@@ -1,0 +1,13 @@
+$homeLeftSlice: 80px;
+
+.home-container {
+  position: absolute;
+  left: $homeLeftSlice;
+  background-color: rgb(247, 247, 247);
+  height: 100%;
+  width: 75%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  margin-top: 80px;
+  margin-left: 20px;
+}

@@ -3,6 +3,7 @@ import React from "react"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import firebase from "firebase"
 import App from "./App"
+import "./styles/index.css"
 
 // Configure Firebase.
 const config = {
@@ -30,7 +31,7 @@ class SignInScreen extends React.Component {
     // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
       // Avoid redirects after sign-in.
@@ -54,8 +55,6 @@ class SignInScreen extends React.Component {
     if (!this.state.isSignedIn) {
       return (
         <div>
-          <h1>My App</h1>
-          <p>Please sign-in:</p>
           <StyledFirebaseAuth
             uiConfig={this.uiConfig}
             firebaseAuth={firebase.auth()}
@@ -63,16 +62,7 @@ class SignInScreen extends React.Component {
         </div>
       )
     }
-    return (
-      <div>
-        <p>
-          Welcome {firebase.auth().currentUser.displayName}! You are now
-          signed-in!
-        </p>
-        <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-        <App />
-      </div>
-    )
+    return <App />
   }
 }
 

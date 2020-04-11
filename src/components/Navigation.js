@@ -1,23 +1,26 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import * as ROUTES from "../constants/routes"
+import firebase from "firebase"
 
 const Navigation = () => (
-  <div>
-    <ul>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.SIGN}>Sign In</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </li>
-    </ul>
+  <div className="side-navbar">
+    <img className="logo" src="./images/logo.png" />
+    <div className="side-navbar-icon">
+      <Link to={ROUTES.HOME}>
+        <img src="./images/board.png" />
+      </Link>
+
+      <Link to={ROUTES.ACCOUNT}>
+        <img src="./images/user.jpg" />
+      </Link>
+      <Link to={ROUTES.ACCOUNT}>
+        <img src="./images/info.png" />
+      </Link>
+      <a onClick={() => firebase.auth().signOut()}>
+        <img src="./images/logout.png" />
+      </a>
+    </div>
   </div>
 )
 

@@ -1,8 +1,16 @@
 import React from "react"
+import firebase from "firebase"
+import Board from "./Home/Board"
+import Header from "./Home/Header"
+import Information from "./Home/Information"
 
 const Home = () => (
   <div>
-    <h1>Home</h1>
+    <Header />
+    <div className="home-container">
+      <Board />
+    </div>
+    <Information />
   </div>
 )
 
