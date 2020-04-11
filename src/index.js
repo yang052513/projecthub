@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./App"
+// import App from "./App"
+import SignInScreen from "./SignInScreen"
 
-ReactDOM.render(<App />, document.getElementById("root"))
+ReactDOM.render(<SignInScreen />, document.getElementById("root"))
