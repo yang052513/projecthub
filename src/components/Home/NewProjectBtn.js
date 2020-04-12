@@ -10,17 +10,23 @@ class NewProjectBtn extends Component {
     this.createProject = this.createProject.bind(this)
   }
   createProject() {
-    this.setState({
-      showComponent: true,
+    this.setState((prevState) => {
+      return {
+        showComponent: !prevState.showComponent,
+      }
     })
-    console.log(this.state.showComponent)
   }
 
   render() {
     return (
       <div>
         <button onClick={this.createProject}>Create a new project</button>
-        {this.state.showComponent ? <ProjectForm /> : null}
+        {this.state.showComponent ? (
+          <ProjectForm
+            toggle={this.createProject}
+            show={this.state.showComponent}
+          />
+        ) : null}
       </div>
     )
   }

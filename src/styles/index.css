@@ -127,7 +127,7 @@
   margin-right: 5px;
 }
 
-.create-project-modal {
+.project-input-modal {
   position: fixed;
   z-index: 3;
   width: 500px;
@@ -142,8 +142,57 @@
           box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
+.project-input-modal .project-input-modal-content {
+  margin: 0 40px;
+}
+
+.project-input-modal .create-project-tit {
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+  color: #48abff;
+}
+
+.project-input-modal p {
+  font-size: 15px;
+}
+
+.project-input-modal input {
+  height: 25px;
+}
+
+.project-input-modal textarea {
+  height: 80px;
+  resize: none;
+}
+
+.project-input-modal input,
+.project-input-modal textarea {
+  border: 1px solid lightgray;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  width: 100%;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+.project-input-modal input[type="text"]:focus,
+.project-input-modal textarea:focus {
+  outline: none;
+  border: 1px solid #48abff;
+}
+
+.project-input-modal select:focus {
+  outline: none;
+}
+
 .board-container {
   padding: 50px 20px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(400px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  row-gap: 40px;
 }
 
 .card-container {
