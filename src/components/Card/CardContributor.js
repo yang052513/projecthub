@@ -1,13 +1,10 @@
 import React from "react"
 
 function CardContributor(props) {
-  return (
-    <div className="contributor-container">
-      <img src="./images/user.jpg" />
-      <img src="./images/user.jpg" />
-      <img src="./images/user.jpg" />
-    </div>
-  )
+  const contributor = props.item.map((item) => (
+    <img src={item} alt="contributor-pic" />
+  ))
+  return <div className="contributor-container">{contributor}</div>
 }
 
 export default CardContributor

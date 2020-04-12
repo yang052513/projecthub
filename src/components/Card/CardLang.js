@@ -1,14 +1,11 @@
 import React from "react"
 
 function CardLang(props) {
+  const category = props.item.map((item) => <li>{item}</li>)
+
   return (
     <div className="technology-container">
-      <ul>
-        <li>React</li>
-        <li>MongoDB</li>
-        <li>Express</li>
-        <li>Node.js</li>
-      </ul>
+      <ul>{category}</ul>
     </div>
   )
 }

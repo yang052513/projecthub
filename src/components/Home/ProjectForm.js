@@ -44,6 +44,8 @@ class ProjectForm extends Component {
         .collection("Projects")
         .add(projectData)
     })
+    // 关闭表单
+    this.props.toggle()
   }
 
   render() {

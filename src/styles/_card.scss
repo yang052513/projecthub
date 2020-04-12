@@ -17,7 +17,6 @@
   background-color: white;
   border-radius: 25px;
   p {
-    font-size: 15px;
     margin: 10px 0;
   }
   ul {
@@ -40,6 +39,9 @@
     }
   }
   .desc-container {
+    p {
+      font-size: 14px;
+    }
     .desc-start-date {
       font-size: 12px;
       color: gray;
@@ -48,7 +50,11 @@
       margin-right: 10px;
     }
   }
-  .feature-container {
+  .repo-container {
+    font-size: 14px;
+    color: #2dc79e;
+    font-family: raleway;
+
     i {
       margin-right: 10px;
       color: #2dc79e;
