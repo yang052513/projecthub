@@ -52,6 +52,19 @@ class SignInScreen extends React.Component {
   }
 
   render() {
+    const db = firebase.firestore()
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      db.collection("user").doc(user.uid).set(
+        {
+          Name: user.displayName,
+        },
+        {
+          merge: true,
+        }
+      )
+    })
+
     if (!this.state.isSignedIn) {
       return (
         <div>
