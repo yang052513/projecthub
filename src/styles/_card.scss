@@ -1,0 +1,73 @@
+@mixin roundProfile($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+.board-container {
+  padding: 50px 20px;
+}
+
+.card-container {
+  width: 400px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 25px;
+  p {
+    font-size: 15px;
+    margin: 10px 0;
+  }
+  ul {
+    font-size: 13px;
+    list-style: none;
+  }
+  .title-container {
+    display: flex;
+    align-items: center;
+    h4 {
+      padding-left: 15px;
+    }
+    p {
+      color: #2dc79e;
+      margin-left: auto;
+    }
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  .desc-container {
+    .desc-start-date {
+      font-size: 12px;
+      color: gray;
+    }
+    i {
+      margin-right: 10px;
+    }
+  }
+  .feature-container {
+    i {
+      margin-right: 10px;
+      color: #2dc79e;
+    }
+  }
+  .technology-container {
+    margin: 20px 0;
+    li {
+      display: inline-block;
+      background-color: #2dc79e;
+      padding: 2px 8px;
+      margin-right: 5px;
+      color: white;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+  }
+
+  .contributor-container {
+    img {
+      @include roundProfile(30px);
+      margin-right: 15px;
+    }
+  }
+}

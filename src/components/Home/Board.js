@@ -4,7 +4,7 @@ import Card from "../Card/Card"
 class Board extends Component {
   render() {
     return (
-      <div>
+      <div className="board-container">
         <Card />
       </div>
     )

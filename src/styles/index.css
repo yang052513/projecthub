@@ -142,6 +142,85 @@
           box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
+.board-container {
+  padding: 50px 20px;
+}
+
+.card-container {
+  width: 400px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 25px;
+}
+
+.card-container p {
+  font-size: 15px;
+  margin: 10px 0;
+}
+
+.card-container ul {
+  font-size: 13px;
+  list-style: none;
+}
+
+.card-container .title-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-container .title-container h4 {
+  padding-left: 15px;
+}
+
+.card-container .title-container p {
+  color: #2dc79e;
+  margin-left: auto;
+}
+
+.card-container .title-container img {
+  width: 25px;
+  height: 25px;
+}
+
+.card-container .desc-container .desc-start-date {
+  font-size: 12px;
+  color: gray;
+}
+
+.card-container .desc-container i {
+  margin-right: 10px;
+}
+
+.card-container .feature-container i {
+  margin-right: 10px;
+  color: #2dc79e;
+}
+
+.card-container .technology-container {
+  margin: 20px 0;
+}
+
+.card-container .technology-container li {
+  display: inline-block;
+  background-color: #2dc79e;
+  padding: 2px 8px;
+  margin-right: 5px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.card-container .contributor-container img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
 @font-face {
   font-family: raleway;
   src: url("../font/Raleway-Regular.ttf");
