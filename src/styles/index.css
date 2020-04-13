@@ -34,7 +34,7 @@
   position: absolute;
   left: 80px;
   background-color: #f7f7f7;
-  height: 100%;
+  height: auto;
   width: 75%;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
@@ -241,6 +241,7 @@
   background-color: #ffffff;
   border: 1px solid #2dc79e;
   border-radius: 25px;
+  position: relative;
 }
 
 .card-container p {
@@ -318,6 +319,32 @@
   height: 30px;
   border-radius: 50%;
   margin-right: 15px;
+}
+
+.card-container button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 20px 20px 0;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  color: #2dc79e;
+  border: 1px solid #2dc79e;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.card-container button:focus {
+  outline: none;
+}
+
+.card-container button:hover {
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: #2dc79e;
 }
 
 @font-face {

@@ -23,6 +23,7 @@
   background-color: #ffffff;
   border: 1px solid #2dc79e;
   border-radius: 25px;
+  position: relative;
   p {
     margin: 10px 0;
   }
@@ -84,6 +85,29 @@
     img {
       @include roundProfile(30px);
       margin-right: 15px;
+    }
+  }
+
+  button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 20px 20px 0;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    color: #2dc79e;
+    border: 1px solid #2dc79e;
+    transition: all 0.5s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      color: white;
+      border: 1px solid rgba(0, 0, 0, 0);
+      background-color: #2dc79e;
     }
   }
 }

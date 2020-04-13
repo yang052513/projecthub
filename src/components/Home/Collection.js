@@ -16,18 +16,6 @@ class Collection extends Component {
     }
   }
 
-  // totalCnt = () => {
-  //   this.setState((prevState) => ({
-  //     total:
-  //       prevState.inprogress +
-  //       prevState.completed +
-  //       prevState.outschedule +
-  //       prevState.inprogress +
-  //       prevState.planning +
-  //       prevState.dropped,
-  //   }))
-  // }
-
   componentDidMount() {
     const db = firebase.firestore()
     firebase.auth().onAuthStateChanged((user) => {
