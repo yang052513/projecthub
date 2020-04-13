@@ -7,32 +7,32 @@ class Status extends Component {
       <div className="status-container">
         <StatusUnit
           caption="Total project"
-          count={123}
+          count={this.props.total}
           lineColor={{ color: "red" }}
         />
         <StatusUnit
           caption="Completed:"
-          count={89}
+          count={this.props.completed}
           lineColor={{ color: "blue" }}
         />
         <StatusUnit
           caption="In progress"
-          count={10}
+          count={this.props.inprogress}
           lineColor={{ color: "purple" }}
         />
         <StatusUnit
           caption="Planning"
-          count={5}
+          count={this.props.planning}
           lineColor={{ color: "green" }}
         />
         <StatusUnit
           caption="Dropped"
-          count={13}
+          count={this.props.dropped}
           lineColor={{ color: "yellow" }}
         />
         <StatusUnit
           caption="Out of schedule"
-          count={19}
+          count={this.props.outschedule}
           lineColor={{ color: "orange" }}
         />
       </div>
