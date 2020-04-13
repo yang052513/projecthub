@@ -11,15 +11,23 @@
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   .project-input-modal-content {
     margin: 0 40px;
+    padding: 20px;
   }
-  .create-project-tit {
-    font-size: 25px;
+  h4 {
+    font-size: 22px;
     text-align: center;
-    font-weight: bold;
-    color: #48abff;
+    color: #2dc79e;
+    margin-bottom: 20px;
+  }
+  i {
+    position: absolute;
+    top: 25px;
+    left: 55px;
+    color: #2dc79e;
   }
   p {
     font-size: 15px;
+    color: #177159;
   }
   input {
     height: 25px;
@@ -31,22 +39,46 @@
   }
 
   input,
-  textarea {
+  textarea,
+  select {
     border: 1px solid lightgray;
     transition: 0.5s;
     width: 100%;
     border-radius: 5px;
     padding: 2px 5px;
+    margin: 10px 0;
   }
   input[type="text"]:focus,
   textarea:focus {
     outline: none;
-    border: 1px solid #48abff;
+    border: 1px solid #2dc79e;
   }
 
   select {
     &:focus {
       outline: none;
+    }
+  }
+
+  button {
+    padding: 5px 10px;
+  }
+  .technology-container {
+    li {
+      list-style-type: none;
+      display: inline-block;
+      background-color: #2dc79e;
+      padding: 2px 8px;
+      margin-right: 5px;
+      color: white;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+  }
+  .submit-btn {
+    text-align: center;
+    button {
+      font-size: 17px;
     }
   }
 }

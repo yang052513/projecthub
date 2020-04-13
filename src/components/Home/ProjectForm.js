@@ -1,11 +1,4 @@
 import React, { Component } from "react"
-// import FormTitle from "../Form/FormTitle"
-// import FormDesc from "../Form/FormDesc"
-// import FormSubmit from "../Form/FormSubmit"
-// import FormRepo from "../Form/FormRepo"
-// import FormContributor from "../Form/FormContributor"
-// import FormCategory from "../Form/FormCategory"
-// import FormLang from "../Form/FormLang"
 
 import firebase from "firebase"
 
@@ -17,25 +10,50 @@ class ProjectForm extends Component {
       description: "",
       category: "Web App",
       repo: "",
+      lang: [],
     }
     this.handleChange = this.handleChange.bind(this)
     this.addDoc = this.addDoc.bind(this)
+    this.handleLang = this.handleLang.bind(this)
   }
 
   handleChange(event) {
-    const { name, value, type } = event.target
+    const { name, value } = event.target
     this.setState({
       [name]: value,
     })
   }
 
   addDoc() {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]
+    const date = new Date()
+    const month = date.getMonth()
+    const day = date.getDate()
+    const year = date.getFullYear()
+
+    const postDate = monthNames[month] + " " + day + ", " + year
     const db = firebase.firestore()
     const projectData = {
       Name: this.state.name,
       Description: this.state.description,
       Category: this.state.category,
       Repo: this.state.repo,
+      Language: this.state.lang,
+      Time: postDate,
+      Schedule: "In progress",
     }
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -48,7 +66,19 @@ class ProjectForm extends Component {
     this.props.toggle()
   }
 
+  handleLang() {
+    let value = document.getElementById("lang-input").value
+    this.setState((prevState) => {
+      return {
+        lang: [...prevState.lang, value],
+      }
+    })
+    document.getElementById("lang-input").value = ""
+  }
+
   render() {
+    const langList = this.state.lang.map((item) => <li>{item}</li>)
+
     if (this.props.show) {
       return (
         <div className="project-input-modal">
@@ -56,6 +86,7 @@ class ProjectForm extends Component {
             <a onClick={this.props.toggle}>
               <i className="fas fa-chevron-left"></i>
             </a>
+            <h4>CREATE A NEW PROJECT</h4>
 
             <p>Project Name</p>
             <input
@@ -90,7 +121,16 @@ class ProjectForm extends Component {
               placeholder="Type your github repo link here"
             />
 
-            <button onClick={this.addDoc}>Submit</button>
+            <div className="technology-container">
+              <p>Technology / Tools</p>
+              <input id="lang-input" name="lang" type="text" />
+              <ul>{langList}</ul>
+              <button onClick={this.handleLang}>Add</button>
+            </div>
+
+            <div className="submit-btn">
+              <button onClick={this.addDoc}>Submit</button>
+            </div>
           </div>
         </div>
       )

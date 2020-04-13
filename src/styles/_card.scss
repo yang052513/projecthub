@@ -4,8 +4,14 @@
   border-radius: 50%;
 }
 
+.filter-title {
+  font-size: 23px;
+  font-family: raleway;
+  margin: 20px 0 10px 40px;
+}
+
 .board-container {
-  padding: 50px 20px;
+  padding: 20px 20px 30px 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   row-gap: 40px;
@@ -14,7 +20,8 @@
 .card-container {
   width: 400px;
   padding: 25px;
-  background-color: white;
+  background-color: #ffffff;
+  border: 1px solid #2dc79e;
   border-radius: 25px;
   p {
     margin: 10px 0;
@@ -40,7 +47,7 @@
   }
   .desc-container {
     p {
-      font-size: 14px;
+      font-size: 15px;
     }
     .desc-start-date {
       font-size: 12px;

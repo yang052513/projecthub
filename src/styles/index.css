@@ -144,17 +144,26 @@
 
 .project-input-modal .project-input-modal-content {
   margin: 0 40px;
+  padding: 20px;
 }
 
-.project-input-modal .create-project-tit {
-  font-size: 25px;
+.project-input-modal h4 {
+  font-size: 22px;
   text-align: center;
-  font-weight: bold;
-  color: #48abff;
+  color: #2dc79e;
+  margin-bottom: 20px;
+}
+
+.project-input-modal i {
+  position: absolute;
+  top: 25px;
+  left: 55px;
+  color: #2dc79e;
 }
 
 .project-input-modal p {
   font-size: 15px;
+  color: #177159;
 }
 
 .project-input-modal input {
@@ -167,27 +176,58 @@
 }
 
 .project-input-modal input,
-.project-input-modal textarea {
+.project-input-modal textarea,
+.project-input-modal select {
   border: 1px solid lightgray;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   width: 100%;
   border-radius: 5px;
   padding: 2px 5px;
+  margin: 10px 0;
 }
 
 .project-input-modal input[type="text"]:focus,
 .project-input-modal textarea:focus {
   outline: none;
-  border: 1px solid #48abff;
+  border: 1px solid #2dc79e;
 }
 
 .project-input-modal select:focus {
   outline: none;
 }
 
+.project-input-modal button {
+  padding: 5px 10px;
+}
+
+.project-input-modal .technology-container li {
+  list-style-type: none;
+  display: inline-block;
+  background-color: #2dc79e;
+  padding: 2px 8px;
+  margin-right: 5px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.project-input-modal .submit-btn {
+  text-align: center;
+}
+
+.project-input-modal .submit-btn button {
+  font-size: 17px;
+}
+
+.filter-title {
+  font-size: 23px;
+  font-family: raleway;
+  margin: 20px 0 10px 40px;
+}
+
 .board-container {
-  padding: 50px 20px;
+  padding: 20px 20px 30px 20px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fit];
@@ -198,7 +238,8 @@
 .card-container {
   width: 400px;
   padding: 25px;
-  background-color: white;
+  background-color: #ffffff;
+  border: 1px solid #2dc79e;
   border-radius: 25px;
 }
 
@@ -235,7 +276,7 @@
 }
 
 .card-container .desc-container p {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .card-container .desc-container .desc-start-date {
