@@ -4,10 +4,13 @@ function CardDesc(props) {
   return (
     <div className="desc-container">
       <p className="desc-start-date">
-        <i class="far fa-clock"></i>
+        <i className="far fa-clock"></i>
         {props.time}
       </p>
-      <p>{props.desc}</p>
+      <div className="desc-wrap">
+        <i style={props.style} className="fas fa-book"></i>
+        {props.desc}
+      </div>
     </div>
   )
 }

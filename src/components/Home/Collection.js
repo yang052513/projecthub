@@ -19,16 +19,44 @@ class Collection extends Component {
   componentDidMount() {
     const db = firebase.firestore()
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection("user")
-        .doc(user.uid)
-        .collection("Projects")
-        .where("Schedule", "==", "In progress")
+      let ref = db.collection("user").doc(user.uid).collection("Projects")
+
+      ref.onSnapshot((snap) => {
+        this.setState({
+          total: snap.docs.map((doc) => doc.data()).length,
+        })
+      })
+
+      ref.where("Schedule", "==", "In progress").onSnapshot((snap) => {
+        this.setState({
+          inprogress: snap.docs.map((doc) => doc.data()).length,
+        })
+      })
+
+      ref.where("Schedule", "==", "Completed").onSnapshot((snap) => {
+        this.setState({
+          completed: snap.docs.map((doc) => doc.data()).length,
+        })
+      })
+
+      ref.where("Schedule", "==", "Planning").onSnapshot((snap) => {
+        this.setState({
+          planning: snap.docs.map((doc) => doc.data()).length,
+        })
+      })
+
+      ref.where("Schedule", "==", "Dropped").onSnapshot((snap) => {
+        this.setState({
+          dropped: snap.docs.map((doc) => doc.data()).length,
+        })
+      })
+
+      ref
+        .where("Schedule", "==", "Out of schedule")
         .get()
-        .then((querySnapshot) => {
-          const inprogress = querySnapshot.docs.map((doc) => doc.data())
+        .then((snap) => {
           this.setState({
-            total: inprogress.length,
-            inprogress: inprogress.length,
+            outschedule: snap.docs.map((doc) => doc.data()).length,
           })
         })
     })

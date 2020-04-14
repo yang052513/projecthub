@@ -10,6 +10,7 @@ class Card extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      cardId: props.cardId,
       edit: false,
       category: props.card.Category,
       title: props.card.Name,
@@ -46,25 +47,66 @@ class Card extends Component {
 
   editChange() {
     const db = firebase.firestore()
-    //   db.collection("user").doc(user.uid).update({
-    //     "BalanceStore": parseInt(newBalance)
-    // })
+    firebase.auth().onAuthStateChanged((user) => {
+      let ref = db
+        .collection("user")
+        .doc(user.uid)
+        .collection("Projects")
+        .doc(this.state.cardId)
+      ref.update({
+        Name: this.state.title,
+        Description: this.state.desc,
+        Schedule: this.state.schedule,
+      })
+    })
+    this.setState({
+      edit: false,
+    })
   }
 
   render() {
+    let cardBorder, textColor, tagColor
+    switch (this.state.schedule) {
+      case "Completed":
+        cardBorder = { border: "1px solid #c72dbd", color: "#c72dbd" }
+        textColor = { color: "#c72dbd" }
+        tagColor = { backgroundColor: "#c72dbd" }
+        break
+      case "Planning":
+        cardBorder = { border: "1px solid #2d91c7", color: "#2d91c7" }
+        textColor = { color: "#2d91c7" }
+        tagColor = { backgroundColor: "#2d91c7" }
+        break
+      case "Dropped":
+        cardBorder = { border: "1px solid #9fa1a1", color: "#9fa1a1" }
+        textColor = { color: "#9fa1a1" }
+        tagColor = { backgroundColor: "#9fa1a1" }
+        break
+      case "Out of schedule":
+        cardBorder = { border: "1px solid #c72d2d", color: "#c72d2d" }
+        textColor = { color: "#c72d2d" }
+        tagColor = { backgroundColor: "#c72d2d" }
+        break
+    }
+
     return (
       <div>
-        <div className="card-container">
+        <div style={cardBorder} className="card-container">
           <CardTitle
             type={this.state.category}
             title={this.state.title}
             schedule={this.state.schedule}
+            style={textColor}
           />
-          <CardDesc desc={this.state.desc} time={this.state.time} />
-          <CardRepo link={this.state.link} />
-          <CardLang item={this.state.lang} />
+          <CardDesc
+            desc={this.state.desc}
+            time={this.state.time}
+            style={textColor}
+          />
+          <CardRepo style={textColor} link={this.state.link} />
+          <CardLang style={tagColor} item={this.state.lang} />
           <CardContributor item={this.state.contributor} />
-          <button onClick={this.handleChange}>
+          <button style={cardBorder} onClick={this.handleChange}>
             <i className="fas fa-pen"></i>
           </button>
         </div>
@@ -76,9 +118,27 @@ class Card extends Component {
                 name="title"
                 onChange={this.handleInput}
                 type="text"
-                placeholder="What do you want to call?"
+                placeholder={this.state.title}
               />
-              <button onClick={this.editChange}>Submit</button>
+              <p>Description</p>
+              <input
+                name="desc"
+                onChange={this.handleInput}
+                type="text"
+                placeholder={this.state.desc}
+              />
+              <p>Schedule</p>
+              <select name="schedule" onChange={this.handleInput}>
+                <option value="In progress">In progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Planning">Planning</option>
+                <option value="Dropped">Dropped</option>
+                <option value="Out of schedule">Out of schedule</option>
+              </select>
+              <div className="input-btn-wrap">
+                <button onClick={this.editChange}>Save</button>
+                <button onClick={this.handleChange}>Cancel</button>
+              </div>
             </div>
           </div>
         ) : null}

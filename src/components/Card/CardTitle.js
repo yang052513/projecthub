@@ -24,7 +24,7 @@ function CardTitle(props) {
     <div className="title-container">
       <img src={type} />
       <h4>{props.title}</h4>
-      <p>{props.schedule}</p>
+      <p style={props.style}>{props.schedule}</p>
     </div>
   )
 }

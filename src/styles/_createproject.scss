@@ -62,6 +62,22 @@
 
   button {
     padding: 5px 10px;
+    font-family: raleway;
+    padding: 3px 10px;
+    border-radius: 25px;
+    margin-right: 10px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    color: white;
+    background-color: rgb(45, 199, 158);
+    transition: 0.5s all;
+    &:hover {
+      color: rgb(45, 199, 158);
+      background-color: white;
+      border: 1px solid rgb(45, 199, 158);
+    }
+    &:focus {
+      outline: none;
+    }
   }
   .technology-container {
     li {
@@ -80,5 +96,10 @@
     button {
       font-size: 17px;
     }
+  }
+  .input-btn-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
   }
 }
