@@ -15,10 +15,10 @@ const Navigation = () => (
         <img src="./images/user.jpg" />
       </Link>
       <Link to={ROUTES.ACCOUNT}>
-        <img src="./images/info.png" />
+        <img src="./images/info.png" />                        
       </Link>
       <a onClick={() => firebase.auth().signOut()}>
-        <img src="./images/logout.png" />
+        <img src="./images/logout.png" />                                 
       </a>
     </div>
   </div>
