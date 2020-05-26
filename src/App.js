@@ -1,21 +1,21 @@
-import React from "react"
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import firebase from "firebase"
-import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom"
-import Home from "./components/Home"
-import Profile from "./components/Profile"
-import Status from "./components/Status"
-import Explore from "./components/Explore"
+import React from 'react'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import firebase from 'firebase'
+import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import Home from './components/Home'
+import Profile from './components/Profile'
+import Status from './components/Status'
+import Explore from './components/Explore'
 
 const config = {
-  apiKey: "AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc",
-  authDomain: "pinboard-25.firebaseapp.com",
-  databaseURL: "https://pinboard-25.firebaseio.com",
-  projectId: "pinboard-25",
-  storageBucket: "pinboard-25.appspot.com",
-  messagingSenderId: "649585637777",
-  appId: "1:649585637777:web:07f6bc2b38cb1ef7f90230",
-  measurementId: "G-1VTSFT88XS",
+  apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
+  authDomain: 'pinboard-25.firebaseapp.com',
+  databaseURL: 'https://pinboard-25.firebaseio.com',
+  projectId: 'pinboard-25',
+  storageBucket: 'pinboard-25.appspot.com',
+  messagingSenderId: '649585637777',
+  appId: '1:649585637777:web:07f6bc2b38cb1ef7f90230',
+  measurementId: 'G-1VTSFT88XS',
 }
 firebase.initializeApp(config)
 
@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   uiConfig = {
-    signInFlow: "popup",
+    signInFlow: 'popup',
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -65,7 +65,7 @@ class App extends React.Component {
       const db = firebase.firestore()
 
       firebase.auth().onAuthStateChanged(function (user) {
-        db.collection("user").doc(user.uid).set(
+        db.collection('user').doc(user.uid).set(
           {
             Name: user.displayName,
           },
@@ -77,12 +77,14 @@ class App extends React.Component {
 
       let user = firebase.auth().currentUser
       user.updateProfile({
-        photoURL: "/images/user.jpg",
+        photoURL: '/images/user.jpg',
       })
 
       return (
         <Router>
           <div>
+            <img className="logo" src="/images/logo.png" />
+
             {/* 侧边导航栏 */}
             <div className="navbar">
               <Link to="/">
@@ -121,8 +123,14 @@ class App extends React.Component {
             </div>
 
             {/* 顶部菜单栏 */}
-            <div className="user-navbar">Hi</div>
-
+            <div className="user-navbar">
+              <h2>Project Dashboard</h2>
+              <div>
+                <i className="fas fa-inbox"></i>
+                <i className="fas fa-bell"></i>
+                <img src="/images/user.jpg" alt="user profile images" />
+              </div>
+            </div>
             <Switch>
               <Route exact path="/">
                 <Home />

@@ -1,7 +1,7 @@
-@import "./mixin";
+@import './mixin';
 
-@import "./login";
-@import "./navbar";
+@import './login';
+@import './navbar';
 
 * {
   margin: 0;
@@ -15,5 +15,14 @@ a {
 
 @font-face {
   font-family: raleway;
-  src: url("../font/Raleway-Regular.ttf");
+  src: url('../font/Raleway-Regular.ttf');
+}
+
+@font-face {
+  font-family: title;
+  src: url('../font/Helvetica.ttf');
+}
+
+.component-layout {
+  margin-left: $sideNavWidth;
 }

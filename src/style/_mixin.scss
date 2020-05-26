@@ -1,6 +1,7 @@
 $sideNavBg: rgb(14, 93, 211); //侧边导航栏背景色
 $sideNavIconSize: 18px; //侧边导航栏大小规格
 
+//菜单栏的主要样式
 @mixin navbarStyle($display, $justify, $align, $padding, $width) {
   position: fixed;
   width: $width;
@@ -28,4 +29,40 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
       transform: scale(1.5);
     }
   }
+}
+
+//设置图片为圆角样式
+@mixin roundedImage($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+//垂直中心样式flex
+@mixin flexAlign() {
+  display: flex;
+  align-items: center;
+}
+
+//水平垂直中心样式
+@mixin flexCenter($justify) {
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+}
+
+//绝对固定位置样式
+@mixin positionStyle($size, $postion, $top, $left) {
+  position: $postion;
+  top: $top;
+  left: $left;
+  width: $size;
+  height: $size;
+}
+
+//组件标题字体样式
+@mixin headerTitle() {
+  font-size: 20px;
+  font-family: title;
+  letter-spacing: 0.8px;
 }

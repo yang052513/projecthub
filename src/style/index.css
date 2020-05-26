@@ -44,6 +44,17 @@
   margin: 0;
 }
 
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 1;
+  margin-left: 7.5px;
+  margin-top: 10px;
+}
+
 .navbar {
   position: fixed;
   width: 65px;
@@ -86,10 +97,45 @@
 
 .user-navbar {
   margin-left: 65px;
+  background-color: white;
+  -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 50px 10px 15px;
 }
 
-.component-layout {
-  margin-left: 65px;
+.user-navbar h2 {
+  font-size: 20px;
+  font-family: title;
+  letter-spacing: 0.8px;
+}
+
+.user-navbar div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-navbar i {
+  font-size: 20px;
+  margin-right: 30px;
+}
+
+.user-navbar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 * {
@@ -105,5 +151,14 @@ a {
 @font-face {
   font-family: raleway;
   src: url("../font/Raleway-Regular.ttf");
+}
+
+@font-face {
+  font-family: title;
+  src: url("../font/Helvetica.ttf");
+}
+
+.component-layout {
+  margin-left: 65px;
 }
 /*# sourceMappingURL=index.css.map */
