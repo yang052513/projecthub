@@ -1,6 +1,11 @@
 import React from "react"
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import firebase from "firebase"
+import { Link, Switch, Route, BrowserRouter as Router } from "react-router-dom"
+import Home from "./components/Home"
+import Profile from "./components/Profile"
+import Status from "./components/Status"
+import Explore from "./components/Explore"
 
 const config = {
   apiKey: "AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc",
@@ -76,10 +81,31 @@ class App extends React.Component {
       })
 
       return (
-        <div>
-          <p>登录进来了</p>
-          <button onClick={() => firebase.auth().signOut()}>退出</button>
-        </div>
+        <Router>
+          <div>
+            <Link to="/">DashBoard</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/status">Status</Link>
+            <Link to="/explore">Explore</Link>
+
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+
+              <Route path="/status">
+                <Status />
+              </Route>
+
+              <Route path="/explore">
+                <Explore />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       )
     }
   }
