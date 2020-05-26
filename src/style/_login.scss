@@ -1,0 +1,42 @@
+.signin-container {
+  background: url("/images/login-bg.png") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  color: white;
+}
+
+.signin-ui-container {
+  position: absolute;
+  top: 50%;
+  left: 200px;
+  transform: translateY(-50%);
+  @media only screen and (max-width: 800px) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h4 {
+    margin: 20px 0;
+  }
+
+  .firebaseui-card-content {
+    li {
+      text-align: left;
+    }
+  }
+}
+
+.signin-ui-text-wrap {
+  @media only screen and (max-width: 600px) {
+    text-align: center;
+  }
+}
+
+.firebase-ui-container {
+  margin: 0;
+}
