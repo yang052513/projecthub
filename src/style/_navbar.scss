@@ -1,0 +1,15 @@
+$sideNavWidth: 65px; //侧边导航栏的宽度
+$sideNavIconDist: 50px; //icon之间的距离
+$sideNavPadding: 80px; //侧边导航栏与顶部的距离
+
+.navbar {
+  @include navbarStyle(grid, center, center, $sideNavPadding, $sideNavWidth);
+  grid-template-rows: repeat(9, $sideNavIconDist);
+}
+
+.user-navbar {
+  margin-left: $sideNavWidth;
+}
+.component-layout {
+  margin-left: $sideNavWidth;
+}

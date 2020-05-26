@@ -1,8 +1,16 @@
+@import "./mixin";
+
 @import "./login";
+@import "./navbar";
 
 * {
   margin: 0;
   padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 @font-face {

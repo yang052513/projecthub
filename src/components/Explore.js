@@ -1,7 +1,11 @@
 import React from "react"
 
 function Explore() {
-  return <p>探索页面</p>
+  return (
+    <div className="component-layout">
+      <p>探索页面</p>
+    </div>
+  )
 }
 
 export default Explore

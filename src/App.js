@@ -83,10 +83,45 @@ class App extends React.Component {
       return (
         <Router>
           <div>
-            <Link to="/">DashBoard</Link>
-            <Link to="/profile">Profile</Link>
-            <Link to="/status">Status</Link>
-            <Link to="/explore">Explore</Link>
+            {/* 侧边导航栏 */}
+            <div className="navbar">
+              <Link to="/">
+                <i className="fas fa-home"></i>
+              </Link>
+              <Link to="/profile">
+                <i className="fas fa-user-friends"></i>
+              </Link>
+              <Link to="/status">
+                <i className="fas fa-tachometer-alt"></i>
+              </Link>
+              <Link to="/explore">
+                <i className="fas fa-comments"></i>
+              </Link>
+
+              {/* 之后可能会添加的功能lol */}
+              <Link to="/explore">
+                <i className="far fa-clock"></i>
+              </Link>
+              <Link to="/explore">
+                <i className="far fa-calendar-alt"></i>
+              </Link>
+              <Link to="/explore">
+                <i className="fas fa-sliders-h"></i>
+              </Link>
+              <Link to="/explore">
+                <i className="far fa-question-circle"></i>
+              </Link>
+              <Link to="/profile">
+                <img src="/images/user.jpg" alt="user profile images" />
+              </Link>
+
+              <Link to="/explore">
+                <i className="fas fa-sign-out-alt"></i>
+              </Link>
+            </div>
+
+            {/* 顶部菜单栏 */}
+            <div className="user-navbar">Hi</div>
 
             <Switch>
               <Route exact path="/">

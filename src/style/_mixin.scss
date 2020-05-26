@@ -1,0 +1,31 @@
+$sideNavBg: rgb(14, 93, 211); //侧边导航栏背景色
+$sideNavIconSize: 18px; //侧边导航栏大小规格
+
+@mixin navbarStyle($display, $justify, $align, $padding, $width) {
+  position: fixed;
+  width: $width;
+  height: 100%;
+  display: $display;
+  justify-items: $justify;
+  align-items: $align;
+  padding: $padding 0;
+  background-color: $sideNavBg;
+  i {
+    font-size: $sideNavIconSize;
+    transition: all 0.5s;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+
+  img {
+    width: $sideNavIconSize;
+    height: $sideNavIconSize;
+    border-radius: 50%;
+    transition: all 0.5s;
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}

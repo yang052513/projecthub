@@ -3,7 +3,7 @@ import firebase from "firebase"
 
 function Profile() {
   return (
-    <div>
+    <div className="component-layout">
       <button onClick={() => firebase.auth().signOut()}>退出</button>
     </div>
   )
