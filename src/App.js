@@ -52,7 +52,7 @@ class App extends React.Component {
           <div className="signin-ui-container">
             <div className="signin-ui-text-wrap">
               <h2>ProjectHub</h2>
-              <h4 className="signin-subtit">Keep your ideas and explore</h4>
+              <p className="signin-subtit">Keep your ideas and explore</p>
             </div>
             <StyledFirebaseAuth
               uiConfig={this.uiConfig}

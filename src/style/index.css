@@ -1,29 +1,26 @@
 .signin-container {
-  background: url("/images/login-bg.png") no-repeat center center fixed;
+  background: url("/images/test.jpg") no-repeat center center fixed;
   background-size: cover;
   height: 100vh;
   color: white;
+  text-align: center;
 }
 
 .signin-ui-container {
   position: absolute;
   top: 50%;
-  left: 200px;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-
-@media only screen and (max-width: 800px) {
-  .signin-ui-container {
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-  }
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .signin-ui-container h1 {
   font-size: 20px;
+}
+
+.signin-ui-container h2 {
+  font-size: 60px;
+  font-family: title;
 }
 
 .signin-ui-container h4 {
@@ -42,6 +39,10 @@
 
 .firebase-ui-container {
   margin: 0;
+}
+
+.signin-subtit {
+  margin: 20px 0;
 }
 
 .logo {
