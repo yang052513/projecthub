@@ -138,6 +138,25 @@
   border-radius: 50%;
 }
 
+.hitokoto-container {
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px 50px;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.hitokoto-container .hitokoto-content {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.hitokoto-container .hitokoto-from {
+  font-size: 13px;
+  margin: 10px 0;
+}
+
 * {
   margin: 0;
   padding: 0;
