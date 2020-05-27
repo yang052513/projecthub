@@ -68,8 +68,8 @@
           align-items: center;
   padding: 80px 0;
   background-color: #0e5dd3;
-  -ms-grid-rows: (50px)[9];
-      grid-template-rows: repeat(9, 50px);
+  -ms-grid-rows: (50px)[10];
+      grid-template-rows: repeat(10, 50px);
 }
 
 .navbar i {
@@ -207,7 +207,7 @@
   font-size: 13px;
   color: white;
   background-color: #33ce67;
-  padding: 5px 15px;
+  padding: 5px 20px;
   border-radius: 15px;
 }
 
@@ -297,7 +297,7 @@
   font-size: 13px;
   color: white;
   background-color: #0e5dd3;
-  padding: 5px 15px;
+  padding: 5px 20px;
   border-radius: 15px;
   border: 1px solid white;
 }
@@ -325,6 +325,24 @@
 .create-btn-container img:hover {
   -webkit-transform: rotate(-360deg) scale(1.5);
           transform: rotate(-360deg) scale(1.5);
+}
+
+.project-form-container {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  margin-top: 50px;
+}
+
+.project-form-container .project-add-tool-btn {
+  font-size: 13px;
+  color: #0e5dd3;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 5px 20px;
+  border-radius: 15px;
+  border: 1px solid #0e5dd3;
+  margin: 13px 0 0 10px;
 }
 
 @font-face {
@@ -355,6 +373,10 @@ a {
 p,
 li {
   font-family: raleway;
+}
+
+button:focus {
+  outline: none;
 }
 
 .component-layout {

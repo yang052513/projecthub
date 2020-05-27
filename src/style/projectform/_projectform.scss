@@ -1,0 +1,11 @@
+.project-form-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 50px;
+
+  .project-add-tool-btn {
+    @include buttonStroke($sideNavBg);
+    margin: 13px 0 0 10px;
+  }
+}

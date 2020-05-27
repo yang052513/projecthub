@@ -4,6 +4,7 @@
 @import './navbar';
 
 @import './home/home';
+@import './projectform/projectform';
 
 @font-face {
   font-family: raleway;
@@ -33,6 +34,10 @@ a {
 p,
 li {
   font-family: raleway;
+}
+
+button:focus {
+  outline: none;
 }
 
 .component-layout {

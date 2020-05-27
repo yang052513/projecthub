@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Profile from './components/Profile'
 import Status from './components/Status'
 import Explore from './components/Explore'
+import CreateProject from './components/CreateProject'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -116,6 +117,9 @@ class App extends React.Component {
               <Link to="/profile">
                 <img src="/images/user.jpg" alt="user profile images" />
               </Link>
+              <Link to="/create">
+                <i className="fas fa-feather"></i>
+              </Link>
 
               <Link to="/explore">
                 <i className="fas fa-sign-out-alt"></i>
@@ -138,13 +142,14 @@ class App extends React.Component {
               <Route path="/profile">
                 <Profile />
               </Route>
-
               <Route path="/status">
                 <Status />
               </Route>
-
               <Route path="/explore">
                 <Explore />
+              </Route>
+              <Route path="/create">
+                <CreateProject />
               </Route>
             </Switch>
           </div>

@@ -70,6 +70,15 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   font-size: 13px;
   color: rgb(255, 255, 255);
   background-color: $color;
-  padding: 5px 15px;
+  padding: 5px 20px;
   border-radius: 15px;
+}
+
+@mixin buttonStroke($stroke) {
+  font-size: 13px;
+  color: $stroke;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 5px 20px;
+  border-radius: 15px;
+  border: 1px solid $stroke;
 }

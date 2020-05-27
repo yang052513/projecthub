@@ -12,7 +12,7 @@ $logoSize: 50px;
 
 .navbar {
   @include navbarStyle(grid, center, center, $sideNavPadding, $sideNavWidth);
-  grid-template-rows: repeat(9, $sideNavIconDist);
+  grid-template-rows: repeat(10, $sideNavIconDist);
 }
 
 .user-navbar {
