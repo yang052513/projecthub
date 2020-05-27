@@ -73,6 +73,13 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   background-color: $color;
   padding: 5px 20px;
   border-radius: 15px;
+  transition: all 0.5s;
+  &:hover {
+    color: $color;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid $color;
+    transform: scale(1.2);
+  }
 }
 
 // 次要按钮描边样式
@@ -83,6 +90,12 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   padding: 5px 20px;
   border-radius: 15px;
   border: 1px solid $stroke;
+  transition: all 0.5s;
+  &:hover {
+    color: white;
+    background-color: $stroke;
+    border: 1px solid rgba(0, 0, 0, 0);
+  }
 }
 
 // 无序列表标签同行样式

@@ -37,9 +37,24 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateProject() {
   const classes = useStyles()
 
+  const [textInput, setTextInput] = useState({
+    projectName: '',
+    projectCategory: '',
+    projectDesc: '',
+  })
   const [tool, setTool] = useState([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
+
+  //管理普通文本输入，名称，简介，分类
+  function handleTextField(event) {
+    const { name, value } = event.target
+    setTextInput((prevText) => ({
+      ...prevText,
+      [name]: value,
+    }))
+    console.log(textInput)
+  }
 
   // 管理项目的tool标签，点击添加按钮时会append到文本框下方
   function handleTool() {
@@ -67,6 +82,8 @@ export default function CreateProject() {
           {/* 项目名称输入 */}
           <TextField
             id="project-name-input"
+            name="projectName"
+            onChange={handleTextField}
             label="Project Name"
             style={{ margin: 8 }}
             placeholder="Enter your project name"
@@ -95,8 +112,10 @@ export default function CreateProject() {
 
           {/* 项目分类输入，之后可以用来分类filter */}
           <TextField
-            label="Category"
             id="project-category-input"
+            name="projectCategory"
+            onChange={handleTextField}
+            label="Category"
             placeholder="Project category"
             className={classes.textField}
             helperText="E.g. Web app, IOS app"
@@ -107,6 +126,8 @@ export default function CreateProject() {
           {/* 项目介绍输入 */}
           <TextField
             id="project-desc-input"
+            name="projectDesc"
+            onChange={handleTextField}
             label="Description"
             style={{ margin: 8 }}
             placeholder="What does you project for?"
@@ -179,6 +200,10 @@ export default function CreateProject() {
                 By enable private, your project will only be visible to yourself
               </p>
             )}
+          </div>
+
+          <div className="project-input-submit-container">
+            <button>Create Project</button>
           </div>
         </div>
       </div>

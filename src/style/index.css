@@ -209,6 +209,16 @@
   background-color: #33ce67;
   padding: 5px 20px;
   border-radius: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.project-card-container .project-card-item .project-status:hover {
+  color: #33ce67;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #33ce67;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .project-card-container .project-card-item .project-category {
@@ -299,7 +309,17 @@
   background-color: #0e5dd3;
   padding: 5px 20px;
   border-radius: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   border: 1px solid white;
+}
+
+.project-header-container .project-header-filter button:hover {
+  color: #0e5dd3;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #0e5dd3;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .home-container {
@@ -361,21 +381,53 @@
   padding: 5px 20px;
   border-radius: 15px;
   border: 1px solid #0e5dd3;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   margin: 13px 0 0 10px;
+}
+
+.project-form-container .project-tool-input-container .project-add-tool-btn:hover {
+  color: white;
+  background-color: #0e5dd3;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .project-form-container .project-input-privacy-container {
   margin: 10px 0 0 5px;
+  padding: 0 0 10px 0;
+  width: 60%;
   border: 1px solid #c3c3c3;
   border-radius: 5px;
-  width: 60%;
-  padding: 0 0 10px 0;
 }
 
 .project-form-container .project-input-privacy-container .project-prompt {
   color: gray;
   font-size: 12px;
   margin-left: 13px;
+}
+
+.project-form-container .project-input-submit-container {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.project-form-container .project-input-submit-container button {
+  font-size: 13px;
+  color: white;
+  background-color: #0e5dd3;
+  padding: 5px 20px;
+  border-radius: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.project-form-container .project-input-submit-container button:hover {
+  color: #0e5dd3;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #0e5dd3;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 @font-face {
