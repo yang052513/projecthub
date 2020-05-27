@@ -1,18 +1,16 @@
 .hitokoto-container {
-  border: 1px solid black;
+  //   border: 1px solid black;
   text-align: center;
   padding: 5px 50px;
   width: 70%;
   margin: 0 auto;
-  margin-top: 30px;
-
   .hitokoto-content {
-    font-size: 16px;
+    font-size: 15px;
     margin: 10px 0;
   }
 
   .hitokoto-from {
-    font-size: 13px;
+    font-size: 12px;
     margin: 10px 0;
   }
 }

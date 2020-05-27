@@ -5,6 +5,21 @@
 
 @import './home/home';
 
+@font-face {
+  font-family: raleway;
+  src: url('../font/Raleway-Regular.ttf');
+}
+
+@font-face {
+  font-family: title;
+  src: url('../font/Helvetica-Bold.ttf');
+}
+
+@font-face {
+  font-family: normalText;
+  src: url('../font/Helvetica.ttf');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,16 +30,17 @@ a {
   color: white;
 }
 
-@font-face {
+p,
+li {
   font-family: raleway;
-  src: url('../font/Raleway-Regular.ttf');
-}
-
-@font-face {
-  font-family: title;
-  src: url('../font/Helvetica.ttf');
 }
 
 .component-layout {
   margin-left: $sideNavWidth;
 }
+
+// body {
+//   background: url('/images/login-bg.png') no-repeat center center fixed;
+//   background-size: cover;
+//   height: 100vh;
+// }

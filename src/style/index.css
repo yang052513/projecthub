@@ -114,8 +114,6 @@
 
 .user-navbar h2 {
   font-size: 20px;
-  font-family: title;
-  letter-spacing: 0.8px;
 }
 
 .user-navbar div {
@@ -139,22 +137,144 @@
 }
 
 .hitokoto-container {
-  border: 1px solid black;
   text-align: center;
   padding: 5px 50px;
   width: 70%;
   margin: 0 auto;
-  margin-top: 30px;
 }
 
 .hitokoto-container .hitokoto-content {
-  font-size: 16px;
+  font-size: 15px;
   margin: 10px 0;
 }
 
 .hitokoto-container .hitokoto-from {
-  font-size: 13px;
+  font-size: 12px;
   margin: 10px 0;
+}
+
+.home-container {
+  padding: 30px 0;
+}
+
+.project-card-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(400px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  justify-items: center;
+  row-gap: 30px;
+  padding: 0 50px;
+}
+
+.project-card-container .project-card-item {
+  width: 350px;
+  padding: 20px 30px;
+  border-radius: 25px;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+          box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+}
+
+.project-card-container .project-card-item .project-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.project-card-container .project-card-item .project-title {
+  font-family: title;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.project-card-container .project-card-item .project-status {
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  background-color: #33ce67;
+  padding: 5px 15px;
+  border-radius: 15px;
+}
+
+.project-card-container .project-card-item .project-category {
+  font-size: 12px;
+  color: gray;
+  margin: 10px 0;
+}
+
+.project-card-container .project-card-item .project-desc {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.project-card-container .project-card-item .project-tools {
+  margin: 15px 0;
+}
+
+.project-card-container .project-card-item .project-tools li {
+  margin: 0px 5px 2px 0;
+  padding: 2px 10px;
+  list-style-type: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 20px;
+  color: #474747;
+  border: 1px solid #818181;
+}
+
+.project-card-container .project-card-item .project-contributor {
+  margin: 10px 0;
+}
+
+.project-card-container .project-card-item .project-contributor img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.project-card-container .project-card-item .project-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.project-card-container .project-card-item .project-footer p {
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: gray;
+}
+
+.project-card-container .project-card-item .project-footer i {
+  color: gray;
+}
+
+@font-face {
+  font-family: raleway;
+  src: url("../font/Raleway-Regular.ttf");
+}
+
+@font-face {
+  font-family: title;
+  src: url("../font/Helvetica-Bold.ttf");
+}
+
+@font-face {
+  font-family: normalText;
+  src: url("../font/Helvetica.ttf");
 }
 
 * {
@@ -167,14 +287,9 @@ a {
   color: white;
 }
 
-@font-face {
+p,
+li {
   font-family: raleway;
-  src: url("../font/Raleway-Regular.ttf");
-}
-
-@font-face {
-  font-family: title;
-  src: url("../font/Helvetica.ttf");
 }
 
 .component-layout {
