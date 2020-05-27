@@ -52,7 +52,7 @@
   height: 50px;
   z-index: 1;
   margin-left: 7.5px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .navbar {
@@ -97,9 +97,6 @@
 
 .user-navbar {
   margin-left: 65px;
-  background-color: white;
-  -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
-          box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -109,11 +106,12 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 10px 50px 10px 15px;
+  padding: 20px 50px 10px 30px;
 }
 
 .user-navbar h2 {
   font-size: 20px;
+  font-family: title;
 }
 
 .user-navbar div {
@@ -137,9 +135,11 @@
 }
 
 .hitokoto-container {
+  background-color: white;
+  border-radius: 25px;
   text-align: center;
-  padding: 5px 50px;
-  width: 70%;
+  padding: 10px 10px;
+  width: 85%;
   margin: 0 auto;
 }
 
@@ -151,6 +151,7 @@
 .hitokoto-container .hitokoto-from {
   font-size: 12px;
   margin: 10px 0;
+  font-weight: bold;
 }
 
 .project-card-container {
@@ -160,7 +161,7 @@
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   justify-items: center;
   row-gap: 30px;
-  padding: 50px;
+  padding: 25px 50px;
 }
 
 .project-card-container .project-card-item {
@@ -168,8 +169,6 @@
   padding: 20px 30px;
   border-radius: 25px;
   background-color: white;
-  -webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
-          box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
   opacity: 1;
 }
 
@@ -260,6 +259,28 @@
   color: gray;
 }
 
+.project-header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 80px;
+  margin-top: 50px;
+}
+
+.project-header-container h3 {
+  font-size: 30px;
+}
+
+.project-header-container .project-header-filter select {
+  margin-right: 30px;
+}
+
 .home-container {
   padding: 30px 0;
 }
@@ -268,7 +289,6 @@
   position: absolute;
   bottom: 50px;
   right: 75px;
-  background-color: white;
 }
 
 .create-btn-container img {
@@ -318,5 +338,9 @@ li {
 
 .component-layout {
   margin-left: 65px;
+}
+
+body {
+  background-color: #f7f7f7;
 }
 /*# sourceMappingURL=index.css.map */

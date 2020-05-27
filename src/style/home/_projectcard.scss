@@ -4,7 +4,7 @@
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   justify-items: center;
   row-gap: 30px;
-  padding: 50px;
+  padding: 25px 50px;
 
   //每个单一的项目卡片样式化
   .project-card-item {
@@ -12,7 +12,7 @@
     padding: 20px 30px;
     border-radius: 25px;
     background-color: rgb(255, 255, 255);
-    box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+    // box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
     opacity: 1;
     .project-header {
       @include flexCenter(space-between);

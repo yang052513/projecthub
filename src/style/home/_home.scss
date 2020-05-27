@@ -1,5 +1,6 @@
 @import './hitokoto';
 @import './projectcard';
+@import './projectheader';
 
 .home-container {
   padding: 30px 0;
@@ -9,7 +10,6 @@
   position: absolute;
   bottom: 50px;
   right: 75px;
-  background-color: rgb(255, 255, 255);
   img {
     width: 80px;
     height: 80px;

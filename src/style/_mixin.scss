@@ -63,5 +63,5 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
 //组件标题字体样式
 @mixin headerTitle() {
   font-size: 20px;
-  // letter-spacing: 0.8px;
+  font-family: title;
 }

@@ -1,0 +1,13 @@
+.project-header-container {
+  @include flexCenter(space-between);
+  padding: 0 80px;
+  margin-top: 50px;
+  h3 {
+    font-size: 30px;
+  }
+  .project-header-filter {
+    select {
+      margin-right: 30px;
+    }
+  }
+}
