@@ -169,7 +169,18 @@
   padding: 20px 30px;
   border-radius: 25px;
   background-color: white;
+  position: relative;
   opacity: 1;
+}
+
+.project-card-container .project-card-item .project-line {
+  background-color: #48d176;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  height: 60px;
 }
 
 .project-card-container .project-card-item .project-header {
@@ -206,7 +217,7 @@
 }
 
 .project-card-container .project-card-item .project-desc {
-  font-size: 14px;
+  font-size: 13px;
   margin: 10px 0;
   line-height: 1.5em;
 }
@@ -279,6 +290,15 @@
 
 .project-header-container .project-header-filter select {
   margin-right: 30px;
+}
+
+.project-header-container .project-header-filter button {
+  font-size: 13px;
+  color: white;
+  background-color: #0e5dd3;
+  padding: 5px 15px;
+  border-radius: 15px;
+  border: 1px solid white;
 }
 
 .home-container {

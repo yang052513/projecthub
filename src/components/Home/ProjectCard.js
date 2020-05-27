@@ -3,6 +3,7 @@ import React from 'react'
 function ProjectCard() {
   return (
     <div className="project-card-item">
+      <div className="project-line"></div>
       <div className="project-header">
         <p className="project-title">NoPandemic.</p>
         <p className="project-status">In Progress</p>

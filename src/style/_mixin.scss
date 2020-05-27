@@ -65,3 +65,11 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   font-size: 20px;
   font-family: title;
 }
+
+@mixin buttonStyle($color) {
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  background-color: $color;
+  padding: 5px 15px;
+  border-radius: 15px;
+}

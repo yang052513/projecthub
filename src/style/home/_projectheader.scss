@@ -9,5 +9,10 @@
     select {
       margin-right: 30px;
     }
+
+    button {
+      @include buttonStyle($sideNavBg);
+      border: 1px solid white;
+    }
   }
 }
