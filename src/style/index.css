@@ -153,10 +153,6 @@
   margin: 10px 0;
 }
 
-.home-container {
-  padding: 30px 0;
-}
-
 .project-card-container {
   display: -ms-grid;
   display: grid;
@@ -164,7 +160,7 @@
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   justify-items: center;
   row-gap: 30px;
-  padding: 0 50px;
+  padding: 50px;
 }
 
 .project-card-container .project-card-item {
@@ -174,6 +170,7 @@
   background-color: white;
   -webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
           box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+  opacity: 1;
 }
 
 .project-card-container .project-card-item .project-header {
@@ -212,6 +209,7 @@
 .project-card-container .project-card-item .project-desc {
   font-size: 14px;
   margin: 10px 0;
+  line-height: 1.5em;
 }
 
 .project-card-container .project-card-item .project-tools {
@@ -260,6 +258,32 @@
 
 .project-card-container .project-card-item .project-footer i {
   color: gray;
+}
+
+.home-container {
+  padding: 30px 0;
+}
+
+.create-btn-container {
+  position: absolute;
+  bottom: 50px;
+  right: 75px;
+  background-color: white;
+}
+
+.create-btn-container img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -webkit-box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12), 0px 3px 5px -1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12), 0px 3px 5px -1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.8s;
+  transition: all 0.8s;
+}
+
+.create-btn-container img:hover {
+  -webkit-transform: rotate(-360deg) scale(1.5);
+          transform: rotate(-360deg) scale(1.5);
 }
 
 @font-face {
