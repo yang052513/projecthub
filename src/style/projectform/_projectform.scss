@@ -4,8 +4,30 @@
   transform: translateX(-50%);
   margin-top: 50px;
 
-  .project-add-tool-btn {
-    @include buttonStroke($sideNavBg);
-    margin: 13px 0 0 10px;
+  .project-tool-input-container {
+    margin: 10px 0 20px 0;
+    ul {
+      margin-left: 10px;
+      li {
+        @include liTag();
+      }
+    }
+    .project-add-tool-btn {
+      @include buttonStroke($sideNavBg);
+      margin: 13px 0 0 10px;
+    }
+  }
+
+  .project-input-privacy-container {
+    margin: 10px 0 0 5px;
+    border: 1px solid rgb(195, 195, 195);
+    border-radius: 5px;
+    width: 60%;
+    padding: 0 0 10px 0;
+    .project-prompt {
+      color: gray;
+      font-size: 12px;
+      margin-left: 13px;
+    }
   }
 }

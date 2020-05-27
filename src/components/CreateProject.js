@@ -1,27 +1,64 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple'
 
-// import InputLabel from '@material-ui/core/InputLabel'
-// import MenuItem from '@material-ui/core/MenuItem'
-// import FormHelperText from '@material-ui/core/FormHelperText'
-// import FormControl from '@material-ui/core/FormControl'
-// import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  // 文本框样式
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '45ch',
   },
+  // 下拉选择菜单样式
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }))
 
-export default function LayoutTextFields() {
+export default function CreateProject() {
   const classes = useStyles()
+
+  const [tool, setTool] = useState([])
+  const [status, setStatus] = useState('In Progress')
+  const [publicProject, setPublicProject] = useState(true)
+
+  // 管理项目的tool标签，点击添加按钮时会append到文本框下方
+  function handleTool() {
+    let toolInput = document.getElementById('project-tool-input').value
+    setTool((prevTool) => [...prevTool, toolInput])
+
+    document.getElementById('project-tool-input').value = ''
+  }
+  const toolList = tool.map((item) => <li>{item}</li>)
+
+  //管理项目进程 4个状态可选 默认In Progress
+  function handleStatus(event) {
+    setStatus(event.target.value)
+  }
+
+  //管理项目公开性 默认公开Public
+  function handlePublic(event) {
+    setPublicProject(event.target.checked)
+  }
 
   return (
     <div className="project-form-container component-layout">
@@ -82,34 +119,67 @@ export default function LayoutTextFields() {
           />
 
           {/* 项目工具，涉及到的技术标签，可自定义添加 */}
-          <TextField
-            label="Tools"
-            id="project-tool-input"
-            placeholder="Tools that used"
-            className={classes.textField}
-            helperText="Click add button to add more tools"
-            margin="dense"
-            variant="outlined"
-          />
+          <div className="project-tool-input-container">
+            <TextField
+              label="Tools"
+              id="project-tool-input"
+              placeholder="Tools that used"
+              className={classes.textField}
+              helperText="Click add button to add more tools"
+              margin="dense"
+              variant="outlined"
+            />
 
-          <button className="project-add-tool-btn">Add</button>
+            <button onClick={handleTool} className="project-add-tool-btn">
+              Add
+            </button>
+            <ul>{toolList}</ul>
+          </div>
 
-          {/* <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+          {/* 项目状态选择菜单，默认设置为进行中 */}
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Project Status
+            </InputLabel>
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              value={'33'}
-              label="Age"
+              id="project-status-input"
+              name="status"
+              value={status}
+              onChange={handleStatus}
+              label="Project Status"
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="In Progress">In Progress</MenuItem>
+              <MenuItem value="Completed">Completed</MenuItem>
+              <MenuItem value="Planning">Planning</MenuItem>
+              <MenuItem value="Dropped">Dropped</MenuItem>
             </Select>
-          </FormControl> */}
+          </FormControl>
+
+          {/* 项目公开状态开关 */}
+          <div className="project-input-privacy-container">
+            <FormControlLabel
+              control={
+                <Switch
+                  onChange={handlePublic}
+                  checked={publicProject}
+                  name="Privacy"
+                  color="primary"
+                />
+              }
+              label={publicProject === true ? 'Public' : 'Private'}
+              labelPlacement="start"
+            />
+            {publicProject === true ? (
+              <p className="project-prompt">
+                By enable public, your project information will be visiable to
+                everyone
+              </p>
+            ) : (
+              <p className="project-prompt">
+                By enable private, your project will only be visible to yourself
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

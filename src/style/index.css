@@ -335,7 +335,26 @@
   margin-top: 50px;
 }
 
-.project-form-container .project-add-tool-btn {
+.project-form-container .project-tool-input-container {
+  margin: 10px 0 20px 0;
+}
+
+.project-form-container .project-tool-input-container ul {
+  margin-left: 10px;
+}
+
+.project-form-container .project-tool-input-container ul li {
+  margin: 0px 5px 2px 0;
+  padding: 2px 10px;
+  list-style-type: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 20px;
+  color: #474747;
+  border: 1px solid #818181;
+}
+
+.project-form-container .project-tool-input-container .project-add-tool-btn {
   font-size: 13px;
   color: #0e5dd3;
   background-color: rgba(0, 0, 0, 0);
@@ -343,6 +362,20 @@
   border-radius: 15px;
   border: 1px solid #0e5dd3;
   margin: 13px 0 0 10px;
+}
+
+.project-form-container .project-input-privacy-container {
+  margin: 10px 0 0 5px;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  width: 60%;
+  padding: 0 0 10px 0;
+}
+
+.project-form-container .project-input-privacy-container .project-prompt {
+  color: gray;
+  font-size: 12px;
+  margin-left: 13px;
 }
 
 @font-face {

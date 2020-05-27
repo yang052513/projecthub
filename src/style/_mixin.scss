@@ -66,6 +66,7 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   font-family: title;
 }
 
+// 主按钮填充样式
 @mixin buttonStyle($color) {
   font-size: 13px;
   color: rgb(255, 255, 255);
@@ -74,6 +75,7 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   border-radius: 15px;
 }
 
+// 次要按钮描边样式
 @mixin buttonStroke($stroke) {
   font-size: 13px;
   color: $stroke;
@@ -81,4 +83,16 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   padding: 5px 20px;
   border-radius: 15px;
   border: 1px solid $stroke;
+}
+
+// 无序列表标签同行样式
+@mixin liTag() {
+  margin: 0px 5px 2px 0;
+  padding: 2px 10px;
+  list-style-type: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 20px;
+  color: rgb(71, 71, 71);
+  border: 1px solid rgb(129, 129, 129);
 }
