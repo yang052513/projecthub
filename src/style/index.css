@@ -309,13 +309,13 @@
 }
 
 .project-card-container .project-card-item .project-line {
-  background-color: #48d176;
+  background-color: #43db76;
   position: absolute;
   top: 30px;
   left: 0;
   width: 4px;
   height: 4px;
-  height: 60px;
+  height: 80px;
 }
 
 .project-card-container .project-card-item .project-header {
@@ -336,10 +336,9 @@
 }
 
 .project-card-container .project-card-item .project-status {
-  font-weight: bold;
   font-size: 13px;
   color: white;
-  background-color: #33ce67;
+  background-color: #43db76;
   padding: 5px 20px;
   border-radius: 15px;
   -webkit-transition: all 0.5s;
@@ -347,11 +346,18 @@
 }
 
 .project-card-container .project-card-item .project-status:hover {
-  color: #33ce67;
+  color: #43db76;
   background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #33ce67;
+  border: 1px solid #43db76;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+.project-card-container .project-card-item .project-status:hover {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  color: white;
+  border: none;
 }
 
 .project-card-container .project-card-item .project-category {

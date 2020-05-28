@@ -1,6 +1,12 @@
 $sideNavBg: rgb(14, 93, 211); //侧边导航栏背景色
 $sideNavIconSize: 18px; //侧边导航栏大小规格
 
+// 状态颜色
+$inProgress: rgb(67, 219, 118);
+$completed: rgb(51, 196, 206);
+$planning: rgb(206, 51, 90);
+$dropped: rgb(128, 128, 128);
+
 //菜单栏的主要样式
 @mixin navbarStyle($display, $justify, $align, $padding, $width) {
   position: fixed;

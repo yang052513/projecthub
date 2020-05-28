@@ -16,9 +16,9 @@
     // box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
     opacity: 1;
     .project-line {
-      background-color: rgb(72, 209, 118);
+      background-color: $inProgress;
       @include positionStyle(4px, absolute, 30px, 0);
-      height: 60px;
+      height: 80px;
     }
     .project-header {
       @include flexCenter(space-between);
@@ -28,8 +28,12 @@
       font-size: 17px;
     }
     .project-status {
-      font-weight: bold;
-      @include buttonStyle(rgb(51, 206, 103));
+      @include buttonStyle($inProgress);
+      &:hover {
+        transform: scale(1);
+        color: white;
+        border: none;
+      }
     }
     .project-category {
       font-size: 12px;
