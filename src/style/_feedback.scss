@@ -1,35 +1,33 @@
 .feedback-container {
-  @include modalFlex(fixed, 400px, 200px, rgb(255, 255, 255), 25px);
+  @include modalStyle(fixed, 400px, 200px, rgb(255, 255, 255), 25px);
   @include flexCenter(center);
-  z-index: 3;
-  box-shadow: 7px 4px 14px -10px rgba(107, 103, 103, 1);
+  z-index: 1;
+
   div {
     text-align: center;
   }
   img {
-    width: 70px;
-    height: 70px;
-    transform: translateY(-50px);
+    width: 100px;
+    height: 100px;
+    transform: translateY(-40px);
   }
   h3 {
-    font-size: 25px;
+    font-size: 20px;
     transform: translateY(-40px);
   }
   p {
-    transform: translateY(-20px);
+    transform: translateY(-30px);
     font-size: 14px;
   }
 
   button {
     @include buttonStroke($sideNavBg);
+    margin-bottom: 10px;
   }
 }
 
 .progress-container {
-  @include positionStyle(100%, fixed, 50%, 50%);
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 2;
+  @include modalStyle(fixed, 100%, 100%, rgba(0, 0, 0, 0.7), 0);
   @include flexCenter(center);
+  z-index: 2;
 }

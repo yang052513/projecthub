@@ -3,10 +3,14 @@ import React, { useState } from 'react'
 function Feedback(props) {
   const [show, setShow] = useState(true)
 
+  //选择是关闭窗口还是刷新页面
   function toggle() {
-    window.location.reload()
+    if (props.method === 'close') {
+      setShow(false)
+    } else if (props.method === 'reload') {
+      window.location.reload()
+    }
   }
-
   return (
     <div>
       {show === true ? (

@@ -60,6 +60,18 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   height: $size;
 }
 
+//中心放置 modal样式
+@mixin modalStyle($position, $width, $height, $bgColor, $borderRadius) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: $width;
+  height: $height;
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+}
+
 //组件标题字体样式
 @mixin headerTitle() {
   font-size: 20px;
@@ -108,16 +120,4 @@ $sideNavIconSize: 18px; //侧边导航栏大小规格
   border-radius: 20px;
   color: rgb(71, 71, 71);
   border: 1px solid rgb(129, 129, 129);
-}
-
-//中心放置
-@mixin modalFlex($position, $width, $height, $bgColor, $borderRadius) {
-  position: $position;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: $width;
-  height: $height;
-  background-color: $bgColor;
-  border-radius: $borderRadius;
 }

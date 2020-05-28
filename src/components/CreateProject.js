@@ -37,7 +37,7 @@ export default function CreateProject() {
   const db = firebase.firestore()
 
   const [loading, setLoading] = useState(false)
-  const [feedback, setFeedback] = useState(false)
+  const [feedback, setFeedback] = useState(true)
 
   //当前的时间 年-月-日格式
   const date = new Date()
@@ -67,7 +67,11 @@ export default function CreateProject() {
   // 管理项目的tool标签，点击添加按钮时会append到文本框下方
   function handleTool() {
     let toolInput = document.getElementById('project-tool-input').value
-    setTool((prevTool) => [...prevTool, toolInput])
+    if (toolInput === '') {
+      alert('你倒是写啊')
+    } else {
+      setTool((prevTool) => [...prevTool, toolInput])
+    }
 
     document.getElementById('project-tool-input').value = ''
   }
@@ -85,37 +89,46 @@ export default function CreateProject() {
 
   //上传项目信息到云端
   function handleSubmit() {
-    setLoading(true)
+    if (
+      textInput.projectName === '' ||
+      textInput.projectCategory === '' ||
+      textInput.projectDesc === '' ||
+      tool.length === 0
+    ) {
+      alert('fuck')
+    } else {
+      //如果表格都填写
+      setLoading(true)
+      setTimeout(() => {
+        let projectData = {
+          Name: textInput.projectName,
+          Date: textInput.projectDate,
+          Category: textInput.projectCategory,
+          Desc: textInput.projectDesc,
+          Tools: tool,
+          Status: status,
+          Privacy: publicProject === true ? 'Public' : 'Private',
+        }
+        firebase.auth().onAuthStateChanged((user) => {
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Project')
+            .add({
+              projectData,
+            })
+            .then((docRef) => {
+              console.log(docRef.id)
+            })
+            .catch((error) => {
+              console.log(`上传失败${error}`)
+            })
+        })
+        setLoading(false)
+        setFeedback(true)
+      }, 2000)
 
-    setTimeout(() => {
-      let projectData = {
-        Name: textInput.projectName,
-        Date: textInput.projectDate,
-        Category: textInput.projectCategory,
-        Desc: textInput.projectDesc,
-        Tools: tool,
-        Status: status,
-        Privacy: publicProject === true ? 'Public' : 'Private',
-      }
-      firebase.auth().onAuthStateChanged((user) => {
-        db.collection('user')
-          .doc(user.uid)
-          .collection('Project')
-          .add({
-            projectData,
-          })
-          .then((docRef) => {
-            console.log(docRef.id)
-          })
-          .catch((error) => {
-            console.log(`上传失败${error}`)
-          })
-      })
-      setLoading(false)
-      setFeedback(true)
-    }, 3000)
-
-    console.log('提交成功')
+      console.log('项目成功保存到云端~ ୧(๑•̀⌄•́๑)૭✧')
+    }
   }
 
   return (
@@ -127,7 +140,8 @@ export default function CreateProject() {
           <Feedback
             msg="Success"
             info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
-            imgUrl="/images/success.png"
+            imgUrl="/images/emoji/emoji_happy.png"
+            method="reload"
           />
         </div>
       ) : null}
