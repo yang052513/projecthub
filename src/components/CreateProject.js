@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -37,7 +37,9 @@ export default function CreateProject() {
   const db = firebase.firestore()
 
   const [loading, setLoading] = useState(false)
-  const [feedback, setFeedback] = useState(true)
+  const [feedback, setFeedback] = useState(false)
+  const [fail, setFail] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   //当前的时间 年-月-日格式
   const date = new Date()
@@ -55,6 +57,14 @@ export default function CreateProject() {
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
 
+  function handleFail() {
+    setFail(false)
+  }
+
+  function handleReload() {
+    window.location.reload()
+  }
+
   //管理普通文本输入，名称，简介，分类
   function handleTextField(event) {
     const { name, value } = event.target
@@ -68,13 +78,18 @@ export default function CreateProject() {
   function handleTool() {
     let toolInput = document.getElementById('project-tool-input').value
     if (toolInput === '') {
-      alert('你倒是写啊')
+      setFail(true)
+      setErrorMsg('Please add the tool you will use ヽ(￣д￣;)ノ')
+    } else if (tool.includes(toolInput)) {
+      setFail(true)
+      setErrorMsg('You already included that tool... ヽ(￣д￣;)ノ')
     } else {
       setTool((prevTool) => [...prevTool, toolInput])
     }
 
     document.getElementById('project-tool-input').value = ''
   }
+
   const toolList = tool.map((item) => <li key={item}>{item}</li>)
 
   //管理项目进程 4个状态可选 默认In Progress
@@ -95,7 +110,8 @@ export default function CreateProject() {
       textInput.projectDesc === '' ||
       tool.length === 0
     ) {
-      alert('fuck')
+      setFail(true)
+      setErrorMsg('Please fill the information ヽ(￣д￣;)ノ')
     } else {
       //如果表格都填写
       setLoading(true)
@@ -135,6 +151,7 @@ export default function CreateProject() {
     <div>
       {loading === true ? <Progress /> : null}
 
+      {/* 项目创建成功反馈 */}
       {feedback === true ? (
         <div>
           <Feedback
@@ -142,9 +159,23 @@ export default function CreateProject() {
             info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
             method="reload"
+            toggle={handleReload}
           />
         </div>
       ) : null}
+
+      {/* 项目缺少信息错误反馈 */}
+      {fail === true ? (
+        <Feedback
+          msg="Error"
+          info={errorMsg}
+          imgUrl="/images/emoji/emoji_scare.png"
+          method={'close'}
+          toggle={handleFail}
+        />
+      ) : null}
+
+      {/* 项目表单信息容器 */}
       <div className="project-form-container component-layout">
         <div className={classes.root}>
           <div>

@@ -1,3 +1,4 @@
+//反馈modal 模板
 .feedback-container {
   @include modalStyle(fixed, 400px, 200px, rgb(255, 255, 255), 25px);
   @include flexCenter(center);
@@ -26,6 +27,7 @@
   }
 }
 
+//等待动画
 .progress-container {
   @include modalStyle(fixed, 100%, 100%, rgba(0, 0, 0, 0.7), 0);
   @include flexCenter(center);
