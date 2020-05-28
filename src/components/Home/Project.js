@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ProjectCard from './ProjectCard'
 import firebase from 'firebase'
 
-function Project() {
+function Project(props) {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
 
@@ -20,12 +20,21 @@ function Project() {
     })
   }, [])
 
-  console.log(project)
   const allProject = project.map((item) => (
     <ProjectCard key={item.Key} project={item.projectData} />
   ))
 
-  return <div className="project-card-container">{allProject}</div>
+  const selectedProject = project
+    .filter((item) => item.projectData.Status === props.filter)
+    .map((project) => (
+      <ProjectCard key={project.Key} project={project.projectData} />
+    ))
+
+  return (
+    <div className="project-card-container">
+      {props.filter === 'All My Projects' ? allProject : selectedProject}
+    </div>
+  )
 }
 
 export default Project
