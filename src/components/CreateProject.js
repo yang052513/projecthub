@@ -134,6 +134,14 @@ export default function CreateProject() {
             })
             .then((docRef) => {
               console.log(docRef.id)
+              //将项目的密匙写入到文档中
+              db.collection('user')
+                .doc(user.uid)
+                .collection('Project')
+                .doc(docRef.id)
+                .update({
+                  Key: docRef.id,
+                })
             })
             .catch((error) => {
               console.log(`上传失败${error}`)

@@ -293,9 +293,8 @@
 .project-card-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(400px, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  justify-items: center;
+  -ms-grid-columns: (minmax(420px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
   row-gap: 30px;
   padding: 25px 50px;
 }
@@ -333,8 +332,7 @@
 
 .project-card-container .project-card-item .project-title {
   font-family: title;
-  font-size: 20px;
-  letter-spacing: 0.5px;
+  font-size: 17px;
 }
 
 .project-card-container .project-card-item .project-status {
