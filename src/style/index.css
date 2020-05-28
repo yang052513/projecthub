@@ -355,6 +355,16 @@
   margin-top: 50px;
 }
 
+.project-form-container .project-form-header-container {
+  margin: 10px 0 20px 10px;
+}
+
+.project-form-container .project-form-header-container p {
+  font-size: 14px;
+  color: gray;
+  margin: 10px 0 30px 0;
+}
+
 .project-form-container .project-tool-input-container {
   margin: 10px 0 20px 0;
 }

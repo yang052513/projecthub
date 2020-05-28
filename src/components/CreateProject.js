@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple'
-
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-
-import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+import firebase from 'firebase'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,11 +32,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateProject() {
   const classes = useStyles()
+  const db = firebase.firestore()
+
+  //当前的时间 年-月-日格式
+  const date = new Date()
+  const currentDay = `${date.getFullYear()}-${
+    date.getMonth() < 10 === true ? '0' + date.getMonth() : date.getMonth
+  }-${date.getDate() < 10 === true ? '0' + date.getDate() : date.getDate()}`
 
   const [textInput, setTextInput] = useState({
     projectName: '',
     projectCategory: '',
     projectDesc: '',
+    projectDate: currentDay,
   })
   const [tool, setTool] = useState([])
   const [status, setStatus] = useState('In Progress')
@@ -53,7 +57,6 @@ export default function CreateProject() {
       ...prevText,
       [name]: value,
     }))
-    console.log(textInput)
   }
 
   // 管理项目的tool标签，点击添加按钮时会append到文本框下方
@@ -63,7 +66,7 @@ export default function CreateProject() {
 
     document.getElementById('project-tool-input').value = ''
   }
-  const toolList = tool.map((item) => <li>{item}</li>)
+  const toolList = tool.map((item) => <li key={item}>{item}</li>)
 
   //管理项目进程 4个状态可选 默认In Progress
   function handleStatus(event) {
@@ -75,10 +78,47 @@ export default function CreateProject() {
     setPublicProject(event.target.checked)
   }
 
+  //上传项目信息到云端
+  function handleSubmit() {
+    let projectData = {
+      Name: textInput.projectName,
+      Date: textInput.projectDate,
+      Category: textInput.projectCategory,
+      Desc: textInput.projectDesc,
+      Tools: tool,
+      Status: status,
+      Privacy: publicProject === true ? 'Public' : 'Private',
+    }
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Project')
+        .add({
+          projectData,
+        })
+        .then((docRef) => {
+          console.log(docRef.id)
+        })
+        .catch((error) => {
+          console.log(`上传失败${error}`)
+        })
+    })
+
+    console.log('提交成功')
+  }
+
   return (
     <div className="project-form-container component-layout">
       <div className={classes.root}>
         <div>
+          <div className="project-form-header-container">
+            <h2>Create a New Project</h2>
+            <p>
+              Create a new project will displayed on the home main dashboard
+              that allows you manage your project easily
+            </p>
+          </div>
+
           {/* 项目名称输入 */}
           <TextField
             id="project-name-input"
@@ -99,9 +139,11 @@ export default function CreateProject() {
           {/* 项目创建时间输入 */}
           <TextField
             id="project-date-input"
+            name="projectDate"
+            onChange={handleTextField}
             label="Create Date"
             type="date"
-            defaultValue="2017-05-24"
+            defaultValue={currentDay}
             className={classes.textField}
             margin="dense"
             variant="outlined"
@@ -203,7 +245,7 @@ export default function CreateProject() {
           </div>
 
           <div className="project-input-submit-container">
-            <button>Create Project</button>
+            <button onClick={handleSubmit}>Create Project</button>
           </div>
         </div>
       </div>
