@@ -33,5 +33,9 @@ $logoSize: 50px;
   }
   img {
     @include roundedImage(30px);
+    transform: translateX(-10px);
   }
+}
+.MuiMenuItem-root {
+  font-size: 13px;
 }

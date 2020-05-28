@@ -44,8 +44,8 @@ export default function CreateProject() {
   //当前的时间 年-月-日格式
   const date = new Date()
   const currentDay = `${date.getFullYear()}-${
-    date.getMonth() < 10 === true ? '0' + date.getMonth() : date.getMonth
-  }-${date.getDate() < 10 === true ? '0' + date.getDate() : date.getDate()}`
+    date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
+  }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
 
   const [textInput, setTextInput] = useState({
     projectName: '',

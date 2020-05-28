@@ -7,6 +7,7 @@ import Profile from './components/Profile'
 import Status from './components/Status'
 import Explore from './components/Explore'
 import CreateProject from './components/CreateProject'
+import ProfileMenu from './components/ProfileMenu'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -132,7 +133,7 @@ class App extends React.Component {
               <div>
                 <i className="fas fa-inbox"></i>
                 <i className="fas fa-bell"></i>
-                <img src="/images/user.jpg" alt="user profile images" />
+                <ProfileMenu />
               </div>
             </div>
             <Switch>

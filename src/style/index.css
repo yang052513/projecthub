@@ -133,6 +133,12 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  -webkit-transform: translateX(-10px);
+          transform: translateX(-10px);
+}
+
+.MuiMenuItem-root {
+  font-size: 13px;
 }
 
 .feedback-container {
@@ -605,7 +611,7 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 p,
