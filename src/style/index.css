@@ -293,14 +293,14 @@
 .project-card-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(420px, 1fr))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   row-gap: 30px;
   padding: 25px 50px;
 }
 
 .project-card-container .project-card-item {
-  width: 350px;
+  width: 330px;
   padding: 20px 30px;
   border-radius: 25px;
   background-color: white;
@@ -430,6 +430,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   padding: 0 80px;
   margin-top: 50px;
 }
@@ -438,8 +441,8 @@
   font-size: 30px;
 }
 
-.project-header-container .project-header-filter select {
-  margin-right: 30px;
+.project-header-container .project-header-filter .MuiInputBase-root {
+  font-size: 13px;
 }
 
 .project-header-container .project-header-filter button {
@@ -451,6 +454,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   border: 1px solid white;
+  margin-left: 30px;
 }
 
 .project-header-container .project-header-filter button:hover {
