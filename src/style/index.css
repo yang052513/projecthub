@@ -447,8 +447,28 @@
   font-size: 30px;
 }
 
-.project-header-container .project-header-filter .MuiInputBase-root {
+.project-header-container .project-header-filter .project-header-search {
+  position: relative;
+}
+
+.project-header-container .project-header-filter .project-header-search i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 4px 0 0 10px;
+  color: #bbbbbb;
+}
+
+.project-header-container .project-header-filter .project-header-search input {
+  margin-right: 30px;
+  border-radius: 25px;
+  border: 1px solid #bbbbbb;
+  padding: 5px 50px 5px 35px;
   font-size: 13px;
+}
+
+.project-header-container .project-header-filter .project-header-search input:focus {
+  outline: none;
 }
 
 .project-header-container .project-header-filter button {

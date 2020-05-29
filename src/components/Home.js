@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  selectItem: {
+    fontSize: '13px',
+    color: 'black',
+  },
 }))
 
 function Home() {
@@ -43,6 +47,10 @@ function Home() {
         <h3>{status}</h3>
 
         <div className="project-header-filter">
+          <label className="project-header-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="search your projects..." />
+          </label>
           {/* 分类项目: status, name(A-Z), Date */}
           <FormControl className={classes.formControl}>
             <InputLabel id="project-sort-label">Sort</InputLabel>
@@ -52,10 +60,18 @@ function Home() {
               value={sort}
               onChange={handleSort}
             >
-              <MenuItem value={'Name'}>Name</MenuItem>
-              <MenuItem value={'Status'}>Status</MenuItem>
-              <MenuItem value={'Newest'}>Newest</MenuItem>
-              <MenuItem value={'Oldest'}>Oldest</MenuItem>
+              <MenuItem className={classes.selectItem} value={'Name'}>
+                Name
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Status'}>
+                Status
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Newest'}>
+                Newest
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Oldest'}>
+                Oldest
+              </MenuItem>
             </Select>
           </FormControl>
 
@@ -68,11 +84,24 @@ function Home() {
               value={status}
               onChange={handleStatus}
             >
-              <MenuItem value={'All My Projects'}>All My Projects</MenuItem>
-              <MenuItem value={'In Progress'}>In Progress</MenuItem>
-              <MenuItem value={'Completed'}>Completed</MenuItem>
-              <MenuItem value={'Planning'}>Planning</MenuItem>
-              <MenuItem value={'Dropped'}>Dropped</MenuItem>
+              <MenuItem
+                className={classes.selectItem}
+                value={'All My Projects'}
+              >
+                All My Projects
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'In Progress'}>
+                In Progress
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Completed'}>
+                Completed
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Planning'}>
+                Planning
+              </MenuItem>
+              <MenuItem className={classes.selectItem} value={'Dropped'}>
+                Dropped
+              </MenuItem>
             </Select>
           </FormControl>
 
