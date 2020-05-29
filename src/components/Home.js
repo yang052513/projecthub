@@ -25,10 +25,15 @@ function Home() {
   const classes = useStyles()
 
   const [status, setStatus] = useState('All My Projects')
+  const [sort, setSort] = useState('projectData.Name')
 
   function handleStatus(event) {
     const { value } = event.target
     setStatus(value)
+  }
+
+  function handleSort(event) {
+    setSort(event.target.value)
   }
 
   return (
@@ -38,8 +43,24 @@ function Home() {
         <h3>{status}</h3>
 
         <div className="project-header-filter">
+          {/* 分类项目: status, name(A-Z), Date */}
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <InputLabel id="project-sort-label">Sort</InputLabel>
+            <Select
+              labelId="project-sort"
+              id="project-sort"
+              value={sort}
+              onChange={handleSort}
+            >
+              <MenuItem value={'projectData.Name'}>Name</MenuItem>
+              <MenuItem value={'projectData.Status'}>Status</MenuItem>
+              <MenuItem value={'projectData.Date'}>Date</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* 根据项目的状态筛选 */}
+          <FormControl className={classes.formControl}>
+            <InputLabel id="status-filter-label">Status</InputLabel>
             <Select
               labelId="status-filter"
               id="status-filter"
@@ -59,7 +80,7 @@ function Home() {
           </Link>
         </div>
       </div>
-      <Project filter={status} />
+      <Project sort={sort} filter={status} />
       <CreateBtn />
     </div>
   )

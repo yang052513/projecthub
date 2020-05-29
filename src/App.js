@@ -100,7 +100,7 @@ class App extends React.Component {
                 <i className="fas fa-tachometer-alt"></i>
               </Link>
               <Link to="/explore">
-                <i className="fas fa-comments"></i>
+                <i className="fab fa-wpexplorer"></i>
               </Link>
 
               {/* 之后可能会添加的功能lol */}

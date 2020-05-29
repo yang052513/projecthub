@@ -126,6 +126,16 @@ export default function CreateProject() {
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
         firebase.auth().onAuthStateChanged((user) => {
+          //获取当前用户的头像
+          let userProfile
+          db.collection('user')
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+              userProfile = doc.data().Profile
+            })
+
+          //保存到用户自己的数据库中
           db.collection('user')
             .doc(user.uid)
             .collection('Project')
@@ -133,7 +143,8 @@ export default function CreateProject() {
               projectData,
             })
             .then((docRef) => {
-              console.log(docRef.id)
+              // console.log(docRef.id)
+
               //将项目的密匙写入到文档中
               db.collection('user')
                 .doc(user.uid)
@@ -141,6 +152,19 @@ export default function CreateProject() {
                 .doc(docRef.id)
                 .update({
                   Key: docRef.id,
+                })
+
+              //写入到公开的数据库中
+              db.collection('project')
+                .doc(docRef.id)
+                .set({
+                  Key: docRef.id,
+                  Author: {
+                    Name: user.displayName,
+                    Email: user.email,
+                    Profile: userProfile,
+                  },
+                  projectData,
                 })
             })
             .catch((error) => {

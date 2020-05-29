@@ -11,6 +11,7 @@ function Project(props) {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
+        .orderBy('projectData.Name', 'asc')
         .get()
         .then((collection) => {
           collection.forEach((doc) => {
@@ -18,7 +19,7 @@ function Project(props) {
           })
         })
     })
-  }, [])
+  }, [props.sort])
 
   const allProject = project.map((item) => (
     <ProjectCard key={item.Key} project={item.projectData} docRef={item.Key} />
