@@ -533,6 +533,16 @@
   border: 1px solid #818181;
 }
 
+.project-form-container .project-tool-input-container ul li i {
+  margin-right: 10px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.project-form-container .project-tool-input-container ul li i:hover {
+  color: #0e5dd3;
+}
+
 .project-form-container .project-tool-input-container .project-add-tool-btn {
   font-size: 13px;
   color: #0e5dd3;

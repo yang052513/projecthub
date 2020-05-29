@@ -18,6 +18,13 @@
       margin-left: 10px;
       li {
         @include liTag();
+        i {
+          margin-right: 10px;
+          transition: all 0.5s;
+          &:hover {
+            color: $sideNavBg;
+          }
+        }
       }
     }
     .project-add-tool-btn {

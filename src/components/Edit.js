@@ -47,6 +47,10 @@ export default function CreateProject() {
   const [feedback, setFeedback] = useState(false)
   const [fail, setFail] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [deleteTool, setDeleteTool] = useState({
+    status: false,
+    name: '',
+  })
 
   //当前的时间 年-月-日格式
   const date = new Date()
@@ -97,6 +101,35 @@ export default function CreateProject() {
     window.location.reload()
   }
 
+  //点击垃圾桶按钮弹出确认modal
+  function handleDelete(event) {
+    console.log(event.currentTarget.id)
+    setDeleteTool({
+      status: true,
+      name: event.currentTarget.id,
+    })
+    setErrorMsg(
+      `Do you want to delete ${event.currentTarget.id} from tool box?`
+    )
+  }
+
+  //   确认删除tool
+  function deleteYes() {
+    tool.splice(tool.indexOf(deleteTool.name), 1)
+    setDeleteTool({
+      status: false,
+      name: '',
+    })
+  }
+
+  //取消删除tool
+  function deleteNo() {
+    setDeleteTool({
+      status: false,
+      name: '',
+    })
+  }
+
   //管理普通文本输入，名称，简介，分类
   function handleTextField(event) {
     const { name, value } = event.target
@@ -122,7 +155,12 @@ export default function CreateProject() {
     document.getElementById('project-tool-input').value = ''
   }
 
-  const toolList = tool.map((item) => <li key={item}>{item}</li>)
+  const toolList = tool.map((item) => (
+    <li key={item}>
+      <i onClick={handleDelete} id={item} className="fas fa-trash-alt"></i>
+      {item}
+    </li>
+  ))
 
   //管理项目进程 4个状态可选 默认In Progress
   function handleStatus(event) {
@@ -199,6 +237,19 @@ export default function CreateProject() {
           imgUrl="/images/emoji/emoji_scare.png"
           method={'close'}
           toggle={handleFail}
+        />
+      ) : null}
+
+      {/* 删除项目tool确认信息 */}
+      {deleteTool.status === true ? (
+        <Feedback
+          msg="Confirm"
+          info={errorMsg}
+          imgUrl="/images/emoji/emoji_cry.png"
+          method={'close'}
+          toggle={deleteYes}
+          cancel={deleteNo}
+          confirm={true}
         />
       ) : null}
 
