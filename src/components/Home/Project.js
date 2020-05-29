@@ -35,8 +35,13 @@ function Project(props) {
     }
   })
 
-  //二层: 选择想渲染的项目
-  const selectedProject = sortedProject
+  //二层: 渲染搜索的项目 初始化为0
+  const searchedProject = sortedProject.filter((item) =>
+    item.projectData.Name.includes(props.search)
+  )
+
+  //三层: 选择想渲染的项目
+  const selectedProject = searchedProject
     .filter((item) => {
       if (props.filter === 'All My Projects') {
         return item
@@ -52,8 +57,7 @@ function Project(props) {
       />
     ))
 
-  //三层: 渲染搜索的项目
-
+  console.log(searchedProject)
   return <div className="project-card-container">{selectedProject}</div>
 }
 

@@ -31,6 +31,8 @@ function Home() {
   const [status, setStatus] = useState('All My Projects')
   const [sort, setSort] = useState('Name')
 
+  const [search, setSearch] = useState('')
+
   function handleStatus(event) {
     const { value } = event.target
     setStatus(value)
@@ -40,6 +42,10 @@ function Home() {
     setSort(event.target.value)
   }
 
+  function handleSearch(event) {
+    setSearch(event.target.value)
+  }
+
   return (
     <div className="home-container component-layout">
       <Hitokoto />
@@ -47,10 +53,16 @@ function Home() {
         <h3>{status}</h3>
 
         <div className="project-header-filter">
+          {/* 搜索用户的项目 */}
           <label className="project-header-search">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="search your projects..." />
+            <i className="fas fa-search"></i>
+            <input
+              onChange={handleSearch}
+              type="text"
+              placeholder="search your projects..."
+            />
           </label>
+
           {/* 分类项目: status, name(A-Z), Date */}
           <FormControl className={classes.formControl}>
             <InputLabel id="project-sort-label">Sort</InputLabel>
@@ -110,7 +122,7 @@ function Home() {
           </Link>
         </div>
       </div>
-      <Project sort={sort} filter={status} />
+      <Project sort={sort} filter={status} search={search} />
       <CreateBtn />
     </div>
   )
