@@ -96,6 +96,10 @@
           transform: scale(1.5);
 }
 
+.navbar a {
+  color: white;
+}
+
 .user-navbar {
   margin-left: 65px;
   display: -webkit-box;
@@ -135,10 +139,6 @@
   border-radius: 50%;
   -webkit-transform: translateX(-10px);
           transform: translateX(-10px);
-}
-
-.MuiMenuItem-root {
-  font-size: 13px;
 }
 
 .feedback-container {
@@ -579,6 +579,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   border: 1px solid rgba(0, 0, 0, 0);
+  margin: 0 30px;
 }
 
 .project-form-container .project-input-submit-container button:hover {
@@ -611,7 +612,6 @@
 
 a {
   text-decoration: none;
-  color: black;
 }
 
 p,

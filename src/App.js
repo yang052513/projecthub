@@ -8,6 +8,7 @@ import Status from './components/Status'
 import Explore from './components/Explore'
 import CreateProject from './components/CreateProject'
 import ProfileMenu from './components/ProfileMenu'
+import Edit from './components/Edit'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -151,6 +152,10 @@ class App extends React.Component {
               </Route>
               <Route path="/create">
                 <CreateProject />
+              </Route>
+
+              <Route path="/edit/:ref">
+                <Edit />
               </Route>
             </Switch>
           </div>

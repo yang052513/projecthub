@@ -1,5 +1,5 @@
 import React from 'react'
-import { rgbToHex } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 const inProgress = 'rgb(67, 219, 118)'
 const completed = 'rgb(51, 196, 206)'
@@ -37,7 +37,9 @@ function ProjectCard(props) {
       </div>
       <div className="project-footer">
         <p>{props.project.Privacy}</p>
-        <i className="far fa-edit"></i>
+        <Link to={`/edit/${props.docRef}`}>
+          <i id={props.docRef} className="far fa-edit"></i>
+        </Link>
       </div>
     </div>
   )

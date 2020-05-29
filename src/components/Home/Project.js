@@ -21,13 +21,17 @@ function Project(props) {
   }, [])
 
   const allProject = project.map((item) => (
-    <ProjectCard key={item.Key} project={item.projectData} />
+    <ProjectCard key={item.Key} project={item.projectData} docRef={item.Key} />
   ))
 
   const selectedProject = project
     .filter((item) => item.projectData.Status === props.filter)
     .map((project) => (
-      <ProjectCard key={project.Key} project={project.projectData} />
+      <ProjectCard
+        key={project.Key}
+        project={project.projectData}
+        docRef={project.Key}
+      />
     ))
 
   return (

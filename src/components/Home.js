@@ -54,14 +54,6 @@ function Home() {
             </Select>
           </FormControl>
 
-          {/* <select onChange={handleStatus} name="status">
-            <option value="All My Projects">All My Projects</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="Planning">Planning</option>
-            <option value="Dropped">Dropped</option>
-          </select> */}
-
           <Link to="/create">
             <button>Create New Project</button>
           </Link>

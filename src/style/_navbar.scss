@@ -13,6 +13,9 @@ $logoSize: 50px;
 .navbar {
   @include navbarStyle(grid, center, center, $sideNavPadding, $sideNavWidth);
   grid-template-rows: repeat(10, $sideNavIconDist);
+  a {
+    color: white;
+  }
 }
 
 .user-navbar {
@@ -31,11 +34,9 @@ $logoSize: 50px;
     font-size: 20px;
     margin-right: 30px;
   }
+
   img {
     @include roundedImage(30px);
     transform: translateX(-10px);
   }
-}
-.MuiMenuItem-root {
-  font-size: 13px;
 }
