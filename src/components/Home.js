@@ -25,7 +25,7 @@ function Home() {
   const classes = useStyles()
 
   const [status, setStatus] = useState('All My Projects')
-  const [sort, setSort] = useState('projectData.Name')
+  const [sort, setSort] = useState('Name')
 
   function handleStatus(event) {
     const { value } = event.target
@@ -52,9 +52,10 @@ function Home() {
               value={sort}
               onChange={handleSort}
             >
-              <MenuItem value={'projectData.Name'}>Name</MenuItem>
-              <MenuItem value={'projectData.Status'}>Status</MenuItem>
-              <MenuItem value={'projectData.Date'}>Date</MenuItem>
+              <MenuItem value={'Name'}>Name</MenuItem>
+              <MenuItem value={'Status'}>Status</MenuItem>
+              <MenuItem value={'Newest'}>Newest</MenuItem>
+              <MenuItem value={'Oldest'}>Oldest</MenuItem>
             </Select>
           </FormControl>
 

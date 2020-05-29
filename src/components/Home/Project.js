@@ -6,12 +6,13 @@ function Project(props) {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
 
+  //初始化从数据库读取所有项目
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
-        .orderBy('projectData.Name', 'asc')
+        // .orderBy('projectData.Name', 'asc')
         .get()
         .then((collection) => {
           collection.forEach((doc) => {
@@ -19,14 +20,30 @@ function Project(props) {
           })
         })
     })
-  }, [props.sort])
+  }, [])
 
-  const allProject = project.map((item) => (
-    <ProjectCard key={item.Key} project={item.projectData} docRef={item.Key} />
-  ))
+  //一层: 分类项目
+  const sortedProject = project.sort((a, b) => {
+    if (props.sort === 'Name') {
+      return a.projectData.Name < b.projectData.Name ? -1 : 1
+    } else if (props.sort === 'Status') {
+      return a.projectData.Status < b.projectData.Status ? -1 : 1
+    } else if (props.sort === 'Newest') {
+      return a.projectData.Date < b.projectData.Date ? 1 : -1
+    } else if (props.sort === 'Oldest') {
+      return a.projectData.Date < b.projectData.Date ? -1 : 1
+    }
+  })
 
-  const selectedProject = project
-    .filter((item) => item.projectData.Status === props.filter)
+  //二层: 选择想渲染的项目
+  const selectedProject = sortedProject
+    .filter((item) => {
+      if (props.filter === 'All My Projects') {
+        return item
+      } else {
+        return item.projectData.Status === props.filter
+      }
+    })
     .map((project) => (
       <ProjectCard
         key={project.Key}
@@ -35,11 +52,9 @@ function Project(props) {
       />
     ))
 
-  return (
-    <div className="project-card-container">
-      {props.filter === 'All My Projects' ? allProject : selectedProject}
-    </div>
-  )
+  //三层: 渲染搜索的项目
+
+  return <div className="project-card-container">{selectedProject}</div>
 }
 
 export default Project
