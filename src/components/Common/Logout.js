@@ -15,9 +15,18 @@ function Logout() {
           setUserName(doc.data().Name)
         })
     })
-
     setTimeout(() => {
-      firebase.auth().signOut()
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          function () {
+            console.log('退出成功 bye bye')
+          },
+          function (error) {
+            console.error('退出也能有错误？那可能是你的网的问题', error)
+          }
+        )
     }, 3000)
   }, [])
 

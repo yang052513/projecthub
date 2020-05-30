@@ -160,9 +160,9 @@ class App extends React.Component {
                 <Edit />
               </Route>
 
-              <Route path="/logout">
+              {/* <Route path="/logout">
                 <Logout />
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         </Router>

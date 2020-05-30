@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
+import Logout from './Common/Logout'
 
 const useStyles = makeStyles({
   root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
 export default function SimpleMenu() {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
+  const [logout, setLogout] = useState(false)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -25,45 +27,49 @@ export default function SimpleMenu() {
     setAnchorEl(null)
   }
 
-  // function handleLogout() {
-  //   firebase.auth().signOut()
-  //   setLogout(true)
-  // }
+  function handleLogout() {
+    setAnchorEl(null)
+    setLogout(true)
+  }
 
   return (
     <div>
-      <Button
-        aria-controls="profile-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <img src="/images/user.jpg" alt="profile" />
-      </Button>
+      <div>
+        <Button
+          aria-controls="profile-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <img src="/images/user.jpg" alt="profile" />
+        </Button>
 
-      <Menu
-        id="profile-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <Link to="/profile">
-          <MenuItem className={classes.root} onClick={handleClose}>
-            Profile
-          </MenuItem>
-        </Link>
-        <Link to="/settings">
-          <MenuItem className={classes.root} onClick={handleClose}>
-            Setting
-          </MenuItem>
-        </Link>
+        <Menu
+          id="profile-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <Link to="/profile">
+            <MenuItem className={classes.root} onClick={handleClose}>
+              Profile
+            </MenuItem>
+          </Link>
+          <Link to="/settings">
+            <MenuItem className={classes.root} onClick={handleClose}>
+              Setting
+            </MenuItem>
+          </Link>
 
-        <Link to="/logout">
-          <MenuItem className={classes.root} onClick={handleClose}>
+          {/* <Link to="/logout"> */}
+          <MenuItem className={classes.root} onClick={handleLogout}>
             Logout
           </MenuItem>
-        </Link>
-      </Menu>
+          {/* </Link> */}
+        </Menu>
+      </div>
+
+      <div>{logout === true ? <Logout /> : null}</div>
     </div>
   )
 }
