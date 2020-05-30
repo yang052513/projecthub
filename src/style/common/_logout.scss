@@ -1,5 +1,5 @@
 .logout-container {
-  background: url('/images/logout-2.jpg') no-repeat center center fixed;
+  // background: url('/images/logout-2.jpg') no-repeat center center fixed;
   background-size: 100%;
   position: fixed;
   top: 0;
@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.5s;
-  animation: zoomOut 5s linear;
+  animation: zoomOut 6s linear;
   p {
     font-size: 20px;
     color: white;
@@ -20,7 +20,7 @@
     backdrop-filter: blur(10px);
     transform-origin: left center;
     transition: all 0.5s;
-    animation: slideIn 3s ease-in;
+    animation: slideIn 3s ease-in 1s;
     opacity: 0;
   }
 

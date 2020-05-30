@@ -133,7 +133,7 @@
   margin-right: 30px;
 }
 
-.user-navbar img {
+.user-navbar .user-profile-icon {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -556,7 +556,6 @@
 }
 
 .logout-container {
-  background: url("/images/logout-2.jpg") no-repeat center center fixed;
   background-size: 100%;
   position: fixed;
   top: 0;
@@ -575,8 +574,8 @@
           align-items: center;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  -webkit-animation: zoomOut 5s linear;
-          animation: zoomOut 5s linear;
+  -webkit-animation: zoomOut 6s linear;
+          animation: zoomOut 6s linear;
 }
 
 .logout-container p {
@@ -590,8 +589,8 @@
           transform-origin: left center;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  -webkit-animation: slideIn 3s ease-in;
-          animation: slideIn 3s ease-in;
+  -webkit-animation: slideIn 3s ease-in 1s;
+          animation: slideIn 3s ease-in 1s;
   opacity: 0;
 }
 

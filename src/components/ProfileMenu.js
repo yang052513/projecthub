@@ -40,7 +40,11 @@ export default function SimpleMenu() {
           aria-haspopup="true"
           onClick={handleClick}
         >
-          <img src="/images/user.jpg" alt="profile" />
+          <img
+            className="user-profile-icon"
+            src="/images/user.jpg"
+            alt="profile"
+          />
         </Button>
 
         <Menu
