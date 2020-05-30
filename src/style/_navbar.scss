@@ -27,7 +27,7 @@ $logoSize: 50px;
   h2 {
     @include headerTitle();
   }
-  div {
+  .user-navbar-icon {
     @include flexAlign();
   }
   i {

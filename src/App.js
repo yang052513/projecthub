@@ -133,7 +133,7 @@ class App extends React.Component {
             {/* 顶部菜单栏 */}
             <div className="user-navbar">
               <h2>Project Dashboard</h2>
-              <div>
+              <div className="user-navbar-icon">
                 <i className="fas fa-inbox"></i>
                 <i className="fas fa-bell"></i>
                 <ProfileMenu />
