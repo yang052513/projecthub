@@ -5,13 +5,30 @@ import Particle from './Particle'
 function Logout() {
   const db = firebase.firestore()
   const [userName, setUserName] = useState('')
-  const [bgImg, setBgImg] = useState('')
 
-  //随机选择背景图片
+  const [bgImg, setBgImg] = useState('')
+  const [bye, setBye] = useState('')
+
+  const byeMsg = [
+    'Bye Bye',
+    'See you soon',
+    'Have a good day',
+    'Take care',
+    'See you next time',
+  ]
+
+  //背景图片数量以及bye 信息
   const maxImages = 20
+  const maxByes = byeMsg.length
+
+  //随机生成
   const randomImg = Math.floor(Math.random() * maxImages) + 1
+  const randomBye = Math.floor(Math.random() * maxByes) + 1
+
   useEffect(() => {
     setBgImg(randomImg)
+    setBye(byeMsg[randomBye])
+
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
@@ -43,7 +60,9 @@ function Logout() {
       className="logout-container"
     >
       {/* <Particle /> */}
-      <p>Take care {userName}.</p>
+      <p>
+        {bye} {userName}.
+      </p>
     </div>
   )
 }
