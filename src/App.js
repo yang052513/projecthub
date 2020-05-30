@@ -87,7 +87,7 @@ class App extends React.Component {
 
       return (
         <Router>
-          <div>
+          <div className="content-container">
             <img className="logo" src="/images/logo.png" />
 
             {/* 侧边导航栏 */}
@@ -161,8 +161,8 @@ class App extends React.Component {
               </Route>
 
               {/* <Route path="/logout">
-                <Logout />
-              </Route> */}
+                  <Logout />
+                </Route> */}
             </Switch>
           </div>
         </Router>

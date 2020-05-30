@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import EditMenu from './EditMenu'
 
 const inProgress = 'rgb(67, 219, 118)'
 const completed = 'rgb(51, 196, 206)'
@@ -37,8 +38,9 @@ function ProjectCard(props) {
       </div>
       <div className="project-footer">
         <p>{props.project.Privacy}</p>
+        <EditMenu />
         <Link to={`/edit/${props.docRef}`}>
-          <i id={props.docRef} className="far fa-edit"></i>
+          <i id={props.docRef} className="fas fa-ellipsis-h"></i>
         </Link>
       </div>
     </div>

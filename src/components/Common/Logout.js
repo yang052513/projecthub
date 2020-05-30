@@ -23,7 +23,7 @@ function Logout() {
 
   //随机生成
   const randomImg = Math.floor(Math.random() * maxImages) + 1
-  const randomBye = Math.floor(Math.random() * maxByes) + 1
+  const randomBye = Math.floor(Math.random() * maxByes)
 
   useEffect(() => {
     setBgImg(randomImg)
