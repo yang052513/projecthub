@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
+import Particle from './Particle'
 
 function Logout() {
   const db = firebase.firestore()
-
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
@@ -15,10 +15,16 @@ function Logout() {
           setUserName(doc.data().Name)
         })
     })
+
+    setTimeout(() => {
+      firebase.auth().signOut()
+    }, 3000)
   }, [])
+
   return (
     <div className="logout-container">
-      <p>Take care {userName}</p>
+      <Particle />
+      <p>Take care {userName}.</p>
     </div>
   )
 }

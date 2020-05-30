@@ -10,6 +10,7 @@ import CreateProject from './components/CreateProject'
 import ProfileMenu from './components/ProfileMenu'
 import Edit from './components/Edit'
 import Logout from './components/Common/Logout'
+import Particle from './components/Common/Particle'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
