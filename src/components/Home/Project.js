@@ -57,8 +57,20 @@ function Project(props) {
       />
     ))
 
-  console.log(searchedProject)
-  return <div className="project-card-container">{selectedProject}</div>
+  // console.log(selectedProject.length)
+  let noResult = selectedProject.length
+  return (
+    <div className="project-card-container">
+      {noResult === 0 ? (
+        <div className="project-no-result-container">
+          <p>It seems like no such projects...</p>
+          <img src="/images/noresult.png" />
+        </div>
+      ) : (
+        selectedProject
+      )}
+    </div>
+  )
 }
 
 export default Project
