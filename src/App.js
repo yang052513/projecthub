@@ -9,6 +9,7 @@ import Explore from './components/Explore'
 import CreateProject from './components/CreateProject'
 import ProfileMenu from './components/ProfileMenu'
 import Edit from './components/Edit'
+import Logout from './components/Common/Logout'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -156,6 +157,10 @@ class App extends React.Component {
 
               <Route path="/edit/:ref">
                 <Edit />
+              </Route>
+
+              <Route path="/logout">
+                <Logout />
               </Route>
             </Switch>
           </div>

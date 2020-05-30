@@ -25,6 +25,11 @@ export default function SimpleMenu() {
     setAnchorEl(null)
   }
 
+  // function handleLogout() {
+  //   firebase.auth().signOut()
+  //   setLogout(true)
+  // }
+
   return (
     <div>
       <Button
@@ -52,12 +57,12 @@ export default function SimpleMenu() {
             Setting
           </MenuItem>
         </Link>
-        <MenuItem
-          className={classes.root}
-          onClick={() => firebase.auth().signOut()}
-        >
-          Logout
-        </MenuItem>
+
+        <Link to="/logout">
+          <MenuItem className={classes.root} onClick={handleClose}>
+            Logout
+          </MenuItem>
+        </Link>
       </Menu>
     </div>
   )
