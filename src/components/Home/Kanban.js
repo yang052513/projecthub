@@ -1,160 +1,89 @@
-import React, { useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import React from 'react'
+import Board from 'react-trello'
 
-const kanbanData = {
-  columns: {
-    'column-1': {
-      id: 'column-1',
-      title: 'To do',
-      tasks: [
-        { id: 'task-1', content: 'Take out the garbage' },
-        { id: 'task-2', content: 'Watch my show' },
+const data = {
+  lanes: [
+    {
+      id: 'PLANNED',
+      title: 'Planned Tasks',
+      label: '20/70',
+      style: {
+        width: 280,
+      },
+      cards: [
+        {
+          id: 'Milk',
+          title: 'Buy milk',
+          label: '15 mins',
+          description: '2 Gallons of milk at the Deli store',
+        },
+        {
+          id: 'Plan2',
+          title: 'Dispose Garbage',
+          label: '10 mins',
+          description: 'Sort out recyclable and waste as needed',
+        },
+        {
+          id: 'Plan3',
+          title: 'Write Blog',
+          label: '30 mins',
+          description: 'Can AI make memes?',
+        },
+        {
+          id: 'Plan4',
+          title: 'Pay Rent',
+          label: '5 mins',
+          description: 'Transfer to bank account',
+        },
       ],
     },
-    'column-2': {
-      id: 'column-2',
-      title: 'In Progress',
-      tasks: [
-        { id: 'task-3', content: 'Charge my phone' },
-        { id: 'task-4', content: 'Cook dinner' },
+    {
+      id: 'WIP',
+      title: 'Work In Progress',
+      label: '10/20',
+      style: {
+        width: 280,
+      },
+      cards: [
+        {
+          id: 'Wip1',
+          title: 'Clean House',
+          label: '30 mins',
+          description:
+            'Soap wash and polish floor. Polish windows and doors. Scrap all broken glasses',
+        },
       ],
     },
-    'column-3': {
-      id: 'column-3',
-      title: 'Done',
-      tasks: [
-        { id: 'task-5', content: 'Workout' },
-        { id: 'task-6', content: 'Homework' },
+
+    {
+      id: 'COMPLETED',
+      title: 'Completed',
+      style: {
+        width: 280,
+      },
+      label: '2/5',
+      cards: [
+        {
+          id: 'Completed1',
+          title: 'Practice Meditation',
+          label: '15 mins',
+          description: 'Use Headspace app',
+        },
+        {
+          id: 'Completed2',
+          title: 'Maintain Daily Journal',
+          label: '15 mins',
+          description: 'Use Spreadsheet for now',
+        },
       ],
     },
-  },
+  ],
 }
 
-//重新排序
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
-  return result
-}
-
-//移动内容到其他列
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-  const [removed] = sourceClone.splice(droppableSource.index, 1)
-
-  destClone.splice(droppableDestination.index, 0, removed)
-
-  const result = {}
-  result[droppableSource.droppableId] = sourceClone
-  result[droppableDestination.droppableId] = destClone
-
-  return result
-}
-
-// 样式化
-const grid = 8
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  background: isDragging ? 'lightgreen' : 'grey',
-
-  ...draggableStyle,
-})
-
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  padding: grid,
-  width: 250,
-})
-
-function Kanban(props) {
-  const [state, setState] = useState([
-    kanbanData.columns['column-2'].tasks,
-    kanbanData.columns['column-2'].tasks,
-    kanbanData.columns['column-3'].tasks,
-  ])
-  console.log(kanbanData)
-
-  function onDragEnd(result) {
-    const { source, destination } = result
-    // dropped outside the list
-    if (!destination) {
-      return
-    }
-    const sInd = +source.droppableId
-    const dInd = +destination.droppableId
-
-    if (sInd === dInd) {
-      const items = reorder(state[sInd], source.index, destination.index)
-      const newState = [...state]
-      newState[sInd] = items
-      setState(newState)
-    } else {
-      const result = move(state[sInd], state[dInd], source, destination)
-      const newState = [...state]
-      newState[sInd] = result[sInd]
-      newState[dInd] = result[dInd]
-
-      setState(newState.filter((group) => group.length))
-    }
-  }
-
+function Kanban() {
   return (
     <div className="kanban-container">
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, []])
-        }}
-      >
-        Create a new column
-      </button>
-      <div style={{ display: 'flex' }}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {state.map((element, ind) => (
-            <Droppable key={ind} droppableId={`${ind}`}>
-              {(provided, snapshot) => (
-                <div
-                  className="kanban-column"
-                  ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
-                  {...provided.droppableProps}
-                >
-                  {element.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          className="kanban-item-container"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style
-                          )}
-                        >
-                          <div className="kanban-item">{item.content}</div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </DragDropContext>
-      </div>
+      <Board data={data} draggable />
     </div>
   )
 }
