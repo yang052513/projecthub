@@ -1,12 +1,36 @@
 import React, { useState } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`,
-  }))
+const kanbanData = {
+  columns: {
+    'column-1': {
+      id: 'column-1',
+      title: 'To do',
+      tasks: [
+        { id: 'task-1', content: 'Take out the garbage' },
+        { id: 'task-2', content: 'Watch my show' },
+      ],
+    },
+    'column-2': {
+      id: 'column-2',
+      title: 'In Progress',
+      tasks: [
+        { id: 'task-3', content: 'Charge my phone' },
+        { id: 'task-4', content: 'Cook dinner' },
+      ],
+    },
+    'column-3': {
+      id: 'column-3',
+      title: 'Done',
+      tasks: [
+        { id: 'task-5', content: 'Workout' },
+        { id: 'task-6', content: 'Homework' },
+      ],
+    },
+  },
+}
 
+//重新排序
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
   const [removed] = result.splice(startIndex, 1)
@@ -15,9 +39,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result
 }
 
-/**
- * Moves an item from one list to another list.
- */
+//移动内容到其他列
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source)
   const destClone = Array.from(destination)
@@ -31,6 +53,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
   return result
 }
+
+// 样式化
 const grid = 8
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -50,11 +74,15 @@ const getListStyle = (isDraggingOver) => ({
 })
 
 function Kanban(props) {
-  const [state, setState] = useState([getItems(10), getItems(5, 10)])
+  const [state, setState] = useState([
+    kanbanData.columns['column-2'].tasks,
+    kanbanData.columns['column-2'].tasks,
+    kanbanData.columns['column-3'].tasks,
+  ])
+  console.log(kanbanData)
 
   function onDragEnd(result) {
     const { source, destination } = result
-
     // dropped outside the list
     if (!destination) {
       return
@@ -85,27 +113,20 @@ function Kanban(props) {
           setState([...state, []])
         }}
       >
-        Add new group
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, getItems(1)])
-        }}
-      >
-        Add new item
+        Create a new column
       </button>
       <div style={{ display: 'flex' }}>
         <DragDropContext onDragEnd={onDragEnd}>
-          {state.map((el, ind) => (
+          {state.map((element, ind) => (
             <Droppable key={ind} droppableId={`${ind}`}>
               {(provided, snapshot) => (
                 <div
+                  className="kanban-column"
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                   {...provided.droppableProps}
                 >
-                  {el.map((item, index) => (
+                  {element.map((item, index) => (
                     <Draggable
                       key={item.id}
                       draggableId={item.id}
@@ -113,6 +134,7 @@ function Kanban(props) {
                     >
                       {(provided, snapshot) => (
                         <div
+                          className="kanban-item-container"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
@@ -121,26 +143,7 @@ function Kanban(props) {
                             provided.draggableProps.style
                           )}
                         >
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'space-around',
-                            }}
-                          >
-                            {item.content}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const newState = [...state]
-                                newState[ind].splice(index, 1)
-                                setState(
-                                  newState.filter((group) => group.length)
-                                )
-                              }}
-                            >
-                              delete
-                            </button>
-                          </div>
+                          <div className="kanban-item">{item.content}</div>
                         </div>
                       )}
                     </Draggable>
