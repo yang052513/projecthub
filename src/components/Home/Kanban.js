@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Component, useState } from 'react'
 import Board from 'react-trello'
 
 const data = {
   lanes: [
     {
       id: 'PLANNED',
-      title: 'Planned Tasks',
+      title: 'Plannedss Tasks',
       label: '20/70',
       style: {
         width: 280,
@@ -22,18 +22,6 @@ const data = {
           title: 'Dispose Garbage',
           label: '10 mins',
           description: 'Sort out recyclable and waste as needed',
-        },
-        {
-          id: 'Plan3',
-          title: 'Write Blog',
-          label: '30 mins',
-          description: 'Can AI make memes?',
-        },
-        {
-          id: 'Plan4',
-          title: 'Pay Rent',
-          label: '5 mins',
-          description: 'Transfer to bank account',
         },
       ],
     },
@@ -80,12 +68,61 @@ const data = {
   ],
 }
 
-function Kanban() {
-  return (
-    <div className="kanban-container">
-      <Board data={data} draggable />
-    </div>
-  )
+//拖动某个项目
+const handleDragStart = (cardId, laneId) => {
+  console.log('drag started')
+  console.log(`cardId: ${cardId}`)
+  console.log(`laneId: ${laneId}`)
+}
+
+//结束并释放某个项目
+const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+  console.log('drag ended')
+  console.log(`cardId: ${cardId}`)
+  console.log(`sourceLaneId: ${sourceLaneId}`)
+  console.log(`targetLaneId: ${targetLaneId}`)
+}
+
+class Kanban extends Component {
+  state = { boardData: { lanes: [] } }
+
+  async componentWillMount() {
+    const response = await this.getBoard()
+    this.setState({ boardData: response })
+    console.log(response)
+  }
+
+  getBoard() {
+    return new Promise((resolve) => {
+      resolve(data)
+    })
+  }
+
+  shouldReceiveNewData = (nextData) => {
+    console.log('New card has been added')
+    console.log(nextData)
+  }
+
+  handleCardAdd = (card, laneId) => {
+    console.log(`New card added to lane ${laneId}`)
+    console.dir(card)
+  }
+
+  render() {
+    return (
+      <div className="kanban-container">
+        <Board
+          data={this.state.boardData}
+          editable
+          draggable
+          onCardAdd={this.handleCardAdd}
+          onDataChange={this.shouldReceiveNewData}
+          handleDragStart={handleDragStart}
+          handleDragEnd={handleDragEnd}
+        />
+      </div>
+    )
+  }
 }
 
 export default Kanban
