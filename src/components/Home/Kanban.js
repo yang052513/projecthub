@@ -1,69 +1,38 @@
-import React, { Component, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import Board from 'react-trello'
+import firebase from 'firebase'
 
+//初始化所有数据
 const data = {
   lanes: [
     {
-      id: 'PLANNED',
-      title: 'Plannedss Tasks',
+      id: 'todo',
+      title: 'To do',
       label: '20/70',
       style: {
-        width: 280,
+        width: 300,
       },
-      cards: [
-        {
-          id: 'Milk',
-          title: 'Buy milk',
-          label: '15 mins',
-          description: '2 Gallons of milk at the Deli store',
-        },
-        {
-          id: 'Plan2',
-          title: 'Dispose Garbage',
-          label: '10 mins',
-          description: 'Sort out recyclable and waste as needed',
-        },
-      ],
+      cards: [],
     },
     {
-      id: 'WIP',
-      title: 'Work In Progress',
+      id: 'inprogress',
+      title: 'In Progress',
       label: '10/20',
       style: {
-        width: 280,
+        width: 300,
       },
-      cards: [
-        {
-          id: 'Wip1',
-          title: 'Clean House',
-          label: '30 mins',
-          description:
-            'Soap wash and polish floor. Polish windows and doors. Scrap all broken glasses',
-        },
-      ],
+      cards: [],
     },
 
     {
-      id: 'COMPLETED',
-      title: 'Completed',
+      id: 'done',
+      title: 'Done',
       style: {
-        width: 280,
+        width: 300,
       },
       label: '2/5',
-      cards: [
-        {
-          id: 'Completed1',
-          title: 'Practice Meditation',
-          label: '15 mins',
-          description: 'Use Headspace app',
-        },
-        {
-          id: 'Completed2',
-          title: 'Maintain Daily Journal',
-          label: '15 mins',
-          description: 'Use Spreadsheet for now',
-        },
-      ],
+      cards: [],
     },
   ],
 }
@@ -83,46 +52,69 @@ const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
   console.log(`targetLaneId: ${targetLaneId}`)
 }
 
-class Kanban extends Component {
-  state = { boardData: { lanes: [] } }
+function Kanban() {
+  const params = useParams()
+  const db = firebase.firestore()
 
-  async componentWillMount() {
-    const response = await this.getBoard()
-    this.setState({ boardData: response })
-    console.log(response)
-  }
+  //先初始化为空的列表
+  const [kanban, setKanban] = useState(data)
 
-  getBoard() {
-    return new Promise((resolve) => {
-      resolve(data)
+  //加载数据库，看是否有内容
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Project')
+        .doc(params.ref)
+        .get()
+        .then((doc) => {
+          if (doc.data().kanbanData) {
+            setKanban(doc.data().kanbanData)
+            console.log('有保存记录')
+          } else {
+            setKanban(data)
+            console.log('第一次用kanban')
+          }
+        })
     })
-  }
+  }, [])
 
-  shouldReceiveNewData = (nextData) => {
-    console.log('New card has been added')
-    console.log(nextData)
-  }
-
-  handleCardAdd = (card, laneId) => {
-    console.log(`New card added to lane ${laneId}`)
+  //添加新的卡片到列表中 保存到数据库
+  function handleCardAdd(card, laneId) {
+    console.log(`创建卡片成功 ${laneId}`)
     console.dir(card)
   }
 
-  render() {
-    return (
-      <div className="kanban-container">
-        <Board
-          data={this.state.boardData}
-          editable
-          draggable
-          onCardAdd={this.handleCardAdd}
-          onDataChange={this.shouldReceiveNewData}
-          handleDragStart={handleDragStart}
-          handleDragEnd={handleDragEnd}
-        />
-      </div>
-    )
+  //任何改动更新到数据库
+  function handleCardChange(kanbanData) {
+    console.log('卡片移动成功')
+
+    setKanban(kanbanData)
+    console.log(kanbanData)
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Project')
+        .doc(params.ref)
+        .update({
+          kanbanData,
+        })
+    })
   }
+
+  return (
+    <div className="kanban-container">
+      <Board
+        data={kanban}
+        editable
+        draggable
+        onCardAdd={handleCardAdd}
+        onDataChange={handleCardChange}
+        handleDragStart={handleDragStart}
+        handleDragEnd={handleDragEnd}
+      />
+    </div>
+  )
 }
 
 export default Kanban
