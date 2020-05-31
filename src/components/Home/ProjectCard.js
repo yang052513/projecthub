@@ -38,10 +38,11 @@ function ProjectCard(props) {
       </div>
       <div className="project-footer">
         <p>{props.project.Privacy}</p>
-        <EditMenu />
-        <Link to={`/edit/${props.docRef}`}>
+        <EditMenu docRef={props.docRef} />
+
+        {/* <Link to={`/edit/${props.docRef}`}>
           <i id={props.docRef} className="fas fa-ellipsis-h"></i>
-        </Link>
+        </Link> */}
       </div>
     </div>
   )

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function SimpleMenu() {
+export default function SimpleMenu(props) {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -43,7 +43,7 @@ export default function SimpleMenu() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <Link to="/profile">
+          <Link to={`/edit/${props.docRef}`}>
             <MenuItem className={classes.root} onClick={handleClose}>
               Edit
             </MenuItem>
