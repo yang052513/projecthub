@@ -32,6 +32,7 @@ export default function SimpleMenu(props) {
     setAnchorEl(null)
   }
 
+  //第一层确认
   function showDeleteConfirm() {
     setDeleteConfirm(true)
     setAnchorEl(null)
@@ -41,6 +42,7 @@ export default function SimpleMenu(props) {
     setDeleteConfirm(false)
   }
 
+  //从数据库中删除项目
   function handleDelete() {
     setLoading(true)
     setTimeout(() => {
@@ -112,7 +114,7 @@ export default function SimpleMenu(props) {
               Edit
             </MenuItem>
           </Link>
-          <Link to="/settings">
+          <Link to={`/kanban/${props.docRef}`}>
             <MenuItem className={classes.root} onClick={handleClose}>
               Kanban
             </MenuItem>

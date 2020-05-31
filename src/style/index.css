@@ -530,6 +530,10 @@
   height: auto;
 }
 
+.kanban-container {
+  margin-left: 65px;
+}
+
 .home-container {
   padding: 30px 0;
 }

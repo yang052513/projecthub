@@ -5,6 +5,7 @@ import firebase from 'firebase'
 function Project(props) {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
+  const [sort, setSort] = useState([])
 
   //初始化从数据库读取所有项目
   useEffect(() => {
@@ -21,6 +22,21 @@ function Project(props) {
         })
     })
   }, [])
+
+  useEffect(() => {
+    const sortedProject = project.sort((a, b) => {
+      if (props.sort === 'Name') {
+        return a.projectData.Name < b.projectData.Name ? -1 : 1
+      } else if (props.sort === 'Status') {
+        return a.projectData.Status < b.projectData.Status ? -1 : 1
+      } else if (props.sort === 'Newest') {
+        return a.projectData.Date < b.projectData.Date ? 1 : -1
+      } else if (props.sort === 'Oldest') {
+        return a.projectData.Date < b.projectData.Date ? -1 : 1
+      }
+    })
+    setSort(sortedProject)
+  }, [props.sort])
 
   //一层: 分类项目
   const sortedProject = project.sort((a, b) => {
@@ -58,6 +74,7 @@ function Project(props) {
     ))
 
   // console.log(selectedProject.length)
+  console.log(sort)
   let noResult = selectedProject.length
   return (
     <div className="project-card-container">

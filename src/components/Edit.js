@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function CreateProject() {
+export default function EditProject() {
   const classes = useStyles()
   const db = firebase.firestore()
 

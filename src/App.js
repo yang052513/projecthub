@@ -11,6 +11,7 @@ import ProfileMenu from './components/ProfileMenu'
 import Edit from './components/Edit'
 import Logout from './components/Common/Logout'
 import Particle from './components/Common/Particle'
+import Kanban from './components/Home/Kanban'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -160,9 +161,9 @@ class App extends React.Component {
                 <Edit />
               </Route>
 
-              {/* <Route path="/logout">
-                  <Logout />
-                </Route> */}
+              <Route path="/kanban/:ref">
+                <Kanban />
+              </Route>
             </Switch>
           </div>
         </Router>
