@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, Prompt } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
 
@@ -11,7 +11,7 @@ const data = {
       title: 'To do',
       label: '20/70',
       style: {
-        width: 300,
+        width: 360,
       },
       cards: [],
     },
@@ -20,7 +20,7 @@ const data = {
       title: 'In Progress',
       label: '10/20',
       style: {
-        width: 300,
+        width: 360,
       },
       cards: [],
     },
@@ -29,7 +29,7 @@ const data = {
       id: 'done',
       title: 'Done',
       style: {
-        width: 300,
+        width: 360,
       },
       label: '2/5',
       cards: [],
@@ -40,7 +40,12 @@ const data = {
 function Kanban() {
   const params = useParams()
   const db = firebase.firestore()
-  let location = useLocation()
+  const [saved, setSaved] = useState(false)
+
+  const cardStyle = {
+    minWidth: '340px',
+    borderRadius: '6px',
+  }
 
   //先初始化为空的列表
   const [kanban, setKanban] = useState(data)
@@ -75,6 +80,7 @@ function Kanban() {
   function handleCardChange(kanbanData) {
     console.log('刷新')
     setKanban(kanbanData)
+    setSaved(true)
   }
 
   function handleSave() {
@@ -87,10 +93,16 @@ function Kanban() {
           kanbanData: kanban,
         })
     })
+    setSaved(false)
   }
 
   return (
     <div className="kanban-container">
+      <Prompt
+        when={saved}
+        message="You have unsaved changes, are you sure you want to leave?"
+      />
+      <button onClick={handleSave}>Save</button>
       <Board
         data={kanban}
         editable
@@ -98,8 +110,8 @@ function Kanban() {
         onCardAdd={handleCardAdd}
         onDataChange={handleCardChange}
         style={{ background: 'none' }}
+        cardStyle={cardStyle}
       />
-      <button onClick={handleSave}>Save</button>
     </div>
   )
 }

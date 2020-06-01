@@ -1,3 +1,62 @@
 .kanban-container {
   margin-left: $sideNavWidth;
+  section {
+    background: #eff1f3;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    min-height: 85vh;
+  }
+
+  .iddgrm {
+    min-width: 340px;
+  }
+
+  .iysiLr {
+    font-size: 12px;
+  }
+
+  // Add card btn
+  .gmyBzk {
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: normal;
+    background: $sideNavBg;
+    padding: 2px 20px;
+    transition: all 0.5s;
+    &:hover {
+      border: 1px solid $sideNavBg;
+      background: none;
+      color: $sideNavBg;
+    }
+  }
+
+  // cancel card btn
+  .LkxnZ {
+    border: 1px solid $sideNavBg;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: normal;
+    background: none;
+    padding: 2px 20px;
+    color: $sideNavBg;
+    margin-bottom: 10px;
+    transition: all 0.5s;
+    &:hover {
+      background: $sideNavBg;
+      border: 1px solid rgba(0, 0, 0, 0);
+      color: white;
+    }
+  }
+
+  .jDKmpp {
+    font-size: 13px;
+  }
+
+  .kQwQSu {
+    font-weight: normal;
+  }
+  .eIXpSa {
+    background: none;
+  }
 }

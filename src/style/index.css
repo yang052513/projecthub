@@ -534,6 +534,69 @@
   margin-left: 65px;
 }
 
+.kanban-container section {
+  background: #eff1f3;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  min-height: 85vh;
+}
+
+.kanban-container .iddgrm {
+  min-width: 340px;
+}
+
+.kanban-container .iysiLr {
+  font-size: 12px;
+}
+
+.kanban-container .gmyBzk {
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: normal;
+  background: #0e5dd3;
+  padding: 2px 20px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.kanban-container .gmyBzk:hover {
+  border: 1px solid #0e5dd3;
+  background: none;
+  color: #0e5dd3;
+}
+
+.kanban-container .LkxnZ {
+  border: 1px solid #0e5dd3;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: normal;
+  background: none;
+  padding: 2px 20px;
+  color: #0e5dd3;
+  margin-bottom: 10px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.kanban-container .LkxnZ:hover {
+  background: #0e5dd3;
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: white;
+}
+
+.kanban-container .jDKmpp {
+  font-size: 13px;
+}
+
+.kanban-container .kQwQSu {
+  font-weight: normal;
+}
+
+.kanban-container .eIXpSa {
+  background: none;
+}
+
 .home-container {
   padding: 30px 0;
 }
