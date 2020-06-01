@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
 
@@ -37,24 +37,10 @@ const data = {
   ],
 }
 
-//拖动某个项目
-const handleDragStart = (cardId, laneId) => {
-  console.log('drag started')
-  console.log(`cardId: ${cardId}`)
-  console.log(`laneId: ${laneId}`)
-}
-
-//结束并释放某个项目
-const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
-  console.log('drag ended')
-  console.log(`cardId: ${cardId}`)
-  console.log(`sourceLaneId: ${sourceLaneId}`)
-  console.log(`targetLaneId: ${targetLaneId}`)
-}
-
 function Kanban() {
   const params = useParams()
   const db = firebase.firestore()
+  let location = useLocation()
 
   //先初始化为空的列表
   const [kanban, setKanban] = useState(data)
@@ -87,17 +73,18 @@ function Kanban() {
 
   //任何改动更新到数据库
   function handleCardChange(kanbanData) {
-    console.log('卡片移动成功')
-
+    console.log('刷新')
     setKanban(kanbanData)
-    console.log(kanbanData)
+  }
+
+  function handleSave() {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .doc(params.ref)
         .update({
-          kanbanData,
+          kanbanData: kanban,
         })
     })
   }
@@ -110,9 +97,9 @@ function Kanban() {
         draggable
         onCardAdd={handleCardAdd}
         onDataChange={handleCardChange}
-        handleDragStart={handleDragStart}
-        handleDragEnd={handleDragEnd}
+        style={{ background: 'none' }}
       />
+      <button onClick={handleSave}>Save</button>
     </div>
   )
 }
