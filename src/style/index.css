@@ -625,10 +625,21 @@
           transform: rotate(-360deg) scale(1.5);
 }
 
+.setting-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .setting-container .setting-side-nav {
   border: 1px solid black;
   max-width: 150px;
   height: 40vh;
+  border-radius: 25px;
+  margin: 25px 25px 25px 0px;
   padding: 25px;
 }
 
@@ -638,6 +649,30 @@
   color: black;
   margin-bottom: 15px;
   font-size: 18px;
+  text-align: right;
+}
+
+.setting-container .setting-content-container {
+  margin: 25px 50px 25px 0px;
+  padding: 25px;
+  border: 1px solid black;
+  border-radius: 25px;
+  width: 50%;
+}
+
+.setting-container .setting-content-container .setting-content-profile-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.setting-container .setting-content-container .setting-content-profile-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 
 .logout-container {
