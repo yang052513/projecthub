@@ -36,6 +36,7 @@ function Project(props) {
       }
     })
     setSort(sortedProject)
+    console.log(sort)
   }, [props.sort])
 
   //一层: 分类项目

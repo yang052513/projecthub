@@ -102,6 +102,9 @@
 
 .user-navbar {
   margin-left: 65px;
+  background-color: white;
+  -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -111,7 +114,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 20px 50px 10px 30px;
+  padding: 1vh 5vh 1vh 3vh;
 }
 
 .user-navbar h2 {
@@ -620,6 +623,21 @@
 .create-btn-container img:hover {
   -webkit-transform: rotate(-360deg) scale(1.5);
           transform: rotate(-360deg) scale(1.5);
+}
+
+.setting-container .setting-side-nav {
+  border: 1px solid black;
+  max-width: 150px;
+  height: 40vh;
+  padding: 25px;
+}
+
+.setting-container .setting-side-nav a {
+  display: block;
+  font-family: raleway;
+  color: black;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 .logout-container {

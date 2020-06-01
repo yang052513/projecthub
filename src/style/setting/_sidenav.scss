@@ -1,0 +1,19 @@
+.setting-container {
+  .setting-side-nav {
+    border: 1px solid black;
+    max-width: 150px;
+    //   min-height: 500px;
+    height: 40vh;
+    //   border-radius: 25px;
+    //   margin: 25px;
+    padding: 25px;
+
+    a {
+      display: block;
+      font-family: raleway;
+      color: black;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+  }
+}

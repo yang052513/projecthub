@@ -3,7 +3,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import Home from './components/Home'
-import Profile from './components/Profile'
+import Setting from './components/Setting'
 import Status from './components/Status'
 import Explore from './components/Explore'
 import CreateProject from './components/CreateProject'
@@ -106,14 +106,13 @@ class App extends React.Component {
                 <i className="fab fa-wpexplorer"></i>
               </Link>
 
-              {/* 之后可能会添加的功能lol */}
               <Link to="/explore">
                 <i className="far fa-clock"></i>
               </Link>
               <Link to="/explore">
                 <i className="far fa-calendar-alt"></i>
               </Link>
-              <Link to="/explore">
+              <Link to="/setting/profile">
                 <i className="fas fa-sliders-h"></i>
               </Link>
               <Link to="/explore">
@@ -144,8 +143,8 @@ class App extends React.Component {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route path="/profile">
-                <Profile />
+              <Route path="/setting/">
+                <Setting />
               </Route>
               <Route path="/status">
                 <Status />
@@ -156,11 +155,9 @@ class App extends React.Component {
               <Route path="/create">
                 <CreateProject />
               </Route>
-
               <Route path="/edit/:ref">
                 <Edit />
               </Route>
-
               <Route path="/kanban/:ref">
                 <Kanban />
               </Route>
