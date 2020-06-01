@@ -28,7 +28,7 @@ function Profile() {
       <h2>Profile</h2>
       <div className="setting-content-profile-header">
         <img src="/images/user.jpg" alt="profile" />
-        <button>Upload New Picture</button>
+        <button>Upload Images</button>
       </div>
 
       <div className={classes.root}>
@@ -113,7 +113,9 @@ function Profile() {
         />
       </div>
 
-      <button>Save</button>
+      <div className="setting-content-save">
+        <button>Save</button>
+      </div>
     </div>
   )
 }

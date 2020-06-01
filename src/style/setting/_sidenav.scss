@@ -1,36 +1,49 @@
 .setting-container {
   display: flex;
   justify-content: center;
+  margin: 25px 0 0 0;
   .setting-side-nav {
-    border: 1px solid black;
     max-width: 150px;
     height: 40vh;
-    border-radius: 25px;
-    margin: 25px 25px 25px 0px;
+    margin-right: 25px;
     padding: 25px;
-
     a {
       display: block;
       font-family: raleway;
-      color: black;
-      margin-bottom: 15px;
-      font-size: 18px;
+      color: rgb(148, 148, 148);
+      margin-bottom: 20px;
+      font-size: 16px;
       text-align: right;
+      transition: all 0.5s;
+      &:hover {
+        color: $sideNavBg;
+      }
     }
   }
   .setting-content-container {
-    margin: 25px 50px 25px 0px;
     padding: 25px;
-    border: 1px solid black;
-    border-radius: 25px;
     width: 50%;
+    h2 {
+      font-size: 30px;
+      font-family: title;
+    }
     .setting-content-profile-header {
-      display: flex;
-      align-items: center;
+      @include flexAlign();
+      margin-top: 20px;
       img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
+        @include roundedImage(100px);
+        margin-right: 30px;
+      }
+      button {
+        @include buttonStroke($sideNavBg);
+      }
+    }
+    .setting-content-save {
+      text-align: center;
+      margin-top: 20px;
+      button {
+        @include buttonStyle($sideNavBg);
+        border: 1px solid rgba(0, 0, 0, 0);
       }
     }
   }
