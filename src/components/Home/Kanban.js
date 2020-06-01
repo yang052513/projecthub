@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Prompt } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
 
-//初始化所有数据
+//初始化的看板模板
 const data = {
   lanes: [
     {
       id: 'todo',
       title: 'To do',
-      label: '20/70',
       style: {
         width: 360,
       },
@@ -18,20 +17,25 @@ const data = {
     {
       id: 'inprogress',
       title: 'In Progress',
-      label: '10/20',
       style: {
         width: 360,
       },
       cards: [],
     },
-
     {
       id: 'done',
       title: 'Done',
       style: {
         width: 360,
       },
-      label: '2/5',
+      cards: [],
+    },
+    {
+      id: 'bug',
+      title: 'Bugs',
+      style: {
+        width: 360,
+      },
       cards: [],
     },
   ],
@@ -40,7 +44,7 @@ const data = {
 function Kanban() {
   const params = useParams()
   const db = firebase.firestore()
-  const [saved, setSaved] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const cardStyle = {
     minWidth: '340px',
@@ -48,10 +52,11 @@ function Kanban() {
   }
 
   //先初始化为空的列表
-  const [kanban, setKanban] = useState(data)
+  const [kanban, setKanban] = useState({})
 
   //加载数据库，看是否有内容
   useEffect(() => {
+    window.scrollTo(0, 0)
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
@@ -61,10 +66,12 @@ function Kanban() {
         .then((doc) => {
           if (doc.data().kanbanData) {
             setKanban(doc.data().kanbanData)
-            console.log('有保存记录')
+            setLoading(true)
+            console.log('数据库有您的看板记录，将读取您的历史看板 ╰(*°▽°*)╯')
           } else {
             setKanban(data)
-            console.log('第一次用kanban')
+            setLoading(true)
+            console.log('第一次使用看板，已经帮你配置好啦 ︿(￣︶￣)︿')
           }
         })
     })
@@ -78,40 +85,32 @@ function Kanban() {
 
   //任何改动更新到数据库
   function handleCardChange(kanbanData) {
-    console.log('刷新')
-    setKanban(kanbanData)
-    setSaved(true)
-  }
-
-  function handleSave() {
+    console.log(kanbanData)
+    //保存所有更改过的数据到数据库
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .doc(params.ref)
         .update({
-          kanbanData: kanban,
+          kanbanData: kanbanData,
         })
     })
-    setSaved(false)
   }
 
   return (
     <div className="kanban-container">
-      <Prompt
-        when={saved}
-        message="You have unsaved changes, are you sure you want to leave?"
-      />
-      <button onClick={handleSave}>Save</button>
-      <Board
-        data={kanban}
-        editable
-        draggable
-        onCardAdd={handleCardAdd}
-        onDataChange={handleCardChange}
-        style={{ background: 'none' }}
-        cardStyle={cardStyle}
-      />
+      {loading === true ? (
+        <Board
+          data={kanban}
+          editable
+          draggable
+          onCardAdd={handleCardAdd}
+          onDataChange={handleCardChange}
+          style={{ background: 'none' }}
+          cardStyle={cardStyle}
+        />
+      ) : null}
     </div>
   )
 }
