@@ -24,6 +24,46 @@ const inputMargin = {
 
 function Profile() {
   const classes = useStyles()
+  const db = firebase.firestore()
+
+  const [profile, setProfile] = useState({
+    profileName: '',
+    profileLocation: '',
+    profileEmail: '',
+    profileBio: '',
+    profileWeb: '',
+    profilelinkedin: '',
+    profileGithub: '',
+  })
+
+  function handleTextField(event) {
+    const { name, value } = event.target
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }))
+  }
+
+  function handleSubmit() {
+    if (profile.profileEmail !== '' && !profile.profileEmail.includes('@')) {
+      alert('错误')
+    } else {
+      firebase.auth().onAuthStateChanged((user) => {
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Setting')
+          .doc('Profile')
+          .update({
+            profile,
+          })
+          .then(console.log('用户信息保存成功'))
+          .catch((error) => {
+            console.log('保存出错' + error)
+          })
+      })
+    }
+  }
+
   return (
     <div>
       <div className="setting-content-intro">
@@ -37,12 +77,15 @@ function Profile() {
 
       <div className={classes.root}>
         <TextField
+          error={false}
           id="profile-name-input"
           name="profileName"
+          onChange={handleTextField}
           label="Full Name"
           style={inputMargin}
           fullWidth
           margin="normal"
+          type="email"
           InputLabelProps={{
             shrink: true,
           }}
@@ -52,6 +95,7 @@ function Profile() {
         <TextField
           id="profile-location-input"
           name="profileLocation"
+          onChange={handleTextField}
           label="Location"
           className={classes.textField}
           margin="dense"
@@ -60,6 +104,7 @@ function Profile() {
         <TextField
           id="profile-email-input"
           name="profileEmail"
+          onChange={handleTextField}
           label="Email Address"
           className={classes.textField}
           helperText="For notification and password reset"
@@ -69,6 +114,7 @@ function Profile() {
         <TextField
           id="profile-bio-input"
           name="profileBio"
+          onChange={handleTextField}
           label="Bio"
           style={inputMargin}
           fullWidth
@@ -82,6 +128,7 @@ function Profile() {
         <TextField
           id="profile-url-input"
           name="profileWeb"
+          onChange={handleTextField}
           label="Personal Website"
           style={inputMargin}
           fullWidth
@@ -94,6 +141,7 @@ function Profile() {
         <TextField
           id="profile-linkedin-input"
           name="profilelinkedin"
+          onChange={handleTextField}
           label="Linkedin URL"
           style={inputMargin}
           fullWidth
@@ -106,6 +154,7 @@ function Profile() {
         <TextField
           id="profile-github-input"
           name="profileGithub"
+          onChange={handleTextField}
           label="Github URL"
           style={inputMargin}
           fullWidth
@@ -118,7 +167,7 @@ function Profile() {
       </div>
 
       <div className="setting-content-save">
-        <button>Save</button>
+        <button onClick={handleSubmit}>Save</button>
       </div>
     </div>
   )

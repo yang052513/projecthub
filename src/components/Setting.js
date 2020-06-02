@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link, Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import firebase from 'firebase'
 
 import Profile from './Setting/Profile'
 import Apparence from './Setting/Apparence'
@@ -28,7 +27,7 @@ function Setting({ location }) {
           to="/setting/theme"
           style={currPath === '/setting/theme' ? currPathStyle : null}
         >
-          Theme
+          Apparence
         </Link>
         <Link
           to="/setting/language"
@@ -77,24 +76,6 @@ function Setting({ location }) {
           </section>
         </CSSTransition>
       </TransitionGroup>
-
-      {/* <Switch>
-        <Route exact path="/setting/profile">
-          <Profile />
-        </Route>
-        <Route path="/setting/theme">
-          <Apparence />
-        </Route>
-        <Route path="/setting/language">
-          <Language />
-        </Route>
-        <Route path="/setting/about">
-          <About />
-        </Route>
-        <Route path="/setting/changelog">
-          <ChangeLog />
-        </Route>
-      </Switch> */}
     </div>
   )
 }
