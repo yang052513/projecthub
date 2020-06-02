@@ -3,7 +3,7 @@ import { Link, Switch, Route } from 'react-router-dom'
 import firebase from 'firebase'
 
 import Profile from './Setting/Profile'
-import Theme from './Setting/Theme'
+import Apparence from './Setting/Apparence'
 import Language from './Setting/Language'
 import About from './Setting/About'
 import ChangeLog from './Setting/Changelog'
@@ -24,7 +24,7 @@ function Setting() {
           <Profile />
         </Route>
         <Route path="/setting/theme">
-          <Theme />
+          <Apparence />
         </Route>
         <Route path="/setting/language">
           <Language />

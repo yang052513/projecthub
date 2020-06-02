@@ -27,6 +27,9 @@
       font-size: 30px;
       font-family: title;
     }
+    h3 {
+      margin: 20px 0;
+    }
     .setting-content-profile-header {
       @include flexAlign();
       margin-top: 20px;
@@ -38,6 +41,23 @@
         @include buttonStroke($sideNavBg);
       }
     }
+    .setting-content-theme-sample-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      row-gap: 20px;
+      .setting-content-theme-sample {
+        text-align: center;
+        p {
+          margin: 5px 0;
+          width: 80px;
+        }
+        div {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+
     .setting-content-save {
       text-align: center;
       margin-top: 20px;
