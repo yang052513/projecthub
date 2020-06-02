@@ -638,7 +638,7 @@
 .setting-container .setting-side-nav {
   max-width: 150px;
   height: 40vh;
-  margin-right: 25px;
+  margin-right: 50px;
   padding: 25px;
 }
 
@@ -659,12 +659,16 @@
 
 .setting-container .setting-content-container {
   padding: 25px;
-  width: 50%;
+  width: 40%;
 }
 
-.setting-container .setting-content-container h2 {
+.setting-container .setting-content-container .setting-content-intro h2 {
   font-size: 30px;
   font-family: title;
+}
+
+.setting-container .setting-content-container .setting-content-intro p {
+  margin: 10px 0;
 }
 
 .setting-container .setting-content-container h3 {
@@ -739,6 +743,33 @@
   height: 100px;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.setting-container .setting-content-container .setting-content-lang-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 15px 0;
+}
+
+.setting-container .setting-content-container .setting-content-lang-list .setting-content-country-flag {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.setting-container .setting-content-container .setting-content-lang-list .setting-content-country-flag img {
+  width: 40px;
+  margin-left: 20px;
 }
 
 .logout-container {
@@ -965,6 +996,12 @@ a {
 p,
 li {
   font-family: raleway;
+}
+
+hr {
+  height: 1px;
+  background-color: #c7c7c7;
+  border: none;
 }
 
 button:focus {

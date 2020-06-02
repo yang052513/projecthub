@@ -5,7 +5,7 @@
   .setting-side-nav {
     max-width: 150px;
     height: 40vh;
-    margin-right: 25px;
+    margin-right: 50px;
     padding: 25px;
     a {
       display: block;
@@ -22,11 +22,17 @@
   }
   .setting-content-container {
     padding: 25px;
-    width: 50%;
-    h2 {
-      font-size: 30px;
-      font-family: title;
+    width: 40%;
+    .setting-content-intro {
+      h2 {
+        font-size: 30px;
+        font-family: title;
+      }
+      p {
+        margin: 10px 0;
+      }
     }
+
     h3 {
       margin: 20px 0;
     }
@@ -61,6 +67,18 @@
           width: 100px;
           height: 100px;
           object-fit: cover;
+        }
+      }
+    }
+    .setting-content-lang-list {
+      @include flexCenter(space-between);
+      margin: 15px 0;
+
+      .setting-content-country-flag {
+        @include flexAlign();
+        img {
+          width: 40px;
+          margin-left: 20px;
         }
       }
     }

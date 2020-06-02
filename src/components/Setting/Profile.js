@@ -26,7 +26,10 @@ function Profile() {
   const classes = useStyles()
   return (
     <div className="setting-content-container">
-      <h2>Profile</h2>
+      <div className="setting-content-intro">
+        <h2>Profile</h2>
+        <p>Edit your personal information</p>
+      </div>
       <div className="setting-content-profile-header">
         <img src="/images/user.jpg" alt="profile" />
         <button>Upload Images</button>
