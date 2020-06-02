@@ -705,28 +705,6 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
-.setting-container .setting-content-container .setting-content-theme-sample-wrap {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (minmax(100px, 1fr))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  row-gap: 20px;
-}
-
-.setting-container .setting-content-container .setting-content-theme-sample-wrap .setting-content-theme-sample {
-  text-align: center;
-}
-
-.setting-container .setting-content-container .setting-content-theme-sample-wrap .setting-content-theme-sample p {
-  margin: 5px 0;
-  width: 80px;
-}
-
-.setting-container .setting-content-container .setting-content-theme-sample-wrap .setting-content-theme-sample div {
-  width: 80px;
-  height: 80px;
-}
-
 .setting-container .setting-content-container .setting-content-save {
   text-align: center;
   margin-top: 20px;
@@ -749,6 +727,18 @@
   border: 1px solid #0e5dd3;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+.setting-container .setting-content-container .setting-content-background .setting-content-background-demo img {
+  width: 600px;
+  height: auto;
+}
+
+.setting-container .setting-content-container .setting-content-background .setting-content-background-options img {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .logout-container {

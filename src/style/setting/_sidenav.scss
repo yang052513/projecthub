@@ -23,7 +23,6 @@
   .setting-content-container {
     padding: 25px;
     width: 50%;
-
     h2 {
       font-size: 30px;
       font-family: title;
@@ -42,29 +41,27 @@
         @include buttonStroke($sideNavBg);
       }
     }
-    .setting-content-theme-sample-wrap {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      row-gap: 20px;
-      .setting-content-theme-sample {
-        text-align: center;
-        p {
-          margin: 5px 0;
-          width: 80px;
-        }
-        div {
-          width: 80px;
-          height: 80px;
-        }
-      }
-    }
-
     .setting-content-save {
       text-align: center;
       margin-top: 20px;
       button {
         @include buttonStyle($sideNavBg);
         border: 1px solid rgba(0, 0, 0, 0);
+      }
+    }
+    .setting-content-background {
+      .setting-content-background-demo {
+        img {
+          width: 600px;
+          height: auto;
+        }
+      }
+      .setting-content-background-options {
+        img {
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+        }
       }
     }
   }
