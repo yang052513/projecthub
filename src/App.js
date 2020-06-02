@@ -96,9 +96,6 @@ class App extends React.Component {
               <Link to="/">
                 <i className="fas fa-home"></i>
               </Link>
-              <Link to="/profile">
-                <i className="fas fa-user-friends"></i>
-              </Link>
               <Link to="/status">
                 <i className="fas fa-tachometer-alt"></i>
               </Link>
@@ -106,18 +103,30 @@ class App extends React.Component {
                 <i className="fab fa-wpexplorer"></i>
               </Link>
 
-              <Link to="/explore">
+              {/* 显示所有的用户 并可以搜寻 加好友 */}
+              <Link to="/users">
+                <i className="fas fa-user-friends"></i>
+              </Link>
+
+              {/* 动态类似朋友圈 */}
+              <Link to="/moment">
                 <i className="far fa-clock"></i>
               </Link>
+
+              {/* 项目大厅 这里展示的是想找人一起的 加一个按钮可以发布 */}
               <Link to="/explore">
                 <i className="far fa-calendar-alt"></i>
               </Link>
+
               <Link to="/setting/profile">
                 <i className="fas fa-sliders-h"></i>
               </Link>
+
+              {/* 软件疑难解答 加一个机器人 */}
               <Link to="/explore">
                 <i className="far fa-question-circle"></i>
               </Link>
+
               <Link to="/profile">
                 <img src="/images/user.jpg" alt="user profile images" />
               </Link>
