@@ -3,7 +3,7 @@ import ChangeLogContent from './ChangeLogContent'
 
 export default function ChangeLogBlock(props) {
   const changeLog = props.content.map((item) => (
-    <ChangeLogContent status={item.status} info={item.info} />
+    <ChangeLogContent key={item.info} status={item.status} info={item.info} />
   ))
   return (
     <div className="setting-content-changelog">
