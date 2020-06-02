@@ -13,7 +13,7 @@ function ChangeLog() {
   ))
 
   return (
-    <div className="setting-content-container">
+    <div>
       <div className="setting-content-intro">
         <h2>Change Log</h2>
         <p>New features and updates</p>

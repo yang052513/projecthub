@@ -25,7 +25,7 @@ const inputMargin = {
 function Profile() {
   const classes = useStyles()
   return (
-    <div className="setting-content-container">
+    <div>
       <div className="setting-content-intro">
         <h2>Profile</h2>
         <p>Edit your personal information</p>

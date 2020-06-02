@@ -659,7 +659,8 @@
 
 .setting-container .setting-content-container {
   padding: 25px;
-  width: 40%;
+  width: 45%;
+  position: relative;
 }
 
 .setting-container .setting-content-container .setting-content-intro h2 {
@@ -734,7 +735,7 @@
 }
 
 .setting-container .setting-content-container .setting-content-background .setting-content-background-demo img {
-  width: 600px;
+  width: 490px;
   height: auto;
 }
 
@@ -806,6 +807,39 @@
   margin: 10px 10px 10px 0;
   font-size: 12px;
   font-weight: bold;
+}
+
+.fade-enter {
+  opacity: 0;
+  -webkit-transform: translateX(-50px);
+          transform: translateX(-50px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+          transform: translateX(0px);
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.fade-exit {
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+          transform: translateX(0px);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  -webkit-transform: translateX(50px);
+          transform: translateX(50px);
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.route-section {
+  position: absolute;
+  width: 100%;
 }
 
 .logout-container {

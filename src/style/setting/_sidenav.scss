@@ -1,6 +1,7 @@
 .setting-container {
   display: flex;
   justify-content: center;
+
   margin: 25px 0 0 0;
   .setting-side-nav {
     max-width: 150px;
@@ -22,7 +23,9 @@
   }
   .setting-content-container {
     padding: 25px;
-    width: 40%;
+    width: 45%;
+
+    position: relative;
     .setting-content-intro {
       h2 {
         font-size: 30px;
@@ -57,7 +60,7 @@
     .setting-content-background {
       .setting-content-background-demo {
         img {
-          width: 600px;
+          width: 490px;
           height: auto;
         }
       }
@@ -112,4 +115,29 @@
       }
     }
   }
+}
+
+.fade-enter {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 1s;
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 1s;
+}
+
+.route-section {
+  position: absolute;
+  width: 100%;
 }

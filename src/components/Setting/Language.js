@@ -3,7 +3,7 @@ import SelectLang from './Language/SelectLang'
 
 function Language() {
   return (
-    <div className="setting-content-container">
+    <div>
       <div className="setting-content-intro">
         <h2>Language</h2>
         <p>Change the dispaly language</p>
