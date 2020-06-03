@@ -4,7 +4,7 @@ import OpacitySlider from './OpacitySlider'
 export default function Opacity() {
   return (
     <div>
-      <h3>Opacity</h3>
+      <h3 className="setting-content-subtit">Opacity</h3>
       <OpacitySlider />
     </div>
   )

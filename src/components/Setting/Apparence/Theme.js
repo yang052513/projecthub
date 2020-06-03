@@ -8,7 +8,7 @@ export default function Theme() {
   }
   return (
     <div className="setting-content-theme">
-      <h3>Theme</h3>
+      <h3 className="setting-content-subtit">Theme</h3>
       <CirclePicker width={'600px'} circleSize={50} onChange={handleColor} />
     </div>
   )
