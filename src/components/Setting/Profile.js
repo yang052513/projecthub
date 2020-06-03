@@ -41,6 +41,7 @@ function Profile() {
 
   const [loading, setLoading] = useState(false)
   const [feedback, setFeedback] = useState(false)
+  const [error, setError] = useState(false)
 
   const [profile, setProfile] = useState({})
 
@@ -53,7 +54,37 @@ function Profile() {
   }
 
   //上传用户保存的照片
-  function handleProfileUpload() {}
+  function handleProfileUpload() {
+    let file = document.getElementById('profile-input').files[0]
+    //如果更改了照片
+    if (file) {
+      let metadata = {
+        contentType: file.type,
+      }
+
+      let upload = storageRef.child(file.name).put(file, metadata)
+      upload
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then((url) => {
+          console.log(`头像成功上传到数据库~'${url}`)
+          firebase.auth().onAuthStateChanged((user) => {
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Setting')
+              .doc('Profile')
+              .update({
+                avatar: url,
+              })
+          })
+          setLoading(false)
+          setFeedback(true)
+        })
+    } else {
+      setLoading(false)
+      setError(true)
+    }
+  }
+
   //保存用户修改后的profile信息
   function handleSubmit() {
     if (profile.profileEmail !== '' && !profile.profileEmail.includes('@')) {
@@ -82,6 +113,10 @@ function Profile() {
 
   function handleReload() {
     window.location.reload()
+  }
+
+  function handleError() {
+    setError(false)
   }
 
   //初始化读取数据库信息
@@ -116,6 +151,18 @@ function Profile() {
           />
         </div>
       ) : null}
+
+      {error === true ? (
+        <div>
+          <Feedback
+            msg="Error"
+            info="Pleaqse upload your profile picture ~ ー( ´ ▽ ` )ﾉ"
+            imgUrl="/images/emoji/emoji_scare.png"
+            toggle={handleError}
+          />
+        </div>
+      ) : null}
+
       <div className="setting-content-intro">
         <h2>Profile</h2>
         <p>Edit your personal information</p>
@@ -123,10 +170,10 @@ function Profile() {
       <div className="setting-content-profile-header">
         <img src="/images/user.jpg" alt="profile" />
         <input id="profile-input" name="profile-input" type="file" />
-        <label for="profile-input">
+        <label htmlFor="profile-input">
           <p>Upload Images</p>
         </label>
-        <button>Save</button>
+        <button onClick={handleProfileUpload}>Save</button>
       </div>
 
       <div className={classes.root}>
