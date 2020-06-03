@@ -37,6 +37,8 @@ const profileInit = {
 function Profile() {
   const classes = useStyles()
   const db = firebase.firestore()
+  const storageRef = firebase.storage().ref()
+
   const [loading, setLoading] = useState(false)
   const [feedback, setFeedback] = useState(false)
 
@@ -50,6 +52,8 @@ function Profile() {
     }))
   }
 
+  //上传用户保存的照片
+  function handleProfileUpload() {}
   //保存用户修改后的profile信息
   function handleSubmit() {
     if (profile.profileEmail !== '' && !profile.profileEmail.includes('@')) {
@@ -118,7 +122,11 @@ function Profile() {
       </div>
       <div className="setting-content-profile-header">
         <img src="/images/user.jpg" alt="profile" />
-        <button>Upload Images</button>
+        <input id="profile-input" name="profile-input" type="file" />
+        <label for="profile-input">
+          <p>Upload Images</p>
+        </label>
+        <button>Save</button>
       </div>
 
       <div className={classes.root}>

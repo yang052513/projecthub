@@ -46,7 +46,30 @@
         margin-right: 30px;
       }
       button {
-        @include buttonStroke($sideNavBg);
+        @include buttonStyle($sideNavBg);
+        border: 1px solid $sideNavBg;
+        &:hover {
+          transform: scale(1);
+        }
+      }
+      //隐藏原生的上传file
+      input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      label {
+        margin-right: 20px;
+        p {
+          @include buttonStroke($sideNavBg);
+          border: 1px solid $sideNavBg;
+          &:hover {
+            transform: scale(1);
+          }
+        }
       }
     }
     .setting-content-save {

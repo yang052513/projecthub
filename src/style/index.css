@@ -728,6 +728,43 @@
 
 .setting-container .setting-content-container .setting-content-profile-header button {
   font-size: 13px;
+  color: white;
+  background-color: #0e5dd3;
+  padding: 5px 20px;
+  border-radius: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  border: 1px solid #0e5dd3;
+}
+
+.setting-container .setting-content-container .setting-content-profile-header button:hover {
+  color: #0e5dd3;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #0e5dd3;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.setting-container .setting-content-container .setting-content-profile-header button:hover {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.setting-container .setting-content-container .setting-content-profile-header input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.setting-container .setting-content-container .setting-content-profile-header label {
+  margin-right: 20px;
+}
+
+.setting-container .setting-content-container .setting-content-profile-header label p {
+  font-size: 13px;
   color: #0e5dd3;
   background-color: rgba(0, 0, 0, 0);
   padding: 5px 20px;
@@ -735,12 +772,18 @@
   border: 1px solid #0e5dd3;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  border: 1px solid #0e5dd3;
 }
 
-.setting-container .setting-content-container .setting-content-profile-header button:hover {
+.setting-container .setting-content-container .setting-content-profile-header label p:hover {
   color: white;
   background-color: #0e5dd3;
   border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.setting-container .setting-content-container .setting-content-profile-header label p:hover {
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
 
 .setting-container .setting-content-container .setting-content-save {
