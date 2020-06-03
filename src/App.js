@@ -126,8 +126,9 @@ class App extends React.Component {
                 <i className="far fa-question-circle"></i>
               </Link>
 
-              <Link to="/profile">
-                <img src="/images/user.jpg" alt="user profile images" />
+              {/* 系统随机分配的任务 */}
+              <Link to="/mission">
+                <i className="fas fa-book"></i>
               </Link>
               <Link to="/create">
                 <i className="fas fa-feather"></i>

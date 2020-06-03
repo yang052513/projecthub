@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Progress from '../Progress'
 import Feedback from '../Feedback'
+import Loading from '../Loading'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,11 +40,13 @@ function Profile() {
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
+  const [launch, setLaunch] = useState(true)
   const [loading, setLoading] = useState(false)
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
 
   const [profile, setProfile] = useState({})
+  const [avatar, setAvatar] = useState('/images/user.jpg')
 
   function handleTextField(event) {
     const { name, value } = event.target
@@ -55,6 +58,7 @@ function Profile() {
 
   //上传用户保存的照片
   function handleProfileUpload() {
+    setLoading(true)
     let file = document.getElementById('profile-input').files[0]
     //如果更改了照片
     if (file) {
@@ -133,6 +137,10 @@ function Profile() {
           } else {
             setProfile(profileInit)
           }
+          if (doc.data().avatar) {
+            setAvatar(doc.data().avatar)
+            setLaunch(false)
+          }
         })
     })
   }, [])
@@ -163,125 +171,131 @@ function Profile() {
         </div>
       ) : null}
 
-      <div className="setting-content-intro">
-        <h2>Profile</h2>
-        <p>Edit your personal information</p>
-      </div>
-      <div className="setting-content-profile-header">
-        <img src="/images/user.jpg" alt="profile" />
-        <input id="profile-input" name="profile-input" type="file" />
-        <label htmlFor="profile-input">
-          <p>Upload Images</p>
-        </label>
-        <button onClick={handleProfileUpload}>Save</button>
-      </div>
+      {launch ? (
+        <Loading />
+      ) : (
+        <div>
+          <div className="setting-content-intro">
+            <h2>Profile</h2>
+            <p>Edit your personal information</p>
+          </div>
+          <div className="setting-content-profile-header">
+            <img src={avatar} alt="profile" />
+            <input id="profile-input" name="profile-input" type="file" />
+            <label htmlFor="profile-input">
+              <p>Upload Images</p>
+            </label>
+            <button onClick={handleProfileUpload}>Save</button>
+          </div>
 
-      <div className={classes.root}>
-        <TextField
-          error={false}
-          id="profile-name-input"
-          name="profileName"
-          onChange={handleTextField}
-          label="Full Name"
-          style={inputMargin}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          helperText="Name you want to display while using the app"
-          inputProps={{ placeholder: profile.profileName }}
-        />
-        <TextField
-          id="profile-location-input"
-          name="profileLocation"
-          onChange={handleTextField}
-          label="Location"
-          className={classes.textField}
-          margin="dense"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          inputProps={{ placeholder: profile.profileLocation }}
-        />
-        <TextField
-          id="profile-email-input"
-          name="profileEmail"
-          onChange={handleTextField}
-          label="Email Address"
-          className={classes.textField}
-          helperText="For notification and password reset"
-          margin="dense"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          inputProps={{ placeholder: profile.profileEmail }}
-        />
-        <TextField
-          id="profile-bio-input"
-          name="profileBio"
-          onChange={handleTextField}
-          label="Bio"
-          style={inputMargin}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          helperText="Descirbe your self and make some friends"
-          variant="outlined"
-          inputProps={{ placeholder: profile.profileBio }}
-        />
-        <TextField
-          id="profile-url-input"
-          name="profileWeb"
-          onChange={handleTextField}
-          label="Personal Website"
-          style={inputMargin}
-          fullWidth
-          margin="dense"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          inputProps={{ placeholder: profile.profileWeb }}
-        />
-        <TextField
-          id="profile-linkedin-input"
-          name="profilelinkedin"
-          onChange={handleTextField}
-          label="Linkedin URL"
-          style={inputMargin}
-          fullWidth
-          margin="dense"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          inputProps={{ placeholder: profile.profilelinkedin }}
-        />
-        <TextField
-          id="profile-github-input"
-          name="profileGithub"
-          onChange={handleTextField}
-          label="Github URL"
-          style={inputMargin}
-          fullWidth
-          margin="dense"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          inputProps={{ placeholder: profile.profileGithub }}
-        />
-      </div>
+          <div className={classes.root}>
+            <TextField
+              error={false}
+              id="profile-name-input"
+              name="profileName"
+              onChange={handleTextField}
+              label="Full Name"
+              style={inputMargin}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              helperText="Name you want to display while using the app"
+              inputProps={{ placeholder: profile.profileName }}
+            />
+            <TextField
+              id="profile-location-input"
+              name="profileLocation"
+              onChange={handleTextField}
+              label="Location"
+              className={classes.textField}
+              margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{ placeholder: profile.profileLocation }}
+            />
+            <TextField
+              id="profile-email-input"
+              name="profileEmail"
+              onChange={handleTextField}
+              label="Email Address"
+              className={classes.textField}
+              helperText="For notification and password reset"
+              margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{ placeholder: profile.profileEmail }}
+            />
+            <TextField
+              id="profile-bio-input"
+              name="profileBio"
+              onChange={handleTextField}
+              label="Bio"
+              style={inputMargin}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              helperText="Descirbe your self and make some friends"
+              variant="outlined"
+              inputProps={{ placeholder: profile.profileBio }}
+            />
+            <TextField
+              id="profile-url-input"
+              name="profileWeb"
+              onChange={handleTextField}
+              label="Personal Website"
+              style={inputMargin}
+              fullWidth
+              margin="dense"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              inputProps={{ placeholder: profile.profileWeb }}
+            />
+            <TextField
+              id="profile-linkedin-input"
+              name="profilelinkedin"
+              onChange={handleTextField}
+              label="Linkedin URL"
+              style={inputMargin}
+              fullWidth
+              margin="dense"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              inputProps={{ placeholder: profile.profilelinkedin }}
+            />
+            <TextField
+              id="profile-github-input"
+              name="profileGithub"
+              onChange={handleTextField}
+              label="Github URL"
+              style={inputMargin}
+              fullWidth
+              margin="dense"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              inputProps={{ placeholder: profile.profileGithub }}
+            />
+          </div>
 
-      <div className="setting-content-save">
-        <button onClick={handleSubmit}>Save</button>
-      </div>
+          <div className="setting-content-save">
+            <button onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

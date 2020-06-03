@@ -39,5 +39,6 @@ $logoSize: 50px;
   .user-profile-icon {
     @include roundedImage(30px);
     transform: translateX(-10px);
+    border: 1px solid rgb(207, 207, 207);
   }
 }

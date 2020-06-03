@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import Button from '@material-ui/core/Button'
@@ -16,8 +16,11 @@ const useStyles = makeStyles({
 
 export default function SimpleMenu() {
   const classes = useStyles()
+  const db = firebase.firestore()
+
   const [anchorEl, setAnchorEl] = useState(null)
   const [logout, setLogout] = useState(false)
+  const [avatar, setAvatar] = useState('/images/user.jpg')
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -32,6 +35,21 @@ export default function SimpleMenu() {
     setLogout(true)
   }
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Profile')
+        .get()
+        .then((doc) => {
+          if (doc.data().avatar) {
+            setAvatar(doc.data().avatar)
+          }
+        })
+    })
+  }, [])
+
   return (
     <div>
       <div>
@@ -40,11 +58,7 @@ export default function SimpleMenu() {
           aria-haspopup="true"
           onClick={handleClick}
         >
-          <img
-            className="user-profile-icon"
-            src="/images/user.jpg"
-            alt="profile"
-          />
+          <img className="user-profile-icon" src={avatar} alt="profile" />
         </Button>
 
         <Menu
@@ -65,11 +79,9 @@ export default function SimpleMenu() {
             </MenuItem>
           </Link>
 
-          {/* <Link to="/logout"> */}
           <MenuItem className={classes.root} onClick={handleLogout}>
             Logout
           </MenuItem>
-          {/* </Link> */}
         </Menu>
       </div>
 
