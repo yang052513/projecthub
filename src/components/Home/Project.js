@@ -75,7 +75,7 @@ function Project(props) {
     ))
 
   // console.log(selectedProject.length)
-  console.log(sort)
+  // console.log(sort)
   let noResult = selectedProject.length
   return (
     <div className="project-card-container">
