@@ -823,6 +823,8 @@
 .setting-container .setting-content-container .setting-content-background .setting-content-background-options img {
   width: 100px;
   height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
   margin-right: 5px;
   border-radius: 10px;
 }

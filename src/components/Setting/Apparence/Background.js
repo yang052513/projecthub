@@ -73,6 +73,11 @@ export default function Background() {
     setError(false)
   }
 
+  const customBgRender =
+    customBg.length === 0
+      ? null
+      : customBg.map((bg) => <img key={bg} src={bg} />)
+
   return (
     <div className="setting-content-background">
       {loading === true ? <Progress /> : null}
@@ -112,6 +117,7 @@ export default function Background() {
         <img src="/images/theme/background/5-demo.jpg" />
 
         {/* 用户已经上传的壁纸 */}
+        {customBgRender}
       </div>
       <input type="file" id="img-input" />
       <button onClick={handleBgUpload}>Save</button>
