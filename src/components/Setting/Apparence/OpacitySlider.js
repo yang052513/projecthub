@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import Slider from '@material-ui/core/Slider'
 import firebase from 'firebase'
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: 350,
   },
 })
 

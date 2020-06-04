@@ -87,6 +87,7 @@ class App extends React.Component {
 
       return (
         <Router>
+          <div className="overlay"></div>
           <div className="content-container">
             <img className="logo" src="/images/logo.png" />
 

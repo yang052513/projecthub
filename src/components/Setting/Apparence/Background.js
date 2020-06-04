@@ -81,17 +81,15 @@ export default function Background() {
         <img src="/images/theme/background/demo.png" alt="ad" />
       </div>
 
-      <p>Choose Background</p>
-      <button onClick={handleBgUpload}>Save</button>
-
       <div className="setting-content-background-options">
-        {/* <img src="/images/theme/background/1.jpg" />
-        <img src="/images/theme/background/2.jpg" />
-        <img src="/images/theme/background/3.jpg" />
-        <img src="/images/theme/background/4.jpg" />
-        <img src="/images/theme/background/5.jpg" /> */}
+        <img src="/images/theme/background/1-demo.jpg" />
+        <img src="/images/theme/background/2-demo.jpg" />
+        <img src="/images/theme/background/3-demo.jpg" />
+        <img src="/images/theme/background/4-demo.jpg" />
+        <img src="/images/theme/background/5-demo.jpg" />
       </div>
       <input type="file" id="img-input" />
+      <button onClick={handleBgUpload}>Save</button>
     </div>
   )
 }

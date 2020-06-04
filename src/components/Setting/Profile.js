@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: '30px',
+    marginTop: '10px',
   },
 
   // 文本框样式

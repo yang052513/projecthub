@@ -1,7 +1,6 @@
 .setting-container {
   display: flex;
   justify-content: center;
-
   margin: 25px 0 0 0;
   .setting-side-nav {
     max-width: 150px;
@@ -23,9 +22,12 @@
   }
   .setting-content-container {
     padding: 25px;
-    width: 45%;
+    width: 40%;
 
     position: relative;
+    .setting-opacity-container {
+      margin-bottom: 100px;
+    }
     .setting-content-intro {
       h2 {
         font-size: 30px;
@@ -91,7 +93,9 @@
         img {
           width: 100px;
           height: 100px;
-          object-fit: cover;
+          // object-fit: cover;
+          margin-right: 5px;
+          border-radius: 10px;
         }
       }
     }
@@ -135,6 +139,14 @@
             font-weight: bold;
           }
         }
+      }
+    }
+    .setting-content-slider {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      p {
+        width: 200px;
       }
     }
   }
