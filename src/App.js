@@ -78,6 +78,20 @@ class App extends React.Component {
             merge: true,
           }
         )
+
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Setting')
+          .doc('Apparence')
+          .update({
+            appBackground: [
+              '/images/theme/background/1.jpg',
+              '/images/theme/background/2.jpg',
+              '/images/theme/background/3.jpg',
+              '/images/theme/background/4.jpg',
+              '/images/theme/background/5.jpg',
+            ],
+          })
       })
 
       let user = firebase.auth().currentUser

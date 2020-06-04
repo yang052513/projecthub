@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import Progress from '../../Progress'
 import Feedback from '../../Feedback'
@@ -10,6 +10,8 @@ export default function Background() {
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
 
+  const [customBg, setCustomBg] = useState([])
+
   //更改背景图片
   function handleBgUpload() {
     setLoading(true)
@@ -19,7 +21,6 @@ export default function Background() {
       let metadata = {
         contentType: file.type,
       }
-
       let upload = storageRef.child(file.name).put(file, metadata)
       upload
         .then((snapshot) => snapshot.ref.getDownloadURL())
@@ -32,6 +33,7 @@ export default function Background() {
               .doc('Apparence')
               .update({
                 background: url,
+                customBackground: firebase.firestore.FieldValue.arrayUnion(url),
               })
           })
           setLoading(false)
@@ -42,6 +44,26 @@ export default function Background() {
       setError(true)
     }
   }
+
+  //读取用户已经保存过的壁纸
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .get()
+        .then((doc) => {
+          if (doc.data().customBackground) {
+            setCustomBg(doc.data().customBackground)
+            console.log(doc.data().customBackground)
+          }
+        })
+        .catch((error) => {
+          console.log(`读取用户保存的壁纸时出错了 ${error}`)
+        })
+    })
+  }, [])
 
   function handleReload() {
     window.location.reload()
@@ -82,11 +104,14 @@ export default function Background() {
       </div>
 
       <div className="setting-content-background-options">
+        {/* 系统内置壁纸 */}
         <img src="/images/theme/background/1-demo.jpg" />
         <img src="/images/theme/background/2-demo.jpg" />
         <img src="/images/theme/background/3-demo.jpg" />
         <img src="/images/theme/background/4-demo.jpg" />
         <img src="/images/theme/background/5-demo.jpg" />
+
+        {/* 用户已经上传的壁纸 */}
       </div>
       <input type="file" id="img-input" />
       <button onClick={handleBgUpload}>Save</button>
