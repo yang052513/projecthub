@@ -1,72 +1,77 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Slider from '@material-ui/core/Slider'
-import Input from '@material-ui/core/Input'
+import firebase from 'firebase'
 
 const useStyles = makeStyles({
   root: {
-    width: 250,
-  },
-  input: {
-    width: 42,
+    width: 300,
   },
 })
 
 export default function InputSlider() {
   const classes = useStyles()
-  const [value, setValue] = React.useState(30)
+  const db = firebase.firestore()
 
-  const handleSliderChange = (event, newValue) => {
-    setValue(newValue)
+  const [opacity, setOpacity] = useState({
+    sidebar: 100,
+    topbar: 100,
+    card: 100,
+  })
+
+  const handleOpacity = (name) => (event, value) => {
+    setOpacity((prevOpacity) => ({
+      ...prevOpacity,
+      [name]: value,
+    }))
   }
 
-  const handleInputChange = (event) => {
-    setValue(event.target.value === '' ? '' : Number(event.target.value))
-  }
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          opacity,
+        })
+    })
+  }, [opacity])
 
-  const handleBlur = () => {
-    if (value < 0) {
-      setValue(0)
-    } else if (value > 100) {
-      setValue(100)
-    }
-  }
-
+  console.log(opacity)
   return (
     <div className={classes.root}>
-      <Typography id="input-slider" gutterBottom>
-        Volume
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          <i className="fas fa-comments"></i>
-        </Grid>
-        <Grid item xs>
-          <Slider
-            value={typeof value === 'number' ? value : 0}
-            onChange={handleSliderChange}
-            aria-labelledby="input-slider"
-          />
-        </Grid>
-        <Grid item>
-          <Input
-            className={classes.input}
-            value={value}
-            margin="dense"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            inputProps={{
-              step: 10,
-              min: 0,
-              max: 100,
-              type: 'number',
-              'aria-labelledby': 'input-slider',
-            }}
-          />
-        </Grid>
-      </Grid>
+      <div className="setting-content-slider">
+        <p>Side Bar</p>
+        <Slider
+          name="sidebar"
+          value={opacity.sidebar}
+          onChange={handleOpacity('sidebar')}
+          aria-labelledby="input-slider"
+        />
+      </div>
+
+      <div className="setting-content-slider">
+        <p>Top Bar</p>
+        <Slider
+          name="topbar"
+          value={opacity.topbar}
+          onChange={handleOpacity('topbar')}
+          aria-labelledby="input-slider"
+        />
+      </div>
+
+      <div className="setting-content-slider">
+        <p>Project Card</p>
+        <Slider
+          name="card"
+          value={opacity.card}
+          onChange={handleOpacity('card')}
+          aria-labelledby="input-slider"
+        />
+      </div>
     </div>
   )
 }

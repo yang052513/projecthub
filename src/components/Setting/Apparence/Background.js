@@ -10,9 +10,10 @@ export default function Background() {
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
 
+  //更改背景图片
   function handleBgUpload() {
     setLoading(true)
-    let file = document.getElementById('profile-input').files[0]
+    let file = document.getElementById('img-input').files[0]
     //如果更改了照片
     if (file) {
       let metadata = {
@@ -23,14 +24,14 @@ export default function Background() {
       upload
         .then((snapshot) => snapshot.ref.getDownloadURL())
         .then((url) => {
-          console.log(`头像成功上传到数据库~'${url}`)
+          console.log(`背景图成功上传到数据库~'${url}`)
           firebase.auth().onAuthStateChanged((user) => {
             db.collection('user')
               .doc(user.uid)
               .collection('Setting')
-              .doc('Profile')
+              .doc('Apparence')
               .update({
-                avatar: url,
+                background: url,
               })
           })
           setLoading(false)
@@ -46,6 +47,10 @@ export default function Background() {
     window.location.reload()
   }
 
+  function handleError() {
+    setError(false)
+  }
+
   return (
     <div className="setting-content-background">
       {loading === true ? <Progress /> : null}
@@ -54,9 +59,20 @@ export default function Background() {
         <div>
           <Feedback
             msg="Success"
-            info="Profile changed successfully ~ ー( ´ ▽ ` )ﾉ"
+            info="Background changed successfully ~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
             toggle={handleReload}
+          />
+        </div>
+      ) : null}
+
+      {error === true ? (
+        <div>
+          <Feedback
+            msg="Error"
+            info="Didnt detect any backgroud changes ~ ー( ´ ▽ ` )ﾉ"
+            imgUrl="/images/emoji/emoji_scare.png"
+            toggle={handleError}
           />
         </div>
       ) : null}
@@ -66,6 +82,8 @@ export default function Background() {
       </div>
 
       <p>Choose Background</p>
+      <button onClick={handleBgUpload}>Save</button>
+
       <div className="setting-content-background-options">
         {/* <img src="/images/theme/background/1.jpg" />
         <img src="/images/theme/background/2.jpg" />
@@ -73,7 +91,7 @@ export default function Background() {
         <img src="/images/theme/background/4.jpg" />
         <img src="/images/theme/background/5.jpg" /> */}
       </div>
-      <input type="file" />
+      <input type="file" id="img-input" />
     </div>
   )
 }
