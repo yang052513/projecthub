@@ -72,7 +72,7 @@ export default function InputSlider() {
       </div>
 
       <div className="setting-content-slider">
-        <p>Project Card</p>
+        <p>Background</p>
         <Slider
           name="background"
           value={opacity.background}

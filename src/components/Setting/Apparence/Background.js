@@ -3,8 +3,23 @@ import firebase from 'firebase'
 import Progress from '../../Progress'
 import Feedback from '../../Feedback'
 import Loading from '../../Loading'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}))
 
 export default function Background() {
+  const classes = useStyles()
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
   const [loading, setLoading] = useState(false)
@@ -13,6 +28,14 @@ export default function Background() {
 
   const [customBg, setCustomBg] = useState([])
   const [demo, setDemo] = useState('/images/theme/background/default.jpg')
+
+  const [options, setOptions] = useState('Color')
+
+  //渲染是以照片还是纯色模式为背景
+  const handleOptions = (event) => {
+    setOptions(event.target.value)
+    console.log(options)
+  }
 
   //更改背景图片
   function handleBgUpload() {
@@ -131,46 +154,69 @@ export default function Background() {
           />
         </div>
       ) : null}
+
       <h3 className="setting-content-subtit">Background</h3>
+
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
+        <Select
+          native
+          value={options}
+          onChange={handleOptions}
+          label="Options"
+          inputProps={{
+            name: 'options',
+          }}
+        >
+          <option value={'Color'}>Color</option>
+          <option value={'Images'}>Images</option>
+        </Select>
+      </FormControl>
+
       <div className="setting-content-background-demo">
         <img src={demo} alt="ad" />
       </div>
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
-        <img
-          id="/images/theme/background/default.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/default.jpg"
-        />
-        <img
-          id="/images/theme/background/1.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/1-demo.jpg"
-        />
-        <img
-          id="/images/theme/background/2.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/2-demo.jpg"
-        />
-        <img
-          id="/images/theme/background/3.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/3-demo.jpg"
-        />
-        <img
-          id="/images/theme/background/4.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/4-demo.jpg"
-        />
-        <img
-          id="/images/theme/background/5.jpg"
-          onClick={handleSwitch}
-          src="/images/theme/background/5-demo.jpg"
-        />
+        {options === 'Color' ? (
+          <img
+            id="/images/theme/background/default.jpg"
+            onClick={handleSwitch}
+            src="/images/theme/background/default.jpg"
+          />
+        ) : (
+          <div>
+            <img
+              id="/images/theme/background/1.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/1-demo.jpg"
+            />
+            <img
+              id="/images/theme/background/2.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/2-demo.jpg"
+            />
+            <img
+              id="/images/theme/background/3.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/3-demo.jpg"
+            />
+            <img
+              id="/images/theme/background/4.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/4-demo.jpg"
+            />
+            <img
+              id="/images/theme/background/5.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/5-demo.jpg"
+            />
 
-        {/* 用户已经上传的壁纸 */}
-        {customBgRender}
+            {/* 用户已经上传的壁纸 */}
+            {customBgRender}
+          </div>
+        )}
       </div>
 
       <div className="setting-content-profile-header">
