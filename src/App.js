@@ -9,7 +9,6 @@ import Explore from './components/Explore'
 import CreateProject from './components/CreateProject'
 import ProfileMenu from './components/ProfileMenu'
 import Edit from './components/Edit'
-import Particle from './components/Common/Particle'
 import Kanban from './components/Home/Kanban'
 import Mission from './components/Mission'
 
@@ -29,6 +28,7 @@ class App extends Component {
   state = {
     isSignedIn: false,
     background: '',
+    backgroundColor: true,
   }
 
   uiConfig = {
@@ -70,14 +70,6 @@ class App extends Component {
       )
     } else {
       const db = firebase.firestore()
-      const bgStyle = {
-        backgroundImage: `url(${this.state.background})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        backgroundAttachment: 'fixed',
-      }
-
       firebase.auth().onAuthStateChanged((user) => {
         db.collection('user').doc(user.uid).set(
           {
@@ -97,6 +89,7 @@ class App extends Component {
             if (doc.data().background) {
               this.setState({
                 background: doc.data().background,
+                backgroundColor: doc.data().backgroundColor,
               })
             } else {
               db.collection('user')
@@ -105,27 +98,25 @@ class App extends Component {
                 .doc('Apparence')
                 .update({
                   background: '/images/theme/background/default.jpg',
+                  backgroundColor: true,
                 })
               this.setState({
                 background: '/images/theme/background/default.jpg',
+                backgroundColor: true,
               })
             }
           })
       })
 
-      let user = firebase.auth().currentUser
-      user.updateProfile({
-        photoURL: '/images/user.jpg',
-      })
-
       return (
         <Router>
-          {/* <div
-            style={this.state.background === '' ? null : bgStyle}
-            className="background"
-          ></div> */}
-          {this.state.background === '' ? null : (
-            <img className="background-test" src={this.state.background} />
+          {this.state.backgroundColor ? (
+            <div
+              style={{ backgroundColor: this.state.background }}
+              className="background"
+            ></div>
+          ) : (
+            <img className="background-image" src={this.state.background} />
           )}
 
           <div className="overlay"></div>

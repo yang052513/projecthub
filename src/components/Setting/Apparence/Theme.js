@@ -4,7 +4,6 @@ import firebase from 'firebase'
 
 export default function Theme() {
   const db = firebase.firestore()
-  const [color, setColor] = useState('#fff')
 
   //颜色有更改时 写入到数据库
   function handleColor(color, event) {

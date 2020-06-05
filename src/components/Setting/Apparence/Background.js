@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
+import { SwatchesPicker } from 'react-color'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -27,7 +28,10 @@ export default function Background() {
   const [error, setError] = useState(false)
 
   const [customBg, setCustomBg] = useState([])
-  const [demo, setDemo] = useState('/images/theme/background/default.jpg')
+  const [demo, setDemo] = useState({
+    backgroundColor: false,
+    backgroundRef: '',
+  })
 
   const [options, setOptions] = useState('Color')
 
@@ -58,6 +62,7 @@ export default function Background() {
               .doc('Apparence')
               .update({
                 background: url,
+                backgroundColor: false,
                 customBackground: firebase.firestore.FieldValue.arrayUnion(url),
               })
           })
@@ -82,9 +87,13 @@ export default function Background() {
           if (doc.data().customBackground) {
             setCustomBg(doc.data().customBackground)
           }
-
           if (doc.data().background) {
-            setDemo(doc.data().background)
+            // setDemo(doc.data().background)
+
+            setDemo((prevDemo) => ({
+              backgroundColor: doc.data().backgroundColor,
+              backgroundRef: doc.data().background,
+            }))
           }
         })
         .catch((error) => {
@@ -104,13 +113,17 @@ export default function Background() {
   //点击缩略图切换壁纸
   function handleSwitch(event) {
     let bgRef = event.currentTarget.id
-    setDemo(bgRef)
+    setDemo((prevDemo) => ({
+      backgroundColor: false,
+      backgroundRef: bgRef,
+    }))
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
         .doc('Apparence')
         .update({
+          backgroundColor: false,
           background: bgRef,
         })
         .then(() => {
@@ -118,6 +131,29 @@ export default function Background() {
         })
         .catch((error) => {
           console.log(`切换背景错误${error}`)
+        })
+    })
+  }
+
+  function handleColor(color, event) {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          backgroundColor: true,
+          background: color.hex,
+        })
+        .then(() => {
+          setDemo(() => ({
+            backgroundColor: true,
+            backgroundRef: color.hex,
+          }))
+          console.log(`主题色修改成功为${color.hex}`)
+        })
+        .catch((error) => {
+          console.log(`更改主题色时出错啦${error}`)
         })
     })
   }
@@ -174,22 +210,22 @@ export default function Background() {
       </FormControl>
 
       <div className="setting-content-background-demo">
-        <img src={demo} alt="ad" />
+        {demo.backgroundColor ? null : (
+          <img src={demo.backgroundRef} alt="preview demo placeholder" />
+        )}
       </div>
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
-        {/* 如果选择的是纯色 也用status但是渲染背景色并关闭img */}
         {options === 'Color' ? (
           <div>
-            <img
-              id="/images/theme/background/default.jpg"
-              onClick={handleSwitch}
-              src="/images/theme/background/default.jpg"
+            <SwatchesPicker
+              width={'600px'}
+              height={'300px'}
+              onChange={handleColor}
             />
           </div>
         ) : (
-          // 如果选择的是图片就加一个status为true然后渲染img
           <div>
             <img
               id="/images/theme/background/1.jpg"
