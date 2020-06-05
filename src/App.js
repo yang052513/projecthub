@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
@@ -24,9 +24,10 @@ const config = {
 }
 firebase.initializeApp(config)
 
-class App extends React.Component {
+class App extends Component {
   state = {
     isSignedIn: false,
+    background: '',
   }
 
   uiConfig = {
@@ -68,8 +69,15 @@ class App extends React.Component {
       )
     } else {
       const db = firebase.firestore()
+      const bgStyle = {
+        backgroundImage: `url(${this.state.background})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundAttachment: 'fixed',
+      }
 
-      firebase.auth().onAuthStateChanged(function (user) {
+      firebase.auth().onAuthStateChanged((user) => {
         db.collection('user').doc(user.uid).set(
           {
             Name: user.displayName,
@@ -83,14 +91,24 @@ class App extends React.Component {
           .doc(user.uid)
           .collection('Setting')
           .doc('Apparence')
-          .update({
-            appBackground: [
-              '/images/theme/background/1.jpg',
-              '/images/theme/background/2.jpg',
-              '/images/theme/background/3.jpg',
-              '/images/theme/background/4.jpg',
-              '/images/theme/background/5.jpg',
-            ],
+          .get()
+          .then((doc) => {
+            if (doc.data().background) {
+              this.setState({
+                background: doc.data().background,
+              })
+            } else {
+              db.collection('user')
+                .doc(user.uid)
+                .collection('Setting')
+                .doc('Apparence')
+                .update({
+                  background: '/images/theme/background/default.jpg',
+                })
+              this.setState({
+                background: '/images/theme/background/default.jpg',
+              })
+            }
           })
       })
 
@@ -101,6 +119,14 @@ class App extends React.Component {
 
       return (
         <Router>
+          {/* <div
+            style={this.state.background === '' ? null : bgStyle}
+            className="background"
+          ></div> */}
+          {this.state.background === '' ? null : (
+            <img className="background-test" src={this.state.background} />
+          )}
+
           <div className="overlay"></div>
           <div className="content-container">
             <img className="logo" src="/images/logo.png" />

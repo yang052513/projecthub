@@ -12,7 +12,7 @@ export default function Background() {
   const [error, setError] = useState(false)
 
   const [customBg, setCustomBg] = useState([])
-  const [demo, setDemo] = useState('/images/theme/background/1.jpg')
+  const [demo, setDemo] = useState('/images/theme/background/default.jpg')
 
   //更改背景图片
   function handleBgUpload() {
@@ -138,6 +138,11 @@ export default function Background() {
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
+        <img
+          id="/images/theme/background/default.jpg"
+          onClick={handleSwitch}
+          src="/images/theme/background/default.jpg"
+        />
         <img
           id="/images/theme/background/1.jpg"
           onClick={handleSwitch}

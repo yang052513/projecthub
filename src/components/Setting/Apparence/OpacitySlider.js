@@ -17,6 +17,7 @@ export default function InputSlider() {
     sidebar: 100,
     topbar: 100,
     card: 100,
+    background: 100,
   })
 
   const handleOpacity = (name) => (event, value) => {
@@ -66,6 +67,16 @@ export default function InputSlider() {
           name="card"
           value={opacity.card}
           onChange={handleOpacity('card')}
+          aria-labelledby="input-slider"
+        />
+      </div>
+
+      <div className="setting-content-slider">
+        <p>Project Card</p>
+        <Slider
+          name="background"
+          value={opacity.background}
+          onChange={handleOpacity('background')}
           aria-labelledby="input-slider"
         />
       </div>
