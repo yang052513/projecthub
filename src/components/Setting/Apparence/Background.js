@@ -166,6 +166,22 @@ export default function Background() {
 
   return (
     <div className="setting-content-background">
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
+        <Select
+          native
+          value={options}
+          onChange={handleOptions}
+          label="Options"
+          inputProps={{
+            name: 'options',
+          }}
+        >
+          <option value={'Color'}>Color</option>
+          <option value={'Images'}>Images</option>
+        </Select>
+      </FormControl>
+
       {loading === true ? <Progress /> : null}
       {/* 项目创建成功反馈 */}
       {feedback === true ? (
