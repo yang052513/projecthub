@@ -11,6 +11,7 @@ import ProfileMenu from './components/ProfileMenu'
 import Edit from './components/Edit'
 import Particle from './components/Common/Particle'
 import Kanban from './components/Home/Kanban'
+import Mission from './components/Mission'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -195,6 +196,9 @@ class App extends Component {
               </Route>
               <Route path="/setting/">
                 <Setting />
+              </Route>
+              <Route path="/mission/">
+                <Mission />
               </Route>
               <Route path="/status">
                 <Status />

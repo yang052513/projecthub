@@ -179,13 +179,17 @@ export default function Background() {
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
+        {/* 如果选择的是纯色 也用status但是渲染背景色并关闭img */}
         {options === 'Color' ? (
-          <img
-            id="/images/theme/background/default.jpg"
-            onClick={handleSwitch}
-            src="/images/theme/background/default.jpg"
-          />
+          <div>
+            <img
+              id="/images/theme/background/default.jpg"
+              onClick={handleSwitch}
+              src="/images/theme/background/default.jpg"
+            />
+          </div>
         ) : (
+          // 如果选择的是图片就加一个status为true然后渲染img
           <div>
             <img
               id="/images/theme/background/1.jpg"
@@ -215,16 +219,16 @@ export default function Background() {
 
             {/* 用户已经上传的壁纸 */}
             {customBgRender}
+
+            <div className="setting-content-profile-header">
+              <input id="img-input" name="profile-input" type="file" />
+              <label htmlFor="img-input">
+                <p>Upload Images</p>
+              </label>
+              <button onClick={handleBgUpload}>Save</button>
+            </div>
           </div>
         )}
-      </div>
-
-      <div className="setting-content-profile-header">
-        <input id="img-input" name="profile-input" type="file" />
-        <label htmlFor="img-input">
-          <p>Upload Images</p>
-        </label>
-        <button onClick={handleBgUpload}>Save</button>
       </div>
     </div>
   )
