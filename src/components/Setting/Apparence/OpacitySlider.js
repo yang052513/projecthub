@@ -38,7 +38,6 @@ export default function InputSlider() {
     })
   }, [opacity])
 
-  console.log(opacity)
   return (
     <div className={classes.root}>
       <div className="setting-content-slider">
