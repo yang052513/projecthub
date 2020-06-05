@@ -819,7 +819,8 @@
   margin-bottom: 20px;
 }
 
-.setting-container .setting-content-container .setting-content-background .setting-content-background-demo img {
+.setting-container .setting-content-container .setting-content-background .setting-content-background-demo img,
+.setting-container .setting-content-container .setting-content-background .setting-content-background-demo .color-placeholder {
   width: 600px;
   height: 300px;
   -o-object-fit: cover;
@@ -1166,6 +1167,15 @@ body {
   background-color: #f7f7f7;
 }
 
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: -4;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -1175,15 +1185,6 @@ body {
   background-color: #f7f7f7;
   opacity: 0.5;
   z-index: -3;
-}
-
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100%;
-  z-index: -4;
 }
 
 .background-image {

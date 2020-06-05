@@ -88,12 +88,11 @@ export default function Background() {
             setCustomBg(doc.data().customBackground)
           }
           if (doc.data().background) {
-            // setDemo(doc.data().background)
-
-            setDemo((prevDemo) => ({
+            setDemo(() => ({
               backgroundColor: doc.data().backgroundColor,
               backgroundRef: doc.data().background,
             }))
+            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
           }
         })
         .catch((error) => {
@@ -210,7 +209,12 @@ export default function Background() {
       </FormControl>
 
       <div className="setting-content-background-demo">
-        {demo.backgroundColor ? null : (
+        {demo.backgroundColor ? (
+          <div
+            style={{ backgroundColor: demo.backgroundRef }}
+            className="color-placeholder"
+          ></div>
+        ) : (
           <img src={demo.backgroundRef} alt="preview demo placeholder" />
         )}
       </div>

@@ -84,7 +84,8 @@
     }
     .setting-content-background {
       .setting-content-background-demo {
-        img {
+        img,
+        .color-placeholder {
           width: 600px;
           height: 300px;
           object-fit: cover;
@@ -92,6 +93,7 @@
         }
         margin-bottom: 20px;
       }
+
       .setting-content-background-options {
         width: 600px;
         img {
