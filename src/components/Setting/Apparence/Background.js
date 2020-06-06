@@ -126,7 +126,7 @@ export default function Background() {
           background: bgRef,
         })
         .then(() => {
-          console.log(`切换背景为${bgRef}`)
+          console.log(`切换背景到数据库${bgRef}`)
         })
         .catch((error) => {
           console.log(`切换背景错误${error}`)

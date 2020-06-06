@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import Home from './components/Home'
 import Setting from './components/Setting'
@@ -10,48 +11,55 @@ import Edit from './components/Edit'
 import Kanban from './components/Home/Kanban'
 import Mission from './components/Mission'
 
+import firebase from 'firebase'
+
 export default function App() {
-  // 这个要改成onSnapshot change.doc.type === modified 实时监测
-  // db.collection('user')
-  //   .doc(user.uid)
-  //   .collection('Setting')
-  //   .doc('Apparence')
-  //   .get()
-  //   .then((doc) => {
-  //     if (doc.data().background) {
-  //       this.setState({
-  //         background: doc.data().background,
-  //         backgroundColor: doc.data().backgroundColor,
-  //       })
-  //     } else {
-  //       db.collection('user')
-  //         .doc(user.uid)
-  //         .collection('Setting')
-  //         .doc('Apparence')
-  //         .update({
-  //           background: '/images/theme/background/default.jpg',
-  //           backgroundColor: true,
-  //         })
-  //       this.setState({
-  //         background: '/images/theme/background/default.jpg',
-  //         backgroundColor: true,
-  //       })
-  //     }
-  //   })
+  const [background, setBackground] = useState('#f7f7f7')
+  const [backgroundColor, setBackgroundColor] = useState(true)
+  const db = firebase.firestore()
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .get()
+        .then((doc) => {
+          //如果用户保存过更改
+          if (doc.data().background) {
+            setBackground(doc.data().background)
+            setBackgroundColor(doc.data().backgroundColor)
+            //默认样式 灰色背景
+          } else {
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Setting')
+              .doc('Apparence')
+              .update({
+                background: '#f7f7f7',
+                backgroundColor: true,
+              })
+          }
+        })
+    })
+  }, [])
 
   return (
     <div>
       <Router>
-        {/* {this.state.backgroundColor ? (
-            <div
-              style={{ backgroundColor: this.state.background }}
-              className="background"
-            ></div>
-          ) : (
-            <img className="background-image" src={this.state.background} />
-          )} */}
+        {backgroundColor ? (
+          <div
+            style={{ backgroundColor: background }}
+            className="background"
+          ></div>
+        ) : (
+          <img className="background-image" src={background} />
+        )}
 
         <div className="overlay"></div>
+
+        {/* 内容容器 */}
         <div className="content-container">
           <img className="logo" src="/images/logo.png" />
 
