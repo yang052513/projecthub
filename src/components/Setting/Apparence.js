@@ -3,7 +3,7 @@ import Theme from './Apparence/Theme'
 import Background from './Apparence/Background'
 import Opacity from './Apparence/Opacity'
 
-export default function Apparence() {
+export default function Apparence(props) {
   return (
     <div>
       <div className="setting-content-intro">
@@ -11,7 +11,7 @@ export default function Apparence() {
         <p>Customize the apparence and preferrence</p>
       </div>
       <Theme />
-      <Background />
+      <Background switchImgPreview={props.switchImgPreview} />
       <Opacity />
     </div>
   )

@@ -8,7 +8,8 @@ import Language from './Setting/Language'
 import About from './Setting/About'
 import ChangeLog from './Setting/Changelog'
 
-function Setting({ location }) {
+function Setting(props) {
+  let location = useLocation()
   let currPath = useLocation().pathname
   const currPathStyle = {
     color: 'rgb(14,93,211)',
@@ -51,9 +52,9 @@ function Setting({ location }) {
 
       <TransitionGroup className="setting-content-container">
         <CSSTransition
-          key={location.key}
           timeout={{ enter: 1000, exit: 1000 }}
           classNames="fade"
+          key={location.key}
         >
           <section className="route-section">
             <Switch location={location}>
@@ -61,7 +62,7 @@ function Setting({ location }) {
                 <Profile />
               </Route>
               <Route path="/setting/theme">
-                <Apparence />
+                <Apparence switchImgPreview={props.switchImgPreview} />
               </Route>
               <Route path="/setting/language">
                 <Language />
@@ -80,4 +81,4 @@ function Setting({ location }) {
   )
 }
 
-export default withRouter(Setting)
+export default Setting

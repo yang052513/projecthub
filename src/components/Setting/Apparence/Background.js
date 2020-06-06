@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Background() {
+export default function Background(props) {
   const classes = useStyles()
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
@@ -161,27 +161,11 @@ export default function Background() {
     customBg.length === 0
       ? null
       : customBg.map((bg) => (
-          <img onClick={handleSwitch} id={bg} key={bg} src={bg} />
+          <img onClick={props.switchImgPreview} id={bg} key={bg} src={bg} />
         ))
 
   return (
     <div className="setting-content-background">
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
-        <Select
-          native
-          value={options}
-          onChange={handleOptions}
-          label="Options"
-          inputProps={{
-            name: 'options',
-          }}
-        >
-          <option value={'Color'}>Color</option>
-          <option value={'Images'}>Images</option>
-        </Select>
-      </FormControl>
-
       {loading === true ? <Progress /> : null}
       {/* 项目创建成功反馈 */}
       {feedback === true ? (

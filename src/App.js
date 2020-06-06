@@ -1,6 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import {
+  Link,
+  Switch,
+  Route,
+  withRouter,
+  BrowserRouter as Router,
+} from 'react-router-dom'
 import Home from './components/Home'
 import Setting from './components/Setting'
 import Status from './components/Status'
@@ -17,6 +23,11 @@ export default function App() {
   const [background, setBackground] = useState('#f7f7f7')
   const [backgroundColor, setBackgroundColor] = useState(true)
   const db = firebase.firestore()
+
+  const [demo, setDemo] = useState({
+    backgroundColor: false,
+    backgroundRef: '',
+  })
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -44,6 +55,30 @@ export default function App() {
         })
     })
   }, [])
+
+  function handleSwitch(event) {
+    let bgRef = event.currentTarget.id
+    setDemo((prevDemo) => ({
+      backgroundColor: false,
+      backgroundRef: bgRef,
+    }))
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          backgroundColor: false,
+          background: bgRef,
+        })
+        .then(() => {
+          console.log(`切换背景到数据库${bgRef}`)
+        })
+        .catch((error) => {
+          console.log(`切换背景错误${error}`)
+        })
+    })
+  }
 
   return (
     <div>
@@ -126,7 +161,7 @@ export default function App() {
               <Home />
             </Route>
             <Route path="/setting/">
-              <Setting />
+              <Setting switchImgPreview={handleSwitch} />
             </Route>
             <Route path="/mission/">
               <Mission />
