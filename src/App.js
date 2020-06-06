@@ -20,14 +20,14 @@ import Mission from './components/Mission'
 import firebase from 'firebase'
 
 export default function App() {
-  const [background, setBackground] = useState('#f7f7f7')
-  const [backgroundColor, setBackgroundColor] = useState(true)
   const db = firebase.firestore()
 
+  const [customBg, setCustomBg] = useState([])
   const [demo, setDemo] = useState({
-    backgroundColor: false,
+    backgroundColor: true,
     backgroundRef: '',
   })
+  const [options, setOptions] = useState('Color')
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -38,9 +38,15 @@ export default function App() {
         .get()
         .then((doc) => {
           //如果用户保存过更改
+          if (doc.data().customBackground) {
+            setCustomBg(doc.data().customBackground)
+          }
           if (doc.data().background) {
-            setBackground(doc.data().background)
-            setBackgroundColor(doc.data().backgroundColor)
+            setDemo(() => ({
+              backgroundColor: doc.data().backgroundColor,
+              backgroundRef: doc.data().background,
+            }))
+            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
             //默认样式 灰色背景
           } else {
             db.collection('user')
@@ -53,12 +59,15 @@ export default function App() {
               })
           }
         })
+        .catch((error) => {
+          console.log(`读取用户保存的壁纸时出错了 ${error}`)
+        })
     })
   }, [])
 
   function handleSwitch(event) {
     let bgRef = event.currentTarget.id
-    setDemo((prevDemo) => ({
+    setDemo(() => ({
       backgroundColor: false,
       backgroundRef: bgRef,
     }))
@@ -80,16 +89,45 @@ export default function App() {
     })
   }
 
+  function handleColor(color, event) {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          backgroundColor: true,
+          background: color.hex,
+        })
+        .then(() => {
+          setDemo(() => ({
+            backgroundColor: true,
+            backgroundRef: color.hex,
+          }))
+          console.log(`主题色修改成功为${color.hex}`)
+        })
+        .catch((error) => {
+          console.log(`更改主题色时出错啦${error}`)
+        })
+    })
+  }
+
+  //渲染是以照片还是纯色模式为背景
+  const handleOptions = (event) => {
+    setOptions(event.target.value)
+    console.log(options)
+  }
+
   return (
     <div>
       <Router>
-        {backgroundColor ? (
+        {demo.backgroundColor ? (
           <div
-            style={{ backgroundColor: background }}
+            style={{ backgroundColor: demo.backgroundRef }}
             className="background"
           ></div>
         ) : (
-          <img className="background-image" src={background} />
+          <img className="background-image" src={demo.backgroundRef} />
         )}
 
         <div className="overlay"></div>
@@ -161,7 +199,14 @@ export default function App() {
               <Home />
             </Route>
             <Route path="/setting/">
-              <Setting switchImgPreview={handleSwitch} />
+              <Setting
+                demo={demo}
+                options={options}
+                customBg={customBg}
+                switchImgPreview={handleSwitch}
+                switchColorPreview={handleColor}
+                switchOption={handleOptions}
+              />
             </Route>
             <Route path="/mission/">
               <Mission />

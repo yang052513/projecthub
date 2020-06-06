@@ -11,7 +11,14 @@ export default function Apparence(props) {
         <p>Customize the apparence and preferrence</p>
       </div>
       <Theme />
-      <Background switchImgPreview={props.switchImgPreview} />
+      <Background
+        options={props.options}
+        demo={props.demo}
+        customBg={props.customBg}
+        switchImgPreview={props.switchImgPreview}
+        switchColorPreview={props.switchColorPreview}
+        switchOption={props.switchOption}
+      />
       <Opacity />
     </div>
   )

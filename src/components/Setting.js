@@ -10,7 +10,7 @@ import ChangeLog from './Setting/Changelog'
 
 function Setting(props) {
   let location = useLocation()
-  let currPath = useLocation().pathname
+
   const currPathStyle = {
     color: 'rgb(14,93,211)',
   }
@@ -20,31 +20,37 @@ function Setting(props) {
       <div className="setting-side-nav">
         <Link
           to="/setting/profile"
-          style={currPath === '/setting/profile' ? currPathStyle : null}
+          style={
+            location.pathname === '/setting/profile' ? currPathStyle : null
+          }
         >
           Profile
         </Link>
         <Link
           to="/setting/theme"
-          style={currPath === '/setting/theme' ? currPathStyle : null}
+          style={location.pathname === '/setting/theme' ? currPathStyle : null}
         >
           Apparence
         </Link>
         <Link
           to="/setting/language"
-          style={currPath === '/setting/language' ? currPathStyle : null}
+          style={
+            location.pathname === '/setting/language' ? currPathStyle : null
+          }
         >
           Language
         </Link>
         <Link
           to="/setting/about"
-          style={currPath === '/setting/about' ? currPathStyle : null}
+          style={location.pathname === '/setting/about' ? currPathStyle : null}
         >
           About
         </Link>
         <Link
           to="/setting/changelog"
-          style={currPath === '/setting/changelog' ? currPathStyle : null}
+          style={
+            location.pathname === '/setting/changelog' ? currPathStyle : null
+          }
         >
           Change Log
         </Link>
@@ -62,7 +68,14 @@ function Setting(props) {
                 <Profile />
               </Route>
               <Route path="/setting/theme">
-                <Apparence switchImgPreview={props.switchImgPreview} />
+                <Apparence
+                  options={props.options}
+                  demo={props.demo}
+                  customBg={props.customBg}
+                  switchImgPreview={props.switchImgPreview}
+                  switchColorPreview={props.switchColorPreview}
+                  switchOption={props.switchOption}
+                />
               </Route>
               <Route path="/setting/language">
                 <Language />

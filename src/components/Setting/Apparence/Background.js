@@ -27,25 +27,10 @@ export default function Background(props) {
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
 
-  const [customBg, setCustomBg] = useState([])
-  const [demo, setDemo] = useState({
-    backgroundColor: false,
-    backgroundRef: '',
-  })
-
-  const [options, setOptions] = useState('Color')
-
-  //渲染是以照片还是纯色模式为背景
-  const handleOptions = (event) => {
-    setOptions(event.target.value)
-    console.log(options)
-  }
-
   //更改背景图片
   function handleBgUpload() {
     setLoading(true)
     let file = document.getElementById('img-input').files[0]
-    //如果更改了照片
     if (file) {
       let metadata = {
         contentType: file.type,
@@ -75,32 +60,6 @@ export default function Background(props) {
     }
   }
 
-  //读取用户已经保存过的壁纸
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .get()
-        .then((doc) => {
-          if (doc.data().customBackground) {
-            setCustomBg(doc.data().customBackground)
-          }
-          if (doc.data().background) {
-            setDemo(() => ({
-              backgroundColor: doc.data().backgroundColor,
-              backgroundRef: doc.data().background,
-            }))
-            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
-          }
-        })
-        .catch((error) => {
-          console.log(`读取用户保存的壁纸时出错了 ${error}`)
-        })
-    })
-  }, [])
-
   function handleReload() {
     window.location.reload()
   }
@@ -109,58 +68,10 @@ export default function Background(props) {
     setError(false)
   }
 
-  //点击缩略图切换壁纸
-  function handleSwitch(event) {
-    let bgRef = event.currentTarget.id
-    setDemo((prevDemo) => ({
-      backgroundColor: false,
-      backgroundRef: bgRef,
-    }))
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          backgroundColor: false,
-          background: bgRef,
-        })
-        .then(() => {
-          console.log(`切换背景到数据库${bgRef}`)
-        })
-        .catch((error) => {
-          console.log(`切换背景错误${error}`)
-        })
-    })
-  }
-
-  function handleColor(color, event) {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          backgroundColor: true,
-          background: color.hex,
-        })
-        .then(() => {
-          setDemo(() => ({
-            backgroundColor: true,
-            backgroundRef: color.hex,
-          }))
-          console.log(`主题色修改成功为${color.hex}`)
-        })
-        .catch((error) => {
-          console.log(`更改主题色时出错啦${error}`)
-        })
-    })
-  }
-
   const customBgRender =
-    customBg.length === 0
+    props.customBg.length === 0
       ? null
-      : customBg.map((bg) => (
+      : props.customBg.map((bg) => (
           <img onClick={props.switchImgPreview} id={bg} key={bg} src={bg} />
         ))
 
@@ -196,8 +107,8 @@ export default function Background(props) {
         <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
         <Select
           native
-          value={options}
-          onChange={handleOptions}
+          value={props.options}
+          onChange={props.switchOption}
           label="Options"
           inputProps={{
             name: 'options',
@@ -209,51 +120,51 @@ export default function Background(props) {
       </FormControl>
 
       <div className="setting-content-background-demo">
-        {demo.backgroundColor ? (
+        {props.demo.backgroundColor ? (
           <div
-            style={{ backgroundColor: demo.backgroundRef }}
+            style={{ backgroundColor: props.demo.backgroundRef }}
             className="color-placeholder"
           ></div>
         ) : (
-          <img src={demo.backgroundRef} alt="preview demo placeholder" />
+          <img src={props.demo.backgroundRef} alt="preview demo placeholder" />
         )}
       </div>
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
-        {options === 'Color' ? (
+        {props.options === 'Color' ? (
           <div>
             <SwatchesPicker
               width={'600px'}
               height={'300px'}
-              onChange={handleColor}
+              onChange={props.switchColorPreview}
             />
           </div>
         ) : (
           <div>
             <img
               id="/images/theme/background/1.jpg"
-              onClick={handleSwitch}
+              onClick={props.switchImgPreview}
               src="/images/theme/background/1-demo.jpg"
             />
             <img
               id="/images/theme/background/2.jpg"
-              onClick={handleSwitch}
+              onClick={props.switchImgPreview}
               src="/images/theme/background/2-demo.jpg"
             />
             <img
               id="/images/theme/background/3.jpg"
-              onClick={handleSwitch}
+              onClick={props.switchImgPreview}
               src="/images/theme/background/3-demo.jpg"
             />
             <img
               id="/images/theme/background/4.jpg"
-              onClick={handleSwitch}
+              onClick={props.switchImgPreview}
               src="/images/theme/background/4-demo.jpg"
             />
             <img
               id="/images/theme/background/5.jpg"
-              onClick={handleSwitch}
+              onClick={props.switchImgPreview}
               src="/images/theme/background/5-demo.jpg"
             />
 
