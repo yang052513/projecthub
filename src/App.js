@@ -1,12 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {
-  Link,
-  Switch,
-  Route,
-  withRouter,
-  BrowserRouter as Router,
-} from 'react-router-dom'
+import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import firebase from 'firebase'
 import Home from './components/Home'
 import Setting from './components/Setting'
 import Status from './components/Status'
@@ -17,18 +12,18 @@ import Edit from './components/Edit'
 import Kanban from './components/Home/Kanban'
 import Mission from './components/Mission'
 
-import firebase from 'firebase'
-
 export default function App() {
   const db = firebase.firestore()
 
+  //全局样式化 全局同步
+  const [options, setOptions] = useState('Color')
   const [customBg, setCustomBg] = useState([])
   const [demo, setDemo] = useState({
     backgroundColor: true,
     backgroundRef: '',
   })
-  const [options, setOptions] = useState('Color')
 
+  //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
@@ -37,17 +32,18 @@ export default function App() {
         .doc('Apparence')
         .get()
         .then((doc) => {
-          //如果用户保存过更改
+          //如果用户保存过更改 上传过自己的壁纸
           if (doc.data().customBackground) {
             setCustomBg(doc.data().customBackground)
           }
+          //如果用户更改过壁纸
           if (doc.data().background) {
             setDemo(() => ({
               backgroundColor: doc.data().backgroundColor,
               backgroundRef: doc.data().background,
             }))
             setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
-            //默认样式 灰色背景
+            //设置为默认样式
           } else {
             db.collection('user')
               .doc(user.uid)
@@ -65,12 +61,20 @@ export default function App() {
     })
   }, [])
 
-  function handleSwitch(event) {
+  //渲染是以照片还是纯色模式为背景
+  const handleOptions = (event) => {
+    setOptions(event.target.value)
+    console.log(options)
+  }
+
+  //用户点击壁纸缩略图时更改实时预览demo
+  const handleSwitch = (event) => {
     let bgRef = event.currentTarget.id
     setDemo(() => ({
       backgroundColor: false,
       backgroundRef: bgRef,
     }))
+    //同时更新到数据库
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
@@ -89,7 +93,8 @@ export default function App() {
     })
   }
 
-  function handleColor(color, event) {
+  //用户点击卡色 写入数据库
+  const handleColor = (color, event) => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
         .doc(user.uid)
@@ -112,15 +117,10 @@ export default function App() {
     })
   }
 
-  //渲染是以照片还是纯色模式为背景
-  const handleOptions = (event) => {
-    setOptions(event.target.value)
-    console.log(options)
-  }
-
   return (
     <div>
       <Router>
+        {/* 全局样式更改 */}
         {demo.backgroundColor ? (
           <div
             style={{ backgroundColor: demo.backgroundRef }}
@@ -129,7 +129,6 @@ export default function App() {
         ) : (
           <img className="background-image" src={demo.backgroundRef} />
         )}
-
         <div className="overlay"></div>
 
         {/* 内容容器 */}

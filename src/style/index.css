@@ -815,6 +815,20 @@
           transform: scale(1.2);
 }
 
+.setting-container .setting-content-container .setting-content-background .setting-content-background-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 30px 0 10px 0;
+}
+
+.setting-container .setting-content-container .setting-content-background .setting-content-background-header .MuiOutlinedInput-input {
+  padding: 5px 15px;
+}
+
 .setting-container .setting-content-container .setting-content-background .setting-content-background-demo {
   margin-bottom: 20px;
 }

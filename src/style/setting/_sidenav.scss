@@ -83,6 +83,15 @@
       }
     }
     .setting-content-background {
+      .setting-content-background-header {
+        display: flex;
+        align-items: center;
+        margin: 30px 0 10px 0;
+        .MuiOutlinedInput-input {
+          padding: 5px 15px;
+        }
+      }
+
       .setting-content-background-demo {
         img,
         .color-placeholder {

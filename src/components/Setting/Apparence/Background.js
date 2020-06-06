@@ -4,6 +4,7 @@ import Progress from '../../Progress'
 import Feedback from '../../Feedback'
 import Loading from '../../Loading'
 import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+    padding: '0',
+  },
+  menuItem: {
+    fontSize: '13px',
   },
 }))
 
@@ -101,23 +106,25 @@ export default function Background(props) {
         </div>
       ) : null}
 
-      <h3 className="setting-content-subtit">Background</h3>
+      <div className="setting-content-background-header">
+        <h3 className="setting-content-subtit">Background</h3>
 
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
-        <Select
-          native
-          value={props.options}
-          onChange={props.switchOption}
-          label="Options"
-          inputProps={{
-            name: 'options',
-          }}
-        >
-          <option value={'Color'}>Color</option>
-          <option value={'Images'}>Images</option>
-        </Select>
-      </FormControl>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
+          <Select
+            value={props.options}
+            onChange={props.switchOption}
+            label="Options"
+          >
+            <MenuItem className={classes.menuItem} value={'Color'}>
+              Color
+            </MenuItem>
+            <MenuItem className={classes.menuItem} value={'Images'}>
+              Images
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </div>
 
       <div className="setting-content-background-demo">
         {props.demo.backgroundColor ? (
