@@ -10,7 +10,7 @@ export default function Apparence(props) {
         <h2>Apparence</h2>
         <p>Customize the apparence and preferrence</p>
       </div>
-      <Theme />
+      <Theme switchTheme={props.switchTheme} />
       <Background
         options={props.options}
         demo={props.demo}

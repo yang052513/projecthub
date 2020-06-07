@@ -75,6 +75,7 @@ function Setting(props) {
                   switchImgPreview={props.switchImgPreview}
                   switchColorPreview={props.switchColorPreview}
                   switchOption={props.switchOption}
+                  switchTheme={props.switchTheme}
                 />
               </Route>
               <Route path="/setting/language">

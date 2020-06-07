@@ -15,7 +15,12 @@ import Mission from './components/Mission'
 export default function App() {
   const db = firebase.firestore()
 
-  //全局样式化 全局同步
+  //全局样式化
+
+  //侧边导航栏样式
+  const [theme, setTheme] = useState('')
+
+  //背景样式
   const [options, setOptions] = useState('Color')
   const [customBg, setCustomBg] = useState([])
   const [demo, setDemo] = useState({
@@ -32,11 +37,13 @@ export default function App() {
         .doc('Apparence')
         .get()
         .then((doc) => {
-          //如果用户保存过更改 上传过自己的壁纸
-          if (doc.data().customBackground) {
-            setCustomBg(doc.data().customBackground)
+          //侧边导航栏theme
+          if (doc.data().theme) {
+            setTheme(doc.data().theme)
+          } else {
+            setTheme('#0e5dd3')
           }
-          //如果用户更改过壁纸
+          //壁纸
           if (doc.data().background) {
             setDemo(() => ({
               backgroundColor: doc.data().backgroundColor,
@@ -54,12 +61,37 @@ export default function App() {
                 backgroundColor: true,
               })
           }
+          //如果用户保存过更改 上传过自己的壁纸
+          if (doc.data().customBackground) {
+            setCustomBg(doc.data().customBackground)
+          }
         })
         .catch((error) => {
           console.log(`读取用户保存的壁纸时出错了 ${error}`)
         })
     })
   }, [])
+
+  //颜色有更改时 写入到数据库
+  const handleTheme = (color, event) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          theme: color.hex,
+        })
+        .then(() => {
+          setTheme(color.hex)
+          console.log(`主题色修改成功为${color.hex}`)
+        })
+        .catch((error) => {
+          console.log(`更改主题色时出错啦${error}`)
+        })
+    })
+    console.log('cao')
+  }
 
   //渲染是以照片还是纯色模式为背景
   const handleOptions = (event) => {
@@ -136,7 +168,7 @@ export default function App() {
           <img className="logo" src="/images/logo.png" />
 
           {/* 侧边导航栏 */}
-          <div className="navbar">
+          <div className="navbar" style={{ backgroundColor: theme }}>
             <Link to="/">
               <i className="fas fa-home"></i>
             </Link>
@@ -205,6 +237,7 @@ export default function App() {
                 switchImgPreview={handleSwitch}
                 switchColorPreview={handleColor}
                 switchOption={handleOptions}
+                switchTheme={handleTheme}
               />
             </Route>
             <Route path="/mission/">
