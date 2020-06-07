@@ -5,7 +5,6 @@ import firebase from 'firebase'
 function Project(props) {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
-  const [sort, setSort] = useState([])
 
   //初始化从数据库读取所有项目
   useEffect(() => {
@@ -13,7 +12,6 @@ function Project(props) {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
-        // .orderBy('projectData.Name', 'asc')
         .get()
         .then((collection) => {
           collection.forEach((doc) => {
@@ -23,6 +21,7 @@ function Project(props) {
     })
   }, [])
 
+  //分类排序项目
   useEffect(() => {
     const sortedProject = project.sort((a, b) => {
       if (props.sort === 'Name') {
@@ -35,35 +34,19 @@ function Project(props) {
         return a.projectData.Date < b.projectData.Date ? -1 : 1
       }
     })
-    setSort(sortedProject)
-    console.log(sort)
+    setProject(sortedProject)
   }, [props.sort])
 
-  //一层: 分类项目
-  const sortedProject = project.sort((a, b) => {
-    if (props.sort === 'Name') {
-      return a.projectData.Name < b.projectData.Name ? -1 : 1
-    } else if (props.sort === 'Status') {
-      return a.projectData.Status < b.projectData.Status ? -1 : 1
-    } else if (props.sort === 'Newest') {
-      return a.projectData.Date < b.projectData.Date ? 1 : -1
-    } else if (props.sort === 'Oldest') {
-      return a.projectData.Date < b.projectData.Date ? -1 : 1
-    }
-  })
-
-  //二层: 渲染搜索的项目 初始化为0
-  const searchedProject = sortedProject.filter((item) =>
-    item.projectData.Name.includes(props.search)
-  )
-
-  //三层: 选择想渲染的项目
-  const selectedProject = searchedProject
+  //根据用户选择筛选相关项目
+  const renderProject = project
     .filter((item) => {
       if (props.filter === 'All My Projects') {
-        return item
+        return item.projectData.Name.includes(props.search)
       } else {
-        return item.projectData.Status === props.filter
+        return (
+          item.projectData.Status === props.filter &&
+          item.projectData.Name.includes(props.search)
+        )
       }
     })
     .map((project) => (
@@ -74,21 +57,7 @@ function Project(props) {
       />
     ))
 
-  // console.log(selectedProject.length)
-  // console.log(sort)
-  let noResult = selectedProject.length
-  return (
-    <div className="project-card-container">
-      {noResult === 0 ? (
-        <div className="project-no-result-container">
-          <p>It seems like no such projects...</p>
-          <img src="/images/noresult.png" />
-        </div>
-      ) : (
-        selectedProject
-      )}
-    </div>
-  )
+  return <div className="project-card-container">{renderProject}</div>
 }
 
 export default Project

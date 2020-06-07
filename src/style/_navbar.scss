@@ -13,6 +13,7 @@ $logoSize: 50px;
 .navbar {
   @include navbarStyle(grid, center, center, $sideNavPadding, $sideNavWidth);
   grid-template-rows: repeat(10, $sideNavIconDist);
+  transition: all 2s;
   a {
     color: white;
   }

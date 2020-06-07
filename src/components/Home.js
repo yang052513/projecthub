@@ -28,9 +28,8 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles()
 
-  const [status, setStatus] = useState('All My Projects')
   const [sort, setSort] = useState('Name')
-
+  const [status, setStatus] = useState('All My Projects')
   const [search, setSearch] = useState('')
 
   function handleStatus(event) {
