@@ -190,12 +190,20 @@ export default function App() {
         {/* 全局样式更改 */}
         {demo.backgroundColor ? (
           <div
-            style={{ backgroundColor: demo.backgroundRef }}
+            style={{
+              backgroundColor: demo.backgroundRef,
+              transition: 'all 2s',
+            }}
             className="background"
           ></div>
         ) : (
-          <img className="background-image" src={demo.backgroundRef} />
+          <div
+            style={{ backgroundImage: `url(${demo.backgroundRef})` }}
+            className="background-img"
+          ></div>
+          // <img className="background-image" src={demo.backgroundRef} />
         )}
+        {/* <div className="background-img"></div> */}
         <div
           className="overlay"
           style={{ opacity: opacity.background / 100 }}
