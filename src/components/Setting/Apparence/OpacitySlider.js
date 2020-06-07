@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Slider from '@material-ui/core/Slider'
-import firebase from 'firebase'
 
 const useStyles = makeStyles({
   root: {
@@ -9,35 +8,8 @@ const useStyles = makeStyles({
   },
 })
 
-export default function InputSlider() {
+export default function OpacitySlider(props) {
   const classes = useStyles()
-  const db = firebase.firestore()
-
-  const [opacity, setOpacity] = useState({
-    sidebar: 100,
-    topbar: 100,
-    card: 100,
-    background: 100,
-  })
-
-  const handleOpacity = (name) => (event, value) => {
-    setOpacity((prevOpacity) => ({
-      ...prevOpacity,
-      [name]: value,
-    }))
-  }
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          opacity,
-        })
-    })
-  }, [opacity])
 
   return (
     <div className={classes.root}>
@@ -45,8 +17,8 @@ export default function InputSlider() {
         <p>Side Bar</p>
         <Slider
           name="sidebar"
-          value={opacity.sidebar}
-          onChange={handleOpacity('sidebar')}
+          value={props.opacity.sidebar}
+          onChange={props.switchOpacity('sidebar')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -55,8 +27,8 @@ export default function InputSlider() {
         <p>Top Bar</p>
         <Slider
           name="topbar"
-          value={opacity.topbar}
-          onChange={handleOpacity('topbar')}
+          value={props.opacity.topbar}
+          onChange={props.switchOpacity('topbar')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -65,8 +37,8 @@ export default function InputSlider() {
         <p>Project Card</p>
         <Slider
           name="card"
-          value={opacity.card}
-          onChange={handleOpacity('card')}
+          value={props.opacity.card}
+          onChange={props.switchOpacity('card')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -75,8 +47,8 @@ export default function InputSlider() {
         <p>Background</p>
         <Slider
           name="background"
-          value={opacity.background}
-          onChange={handleOpacity('background')}
+          value={props.opacity.background}
+          onChange={props.switchOpacity('background')}
           aria-labelledby="input-slider"
         />
       </div>

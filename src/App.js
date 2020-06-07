@@ -28,6 +28,14 @@ export default function App() {
     backgroundRef: '',
   })
 
+  //透明度样式
+  const [opacity, setOpacity] = useState({
+    sidebar: 100,
+    topbar: 100,
+    card: 100,
+    background: 100,
+  })
+
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -64,6 +72,17 @@ export default function App() {
           //如果用户保存过更改 上传过自己的壁纸
           if (doc.data().customBackground) {
             setCustomBg(doc.data().customBackground)
+          }
+          if (doc.data().opacity) {
+            setOpacity(doc.data().opacity)
+          } else {
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Setting')
+              .doc('Apparence')
+              .update({
+                opacity,
+              })
           }
         })
         .catch((error) => {
@@ -149,6 +168,24 @@ export default function App() {
     })
   }
 
+  //更改透明度
+  const handleOpacity = (name) => (event, value) => {
+    setOpacity((prevOpacity) => ({
+      ...prevOpacity,
+      [name]: value,
+    }))
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Setting')
+        .doc('Apparence')
+        .update({
+          opacity,
+        })
+    })
+    console.log(opacity)
+  }
+
   return (
     <div>
       <Router>
@@ -168,7 +205,10 @@ export default function App() {
           <img className="logo" src="/images/logo.png" />
 
           {/* 侧边导航栏 */}
-          <div className="navbar" style={{ backgroundColor: theme }}>
+          <div
+            className="navbar"
+            style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
+          >
             <Link to="/">
               <i className="fas fa-home"></i>
             </Link>
@@ -234,10 +274,12 @@ export default function App() {
                 demo={demo}
                 options={options}
                 customBg={customBg}
+                opacity={opacity}
                 switchImgPreview={handleSwitch}
                 switchColorPreview={handleColor}
                 switchOption={handleOptions}
                 switchTheme={handleTheme}
+                swicthOpacity={handleOpacity}
               />
             </Route>
             <Route path="/mission/">

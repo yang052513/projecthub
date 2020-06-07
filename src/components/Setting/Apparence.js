@@ -19,7 +19,7 @@ export default function Apparence(props) {
         switchColorPreview={props.switchColorPreview}
         switchOption={props.switchOption}
       />
-      <Opacity />
+      <Opacity opacity={props.opacity} swicthOpacity={props.swicthOpacity} />
     </div>
   )
 }

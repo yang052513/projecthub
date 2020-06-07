@@ -72,10 +72,12 @@ function Setting(props) {
                   options={props.options}
                   demo={props.demo}
                   customBg={props.customBg}
+                  opacity={props.opacity}
                   switchImgPreview={props.switchImgPreview}
                   switchColorPreview={props.switchColorPreview}
                   switchOption={props.switchOption}
                   switchTheme={props.switchTheme}
+                  swicthOpacity={props.swicthOpacity}
                 />
               </Route>
               <Route path="/setting/language">
