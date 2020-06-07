@@ -16,7 +16,6 @@ export default function App() {
   const db = firebase.firestore()
 
   //全局样式化
-
   //侧边导航栏样式
   const [theme, setTheme] = useState('')
 
@@ -33,7 +32,7 @@ export default function App() {
     sidebar: 100,
     topbar: 100,
     card: 100,
-    background: 100,
+    background: 50,
   })
 
   //初始化读取数据库 判断用户是否有过记录
@@ -183,7 +182,6 @@ export default function App() {
           opacity,
         })
     })
-    console.log(opacity)
   }
 
   return (
@@ -198,7 +196,10 @@ export default function App() {
         ) : (
           <img className="background-image" src={demo.backgroundRef} />
         )}
-        <div className="overlay"></div>
+        <div
+          className="overlay"
+          style={{ opacity: opacity.background / 100 }}
+        ></div>
 
         {/* 内容容器 */}
         <div className="content-container">
@@ -257,7 +258,10 @@ export default function App() {
           </div>
 
           {/* 顶部菜单栏 */}
-          <div className="user-navbar">
+          <div
+            className="user-navbar"
+            style={{ opacity: opacity.topbar / 100 }}
+          >
             <h2>Project Dashboard</h2>
             <div className="user-navbar-icon">
               <i className="fas fa-inbox"></i>

@@ -679,7 +679,7 @@
 .setting-container .setting-side-nav a {
   display: block;
   font-family: raleway;
-  color: #949494;
+  color: black;
   margin-bottom: 20px;
   font-size: 16px;
   text-align: right;
@@ -826,7 +826,7 @@
 }
 
 .setting-container .setting-content-container .setting-content-background .setting-content-background-header .MuiOutlinedInput-input {
-  padding: 5px 15px;
+  padding: 10px 15px;
 }
 
 .setting-container .setting-content-container .setting-content-background .setting-content-background-demo {
