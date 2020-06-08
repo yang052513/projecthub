@@ -2,13 +2,20 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import firebase from 'firebase'
+
+//所有主组件
 import Home from './components/Home'
-import Setting from './components/Setting'
 import Status from './components/Status'
 import Explore from './components/Explore'
+import Group from './components/Group'
 import Mission from './components/Mission'
-
+import Friends from './components/Friends'
+import Moment from './components/Moment'
+import Setting from './components/Setting'
+import FAQ from './components/FAQ'
 import CreateProject from './components/Common/CreateProject'
+
+//导航，副组件根据ref来决定渲染内容
 import ProfileMenu from './components/Navigation/ProfileMenu'
 import Edit from './components/Common/Edit'
 import Kanban from './components/Home/Kanban'
@@ -227,7 +234,6 @@ export default function App() {
           className="navbar"
           style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
         >
-          {/* 做完了 */}
           <Link to="/">
             <i
               style={currRoute === '/' ? currLinkStyle : null}
@@ -263,9 +269,9 @@ export default function App() {
             ></i>
           </Link>
           {/* 显示所有的用户 并可以搜寻 加好友 */}
-          <Link to="/users">
+          <Link to="/friends">
             <i
-              style={currRoute === '/users' ? currLinkStyle : null}
+              style={currRoute === '/friends' ? currLinkStyle : null}
               className="fas fa-user-friends"
             ></i>
           </Link>
@@ -325,8 +331,17 @@ export default function App() {
           <Route path="/explore">
             <Explore />
           </Route>
+          <Route path="/group">
+            <Group />
+          </Route>
           <Route path="/mission/">
             <Mission />
+          </Route>
+          <Route path="/friends">
+            <Friends />
+          </Route>
+          <Route path="/moment">
+            <Moment />
           </Route>
           <Route path="/setting/">
             <Setting
@@ -341,9 +356,14 @@ export default function App() {
               swicthOpacity={handleOpacity}
             />
           </Route>
+          <Route path="/faq">
+            <FAQ />
+          </Route>
           <Route path="/create">
             <CreateProject />
           </Route>
+
+          {/* 其他route 根据相关ref渲染 */}
           <Route path="/edit/:ref">
             <Edit />
           </Route>
