@@ -20,6 +20,11 @@ $dropped: rgb(128, 128, 128);
   background-color: $sideNavBg;
   i {
     font-size: $sideNavIconSize;
+    width: 23px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.5s;
 
     &:hover {

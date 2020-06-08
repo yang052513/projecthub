@@ -1,6 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link, Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import {
+  Link,
+  Switch,
+  Route,
+  useLocation,
+  BrowserRouter as Router,
+} from 'react-router-dom'
 import firebase from 'firebase'
 import Home from './components/Home'
 import Setting from './components/Setting'
@@ -15,6 +21,17 @@ import Kanban from './components/Home/Kanban'
 
 export default function App() {
   const db = firebase.firestore()
+
+  //用户当前所在的route
+  const currRoute = useLocation().pathname
+
+  // active css style 当前所在的route对应的nav icon样式化
+  const currLinkStyle = {
+    backgroundColor: 'white',
+    color: 'rgb(14, 93, 211)',
+    padding: '5px',
+    borderRadius: '50%',
+  }
 
   //全局样式化
   //侧边导航栏样式
@@ -109,7 +126,6 @@ export default function App() {
           console.log(`更改主题色时出错啦${error}`)
         })
     })
-    console.log('cao')
   }
 
   //渲染是以照片还是纯色模式为背景
@@ -187,135 +203,163 @@ export default function App() {
 
   return (
     <div>
-      <Router>
-        {/* 全局样式更改 */}
-        {demo.backgroundColor ? (
-          <div
-            style={{
-              backgroundColor: demo.backgroundRef,
-              transition: 'all 2s',
-            }}
-            className="background"
-          ></div>
-        ) : (
-          <div
-            style={{ backgroundImage: `url(${demo.backgroundRef})` }}
-            className="background-img"
-          ></div>
-          // <img className="background-image" src={demo.backgroundRef} />
-        )}
-        {/* <div className="background-img"></div> */}
+      {/* <Router> */}
+      {/* 全局样式更改 */}
+      {demo.backgroundColor ? (
         <div
-          className="overlay"
-          style={{ opacity: opacity.background / 100 }}
+          style={{
+            backgroundColor: demo.backgroundRef,
+            transition: 'all 2s',
+          }}
+          className="background"
         ></div>
+      ) : (
+        <div
+          style={{ backgroundImage: `url(${demo.backgroundRef})` }}
+          className="background-img"
+        ></div>
+      )}
+      {/* 背景图片前置透明板 */}
+      <div
+        className="overlay"
+        style={{ opacity: opacity.background / 100 }}
+      ></div>
 
-        {/* 内容容器 */}
-        <div className="content-container">
-          <img className="logo" src="/images/logo.png" />
+      {/* 内容容器 */}
+      <div className="content-container">
+        <img className="logo" src="/images/logo.png" />
 
-          {/* 侧边导航栏 */}
-          <div
-            className="navbar"
-            style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
-          >
-            <Link to="/">
-              <i className="fas fa-home"></i>
-            </Link>
-            <Link to="/status">
-              <i className="fas fa-tachometer-alt"></i>
-            </Link>
-            <Link to="/explore">
-              <i className="fab fa-wpexplorer"></i>
-            </Link>
-
-            {/* 显示所有的用户 并可以搜寻 加好友 */}
-            <Link to="/users">
-              <i className="fas fa-user-friends"></i>
-            </Link>
-
-            {/* 动态类似朋友圈 */}
-            <Link to="/moment">
-              <i className="far fa-clock"></i>
-            </Link>
-
-            {/* 项目大厅 这里展示的是想找人一起的 加一个按钮可以发布 */}
-            <Link to="/explore">
-              <i className="far fa-calendar-alt"></i>
-            </Link>
-
-            <Link to="/setting/profile">
-              <i className="fas fa-sliders-h"></i>
-            </Link>
-
-            {/* 软件疑难解答 加一个机器人 */}
-            <Link to="/explore">
-              <i className="far fa-question-circle"></i>
-            </Link>
-
-            {/* 系统随机分配的任务 */}
-            <Link to="/mission">
-              <i className="fas fa-book"></i>
-            </Link>
-            <Link to="/create">
-              <i className="fas fa-feather"></i>
-            </Link>
-
-            <Link to="/explore">
-              <i className="fas fa-sign-out-alt"></i>
-            </Link>
-          </div>
-
-          {/* 顶部菜单栏 */}
-          <div
-            className="user-navbar"
-            style={{ opacity: opacity.topbar / 100 }}
-          >
-            <h2>Project Dashboard</h2>
-            <div className="user-navbar-icon">
-              <i className="fas fa-inbox"></i>
-              <i className="fas fa-bell"></i>
-              <ProfileMenu />
-            </div>
-          </div>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/setting/">
-              <Setting
-                demo={demo}
-                options={options}
-                customBg={customBg}
-                opacity={opacity}
-                switchImgPreview={handleSwitch}
-                switchColorPreview={handleColor}
-                switchOption={handleOptions}
-                switchTheme={handleTheme}
-                swicthOpacity={handleOpacity}
-              />
-            </Route>
-            <Route path="/mission/">
-              <Mission />
-            </Route>
-            <Route path="/status">
-              <Status />
-            </Route>
-            <Route path="/explore">
-              <Explore />
-            </Route>
-            <Route path="/create">
-              <CreateProject />
-            </Route>
-            <Route path="/edit/:ref">
-              <Edit />
-            </Route>
-            <Route path="/kanban/:ref">
-              <Kanban />
-            </Route>
-          </Switch>
+        {/* 侧边导航栏 */}
+        <div
+          className="navbar"
+          style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
+        >
+          {/* 做完了 */}
+          <Link to="/">
+            <i
+              style={currRoute === '/' ? currLinkStyle : null}
+              className="fas fa-home"
+            ></i>
+          </Link>
+          {/* 个人项目统计 */}
+          <Link to="/status">
+            <i
+              style={currRoute === '/status' ? currLinkStyle : null}
+              className="fas fa-tachometer-alt"
+            ></i>
+          </Link>
+          {/* 所有公开项目 */}
+          <Link to="/explore">
+            <i
+              style={currRoute === '/explore' ? currLinkStyle : null}
+              className="fab fa-wpexplorer"
+            ></i>
+          </Link>
+          {/* 项目大厅 这里展示的是想找人一起的 加一个按钮可以发布 */}
+          <Link to="/group">
+            <i
+              style={currRoute === '/group' ? currLinkStyle : null}
+              className="far fa-calendar-alt"
+            ></i>
+          </Link>
+          {/* 系统随机分配的任务 */}
+          <Link to="/mission">
+            <i
+              style={currRoute === '/mission' ? currLinkStyle : null}
+              className="fas fa-book"
+            ></i>
+          </Link>
+          {/* 显示所有的用户 并可以搜寻 加好友 */}
+          <Link to="/users">
+            <i
+              style={currRoute === '/users' ? currLinkStyle : null}
+              className="fas fa-user-friends"
+            ></i>
+          </Link>
+          {/* 动态类似朋友圈 */}
+          <Link to="/moment">
+            <i
+              style={currRoute === '/moment' ? currLinkStyle : null}
+              className="far fa-clock"
+            ></i>
+          </Link>
+          {/* 设置页面 */}
+          <Link to="/setting/profile">
+            <i
+              style={currRoute === '/setting/profile' ? currLinkStyle : null}
+              className="fas fa-sliders-h"
+            ></i>
+          </Link>
+          {/* 软件疑难解答 加一个机器人 */}
+          <Link to="/faq">
+            <i
+              style={currRoute === '/faq' ? currLinkStyle : null}
+              className="far fa-question-circle"
+            ></i>
+          </Link>
+          {/* 创建新的项目 */}
+          <Link to="/create">
+            <i
+              style={currRoute === '/create' ? currLinkStyle : null}
+              className="fas fa-feather"
+            ></i>
+          </Link>
+          {/* 退出 */}
+          <Link to="/explore">
+            <i
+              style={currRoute === '/explore' ? currLinkStyle : null}
+              className="fas fa-sign-out-alt"
+            ></i>
+          </Link>
         </div>
-      </Router>
+
+        {/* 顶部菜单栏 */}
+        <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
+          <h2>Project Dashboard</h2>
+          <div className="user-navbar-icon">
+            <i className="fas fa-inbox"></i>
+            <i className="fas fa-bell"></i>
+            <ProfileMenu />
+          </div>
+        </div>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/setting/">
+            <Setting
+              demo={demo}
+              options={options}
+              customBg={customBg}
+              opacity={opacity}
+              switchImgPreview={handleSwitch}
+              switchColorPreview={handleColor}
+              switchOption={handleOptions}
+              switchTheme={handleTheme}
+              swicthOpacity={handleOpacity}
+            />
+          </Route>
+          <Route path="/mission/">
+            <Mission />
+          </Route>
+          <Route path="/status">
+            <Status />
+          </Route>
+          <Route path="/explore">
+            <Explore />
+          </Route>
+          <Route path="/create">
+            <CreateProject />
+          </Route>
+          <Route path="/edit/:ref">
+            <Edit />
+          </Route>
+          <Route path="/kanban/:ref">
+            <Kanban />
+          </Route>
+        </Switch>
+      </div>
+      {/* </Router> */}
     </div>
   )
 }

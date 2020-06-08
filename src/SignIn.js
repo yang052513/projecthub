@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import App from './App'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -60,7 +61,11 @@ class SignIn extends Component {
       )
     } else {
       //登录后app界面
-      return <App />
+      return (
+        <Router>
+          <App />
+        </Router>
+      )
     }
   }
 }
