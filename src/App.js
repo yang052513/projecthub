@@ -22,17 +22,6 @@ import Kanban from './components/Home/Kanban'
 export default function App() {
   const db = firebase.firestore()
 
-  //用户当前所在的route
-  const currRoute = useLocation().pathname
-
-  // active css style 当前所在的route对应的nav icon样式化
-  const currLinkStyle = {
-    backgroundColor: 'white',
-    color: 'rgb(14, 93, 211)',
-    padding: '5px',
-    borderRadius: '50%',
-  }
-
   //全局样式化
   //侧边导航栏样式
   const [theme, setTheme] = useState('')
@@ -107,6 +96,17 @@ export default function App() {
         })
     })
   }, [])
+
+  //用户当前所在的route
+  const currRoute = useLocation().pathname
+
+  // active css style 当前所在的route对应的nav icon样式化
+  const currLinkStyle = {
+    backgroundColor: 'white',
+    color: `${theme}`,
+    padding: '5px',
+    borderRadius: '50%',
+  }
 
   //颜色有更改时 写入到数据库
   const handleTheme = (color, event) => {
@@ -203,7 +203,6 @@ export default function App() {
 
   return (
     <div>
-      {/* <Router> */}
       {/* 全局样式更改 */}
       {demo.backgroundColor ? (
         <div
@@ -286,7 +285,7 @@ export default function App() {
           {/* 设置页面 */}
           <Link to="/setting/profile">
             <i
-              style={currRoute === '/setting/profile' ? currLinkStyle : null}
+              style={currRoute === `/setting/profile` ? currLinkStyle : null}
               className="fas fa-sliders-h"
             ></i>
           </Link>
@@ -305,9 +304,9 @@ export default function App() {
             ></i>
           </Link>
           {/* 退出 */}
-          <Link to="/explore">
+          <Link to="/noidea">
             <i
-              style={currRoute === '/explore' ? currLinkStyle : null}
+              style={currRoute === '/noidea' ? currLinkStyle : null}
               className="fas fa-sign-out-alt"
             ></i>
           </Link>
@@ -326,6 +325,15 @@ export default function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/status">
+            <Status />
+          </Route>
+          <Route path="/explore">
+            <Explore />
+          </Route>
+          <Route path="/mission/">
+            <Mission />
+          </Route>
           <Route path="/setting/">
             <Setting
               demo={demo}
@@ -339,15 +347,6 @@ export default function App() {
               swicthOpacity={handleOpacity}
             />
           </Route>
-          <Route path="/mission/">
-            <Mission />
-          </Route>
-          <Route path="/status">
-            <Status />
-          </Route>
-          <Route path="/explore">
-            <Explore />
-          </Route>
           <Route path="/create">
             <CreateProject />
           </Route>
@@ -359,7 +358,6 @@ export default function App() {
           </Route>
         </Switch>
       </div>
-      {/* </Router> */}
     </div>
   )
 }

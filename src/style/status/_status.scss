@@ -1,0 +1,12 @@
+.project-status-container {
+  border: 1px solid black;
+  @include flexCenter(space-evenly);
+  background-color: white;
+  border-radius: 25px;
+  padding: 20px 0;
+  width: 85%;
+  margin: 0 auto;
+  .project-status-item-container {
+    text-align: center;
+  }
+}
