@@ -1,12 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {
-  Link,
-  Switch,
-  Route,
-  useLocation,
-  BrowserRouter as Router,
-} from 'react-router-dom'
+import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import firebase from 'firebase'
 import Home from './components/Home'
 import Setting from './components/Setting'

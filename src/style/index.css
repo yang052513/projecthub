@@ -669,7 +669,6 @@
 }
 
 .project-status-container {
-  border: 1px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -688,6 +687,11 @@
 
 .project-status-container .project-status-item-container {
   text-align: center;
+}
+
+.project-status-container .project-status-item-container p {
+  margin: 20px 0 0 0;
+  font-size: 20px;
 }
 
 .setting-container {
