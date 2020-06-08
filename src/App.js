@@ -6,11 +6,12 @@ import Home from './components/Home'
 import Setting from './components/Setting'
 import Status from './components/Status'
 import Explore from './components/Explore'
-import CreateProject from './components/CreateProject'
-import ProfileMenu from './components/ProfileMenu'
-import Edit from './components/Edit'
-import Kanban from './components/Home/Kanban'
 import Mission from './components/Mission'
+
+import CreateProject from './components/Common/CreateProject'
+import ProfileMenu from './components/Navigation/ProfileMenu'
+import Edit from './components/Common/Edit'
+import Kanban from './components/Home/Kanban'
 
 export default function App() {
   const db = firebase.firestore()

@@ -8,6 +8,7 @@ import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
+
 import Feedback from './Feedback'
 import Progress from './Progress'
 

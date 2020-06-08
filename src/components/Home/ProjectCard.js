@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import EditMenu from './EditMenu'
 
 const inProgress = 'rgb(67, 219, 118)'

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { CirclePicker } from 'react-color'
 import firebase from 'firebase'
 

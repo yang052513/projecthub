@@ -5,8 +5,8 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
-import Feedback from '../Feedback'
-import Progress from '../Progress'
+import Feedback from '../Common/Feedback'
+import Progress from '../Common/Progress'
 
 const useStyles = makeStyles({
   root: {

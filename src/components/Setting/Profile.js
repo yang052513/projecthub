@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import Progress from '../Progress'
-import Feedback from '../Feedback'
-import Loading from '../Loading'
+import Progress from '../Common/Progress'
+import Feedback from '../Common/Feedback'
+import Loading from '../Common/Loading'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProjectCard from './ProjectCard'
 import firebase from 'firebase'
-import Loading from '../Loading'
+import Loading from '../Common/Loading'
 
 function Project(props) {
   const db = firebase.firestore()
