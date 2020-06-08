@@ -76,7 +76,13 @@ export default function Background(props) {
     props.customBg.length === 0
       ? null
       : props.customBg.map((bg) => (
-          <img onClick={props.switchImgPreview} id={bg} key={bg} src={bg} />
+          <img
+            onClick={props.switchImgPreview}
+            id={bg}
+            key={bg}
+            src={bg}
+            alt=""
+          />
         ))
 
   return (
@@ -152,26 +158,31 @@ export default function Background(props) {
               id="/images/theme/background/1.jpg"
               onClick={props.switchImgPreview}
               src="/images/theme/background/1-demo.jpg"
+              alt=""
             />
             <img
               id="/images/theme/background/2.jpg"
               onClick={props.switchImgPreview}
               src="/images/theme/background/2-demo.jpg"
+              alt=""
             />
             <img
               id="/images/theme/background/3.jpg"
               onClick={props.switchImgPreview}
               src="/images/theme/background/3-demo.jpg"
+              alt=""
             />
             <img
               id="/images/theme/background/4.jpg"
               onClick={props.switchImgPreview}
               src="/images/theme/background/4-demo.jpg"
+              alt=""
             />
             <img
               id="/images/theme/background/5.jpg"
               onClick={props.switchImgPreview}
               src="/images/theme/background/5-demo.jpg"
+              alt=""
             />
 
             {/* 用户已经上传的壁纸 */}

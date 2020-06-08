@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import Button from '@material-ui/core/Button'
@@ -35,20 +35,18 @@ export default function SimpleMenu() {
     setLogout(true)
   }
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Profile')
-        .get()
-        .then((doc) => {
-          if (doc.data().avatar) {
-            setAvatar(doc.data().avatar)
-          }
-        })
-    })
-  }, [])
+  firebase.auth().onAuthStateChanged((user) => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Profile')
+      .get()
+      .then((doc) => {
+        if (doc.data().avatar) {
+          setAvatar(doc.data().avatar)
+        }
+      })
+  })
 
   return (
     <div>

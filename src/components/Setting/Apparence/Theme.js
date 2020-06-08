@@ -1,10 +1,7 @@
 import React from 'react'
 import { CirclePicker } from 'react-color'
-import firebase from 'firebase'
 
 export default function Theme(props) {
-  const db = firebase.firestore()
-
   return (
     <div className="setting-content-theme">
       <h3 className="setting-content-subtit">Theme</h3>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Switch, Route, useLocation, withRouter } from 'react-router-dom'
+import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Profile from './Setting/Profile'

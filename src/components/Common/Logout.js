@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
-import Particle from './Particle'
+// import Particle from './Particle'
 
 function Logout() {
   const db = firebase.firestore()
