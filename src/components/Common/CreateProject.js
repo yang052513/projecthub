@@ -44,9 +44,45 @@ export default function CreateProject() {
 
   //当前的时间 年-月-日格式
   const date = new Date()
+  let month
   const currentDay = `${date.getFullYear()}-${
     date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
   }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
+
+  switch (date.getMonth()) {
+    case 0:
+      month = 'Jan'
+      break
+    case 1:
+      month = 'Feb'
+      break
+    case 2:
+      month = 'Mar'
+    case 3:
+      month = 'Apr'
+    case 4:
+      month = 'May'
+    case 5:
+      month = 'June'
+    case 6:
+      month = 'July'
+    case 7:
+      month = 'Aug'
+    case 8:
+      month = 'Sep'
+    case 9:
+      month = 'Oct'
+    case 10:
+      month = 'Nov'
+    case 11:
+      month = 'Dec'
+  }
+
+  const currentTime = `${month} ${
+    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+  } ${date.getHours()}:${
+    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+  }`
 
   const [textInput, setTextInput] = useState({
     projectName: '',
@@ -126,6 +162,7 @@ export default function CreateProject() {
           Status: status,
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
+
         firebase.auth().onAuthStateChanged((user) => {
           //获取当前用户的头像
           let userProfile
@@ -145,6 +182,16 @@ export default function CreateProject() {
             })
             .then((docRef) => {
               // console.log(docRef.id)
+
+              //写入到日志中
+              db.collection('user')
+                .doc(user.uid)
+                .collection('Activity')
+                .add({
+                  Key: docRef.id,
+                  Time: currentTime,
+                  Content: `Created a new project ${textInput.projectName}`,
+                })
 
               //将项目的密匙写入到文档中
               db.collection('user')

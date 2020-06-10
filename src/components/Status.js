@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import ProjectStatus from './Status/ProjectStatus'
 import StatusTag from './Status/StatusTag'
 import StatusType from './Status/StatusType'
+import StatusContributor from './Status/StatusContributor'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,17 +100,16 @@ export default function Status() {
             <StatusType typeCnt={typeCnt} />
           </Grid>
           <Grid item xs={4}>
-            <p>最常互动的合作伙伴 长度为1 显示solo者</p>
+            <StatusContributor />
           </Grid>
-          <Grid item xs={12}>
-            <p>Chart js 最近一个月内完成的项目</p>
-          </Grid>
-
           <Grid item xs={6}>
-            <p>获得最多赞的项目</p>
+            <p>Chart js 最近一个月内完成的项目</p>
           </Grid>
           <Grid item xs={6}>
             <p>活动状态日志 eg 时间-添加了一个新的项目， 更改了...</p>
+          </Grid>
+          <Grid item xs={6}>
+            <p>获得最多赞的项目</p>
           </Grid>
         </Grid>
       </div>

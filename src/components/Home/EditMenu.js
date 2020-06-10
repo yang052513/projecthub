@@ -24,6 +24,44 @@ export default function SimpleMenu(props) {
 
   const db = firebase.firestore()
 
+  let month
+  const date = new Date()
+
+  switch (date.getMonth()) {
+    case 0:
+      month = 'Jan'
+      break
+    case 1:
+      month = 'Feb'
+      break
+    case 2:
+      month = 'Mar'
+    case 3:
+      month = 'Apr'
+    case 4:
+      month = 'May'
+    case 5:
+      month = 'June'
+    case 6:
+      month = 'July'
+    case 7:
+      month = 'Aug'
+    case 8:
+      month = 'Sep'
+    case 9:
+      month = 'Oct'
+    case 10:
+      month = 'Nov'
+    case 11:
+      month = 'Dec'
+  }
+
+  const currentTime = `${month} ${
+    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+  } ${date.getHours()}:${
+    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+  }`
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -54,6 +92,14 @@ export default function SimpleMenu(props) {
           .delete()
           .then(() => {
             console.log('(๑•̀ㅂ•́)و✧ 已经删除这个项目啦')
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Activity')
+              .add({
+                Time: currentTime,
+                Content: `Deleted project ${props.projectName}`,
+                Key: props.docRef,
+              })
           })
           .catch((error) => {
             console.log('Σ( ° △ °|||)︴ 删除项目时出错了...', error)

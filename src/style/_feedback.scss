@@ -31,5 +31,5 @@
 .progress-container {
   @include modalStyle(fixed, 100%, 100%, rgba(0, 0, 0, 0.7), 0);
   @include flexCenter(center);
-  z-index: 2;
+  z-index: 4;
 }

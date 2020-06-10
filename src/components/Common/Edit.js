@@ -58,6 +58,42 @@ export default function EditProject() {
     date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
   }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
 
+  let month
+  switch (date.getMonth()) {
+    case 0:
+      month = 'Jan'
+      break
+    case 1:
+      month = 'Feb'
+      break
+    case 2:
+      month = 'Mar'
+    case 3:
+      month = 'Apr'
+    case 4:
+      month = 'May'
+    case 5:
+      month = 'June'
+    case 6:
+      month = 'July'
+    case 7:
+      month = 'Aug'
+    case 8:
+      month = 'Sep'
+    case 9:
+      month = 'Oct'
+    case 10:
+      month = 'Nov'
+    case 11:
+      month = 'Dec'
+  }
+
+  const currentTime = `${month} ${
+    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+  } ${date.getHours()}:${
+    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+  }`
+
   //从数据库读取的信息
   const [textInput, setTextInput] = useState({
     projectName: '',
@@ -202,6 +238,16 @@ export default function EditProject() {
             .doc(params.ref)
             .update({
               projectData: changedData,
+            })
+
+          //写入到日志中
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Activity')
+            .add({
+              Key: params.ref,
+              Time: currentTime,
+              Content: `Edited project ${textInput.projectName}`,
             })
         })
         setLoading(false)
