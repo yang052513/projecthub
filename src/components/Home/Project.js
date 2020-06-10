@@ -6,6 +6,8 @@ import Loading from '../Common/Loading'
 function Project(props) {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
+  const [initial, setInitial] = useState(false)
+
   const [launch, setLaunch] = useState(false)
   //初始化从数据库读取所有项目
   useEffect(() => {
@@ -18,6 +20,10 @@ function Project(props) {
           collection.forEach((doc) => {
             setProject((prevProject) => [...prevProject, doc.data()])
           })
+          if (collection.docs.length === 0) {
+            setInitial(true)
+          }
+          // console.log(collection.docs)
         })
     })
     setLaunch(true)
@@ -59,7 +65,14 @@ function Project(props) {
   return (
     <div className="project-card-container">
       {/* 初始化加载 */}
-      {loading === 0 ? <Loading /> : filteredProject}
+      {loading === 0 && !initial ? <Loading /> : filteredProject}
+
+      {loading === 0 && initial ? (
+        <div className="project-no-result-container">
+          <p>Welcome to Projecthub</p>
+          <img src="/images/noresult.png" />
+        </div>
+      ) : null}
 
       {/* 搜索或者筛选结果为空 */}
       {filteredProject.length === 0 && loading !== 0 ? (

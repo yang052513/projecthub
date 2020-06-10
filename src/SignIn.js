@@ -60,7 +60,21 @@ class SignIn extends Component {
         </div>
       )
     } else {
-      //登录后app界面
+      const db = firebase.firestore()
+      firebase.auth().onAuthStateChanged((user) => {
+        db.collection('user').doc(user.uid).set({
+          online: true,
+        })
+
+        let settingRef = db
+          .collection('user')
+          .doc(user.uid)
+          .collection('Setting')
+
+        settingRef.doc('Profile').set({ Online: true })
+        settingRef.doc('Apparence').set({ Online: true })
+        settingRef.doc('Language').set({ Online: true })
+      })
       return (
         <Router>
           <App />
