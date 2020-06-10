@@ -15,18 +15,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Status() {
   const db = firebase.firestore()
+  const [loading, setLoading] = useState(true)
   const [project, setProject] = useState([])
   const [tag, setTag] = useState([])
+  const [tagCnt, setTagCnt] = useState({ tagCount: 0, tagContent: '' })
   const classes = useStyles()
-  // let tagList = []
 
-  // props.project.map((item) =>
-  //   item.projectData.Tools.forEach((element) => {
-  //     tagList.push(element)
-  //   })
-  // )
-
-  // console.log(tagList)
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
@@ -43,7 +37,28 @@ export default function Status() {
           })
         })
     })
+    setLoading(false)
   }, [])
+
+  useEffect(() => {
+    var maxFreq = 1
+    var cnt = 0
+    var mostFreqTag
+    for (var i = 0; i < tag.length; i++) {
+      for (var j = i; j < tag.length; j++) {
+        if (tag[i] == tag[j]) cnt++
+        if (maxFreq < cnt) {
+          maxFreq = cnt
+          mostFreqTag = tag[i]
+        }
+      }
+      cnt = 0
+    }
+    setTagCnt({
+      tagCount: maxFreq,
+      tagContent: mostFreqTag,
+    })
+  }, [tag])
 
   return (
     <div className="component-layout status-container">
@@ -53,7 +68,7 @@ export default function Status() {
             <ProjectStatus project={project} />
           </Grid>
           <Grid item xs={4}>
-            <StatusTag tag={tag} />
+            <StatusTag tagCnt={tagCnt} />
           </Grid>
           <Grid item xs={4}>
             <p>最常做的项目类型</p>
