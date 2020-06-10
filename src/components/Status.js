@@ -5,6 +5,20 @@ import firebase from 'firebase'
 import ProjectStatus from './Status/ProjectStatus'
 import StatusTag from './Status/StatusTag'
 
+// const demo = [
+//   { cnt: 3, name: 'js' },
+//   { cnt: 2, name: 'sass' },
+//   { cnt: 1, name: 'less' },
+//   { cnt: 13, name: 'firebase' },
+//   { cnt: 5, name: 'css' },
+// ]
+
+// console.log(
+//   demo.sort((a, b) => {
+//     return a.cnt > b.cnt ? -1 : 1
+//   })
+// )
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -41,23 +55,45 @@ export default function Status() {
   }, [])
 
   useEffect(() => {
-    var maxFreq = 1
-    var cnt = 0
-    var mostFreqTag
-    for (var i = 0; i < tag.length; i++) {
-      for (var j = i; j < tag.length; j++) {
-        if (tag[i] == tag[j]) cnt++
-        if (maxFreq < cnt) {
-          maxFreq = cnt
-          mostFreqTag = tag[i]
-        }
-      }
-      cnt = 0
-    }
-    setTagCnt({
-      tagCount: maxFreq,
-      tagContent: mostFreqTag,
+    // var maxFreq = 1
+    // var cnt = 0
+    // var mostFreqTag
+    // for (var i = 0; i < tag.length; i++) {
+    //   for (var j = i; j < tag.length; j++) {
+    //     if (tag[i] == tag[j]) cnt++
+    //     if (maxFreq < cnt) {
+    //       maxFreq = cnt
+    //       mostFreqTag = tag[i]
+    //     }
+    //   }
+    //   cnt = 0
+    // }
+    // setTagCnt({
+    //   tagCount: maxFreq,
+    //   tagContent: mostFreqTag,
+    // })
+    var count = {}
+    tag.forEach(function (i) {
+      count[i] = (count[i] || 0) + 1
     })
+
+    var sortable = []
+    for (var x in count) {
+      sortable.push({ name: x, cnt: count[x] })
+    }
+
+    sortable.sort(function (a, b) {
+      return b[1] - a[1]
+    })
+
+    console.log(sortable)
+    //   let values = Object.values(count)
+
+    //   values.sort(function (a, b) {
+    //     return count[a] - count[b]
+    //   })
+
+    //   console.log(values)
   }, [tag])
 
   return (
