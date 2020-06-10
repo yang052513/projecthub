@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function CreateProject() {
+export default function CreateProject(props) {
   const classes = useStyles()
   const db = firebase.firestore()
 
@@ -58,24 +58,34 @@ export default function CreateProject() {
       break
     case 2:
       month = 'Mar'
+      break
     case 3:
       month = 'Apr'
+      break
     case 4:
       month = 'May'
+      break
     case 5:
       month = 'June'
+      break
     case 6:
       month = 'July'
+      break
     case 7:
       month = 'Aug'
+      break
     case 8:
       month = 'Sep'
+      break
     case 9:
       month = 'Oct'
+      break
     case 10:
       month = 'Nov'
+      break
     case 11:
       month = 'Dec'
+      break
   }
 
   const currentTime = `${month} ${
@@ -203,17 +213,19 @@ export default function CreateProject() {
                 })
 
               //写入到公开的数据库中
-              db.collection('project')
-                .doc(docRef.id)
-                .set({
-                  Key: docRef.id,
-                  Author: {
-                    Name: user.displayName,
-                    Email: user.email,
-                    Profile: userProfile,
-                  },
-                  projectData,
-                })
+              if (publicProject)
+                db.collection('project')
+                  .doc(docRef.id)
+                  .set({
+                    Key: docRef.id,
+                    Public: true,
+                    Like: 0,
+                    Author: {
+                      Id: user.uid,
+                      Profile: props.profile,
+                    },
+                    projectData,
+                  })
             })
             .catch((error) => {
               console.log(`上传失败${error}`)

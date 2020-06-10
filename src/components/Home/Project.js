@@ -8,8 +8,7 @@ function Project(props) {
   const [project, setProject] = useState([])
   const [initial, setInitial] = useState(false)
 
-  const [launch, setLaunch] = useState(false)
-  //初始化从数据库读取所有项目
+  //Read all the projects in the user's database
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
@@ -20,13 +19,12 @@ function Project(props) {
           collection.forEach((doc) => {
             setProject((prevProject) => [...prevProject, doc.data()])
           })
+          //First time log the app set initial message
           if (collection.docs.length === 0) {
             setInitial(true)
           }
-          // console.log(collection.docs)
         })
     })
-    setLaunch(true)
   }, [])
 
   const sortedProject = project.sort((a, b) => {
@@ -60,22 +58,21 @@ function Project(props) {
       />
     ))
 
-  let loading = project.length
-
   return (
     <div className="project-card-container">
-      {/* 初始化加载 */}
-      {loading === 0 && !initial ? <Loading /> : filteredProject}
+      {/* Initialzie all the project */}
+      {project.length === 0 && !initial ? <Loading /> : filteredProject}
 
-      {loading === 0 && initial ? (
+      {/* First time use the app, prompt message */}
+      {project.length === 0 && initial ? (
         <div className="project-no-result-container">
           <p>Welcome to Projecthub</p>
           <img src="/images/noresult.png" />
         </div>
       ) : null}
 
-      {/* 搜索或者筛选结果为空 */}
-      {filteredProject.length === 0 && loading !== 0 ? (
+      {/* No searched or filter result */}
+      {filteredProject.length === 0 && project.length !== 0 ? (
         <div className="project-no-result-container">
           <p>It seems like no such projects...</p>
           <img src="/images/noresult.png" />

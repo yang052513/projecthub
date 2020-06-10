@@ -65,7 +65,7 @@ function Setting(props) {
           <section className="route-section">
             <Switch location={location}>
               <Route exact path="/setting/profile">
-                <Profile />
+                <Profile avatar={props.avatar} />
               </Route>
               <Route path="/setting/theme">
                 <Apparence

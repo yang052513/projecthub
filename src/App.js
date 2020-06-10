@@ -43,6 +43,7 @@ export default function App() {
     background: 50,
   })
 
+  const [profile, setProfile] = useState({})
   const [avatar, setAvatar] = useState('/images/user.jpg')
 
   //初始化读取数据库 判断用户是否有过记录
@@ -74,6 +75,7 @@ export default function App() {
           })
         } else {
           setAvatar(doc.data().avatar)
+          setProfile(doc.data().profile)
         }
       })
 
@@ -222,7 +224,7 @@ export default function App() {
 
   return (
     <div>
-      {/* 全局样式更改 */}
+      {/* Global CSS styles */}
       {demo.backgroundColor ? (
         <div
           style={{
@@ -237,17 +239,17 @@ export default function App() {
           className="background-img"
         ></div>
       )}
-      {/* 背景图片前置透明板 */}
+      {/* Overlay for backgroud image to control opacity */}
       <div
         className="overlay"
         style={{ opacity: opacity.background / 100 }}
       ></div>
 
-      {/* 内容容器 */}
+      {/* Content container */}
       <div className="content-container">
         <img className="logo" src="/images/logo.png" />
 
-        {/* 侧边导航栏 */}
+        {/* Side nav bar */}
         <div
           className="navbar"
           style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
@@ -258,70 +260,60 @@ export default function App() {
               className="fas fa-home"
             ></i>
           </Link>
-          {/* 个人项目统计 */}
           <Link to="/status">
             <i
               style={currRoute === '/status' ? currLinkStyle : null}
               className="fas fa-tachometer-alt"
             ></i>
           </Link>
-          {/* 所有公开项目 */}
           <Link to="/explore">
             <i
               style={currRoute === '/explore' ? currLinkStyle : null}
               className="fab fa-wpexplorer"
             ></i>
           </Link>
-          {/* 项目大厅 这里展示的是想找人一起的 加一个按钮可以发布 */}
           <Link to="/group">
             <i
               style={currRoute === '/group' ? currLinkStyle : null}
               className="far fa-calendar-alt"
             ></i>
           </Link>
-          {/* 系统随机分配的任务 */}
           <Link to="/mission">
             <i
               style={currRoute === '/mission' ? currLinkStyle : null}
               className="fas fa-book"
             ></i>
           </Link>
-          {/* 显示所有的用户 并可以搜寻 加好友 */}
           <Link to="/friends">
             <i
               style={currRoute === '/friends' ? currLinkStyle : null}
               className="fas fa-user-friends"
             ></i>
           </Link>
-          {/* 动态类似朋友圈 */}
           <Link to="/moment">
             <i
               style={currRoute === '/moment' ? currLinkStyle : null}
               className="far fa-clock"
             ></i>
           </Link>
-          {/* 设置页面 */}
           <Link to="/setting/profile">
             <i
               style={currRoute === `/setting/profile` ? currLinkStyle : null}
               className="fas fa-sliders-h"
             ></i>
           </Link>
-          {/* 软件疑难解答 加一个机器人 */}
           <Link to="/faq">
             <i
               style={currRoute === '/faq' ? currLinkStyle : null}
               className="far fa-question-circle"
             ></i>
           </Link>
-          {/* 创建新的项目 */}
           <Link to="/create">
             <i
               style={currRoute === '/create' ? currLinkStyle : null}
               className="fas fa-feather"
             ></i>
           </Link>
-          {/* 退出 */}
           <Link to="/noidea">
             <i
               style={currRoute === '/noidea' ? currLinkStyle : null}
@@ -330,7 +322,7 @@ export default function App() {
           </Link>
         </div>
 
-        {/* 顶部菜单栏 */}
+        {/* Header bar with notification and current page title */}
         <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
           <h2>Project Dashboard</h2>
           <div className="user-navbar-icon">
@@ -339,6 +331,8 @@ export default function App() {
             <ProfileMenu avatar={avatar} />
           </div>
         </div>
+
+        {/* Router switch URL */}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -363,6 +357,7 @@ export default function App() {
           </Route>
           <Route path="/setting/">
             <Setting
+              avatar={avatar}
               demo={demo}
               options={options}
               customBg={customBg}
@@ -378,12 +373,12 @@ export default function App() {
             <FAQ />
           </Route>
           <Route path="/create">
-            <CreateProject />
+            <CreateProject profile={profile} />
           </Route>
 
-          {/* 其他route 根据相关ref渲染 */}
+          {/* Other nested router */}
           <Route path="/edit/:ref">
-            <Edit />
+            <Edit profile={profile} />
           </Route>
           <Route path="/kanban/:ref">
             <Kanban />

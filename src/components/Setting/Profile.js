@@ -35,7 +35,7 @@ const profileInit = {
   profileGithub: '',
 }
 
-function Profile() {
+function Profile(props) {
   const classes = useStyles()
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
@@ -46,7 +46,7 @@ function Profile() {
   const [error, setError] = useState(false)
 
   const [profile, setProfile] = useState({})
-  const [avatar, setAvatar] = useState('/images/user.jpg')
+  const [avatar, setAvatar] = useState(props.avatar)
 
   function handleTextField(event) {
     const { name, value } = event.target
@@ -137,9 +137,9 @@ function Profile() {
           } else {
             setProfile(profileInit)
           }
-          if (doc.data().avatar) {
-            setAvatar(doc.data().avatar)
-          }
+          // if (doc.data().avatar) {
+          //   setAvatar(doc.data().avatar)
+          // }
         })
       setLaunch(false)
     })

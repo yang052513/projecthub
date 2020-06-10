@@ -20,8 +20,6 @@ export default function ProfileMenu(props) {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const [logout, setLogout] = useState(false)
-  // const [avatar, setAvatar] = useState('/images/user.jpg')
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -34,19 +32,6 @@ export default function ProfileMenu(props) {
     setAnchorEl(null)
     setLogout(true)
   }
-
-  // firebase.auth().onAuthStateChanged((user) => {
-  //   db.collection('user')
-  //     .doc(user.uid)
-  //     .collection('Setting')
-  //     .doc('Profile')
-  //     .get()
-  //     .then((doc) => {
-  //       if (doc.data().avatar) {
-  //         setAvatar(doc.data().avatar)
-  //       }
-  //     })
-  // })
 
   return (
     <div>

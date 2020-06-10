@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function EditProject() {
+export default function EditProject(props) {
   const classes = useStyles()
   const db = firebase.firestore()
 
@@ -259,6 +259,36 @@ export default function EditProject() {
               Time: currentTime,
               Content: `Edited project ${textInput.projectName}`,
             })
+
+          //写入到公开数据库
+          //如果改为公开项目 写入到公开集合
+          if (publicProject) {
+            db.collection('project')
+              .doc(params.ref)
+              .set({
+                Key: params.ref,
+                Public: true,
+                Like: 0,
+                Author: {
+                  Id: user.uid,
+                  Profile: props.profile,
+                },
+                changedData,
+              })
+          } else {
+            //If the project changed from public to private, delete from public database
+            let projectRef = db.collection('project').doc(params.ref)
+            projectRef.get().then((doc) => {
+              if (doc.exists) {
+                db.collection('project')
+                  .doc(params.ref)
+                  .delete()
+                  .then(() => {
+                    console.log('已经从公开数据中删除该项目')
+                  })
+              }
+            })
+          }
         })
         setLoading(false)
         setFeedback(true)
