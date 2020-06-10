@@ -139,9 +139,9 @@ function Profile() {
           }
           if (doc.data().avatar) {
             setAvatar(doc.data().avatar)
-            setLaunch(false)
           }
         })
+      setLaunch(false)
     })
   }, [])
 

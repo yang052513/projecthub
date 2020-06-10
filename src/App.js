@@ -25,7 +25,7 @@ export default function App() {
 
   //全局样式化
   //侧边导航栏样式
-  const [theme, setTheme] = useState('')
+  const [theme, setTheme] = useState('#0e5dd3')
 
   //背景样式
   const [options, setOptions] = useState('Color')
@@ -43,53 +43,71 @@ export default function App() {
     background: 50,
   })
 
+  const [avatar, setAvatar] = useState('/images/user.jpg')
+
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection('user')
+      const settingRef = db
+        .collection('user')
         .doc(user.uid)
         .collection('Setting')
-        .doc('Apparence')
+
+      const langRef = settingRef.doc('Language')
+      const apparenceRef = settingRef.doc('Apparence')
+      const profileRef = settingRef.doc('Profile')
+
+      profileRef.get().then((doc) => {
+        if (!doc.exists) {
+          console.log(doc)
+          profileRef.set({
+            avatar: '/images/user.jpg',
+            profile: {
+              profileName: '',
+              profileBio: '',
+              profileEmail: '',
+              profileGithub: '',
+              profileLocation: '',
+              profileWeb: '',
+              profilelinkedin: '',
+            },
+          })
+        } else {
+          setAvatar(doc.data().avatar)
+        }
+      })
+
+      langRef.get().then((doc) => {
+        if (!doc.exists) {
+          langRef.set({
+            Language: 'English',
+          })
+        }
+      })
+
+      apparenceRef
         .get()
         .then((doc) => {
-          //侧边导航栏theme
-          if (doc.data().theme) {
-            setTheme(doc.data().theme)
+          if (!doc.exists) {
+            apparenceRef.set({
+              theme: '#0e5dd3',
+              opacity: {
+                sidebar: 100,
+                topbar: 100,
+                card: 100,
+                background: 50,
+              },
+              background: '#f7f7f7',
+              backgroundColor: true,
+            })
           } else {
-            setTheme('#0e5dd3')
-          }
-          //壁纸
-          if (doc.data().background) {
+            setTheme(doc.data().theme)
+            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
             setDemo(() => ({
               backgroundColor: doc.data().backgroundColor,
               backgroundRef: doc.data().background,
             }))
-            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
-            //设置为默认样式
-          } else {
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Setting')
-              .doc('Apparence')
-              .update({
-                background: '#f7f7f7',
-                backgroundColor: true,
-              })
-          }
-          //如果用户保存过更改 上传过自己的壁纸
-          if (doc.data().customBackground) {
-            setCustomBg(doc.data().customBackground)
-          }
-          if (doc.data().opacity) {
             setOpacity(doc.data().opacity)
-          } else {
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Setting')
-              .doc('Apparence')
-              .update({
-                opacity,
-              })
           }
         })
         .catch((error) => {
@@ -318,7 +336,7 @@ export default function App() {
           <div className="user-navbar-icon">
             <i className="fas fa-inbox"></i>
             <i className="fas fa-bell"></i>
-            <ProfileMenu />
+            <ProfileMenu avatar={avatar} />
           </div>
         </div>
         <Switch>

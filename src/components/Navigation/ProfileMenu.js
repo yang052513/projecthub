@@ -14,13 +14,13 @@ const useStyles = makeStyles({
   },
 })
 
-export default function SimpleMenu() {
+export default function ProfileMenu(props) {
   const classes = useStyles()
   const db = firebase.firestore()
 
   const [anchorEl, setAnchorEl] = useState(null)
   const [logout, setLogout] = useState(false)
-  const [avatar, setAvatar] = useState('/images/user.jpg')
+  // const [avatar, setAvatar] = useState('/images/user.jpg')
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -35,18 +35,18 @@ export default function SimpleMenu() {
     setLogout(true)
   }
 
-  firebase.auth().onAuthStateChanged((user) => {
-    db.collection('user')
-      .doc(user.uid)
-      .collection('Setting')
-      .doc('Profile')
-      .get()
-      .then((doc) => {
-        if (doc.data().avatar) {
-          setAvatar(doc.data().avatar)
-        }
-      })
-  })
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   db.collection('user')
+  //     .doc(user.uid)
+  //     .collection('Setting')
+  //     .doc('Profile')
+  //     .get()
+  //     .then((doc) => {
+  //       if (doc.data().avatar) {
+  //         setAvatar(doc.data().avatar)
+  //       }
+  //     })
+  // })
 
   return (
     <div>
@@ -56,7 +56,7 @@ export default function SimpleMenu() {
           aria-haspopup="true"
           onClick={handleClick}
         >
-          <img className="user-profile-icon" src={avatar} alt="profile" />
+          <img className="user-profile-icon" src={props.avatar} alt="profile" />
         </Button>
 
         <Menu

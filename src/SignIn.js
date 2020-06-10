@@ -19,6 +19,9 @@ firebase.initializeApp(config)
 class SignIn extends Component {
   state = {
     isSignedIn: false,
+    isApparence: false,
+    isLanguage: false,
+    isProfile: false,
   }
 
   uiConfig = {
@@ -63,17 +66,8 @@ class SignIn extends Component {
       const db = firebase.firestore()
       firebase.auth().onAuthStateChanged((user) => {
         db.collection('user').doc(user.uid).set({
-          online: true,
+          Name: user.displayName,
         })
-
-        let settingRef = db
-          .collection('user')
-          .doc(user.uid)
-          .collection('Setting')
-
-        settingRef.doc('Profile').set({ Online: true })
-        settingRef.doc('Apparence').set({ Online: true })
-        settingRef.doc('Language').set({ Online: true })
       })
       return (
         <Router>
