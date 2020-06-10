@@ -32,7 +32,8 @@ export default function Status() {
   const [loading, setLoading] = useState(true)
   const [project, setProject] = useState([])
   const [tag, setTag] = useState([])
-  const [tagCnt, setTagCnt] = useState({ tagCount: 0, tagContent: '' })
+  const [tagSort, setTagSort] = useState([])
+  const [tagCnt, setTagCnt] = useState({ tagCount: '', tagContent: '' })
   const classes = useStyles()
 
   useEffect(() => {
@@ -51,49 +52,23 @@ export default function Status() {
           })
         })
     })
-    setLoading(false)
   }, [])
 
   useEffect(() => {
-    // var maxFreq = 1
-    // var cnt = 0
-    // var mostFreqTag
-    // for (var i = 0; i < tag.length; i++) {
-    //   for (var j = i; j < tag.length; j++) {
-    //     if (tag[i] == tag[j]) cnt++
-    //     if (maxFreq < cnt) {
-    //       maxFreq = cnt
-    //       mostFreqTag = tag[i]
-    //     }
-    //   }
-    //   cnt = 0
-    // }
-    // setTagCnt({
-    //   tagCount: maxFreq,
-    //   tagContent: mostFreqTag,
-    // })
-    var count = {}
+    let count = {}
     tag.forEach(function (i) {
       count[i] = (count[i] || 0) + 1
     })
 
-    var sortable = []
+    let sortable = []
     for (var x in count) {
       sortable.push({ name: x, cnt: count[x] })
     }
-
-    sortable.sort(function (a, b) {
-      return b[1] - a[1]
-    })
-
-    console.log(sortable)
-    //   let values = Object.values(count)
-
-    //   values.sort(function (a, b) {
-    //     return count[a] - count[b]
-    //   })
-
-    //   console.log(values)
+    setTagSort(
+      sortable.sort((a, b) => {
+        return b[1] - a[1]
+      })
+    )
   }, [tag])
 
   return (
@@ -104,7 +79,7 @@ export default function Status() {
             <ProjectStatus project={project} />
           </Grid>
           <Grid item xs={4}>
-            <StatusTag tagCnt={tagCnt} />
+            <StatusTag tagSort={tagSort} />
           </Grid>
           <Grid item xs={4}>
             <p>最常做的项目类型</p>
