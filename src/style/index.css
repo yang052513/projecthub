@@ -693,6 +693,12 @@
   font-size: 20px;
 }
 
+.status-container .status-card-container {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+}
+
 .setting-container {
   display: -webkit-box;
   display: -ms-flexbox;

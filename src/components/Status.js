@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import firebase from 'firebase'
 import ProjectStatus from './Status/ProjectStatus'
+import StatusTag from './Status/StatusTag'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +16,17 @@ const useStyles = makeStyles((theme) => ({
 export default function Status() {
   const db = firebase.firestore()
   const [project, setProject] = useState([])
+  const [tag, setTag] = useState([])
   const classes = useStyles()
+  // let tagList = []
 
+  // props.project.map((item) =>
+  //   item.projectData.Tools.forEach((element) => {
+  //     tagList.push(element)
+  //   })
+  // )
+
+  // console.log(tagList)
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('user')
@@ -26,30 +36,35 @@ export default function Status() {
         .then((collection) => {
           collection.forEach((doc) => {
             setProject((prevProject) => [...prevProject, doc.data()])
+
+            doc.data().projectData.Tools.forEach((tag) => {
+              setTag((prevTag) => [...prevTag, tag])
+            })
           })
         })
     })
   }, [])
 
   return (
-    <div className="component-layout">
+    <div className="component-layout status-container">
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <ProjectStatus project={project} />
           </Grid>
-          <Grid item xs={6}>
-            <p>最常使用的标签</p>
+          <Grid item xs={4}>
+            <StatusTag tag={tag} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <p>最常做的项目类型</p>
           </Grid>
-          <Grid item xs={6}>
-            <p>Chart js 最近一个月内完成的项目</p>
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <p>最常互动的合作伙伴 长度为1 显示solo者</p>
           </Grid>
+          <Grid item xs={12}>
+            <p>Chart js 最近一个月内完成的项目</p>
+          </Grid>
+
           <Grid item xs={6}>
             <p>获得最多赞的项目</p>
           </Grid>
