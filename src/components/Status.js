@@ -4,20 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import firebase from 'firebase'
 import ProjectStatus from './Status/ProjectStatus'
 import StatusTag from './Status/StatusTag'
-
-// const demo = [
-//   { cnt: 3, name: 'js' },
-//   { cnt: 2, name: 'sass' },
-//   { cnt: 1, name: 'less' },
-//   { cnt: 13, name: 'firebase' },
-//   { cnt: 5, name: 'css' },
-// ]
-
-// console.log(
-//   demo.sort((a, b) => {
-//     return a.cnt > b.cnt ? -1 : 1
-//   })
-// )
+import StatusType from './Status/StatusType'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +18,9 @@ export default function Status() {
   const db = firebase.firestore()
   const [loading, setLoading] = useState(true)
   const [project, setProject] = useState([])
+  const [type, setType] = useState([])
+  const [typeCnt, setTypeCnt] = useState({ typeCountt: '', typeContent: '' })
+
   const [tag, setTag] = useState([])
   const [tagSort, setTagSort] = useState([])
   const [tagCnt, setTagCnt] = useState({ tagCount: '', tagContent: '' })
@@ -45,6 +35,10 @@ export default function Status() {
         .then((collection) => {
           collection.forEach((doc) => {
             setProject((prevProject) => [...prevProject, doc.data()])
+            setType((prevType) => [
+              ...prevType,
+              doc.data().projectData.Category,
+            ])
 
             doc.data().projectData.Tools.forEach((tag) => {
               setTag((prevTag) => [...prevTag, tag])
@@ -71,6 +65,26 @@ export default function Status() {
     )
   }, [tag])
 
+  useEffect(() => {
+    let maxFreq = 1
+    let cnt = 0
+    let mostFreqTag
+    for (let i = 0; i < type.length; i++) {
+      for (let j = i; j < type.length; j++) {
+        if (type[i] == type[j]) cnt++
+        if (maxFreq < cnt) {
+          maxFreq = cnt
+          mostFreqTag = type[i]
+        }
+      }
+      cnt = 0
+    }
+    setTypeCnt({
+      typeCount: maxFreq,
+      typeContent: mostFreqTag,
+    })
+  }, [type])
+
   return (
     <div className="component-layout status-container">
       <div className={classes.root}>
@@ -82,7 +96,7 @@ export default function Status() {
             <StatusTag tagSort={tagSort} />
           </Grid>
           <Grid item xs={4}>
-            <p>最常做的项目类型</p>
+            <StatusType typeCnt={typeCnt} />
           </Grid>
           <Grid item xs={4}>
             <p>最常互动的合作伙伴 长度为1 显示solo者</p>
