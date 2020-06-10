@@ -6,6 +6,7 @@ import ProjectStatus from './Status/ProjectStatus'
 import StatusTag from './Status/StatusTag'
 import StatusType from './Status/StatusType'
 import StatusContributor from './Status/StatusContributor'
+import StatusLog from './Status/StatusLog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,8 @@ export default function Status() {
   const db = firebase.firestore()
   const [loading, setLoading] = useState(true)
   const [project, setProject] = useState([])
+  const [activity, setActivity] = useState([])
+
   const [type, setType] = useState([])
   const [typeCnt, setTypeCnt] = useState({ typeCountt: '', typeContent: '' })
 
@@ -44,6 +47,16 @@ export default function Status() {
             doc.data().projectData.Tools.forEach((tag) => {
               setTag((prevTag) => [...prevTag, tag])
             })
+          })
+        })
+
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Activity')
+        .get()
+        .then((collection) => {
+          collection.forEach((doc) => {
+            setActivity((prevActivity) => [...prevActivity, doc.data()])
           })
         })
     })
@@ -106,7 +119,7 @@ export default function Status() {
             <p>Chart js 最近一个月内完成的项目</p>
           </Grid>
           <Grid item xs={6}>
-            <p>活动状态日志 eg 时间-添加了一个新的项目， 更改了...</p>
+            <StatusLog activity={activity} />
           </Grid>
           <Grid item xs={6}>
             <p>获得最多赞的项目</p>
