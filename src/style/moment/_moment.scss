@@ -2,10 +2,10 @@ $storyImgSize: 50px;
 
 .moment-editor-container {
   position: relative;
-  margin-left: 20px;
+  width: 50%;
+  margin: 0 auto;
   .moment-editor-textarea {
     position: relative;
-
     img {
       width: $storyImgSize;
       height: $storyImgSize;
@@ -50,32 +50,48 @@ $storyImgSize: 50px;
   }
 }
 
+.moment-story-card-wrap {
+  background-color: white;
+  padding: 10px;
+  width: 800px;
+  margin: 0 auto;
+}
+
 .moment-story-card-container {
   display: flex;
   margin: 20px 0 0 20px;
-  img {
+
+  .moment-story-user {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 20px;
   }
-  .moment-story-name {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .moment-story-time {
-    font-size: 13px;
-    font-weight: normal;
-    color: gray;
-  }
-  .moment-story-content {
-    margin: 10px 0;
-    font-size: 14px;
-  }
-}
-
-.moment-story-social-container {
-  i {
-    margin-right: 20px;
+  div {
+    .moment-story-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .moment-story-time {
+      font-size: 13px;
+      font-weight: normal;
+      color: gray;
+    }
+    .moment-story-content {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .moment-story-image {
+      width: 30vw;
+      height: auto;
+      border-radius: 0;
+    }
+    .moment-story-social-container {
+      i {
+        margin-right: 30px;
+        font-size: 20px;
+        margin-top: 10px;
+      }
+    }
   }
 }

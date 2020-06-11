@@ -5,19 +5,16 @@ import StoryCard from './Moment/StoryCard'
 
 export default function Moment() {
   return (
-    <div className="component-layout">
-      <Grid container spacing={3}>
-        <Grid item xs={7}>
-          <StoryEditor />
-        </Grid>
-      </Grid>
-
-      <StoryCard
-        imgUrl={'images/user.jpg'}
-        name={'Yang Li'}
-        time={'13:00 Jun 11, 2020'}
-        content={'Projecthub is such a wonderful project bro!'}
-      />
+    <div className="component-layout moment-container">
+      {/* <StoryEditor /> */}
+      <div className="moment-story-card-wrap">
+        <StoryCard
+          imgUrl={'images/user.jpg'}
+          name={'Yang Li'}
+          time={'13:00 Jun 11, 2020'}
+          content={'Projecthub is such a wonderful project bro!'}
+        />
+      </div>
     </div>
   )
 }

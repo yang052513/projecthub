@@ -974,7 +974,8 @@
 
 .moment-editor-container {
   position: relative;
-  margin-left: 20px;
+  width: 50%;
+  margin: 0 auto;
 }
 
 .moment-editor-container .moment-editor-textarea {
@@ -1047,6 +1048,13 @@
   color: #0e5dd3;
 }
 
+.moment-story-card-wrap {
+  background-color: white;
+  padding: 10px;
+  width: 800px;
+  margin: 0 auto;
+}
+
 .moment-story-card-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1054,31 +1062,39 @@
   margin: 20px 0 0 20px;
 }
 
-.moment-story-card-container img {
+.moment-story-card-container .moment-story-user {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 20px;
 }
 
-.moment-story-card-container .moment-story-name {
+.moment-story-card-container div .moment-story-name {
   font-size: 18px;
   font-weight: bold;
 }
 
-.moment-story-card-container .moment-story-time {
+.moment-story-card-container div .moment-story-time {
   font-size: 13px;
   font-weight: normal;
   color: gray;
 }
 
-.moment-story-card-container .moment-story-content {
+.moment-story-card-container div .moment-story-content {
   margin: 10px 0;
   font-size: 14px;
 }
 
-.moment-story-social-container i {
-  margin-right: 20px;
+.moment-story-card-container div .moment-story-image {
+  width: 30vw;
+  height: auto;
+  border-radius: 0;
+}
+
+.moment-story-card-container div .moment-story-social-container i {
+  margin-right: 30px;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 .logout-container {
