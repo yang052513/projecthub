@@ -1,0 +1,51 @@
+$storyImgSize: 50px;
+
+.moment-editor-container {
+  position: relative;
+  margin-left: 20px;
+  .moment-editor-textarea {
+    position: relative;
+
+    img {
+      width: $storyImgSize;
+      height: $storyImgSize;
+      border-radius: 50%;
+      border: 1px solid rgb(216, 216, 216);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+    textarea {
+      border-radius: 15px;
+      width: 100%;
+      height: 100px;
+      resize: none;
+      font-family: raleway;
+      font-size: 15px;
+      padding: 10px 20px 20px $storyImgSize + 40px;
+      background-color: rgb(255, 255, 255);
+      border: none;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .moment-editor-social {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    @include flexAlign();
+    button {
+      margin-right: 20px;
+      @include buttonStroke($sideNavBg);
+    }
+    input {
+      display: none;
+    }
+    i {
+      font-size: 25px;
+      margin-right: 20px;
+      color: $sideNavBg;
+    }
+  }
+}

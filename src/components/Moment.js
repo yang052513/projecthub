@@ -1,13 +1,15 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
+import StoryEditor from './Moment/StoryEditor'
 
 export default function Moment() {
   return (
     <div className="component-layout">
-      <ul>
-        <li>动态朋友圈 用户可以选择自己发</li>
-        <li>参考推特</li>
-        <li>基本是赞和评论的功能</li>
-      </ul>
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <StoryEditor />
+        </Grid>
+      </Grid>
     </div>
   )
 }
