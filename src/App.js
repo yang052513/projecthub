@@ -55,10 +55,21 @@ export default function App() {
         .get()
         .then((doc) => {
           if (!doc.exists) {
-            db.collection('friends').doc(user.uid).set({
-              Name: user.displayName,
-              Key: user.uid,
-            })
+            db.collection('friends')
+              .doc(user.uid)
+              .set({
+                avatar: '/images/user.jpg',
+                profile: {
+                  profileName: user.displayName,
+                  profileBio: '',
+                  profileEmail: user.email,
+                  profileGithub: '',
+                  profileLocation: '',
+                  profileWeb: '',
+                  profilelinkedin: '',
+                },
+                Key: user.uid,
+              })
           }
         })
 

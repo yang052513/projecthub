@@ -79,6 +79,9 @@ function Profile(props) {
               .update({
                 avatar: url,
               })
+            db.collection('friends').doc(user.uid).update({
+              avatar: url,
+            })
           })
           setLoading(false)
           setFeedback(true)
@@ -108,6 +111,10 @@ function Profile(props) {
             .catch((error) => {
               console.log('保存出错' + error)
             })
+          db.collection('friends').doc(user.uid).update({
+            Key: user.uid,
+            profile,
+          })
         })
         setLoading(false)
         setFeedback(true)

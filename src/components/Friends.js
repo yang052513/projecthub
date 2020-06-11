@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 
+import FriendCard from './Friends/FriendCard'
+
 export default function Friends() {
   const [user, setUser] = useState([])
   const db = firebase.firestore()
@@ -17,7 +19,10 @@ export default function Friends() {
     })
   }, [])
 
-  console.log(user)
+  const userList = user.map((user) => (
+    <FriendCard key={user.Key} avatar={user.avatar} info={user.profile} />
+  ))
+
   return (
     <div className="component-layout">
       <ul>
@@ -26,6 +31,7 @@ export default function Friends() {
         <li>sort排序</li>
         <li>添加好友</li>
       </ul>
+      {userList}
     </div>
   )
 }
