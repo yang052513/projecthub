@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '45ch',
+    width: '40ch',
   },
 }))
 
@@ -137,9 +137,9 @@ function Profile(props) {
           } else {
             setProfile(profileInit)
           }
-          // if (doc.data().avatar) {
-          //   setAvatar(doc.data().avatar)
-          // }
+          if (doc.data().avatar) {
+            setAvatar(doc.data().avatar)
+          }
         })
       setLaunch(false)
     })

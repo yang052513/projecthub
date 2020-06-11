@@ -51,12 +51,12 @@ export default function ProfileMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <Link to="/profile">
+          <Link to="/setting/profile">
             <MenuItem className={classes.root} onClick={handleClose}>
               Profile
             </MenuItem>
           </Link>
-          <Link to="/settings">
+          <Link to="/setting/profile">
             <MenuItem className={classes.root} onClick={handleClose}>
               Setting
             </MenuItem>

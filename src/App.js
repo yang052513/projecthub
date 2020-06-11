@@ -49,6 +49,19 @@ export default function App() {
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
+      //将用户加入到所有用户列表
+      db.collection('friends')
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (!doc.exists) {
+            db.collection('friends').doc(user.uid).set({
+              Name: user.displayName,
+              Key: user.uid,
+            })
+          }
+        })
+
       const settingRef = db
         .collection('user')
         .doc(user.uid)

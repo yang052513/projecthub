@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import firebase from 'firebase'
 
 export default function Friends() {
+  const [user, setUser] = useState([])
+  const db = firebase.firestore()
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('friends')
+        .get()
+        .then((friendQuery) => {
+          friendQuery.forEach((doc) => {
+            setUser((prevUser) => [...prevUser, doc.data()])
+          })
+        })
+    })
+  }, [])
+
+  console.log(user)
   return (
     <div className="component-layout">
       <ul>
