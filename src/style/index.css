@@ -987,7 +987,7 @@
   border-radius: 50%;
   border: 1px solid #d8d8d8;
   position: absolute;
-  top: 10px;
+  top: 20px;
   left: 20px;
 }
 
@@ -998,7 +998,7 @@
   resize: none;
   font-family: raleway;
   font-size: 15px;
-  padding: 10px 20px 20px 90px;
+  padding: 20px 20px 20px 90px;
   background-color: white;
   border: none;
 }
@@ -1045,6 +1045,40 @@
   font-size: 25px;
   margin-right: 20px;
   color: #0e5dd3;
+}
+
+.moment-story-card-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 20px 0 0 20px;
+}
+
+.moment-story-card-container img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.moment-story-card-container .moment-story-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.moment-story-card-container .moment-story-time {
+  font-size: 13px;
+  font-weight: normal;
+  color: gray;
+}
+
+.moment-story-card-container .moment-story-content {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.moment-story-social-container i {
+  margin-right: 20px;
 }
 
 .logout-container {

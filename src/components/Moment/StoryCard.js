@@ -1,11 +1,18 @@
 import React from 'react'
+import StorySocial from './StorySocial'
 
 export default function StoryCard(props) {
   return (
-    <div>
-      <img src={props.imgUrl} alt="" width="50px" height="50px" />
-      <h3>{props.name}</h3>
-      <p>{props.content}</p>
+    <div className="moment-story-card-container">
+      <img src={props.imgUrl} alt="" />
+      <div className="speech-bubble">
+        <p className="moment-story-name">
+          {props.name}
+          <span className="moment-story-time"> @{props.time}</span>
+        </p>
+        <p className="moment-story-content">{props.content}</p>
+        <StorySocial />
+      </div>
     </div>
   )
 }

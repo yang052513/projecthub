@@ -12,7 +12,7 @@ $storyImgSize: 50px;
       border-radius: 50%;
       border: 1px solid rgb(216, 216, 216);
       position: absolute;
-      top: 10px;
+      top: 20px;
       left: 20px;
     }
     textarea {
@@ -22,7 +22,7 @@ $storyImgSize: 50px;
       resize: none;
       font-family: raleway;
       font-size: 15px;
-      padding: 10px 20px 20px $storyImgSize + 40px;
+      padding: 20px 20px 20px $storyImgSize + 40px;
       background-color: rgb(255, 255, 255);
       border: none;
       &:focus {
@@ -47,5 +47,35 @@ $storyImgSize: 50px;
       margin-right: 20px;
       color: $sideNavBg;
     }
+  }
+}
+
+.moment-story-card-container {
+  display: flex;
+  margin: 20px 0 0 20px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  .moment-story-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .moment-story-time {
+    font-size: 13px;
+    font-weight: normal;
+    color: gray;
+  }
+  .moment-story-content {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+}
+
+.moment-story-social-container {
+  i {
+    margin-right: 20px;
   }
 }
