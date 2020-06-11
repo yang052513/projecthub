@@ -1,12 +1,17 @@
-import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import React, { useState } from 'react'
 import StoryEditor from './Moment/StoryEditor'
 import StoryCard from './Moment/StoryCard'
 
 export default function Moment() {
+  const [editor, setEditor] = useState(false)
+
+  const displayEditor = () => {
+    setEditor(true)
+  }
+
   return (
     <div className="component-layout moment-container">
-      {/* <StoryEditor /> */}
+      {editor ? <StoryEditor /> : null}
       <div className="moment-story-card-wrap">
         <StoryCard
           imgUrl={'images/user.jpg'}
@@ -14,6 +19,9 @@ export default function Moment() {
           time={'13:00 Jun 11, 2020'}
           content={'Projecthub is such a wonderful project bro!'}
         />
+      </div>
+      <div className="post-moment-container">
+        <i onClick={displayEditor} className="fas fa-feather"></i>
       </div>
     </div>
   )

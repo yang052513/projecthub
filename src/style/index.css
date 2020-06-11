@@ -972,10 +972,24 @@
   width: 200px;
 }
 
+.overlay-post {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
 .moment-editor-container {
-  position: relative;
-  width: 50%;
-  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 45%;
+  z-index: 2;
 }
 
 .moment-editor-container .moment-editor-textarea {
@@ -1095,6 +1109,29 @@
   margin-right: 30px;
   font-size: 20px;
   margin-top: 10px;
+}
+
+.post-moment-container {
+  position: fixed;
+  bottom: 50px;
+  right: 75px;
+}
+
+.post-moment-container i {
+  font-size: 30px;
+  color: #0e5dd3;
+  background-color: white;
+  padding: 20px;
+  border-radius: 50%;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.post-moment-container i:hover {
+  color: white;
+  background-color: #0e5dd3;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .logout-container {

@@ -1,9 +1,20 @@
 $storyImgSize: 50px;
-
+.overlay-post {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 .moment-editor-container {
-  position: relative;
-  width: 50%;
-  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  z-index: 2;
   .moment-editor-textarea {
     position: relative;
     img {
@@ -92,6 +103,25 @@ $storyImgSize: 50px;
         font-size: 20px;
         margin-top: 10px;
       }
+    }
+  }
+}
+
+.post-moment-container {
+  position: fixed;
+  bottom: 50px;
+  right: 75px;
+  i {
+    font-size: 30px;
+    color: $sideNavBg;
+    background-color: white;
+    padding: 20px;
+    border-radius: 50%;
+    transition: all 0.5s;
+    &:hover {
+      color: white;
+      background-color: $sideNavBg;
+      transform: scale(1.2);
     }
   }
 }
