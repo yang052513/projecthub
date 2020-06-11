@@ -377,7 +377,7 @@ export default function App() {
             <Friends />
           </Route>
           <Route path="/moment">
-            <Moment />
+            <Moment profile={profile} avatar={avatar} />
           </Route>
           <Route path="/setting/">
             <Setting

@@ -1073,7 +1073,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 20px 0 0 20px;
+  margin: 20px;
 }
 
 .moment-story-card-container .moment-story-user {
