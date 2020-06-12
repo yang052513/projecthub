@@ -19,6 +19,7 @@ export default function Moment(props) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       db.collection('moment')
+        .orderBy('Time', 'desc')
         .get()
         .then((query) => {
           query.forEach((doc) => {
