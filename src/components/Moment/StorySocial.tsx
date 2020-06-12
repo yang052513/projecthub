@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function StorySocial(props) {
+export const StorySocial: React.FC = () => {
   return (
     <div className="moment-story-social-container">
       <i className="far fa-heart"></i>

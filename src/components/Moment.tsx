@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import StoryEditor from './Moment/StoryEditor'
-import StoryCard from './Moment/StoryCard'
+import { StoryEditor } from './Moment/StoryEditor'
+import { StoryCard } from './Moment/StoryCard'
 import firebase from 'firebase'
 
-export default function Moment(props) {
+export default function Moment(props: any) {
   const db = firebase.firestore()
 
-  const [editor, setEditor] = useState(false)
-  const [moment, setMoment] = useState([])
+  const [editor, setEditor] = useState<boolean>(false)
+  const [moment, setMoment] = useState<Array<object | null | undefined>>([])
+
   const displayEditor = () => {
     setEditor(true)
   }
-
   const offEditor = () => {
     setEditor(false)
   }
-
+  //Initialize and read all the moment that stores in the database
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('moment')
-        .orderBy('Time', 'desc')
-        .get()
-        .then((query) => {
-          query.forEach((doc) => {
-            setMoment((prevMoment) => [...prevMoment, doc.data()])
-          })
+    db.collection('moment')
+      .orderBy('Time', 'desc')
+      .get()
+      .then(query => {
+        query.forEach(doc => {
+          setMoment(prevMoment => [...prevMoment, doc.data()])
         })
-    })
+      })
   }, [])
 
-  const momentList = moment.map((moment) => (
+  //Loop all the moment and render in storycard component
+  const momentList = moment.map((moment: any) => (
     <StoryCard
       key={moment.Key}
       docRef={moment.Key}

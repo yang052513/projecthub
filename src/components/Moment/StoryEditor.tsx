@@ -2,7 +2,13 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import Progress from '../Common/Progress'
 
-export default function StoryEditor(props) {
+interface Props {
+  profile: object | any
+  avatar: string
+  toggle: any
+}
+
+export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
@@ -62,46 +68,48 @@ export default function StoryEditor(props) {
 
   const handleMoment = () => {
     if (post !== '') {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged((user: any) => {
         db.collection('moment')
           .add({
-            Author: props.profile.profileName,
+            Author: profile.profileName,
             Time: currentTime,
             Content: post,
             Like: 0,
             Comments: {},
-            Avatar: props.avatar,
+            Avatar: avatar,
             UserId: user.uid,
             Picture: picture,
           })
-          .then((docRef) => {
+          .then(docRef => {
             db.collection('moment').doc(docRef.id).update({
               Key: docRef.id,
             })
           })
       })
 
-      props.toggle()
+      toggle()
     } else {
       alert('说点什么吧')
     }
   }
 
-  const handleContent = (event) => {
-    setPost(event.target.value)
+  const handleContent = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPost(event.target.value as string)
   }
 
-  const handleImage = (event) => {
+  const handleImage = (event: any) => {
     setLoading(true)
-    let file = document.getElementById(event.currentTarget.id).files[0]
+    let imageInput: any = document.getElementById(event.currentTarget.id)
+    let file = imageInput.files[0]
+
     let metadata = {
       contentType: file.type,
     }
 
     let task = storageRef.child(file.name).put(file, metadata)
     task
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((url) => {
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
         setPicture(url)
         console.log('朋友圈图片上传成功 链接为: ' + url)
         setLoading(false)
@@ -115,7 +123,7 @@ export default function StoryEditor(props) {
   return (
     <div>
       {loading ? <Progress /> : null}
-      <div onClick={props.toggle} className="overlay-post"></div>
+      <div onClick={toggle} className="overlay-post"></div>
       <div className="moment-editor-container">
         <div className="moment-editor-textarea">
           <img src="images/user.jpg" width="50px" height="50px" />
