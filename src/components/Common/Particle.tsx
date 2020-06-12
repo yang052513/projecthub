@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Particle() {
+export const Particle: React.FC = () => {
   return (
     <div className="particle-container">
       <div className="snow"></div>
@@ -206,5 +206,3 @@ function Particle() {
     </div>
   )
 }
-
-export default Particle
