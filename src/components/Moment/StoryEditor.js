@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
+import Progress from '../Common/Progress'
 
 export default function StoryEditor(props) {
   const db = firebase.firestore()
-  const [post, setPost] = useState('')
+  const storageRef = firebase.storage().ref()
 
+  const [loading, setLoading] = useState(false)
+  const [post, setPost] = useState('')
+  const [picture, setPicture] = useState('')
+  const [pictureInfo, setPictureInfo] = useState({
+    Status: false,
+    Name: '',
+  })
   const date = new Date()
   let month
   switch (date.getMonth()) {
@@ -55,25 +63,53 @@ export default function StoryEditor(props) {
   console.log(currentTime)
 
   const handleMoment = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection('moment').add({
-        Author: props.profile.profileName,
-        Time: currentTime,
-        Content: post,
-        Like: 0,
-        Comments: {},
-        Avatar: props.avatar,
-        Id: user.uid,
+    if (post !== '') {
+      firebase.auth().onAuthStateChanged((user) => {
+        db.collection('moment').add({
+          Author: props.profile.profileName,
+          Time: currentTime,
+          Content: post,
+          Like: 0,
+          Comments: {},
+          Avatar: props.avatar,
+          Id: user.uid,
+          Picture: picture,
+        })
       })
-    })
+      return props.toggle
+    } else {
+      alert('说点什么吧')
+    }
   }
 
   const handleContent = (event) => {
     setPost(event.target.value)
   }
 
+  const handleImage = (event) => {
+    setLoading(true)
+    let file = document.getElementById(event.currentTarget.id).files[0]
+    let metadata = {
+      contentType: file.type,
+    }
+
+    let task = storageRef.child(file.name).put(file, metadata)
+    task
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((url) => {
+        setPicture(url)
+        console.log('朋友圈图片上传成功 链接为: ' + url)
+        setLoading(false)
+        setPictureInfo({
+          Status: true,
+          Name: file.name,
+        })
+      })
+  }
+
   return (
     <div>
+      {loading ? <Progress /> : null}
       <div onClick={props.toggle} className="overlay-post"></div>
       <div className="moment-editor-container">
         <div className="moment-editor-textarea">
@@ -86,12 +122,14 @@ export default function StoryEditor(props) {
 
         <div className="moment-editor-social">
           <button onClick={handleMoment}>Post</button>
-          <input type="file" id="image-input" />
-          <label id="upload-image-tweet" htmlFor="image-input">
+          <input onChange={handleImage} type="file" id="image-input" />
+          <label htmlFor="image-input">
             <i className="far fa-image"></i>
           </label>
 
           <i className="far fa-laugh"></i>
+
+          {pictureInfo.Status ? <p>{pictureInfo.Name}</p> : null}
         </div>
       </div>
     </div>
