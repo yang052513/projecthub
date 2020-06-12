@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Group() {
+export const Group: React.FC = () => {
   return (
     <div className="component-layout">
       <ul>

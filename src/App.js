@@ -6,13 +6,13 @@ import firebase from 'firebase'
 //所有主组件
 import Home from './components/Home'
 import Status from './components/Status'
-import Explore from './components/Explore'
-import Group from './components/Group'
-import Mission from './components/Mission'
+import { Explore } from './components/Explore'
+import { Group } from './components/Group'
+import { Mission } from './components/Mission'
 import Friends from './components/Friends'
 import Moment from './components/Moment'
 import Setting from './components/Setting'
-import FAQ from './components/FAQ'
+import { FAQ } from './components/FAQ'
 import CreateProject from './components/Common/CreateProject'
 
 //导航，副组件根据ref来决定渲染内容
@@ -48,12 +48,12 @@ export default function App() {
 
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       //将用户加入到所有用户列表
       db.collection('friends')
         .doc(user.uid)
         .get()
-        .then((doc) => {
+        .then(doc => {
           if (!doc.exists) {
             db.collection('friends')
               .doc(user.uid)
@@ -82,7 +82,7 @@ export default function App() {
       const apparenceRef = settingRef.doc('Apparence')
       const profileRef = settingRef.doc('Profile')
 
-      profileRef.get().then((doc) => {
+      profileRef.get().then(doc => {
         if (!doc.exists) {
           console.log(doc)
           profileRef.set({
@@ -103,7 +103,7 @@ export default function App() {
         }
       })
 
-      langRef.get().then((doc) => {
+      langRef.get().then(doc => {
         if (!doc.exists) {
           langRef.set({
             Language: 'English',
@@ -113,7 +113,7 @@ export default function App() {
 
       apparenceRef
         .get()
-        .then((doc) => {
+        .then(doc => {
           if (!doc.exists) {
             apparenceRef.set({
               theme: '#0e5dd3',
@@ -136,7 +136,7 @@ export default function App() {
             setOpacity(doc.data().opacity)
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(`读取用户保存的壁纸时出错了 ${error}`)
         })
     })
@@ -155,7 +155,7 @@ export default function App() {
 
   //颜色有更改时 写入到数据库
   const handleTheme = (color, event) => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
@@ -167,27 +167,27 @@ export default function App() {
           setTheme(color.hex)
           console.log(`主题色修改成功为${color.hex}`)
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(`更改主题色时出错啦${error}`)
         })
     })
   }
 
   //渲染是以照片还是纯色模式为背景
-  const handleOptions = (event) => {
+  const handleOptions = event => {
     setOptions(event.target.value)
     console.log(options)
   }
 
   //用户点击壁纸缩略图时更改实时预览demo
-  const handleSwitch = (event) => {
+  const handleSwitch = event => {
     let bgRef = event.currentTarget.id
     setDemo(() => ({
       backgroundColor: false,
       backgroundRef: bgRef,
     }))
     //同时更新到数据库
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
@@ -199,7 +199,7 @@ export default function App() {
         .then(() => {
           console.log(`切换背景到数据库${bgRef}`)
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(`切换背景错误${error}`)
         })
     })
@@ -207,7 +207,7 @@ export default function App() {
 
   //用户点击卡色 写入数据库
   const handleColor = (color, event) => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
@@ -223,19 +223,19 @@ export default function App() {
           }))
           console.log(`主题色修改成功为${color.hex}`)
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(`更改主题色时出错啦${error}`)
         })
     })
   }
 
   //更改透明度
-  const handleOpacity = (name) => (event, value) => {
-    setOpacity((prevOpacity) => ({
+  const handleOpacity = name => (event, value) => {
+    setOpacity(prevOpacity => ({
       ...prevOpacity,
       [name]: value,
     }))
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')

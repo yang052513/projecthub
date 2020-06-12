@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function FAQ() {
+export const FAQ: React.FC = () => {
   return (
     <div className="component-layout">
       <ul>

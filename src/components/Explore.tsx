@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Explore() {
+export const Explore: React.FC = () => {
   return (
     <div className="component-layout">
       <p>探索页面</p>
@@ -11,5 +11,3 @@ function Explore() {
     </div>
   )
 }
-
-export default Explore
