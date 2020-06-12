@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StoryEditor from './Moment/StoryEditor'
 import StoryCard from './Moment/StoryCard'
+import firebase from 'firebase'
 
 export default function Moment(props) {
-  const [editor, setEditor] = useState(false)
+  const db = firebase.firestore()
 
+  const [editor, setEditor] = useState(false)
+  const [moment, setMoment] = useState([])
   const displayEditor = () => {
     setEditor(true)
   }
@@ -13,8 +16,36 @@ export default function Moment(props) {
     setEditor(false)
   }
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection('moment')
+        .get()
+        .then((query) => {
+          query.forEach((doc) => {
+            setMoment((prevMoment) => [...prevMoment, doc.data()])
+          })
+        })
+    })
+  }, [])
+
+  const momentList = moment.map((moment) => (
+    <StoryCard
+      key={moment.Key}
+      docRef={moment.Key}
+      userId={moment.UserId}
+      avatar={moment.Avatar}
+      name={moment.Author}
+      time={moment.Time}
+      content={moment.Content}
+      picture={moment.Picture}
+      like={moment.Like}
+      comment={moment.Comments}
+    />
+  ))
+
   return (
     <div className="component-layout moment-container">
+      {/* Display the moment editor container */}
       {editor ? (
         <StoryEditor
           profile={props.profile}
@@ -22,14 +53,11 @@ export default function Moment(props) {
           toggle={offEditor}
         />
       ) : null}
-      <div className="moment-story-card-wrap">
-        <StoryCard
-          imgUrl={'images/user.jpg'}
-          name={'Yang Li'}
-          time={'13:00 Jun 11, 2020'}
-          content={'Projecthub is such a wonderful project bro!'}
-        />
-      </div>
+
+      {/* Display all the moments from database */}
+      <div className="moment-story-card-wrap">{momentList}</div>
+
+      {/* Creat a new moment button */}
       <div className="post-moment-container">
         <i onClick={displayEditor} className="fas fa-feather"></i>
       </div>

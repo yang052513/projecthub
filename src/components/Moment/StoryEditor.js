@@ -60,23 +60,28 @@ export default function StoryEditor(props) {
     date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
   },${date.getFullYear()}`
 
-  console.log(currentTime)
-
   const handleMoment = () => {
     if (post !== '') {
       firebase.auth().onAuthStateChanged((user) => {
-        db.collection('moment').add({
-          Author: props.profile.profileName,
-          Time: currentTime,
-          Content: post,
-          Like: 0,
-          Comments: {},
-          Avatar: props.avatar,
-          Id: user.uid,
-          Picture: picture,
-        })
+        db.collection('moment')
+          .add({
+            Author: props.profile.profileName,
+            Time: currentTime,
+            Content: post,
+            Like: 0,
+            Comments: {},
+            Avatar: props.avatar,
+            UserId: user.uid,
+            Picture: picture,
+          })
+          .then((docRef) => {
+            db.collection('moment').doc(docRef.id).update({
+              Key: docRef.id,
+            })
+          })
       })
-      return props.toggle
+
+      props.toggle()
     } else {
       alert('说点什么吧')
     }

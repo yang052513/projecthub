@@ -62,7 +62,6 @@ $storyImgSize: 50px;
 }
 
 .moment-story-card-wrap {
-  background-color: white;
   padding: 10px;
   width: 800px;
   margin: 0 auto;
@@ -71,7 +70,8 @@ $storyImgSize: 50px;
 .moment-story-card-container {
   display: flex;
   margin: 20px;
-
+  background-color: white;
+  padding: 20px;
   .moment-story-user {
     width: 50px;
     height: 50px;
