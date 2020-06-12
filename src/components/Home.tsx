@@ -4,45 +4,46 @@ import Hitokoto from './Home/Hitokoto'
 import Project from './Home/Project'
 import CreateBtn from './Home/CreateBtn'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 150,
-    transform: 'translateY(-25px)',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  selectItem: {
-    fontSize: '13px',
-    color: 'black',
-  },
-}))
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 150,
+      transform: 'translateY(-25px)',
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+    selectItem: {
+      fontSize: '13px',
+      color: 'black',
+    },
+  })
+)
 
-function Home() {
+export const Home: React.FC = () => {
   const classes = useStyles()
 
-  const [sort, setSort] = useState('Name')
-  const [status, setStatus] = useState('All My Projects')
-  const [search, setSearch] = useState('')
+  const [sort, setSort] = useState<string>('Name')
+  const [status, setStatus] = useState<string>('All My Projects')
+  const [search, setSearch] = useState<string>('')
 
-  function handleStatus(event) {
-    const { value } = event.target
-    setStatus(value)
+  const handleStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setStatus(event.target.value as string)
   }
 
-  function handleSort(event) {
-    setSort(event.target.value)
+  function handleSort(event: React.ChangeEvent<{ value: unknown }>) {
+    setSort(event.target.value as string)
   }
 
-  function handleSearch(event) {
-    setSearch(event.target.value)
+  function handleSearch(event: React.ChangeEvent<{ value: unknown }>) {
+    setSearch(event.target.value as string)
   }
 
   return (
@@ -126,5 +127,3 @@ function Home() {
     </div>
   )
 }
-
-export default Home

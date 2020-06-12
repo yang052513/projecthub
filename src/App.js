@@ -4,7 +4,7 @@ import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import firebase from 'firebase'
 
 //所有主组件
-import Home from './components/Home'
+import { Home } from './components/Home'
 import Status from './components/Status'
 import { Explore } from './components/Explore'
 import { Group } from './components/Group'
