@@ -34,11 +34,12 @@ class SignIn extends Component {
       signInSuccessWithAuthResult: () => false,
     },
   }
+  unregisterAuthObserver!: firebase.Unsubscribe
 
   componentDidMount() {
     this.unregisterAuthObserver = firebase
       .auth()
-      .onAuthStateChanged((user) => this.setState({ isSignedIn: !!user }))
+      .onAuthStateChanged(user => this.setState({ isSignedIn: !!user }))
   }
 
   componentWillUnmount() {
@@ -64,10 +65,12 @@ class SignIn extends Component {
       )
     } else {
       const db = firebase.firestore()
-      firebase.auth().onAuthStateChanged((user) => {
-        db.collection('user').doc(user.uid).set({
-          Name: user.displayName,
-        })
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          db.collection('user').doc(user.uid).set({
+            Name: user.displayName,
+          })
+        }
       })
       return (
         <Router>
