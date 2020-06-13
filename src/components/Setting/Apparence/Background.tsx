@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
 import { Progress } from '../../Common/Progress'
-import Feedback from '../../Common/Feedback'
+import { Feedback } from '../../Common/Feedback'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'

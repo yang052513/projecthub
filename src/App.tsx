@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { useState, useEffect } from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import firebase from 'firebase'
@@ -22,6 +22,7 @@ import { Kanban } from './components/Home/Kanban'
 
 export default function App() {
   const db = firebase.firestore()
+  const user: any = firebase.auth().currentUser
 
   //全局样式化
   //侧边导航栏样式
@@ -29,8 +30,8 @@ export default function App() {
 
   //背景样式
   const [options, setOptions] = useState('Color')
-  const [customBg, setCustomBg] = useState([])
-  const [demo, setDemo] = useState({
+  const [customBg, setCustomBg] = useState<any>([])
+  const [demo, setDemo] = useState<any>({
     backgroundColor: true,
     backgroundRef: '',
   })
@@ -48,105 +49,102 @@ export default function App() {
 
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      //将用户加入到所有用户列表
-      db.collection('friends')
-        .doc(user.uid)
-        .get()
-        .then(doc => {
-          if (!doc.exists) {
-            db.collection('friends')
-              .doc(user.uid)
-              .set({
-                avatar: '/images/user.jpg',
-                profile: {
-                  profileName: user.displayName,
-                  profileBio: '',
-                  profileEmail: user.email,
-                  profileGithub: '',
-                  profileLocation: '',
-                  profileWeb: '',
-                  profilelinkedin: '',
-                },
-                Key: user.uid,
-              })
-          }
-        })
-
-      const settingRef = db
-        .collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-
-      const langRef = settingRef.doc('Language')
-      const apparenceRef = settingRef.doc('Apparence')
-      const profileRef = settingRef.doc('Profile')
-
-      profileRef.get().then(doc => {
+    // firebase.auth().onAuthStateChanged(user => {
+    //将用户加入到所有用户列表
+    db.collection('friends')
+      .doc(user.uid)
+      .get()
+      .then(doc => {
         if (!doc.exists) {
-          console.log(doc)
-          profileRef.set({
-            avatar: '/images/user.jpg',
-            profile: {
-              profileName: '',
-              profileBio: '',
-              profileEmail: '',
-              profileGithub: '',
-              profileLocation: '',
-              profileWeb: '',
-              profilelinkedin: '',
+          db.collection('friends')
+            .doc(user.uid)
+            .set({
+              avatar: '/images/user.jpg',
+              profile: {
+                profileName: user.displayName,
+                profileBio: '',
+                profileEmail: user.email,
+                profileGithub: '',
+                profileLocation: '',
+                profileWeb: '',
+                profilelinkedin: '',
+              },
+              Key: user.uid,
+            })
+        }
+      })
+
+    const settingRef = db.collection('user').doc(user.uid).collection('Setting')
+
+    const langRef = settingRef.doc('Language')
+    const apparenceRef = settingRef.doc('Apparence')
+    const profileRef = settingRef.doc('Profile')
+
+    profileRef.get().then((doc: any) => {
+      if (!doc.exists) {
+        console.log(doc)
+        profileRef.set({
+          avatar: '/images/user.jpg',
+          profile: {
+            profileName: '',
+            profileBio: '',
+            profileEmail: '',
+            profileGithub: '',
+            profileLocation: '',
+            profileWeb: '',
+            profilelinkedin: '',
+          },
+        })
+      } else {
+        setAvatar(doc.data().avatar)
+        setProfile(doc.data().profile)
+      }
+    })
+
+    langRef.get().then(doc => {
+      if (!doc.exists) {
+        langRef.set({
+          Language: 'English',
+        })
+      }
+    })
+
+    apparenceRef
+      .get()
+      .then((doc: any) => {
+        if (!doc.exists) {
+          apparenceRef.set({
+            theme: '#0e5dd3',
+            opacity: {
+              sidebar: 100,
+              topbar: 100,
+              card: 100,
+              background: 50,
             },
+            background: '#f7f7f7',
+            backgroundColor: true,
           })
         } else {
-          setAvatar(doc.data().avatar)
-          setProfile(doc.data().profile)
+          setTheme(doc.data().theme)
+          setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
+          setDemo(() => ({
+            backgroundColor: doc.data().backgroundColor,
+            backgroundRef: doc.data().background,
+          }))
+          setOpacity(doc.data().opacity)
         }
       })
-
-      langRef.get().then(doc => {
-        if (!doc.exists) {
-          langRef.set({
-            Language: 'English',
-          })
-        }
+      .catch(error => {
+        console.log(`读取用户保存的壁纸时出错了 ${error}`)
       })
-
-      apparenceRef
-        .get()
-        .then(doc => {
-          if (!doc.exists) {
-            apparenceRef.set({
-              theme: '#0e5dd3',
-              opacity: {
-                sidebar: 100,
-                topbar: 100,
-                card: 100,
-                background: 50,
-              },
-              background: '#f7f7f7',
-              backgroundColor: true,
-            })
-          } else {
-            setTheme(doc.data().theme)
-            setOptions(doc.data().backgroundColor ? 'Color' : 'Images')
-            setDemo(() => ({
-              backgroundColor: doc.data().backgroundColor,
-              backgroundRef: doc.data().background,
-            }))
-            setOpacity(doc.data().opacity)
-          }
-        })
-        .catch(error => {
-          console.log(`读取用户保存的壁纸时出错了 ${error}`)
-        })
-    })
+    // })
   }, [])
 
   //用户当前所在的route
   const currRoute = useLocation().pathname
 
   // active css style 当前所在的route对应的nav icon样式化
-  const currLinkStyle = {
+  const currLinkStyle: any = {
     backgroundColor: 'white',
     color: `${theme}`,
     padding: '5px',
@@ -154,96 +152,98 @@ export default function App() {
   }
 
   //颜色有更改时 写入到数据库
-  const handleTheme = (color, event) => {
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          theme: color.hex,
-        })
-        .then(() => {
-          setTheme(color.hex)
-          console.log(`主题色修改成功为${color.hex}`)
-        })
-        .catch(error => {
-          console.log(`更改主题色时出错啦${error}`)
-        })
-    })
+  const handleTheme = (color: any, event: any) => {
+    // firebase.auth().onAuthStateChanged(user => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Apparence')
+      .update({
+        theme: color.hex,
+      })
+      .then(() => {
+        setTheme(color.hex)
+        console.log(`主题色修改成功为${color.hex}`)
+      })
+      .catch(error => {
+        console.log(`更改主题色时出错啦${error}`)
+      })
+    // })
   }
 
   //渲染是以照片还是纯色模式为背景
-  const handleOptions = event => {
+  const handleOptions = (event: {
+    target: { value: React.SetStateAction<string> }
+  }) => {
     setOptions(event.target.value)
     console.log(options)
   }
 
   //用户点击壁纸缩略图时更改实时预览demo
-  const handleSwitch = event => {
+  const handleSwitch = (event: { currentTarget: { id: any } }) => {
     let bgRef = event.currentTarget.id
     setDemo(() => ({
       backgroundColor: false,
       backgroundRef: bgRef,
     }))
     //同时更新到数据库
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          backgroundColor: false,
-          background: bgRef,
-        })
-        .then(() => {
-          console.log(`切换背景到数据库${bgRef}`)
-        })
-        .catch(error => {
-          console.log(`切换背景错误${error}`)
-        })
-    })
+    // firebase.auth().onAuthStateChanged(user => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Apparence')
+      .update({
+        backgroundColor: false,
+        background: bgRef,
+      })
+      .then(() => {
+        console.log(`切换背景到数据库${bgRef}`)
+      })
+      .catch(error => {
+        console.log(`切换背景错误${error}`)
+      })
+    // })
   }
 
   //用户点击卡色 写入数据库
-  const handleColor = (color, event) => {
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
+  const handleColor = (color: any, event: any) => {
+    // firebase.auth().onAuthStateChanged(user => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Apparence')
+      .update({
+        backgroundColor: true,
+        background: color.hex,
+      })
+      .then(() => {
+        setDemo(() => ({
           backgroundColor: true,
-          background: color.hex,
-        })
-        .then(() => {
-          setDemo(() => ({
-            backgroundColor: true,
-            backgroundRef: color.hex,
-          }))
-          console.log(`主题色修改成功为${color.hex}`)
-        })
-        .catch(error => {
-          console.log(`更改主题色时出错啦${error}`)
-        })
-    })
+          backgroundRef: color.hex,
+        }))
+        console.log(`主题色修改成功为${color.hex}`)
+      })
+      .catch(error => {
+        console.log(`更改主题色时出错啦${error}`)
+      })
+    // })
   }
 
   //更改透明度
-  const handleOpacity = name => (event, value) => {
+  const handleOpacity = (name: any) => (event: any, value: any) => {
     setOpacity(prevOpacity => ({
       ...prevOpacity,
       [name]: value,
     }))
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Apparence')
-        .update({
-          opacity,
-        })
-    })
+    // firebase.auth().onAuthStateChanged(user => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Apparence')
+      .update({
+        opacity,
+      })
+    // })
   }
 
   return (

@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
-import Feedback from './Feedback'
+import { Feedback } from './Feedback'
 import { Progress } from './Progress'
 import { Link, useParams } from 'react-router-dom'
 
@@ -314,7 +314,6 @@ export const Edit: React.FC<Props> = ({ profile }) => {
             msg="Success"
             info="The project saved successfully ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
-            method="reload"
             toggle={handleReload}
           />
         </div>
@@ -326,7 +325,6 @@ export const Edit: React.FC<Props> = ({ profile }) => {
           msg="Error"
           info={errorMsg}
           imgUrl="/images/emoji/emoji_scare.png"
-          method={'close'}
           toggle={handleFail}
         />
       ) : null}
@@ -337,7 +335,6 @@ export const Edit: React.FC<Props> = ({ profile }) => {
           msg="Confirm"
           info={errorMsg}
           imgUrl="/images/emoji/emoji_cry.png"
-          method={'close'}
           toggle={deleteYes}
           cancel={deleteNo}
           confirm={true}

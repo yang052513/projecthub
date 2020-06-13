@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
 
-import Feedback from './Feedback'
+import { Feedback } from './Feedback'
 import { Progress } from './Progress'
 
 const useStyles = makeStyles(theme => ({
@@ -258,7 +258,6 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
             msg="Success"
             info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
-            method="reload"
             toggle={handleReload}
           />
         </div>
@@ -270,7 +269,6 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
           msg="Error"
           info={errorMsg}
           imgUrl="/images/emoji/emoji_scare.png"
-          method={'close'}
           toggle={handleFail}
         />
       ) : null}

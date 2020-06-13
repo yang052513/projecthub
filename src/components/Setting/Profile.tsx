@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { Progress } from '../Common/Progress'
-import Feedback from '../Common/Feedback'
+import { Feedback } from '../Common/Feedback'
 import { Loading } from '../Common/Loading'
 
 const useStyles = makeStyles((theme: Theme) =>
