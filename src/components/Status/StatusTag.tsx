@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default function StatusTag(props) {
-  const topThreeTag = props.tagSort.slice(0, 3).map((item) => (
+interface Props {
+  tagSort: any
+}
+
+export const StatusTag: React.FC<Props> = ({ tagSort }) => {
+  const topThreeTag = tagSort.slice(0, 3).map((item: any) => (
     <li key={item.name}>
       {item.name} {item.cnt}
     </li>

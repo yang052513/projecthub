@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function StatusContributor(props) {
+export const StatusContributor: React.FC = () => {
   return (
     <div className="status-card-container">
       <p>Solo guy</p>
