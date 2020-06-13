@@ -42,10 +42,12 @@ const data = {
   ],
 }
 
-function Kanban() {
-  const params = useParams()
+export const Kanban: React.FC = () => {
+  const params: any = useParams()
   const db = firebase.firestore()
-  const [loading, setLoading] = useState(false)
+  const user: any = firebase.auth().currentUser
+
+  const [loading, setLoading] = useState<boolean>(false)
 
   const cardStyle = {
     minWidth: '340px',
@@ -58,13 +60,13 @@ function Kanban() {
   //加载数据库，看是否有内容
   useEffect(() => {
     window.scrollTo(0, 0)
-    firebase.auth().onAuthStateChanged(user => {
+    if (user) {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .doc(params.ref)
         .get()
-        .then(doc => {
+        .then((doc: any) => {
           if (doc.data().kanbanData) {
             setKanban(doc.data().kanbanData)
             setLoading(true)
@@ -75,28 +77,25 @@ function Kanban() {
             console.log('第一次使用看板，已经帮你配置好啦 ︿(￣︶￣)︿')
           }
         })
-    })
+    }
   }, [])
 
   //添加新的卡片到列表中 保存到数据库
-  function handleCardAdd(card, laneId) {
+  const handleCardAdd = (card: any, laneId: any) => {
     console.log(`创建卡片成功 ${laneId}`)
     console.dir(card)
   }
 
   //任何改动更新到数据库
-  function handleCardChange(kanbanData) {
+  const handleCardChange = (kanbanData: any) => {
     console.log(kanbanData)
-    //保存所有更改过的数据到数据库
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Project')
-        .doc(params.ref)
-        .update({
-          kanbanData: kanbanData,
-        })
-    })
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Project')
+      .doc(params.ref)
+      .update({
+        kanbanData: kanbanData,
+      })
   }
 
   return (

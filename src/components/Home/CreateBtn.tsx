@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function CreateBtn() {
+export const CreateBtn: React.FC = () => {
   return (
     <div className="create-btn-container">
       <Link to="/create">
@@ -10,5 +10,3 @@ function CreateBtn() {
     </div>
   )
 }
-
-export default CreateBtn

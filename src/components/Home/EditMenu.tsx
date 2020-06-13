@@ -15,14 +15,20 @@ const useStyles = makeStyles({
   },
 })
 
-export default function SimpleMenu(props) {
+interface Props {
+  docRef: string | undefined
+  projectName: string | null | undefined
+}
+
+export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
-  const [deleteConfirm, setDeleteConfirm] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [showReturn, setShowReturn] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [showReturn, setShowReturn] = useState<boolean>(false)
 
   const db = firebase.firestore()
+  const user = firebase.auth().currentUser
 
   let month
   const date = new Date()
@@ -62,7 +68,7 @@ export default function SimpleMenu(props) {
     date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
   }`
 
-  const handleClick = event => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -84,11 +90,11 @@ export default function SimpleMenu(props) {
   function handleDelete() {
     setLoading(true)
     setTimeout(() => {
-      firebase.auth().onAuthStateChanged(user => {
+      if (user) {
         db.collection('user')
           .doc(user.uid)
           .collection('Project')
-          .doc(props.docRef)
+          .doc(docRef)
           .delete()
           .then(() => {
             console.log('(๑•̀ㅂ•́)و✧ 已经删除这个项目啦')
@@ -97,14 +103,14 @@ export default function SimpleMenu(props) {
               .collection('Activity')
               .add({
                 Time: currentTime,
-                Content: `Deleted project ${props.projectName}`,
-                Key: props.docRef,
+                Content: `Deleted project ${projectName}`,
+                Key: docRef,
               })
           })
           .catch(error => {
             console.log('Σ( ° △ °|||)︴ 删除项目时出错了...', error)
           })
-      })
+      }
       setLoading(false)
       setDeleteConfirm(false)
       setShowReturn(true)
@@ -155,12 +161,12 @@ export default function SimpleMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <Link to={`/edit/${props.docRef}`}>
+          <Link to={`/edit/${docRef}`}>
             <MenuItem className={classes.root} onClick={handleClose}>
               Edit
             </MenuItem>
           </Link>
-          <Link to={`/kanban/${props.docRef}`}>
+          <Link to={`/kanban/${docRef}`}>
             <MenuItem className={classes.root} onClick={handleClose}>
               Kanban
             </MenuItem>

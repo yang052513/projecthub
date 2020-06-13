@@ -1,56 +1,61 @@
 import React, { useState, useEffect } from 'react'
-import ProjectCard from './ProjectCard'
 import firebase from 'firebase'
 import { Loading } from '../Common/Loading'
+import { ProjectCard } from './ProjectCard'
 
-function Project(props) {
+interface Props {
+  sort: string | undefined | null
+  filter: string | undefined | null
+  search: string | undefined | null
+}
+
+export const Project: React.FC<Props> = ({ sort, filter, search }) => {
   const db = firebase.firestore()
-  const [project, setProject] = useState([])
+  const user: any = firebase.auth().currentUser
+  const [project, setProject] = useState<any>([])
   const [initial, setInitial] = useState(false)
 
   //Read all the projects in the user's database
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Project')
-        .get()
-        .then(collection => {
-          collection.forEach(doc => {
-            setProject(prevProject => [...prevProject, doc.data()])
-          })
-          //First time log the app set initial message
-          if (collection.docs.length === 0) {
-            setInitial(true)
-          }
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Project')
+      .get()
+      .then(collection => {
+        collection.forEach(doc => {
+          setProject((prevProject: any) => [...prevProject, doc.data()])
         })
-    })
+        //First time log the app set initial message
+        if (collection.docs.length === 0) {
+          setInitial(true)
+        }
+      })
   }, [])
 
-  const sortedProject = project.sort((a, b) => {
-    if (props.sort === 'Name') {
+  const sortedProject = project.sort((a: any, b: any) => {
+    if (sort === 'Name') {
       return a.projectData.Name < b.projectData.Name ? -1 : 1
-    } else if (props.sort === 'Status') {
+    } else if (sort === 'Status') {
       return a.projectData.Status < b.projectData.Status ? -1 : 1
-    } else if (props.sort === 'Newest') {
+    } else if (sort === 'Newest') {
       return a.projectData.Date < b.projectData.Date ? 1 : -1
-    } else if (props.sort === 'Oldest') {
+    } else if (sort === 'Oldest') {
       return a.projectData.Date < b.projectData.Date ? -1 : 1
     }
   })
 
   const filteredProject = sortedProject
-    .filter(item => {
-      if (props.filter === 'All My Projects') {
-        return item && item.projectData.Name.includes(props.search)
+    .filter((item: any) => {
+      if (filter === 'All My Projects') {
+        return item && item.projectData.Name.includes(search)
       } else {
         return (
-          item.projectData.Status === props.filter &&
-          item.projectData.Name.includes(props.search)
+          item.projectData.Status === filter &&
+          item.projectData.Name.includes(search)
         )
       }
     })
-    .map(project => (
+    .map((project: any) => (
       <ProjectCard
         key={project.Key}
         project={project.projectData}

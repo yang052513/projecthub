@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Hitokoto from './Home/Hitokoto'
-import Project from './Home/Project'
-import CreateBtn from './Home/CreateBtn'
+import { Hitokoto } from './Home/Hitokoto'
+import { Project } from './Home/Project'
+import { CreateBtn } from './Home/CreateBtn'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
