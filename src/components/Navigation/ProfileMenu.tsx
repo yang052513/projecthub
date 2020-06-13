@@ -14,21 +14,28 @@ const useStyles = makeStyles({
   },
 })
 
-export default function ProfileMenu(props) {
+interface Props {
+  avatar: string
+}
+
+export const ProfileMenu: React.FC<Props> = ({ avatar }) => {
   const classes = useStyles()
   const db = firebase.firestore()
 
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [logout, setLogout] = useState(false)
-  const handleClick = (event) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [logout, setLogout] = useState<boolean>(false)
+
+  //Open the menu modal when click the avatar
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
+  //Close the menu modal; fired when user click anything
   const handleClose = () => {
     setAnchorEl(null)
   }
 
-  function handleLogout() {
+  const handleLogout = () => {
     setAnchorEl(null)
     setLogout(true)
   }
@@ -41,7 +48,7 @@ export default function ProfileMenu(props) {
           aria-haspopup="true"
           onClick={handleClick}
         >
-          <img className="user-profile-icon" src={props.avatar} alt="profile" />
+          <img className="user-profile-icon" src={avatar} alt="profile" />
         </Button>
 
         <Menu

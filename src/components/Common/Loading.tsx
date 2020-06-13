@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Loading() {
+export const Loading: React.FC = () => {
   return (
     <div className="loading-container">
       <div></div>
@@ -9,5 +9,3 @@ function Loading() {
     </div>
   )
 }
-
-export default Loading
