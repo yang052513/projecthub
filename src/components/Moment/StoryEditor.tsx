@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
-import Progress from '../Common/Progress'
+import { Progress } from '../Common/Progress'
 
 interface Props {
   profile: object | any

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ProjectCard from './ProjectCard'
 import firebase from 'firebase'
-import Loading from '../Common/Loading'
+import { Loading } from '../Common/Loading'
 
 function Project(props) {
   const db = firebase.firestore()
@@ -10,14 +10,14 @@ function Project(props) {
 
   //Read all the projects in the user's database
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .get()
-        .then((collection) => {
-          collection.forEach((doc) => {
-            setProject((prevProject) => [...prevProject, doc.data()])
+        .then(collection => {
+          collection.forEach(doc => {
+            setProject(prevProject => [...prevProject, doc.data()])
           })
           //First time log the app set initial message
           if (collection.docs.length === 0) {
@@ -40,7 +40,7 @@ function Project(props) {
   })
 
   const filteredProject = sortedProject
-    .filter((item) => {
+    .filter(item => {
       if (props.filter === 'All My Projects') {
         return item && item.projectData.Name.includes(props.search)
       } else {
@@ -50,7 +50,7 @@ function Project(props) {
         )
       }
     })
-    .map((project) => (
+    .map(project => (
       <ProjectCard
         key={project.Key}
         project={project.projectData}

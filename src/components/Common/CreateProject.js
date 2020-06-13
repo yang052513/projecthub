@@ -10,9 +10,9 @@ import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
 
 import Feedback from './Feedback'
-import Progress from './Progress'
+import { Progress } from './Progress'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -115,7 +115,7 @@ export default function CreateProject(props) {
   //管理普通文本输入，名称，简介，分类
   function handleTextField(event) {
     const { name, value } = event.target
-    setTextInput((prevText) => ({
+    setTextInput(prevText => ({
       ...prevText,
       [name]: value,
     }))
@@ -131,13 +131,13 @@ export default function CreateProject(props) {
       setFail(true)
       setErrorMsg('You already included that tool... ヽ(￣д￣;)ノ')
     } else {
-      setTool((prevTool) => [...prevTool, toolInput])
+      setTool(prevTool => [...prevTool, toolInput])
     }
 
     document.getElementById('project-tool-input').value = ''
   }
 
-  const toolList = tool.map((item) => <li key={item}>{item}</li>)
+  const toolList = tool.map(item => <li key={item}>{item}</li>)
 
   //管理项目进程 4个状态可选 默认In Progress
   function handleStatus(event) {
@@ -173,13 +173,13 @@ export default function CreateProject(props) {
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
 
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged(user => {
           //获取当前用户的头像
           let userProfile
           db.collection('user')
             .doc(user.uid)
             .get()
-            .then((doc) => {
+            .then(doc => {
               userProfile = doc.data().Profile
             })
 
@@ -190,7 +190,7 @@ export default function CreateProject(props) {
             .add({
               projectData,
             })
-            .then((docRef) => {
+            .then(docRef => {
               // console.log(docRef.id)
 
               //写入到日志中
@@ -227,7 +227,7 @@ export default function CreateProject(props) {
                     projectData,
                   })
             })
-            .catch((error) => {
+            .catch(error => {
               console.log(`上传失败${error}`)
             })
         })

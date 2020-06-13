@@ -3,7 +3,7 @@ import { StoryEditor } from './Moment/StoryEditor'
 import { StoryCard } from './Moment/StoryCard'
 import firebase from 'firebase'
 
-export default function Moment(props: any) {
+export function Moment(props: any) {
   const db = firebase.firestore()
 
   const [editor, setEditor] = useState<boolean>(false)

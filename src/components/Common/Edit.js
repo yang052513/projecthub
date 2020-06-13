@@ -9,10 +9,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
 import Feedback from './Feedback'
-import Progress from './Progress'
+import { Progress } from './Progress'
 import { Link, useParams } from 'react-router-dom'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -117,13 +117,13 @@ export default function EditProject(props) {
 
   //初始化加载数据库内该项目的信息
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .doc(params.ref)
         .get()
-        .then((doc) => {
+        .then(doc => {
           setTextInput({
             projectName: doc.data().projectData.Name,
             projectCategory: doc.data().projectData.Category,
@@ -179,7 +179,7 @@ export default function EditProject(props) {
   //管理普通文本输入，名称，简介，分类
   function handleTextField(event) {
     const { name, value } = event.target
-    setTextInput((prevText) => ({
+    setTextInput(prevText => ({
       ...prevText,
       [name]: value,
     }))
@@ -195,13 +195,13 @@ export default function EditProject(props) {
       setFail(true)
       setErrorMsg('You already included that tool... ヽ(￣д￣;)ノ')
     } else {
-      setTool((prevTool) => [...prevTool, toolInput])
+      setTool(prevTool => [...prevTool, toolInput])
     }
 
     document.getElementById('project-tool-input').value = ''
   }
 
-  const toolList = tool.map((item) => (
+  const toolList = tool.map(item => (
     <li key={item}>
       <i onClick={handleDelete} id={item} className="fas fa-trash-alt"></i>
       {item}
@@ -241,7 +241,7 @@ export default function EditProject(props) {
           Status: status,
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged(user => {
           db.collection('user')
             .doc(user.uid)
             .collection('Project')
@@ -278,7 +278,7 @@ export default function EditProject(props) {
           } else {
             //If the project changed from public to private, delete from public database
             let projectRef = db.collection('project').doc(params.ref)
-            projectRef.get().then((doc) => {
+            projectRef.get().then(doc => {
               if (doc.exists) {
                 db.collection('project')
                   .doc(params.ref)

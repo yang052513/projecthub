@@ -6,7 +6,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import Feedback from '../Common/Feedback'
-import Progress from '../Common/Progress'
+import { Progress } from '../Common/Progress'
 
 const useStyles = makeStyles({
   root: {
@@ -62,7 +62,7 @@ export default function SimpleMenu(props) {
     date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
   }`
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -84,7 +84,7 @@ export default function SimpleMenu(props) {
   function handleDelete() {
     setLoading(true)
     setTimeout(() => {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(user => {
         db.collection('user')
           .doc(user.uid)
           .collection('Project')
@@ -101,7 +101,7 @@ export default function SimpleMenu(props) {
                 Key: props.docRef,
               })
           })
-          .catch((error) => {
+          .catch(error => {
             console.log('Σ( ° △ °|||)︴ 删除项目时出错了...', error)
           })
       })

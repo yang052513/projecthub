@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
-import Progress from '../../Common/Progress'
+import { Progress } from '../../Common/Progress'
 import Feedback from '../../Common/Feedback'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import { SwatchesPicker } from 'react-color'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -41,10 +41,10 @@ export default function Background(props) {
       }
       let upload = storageRef.child(file.name).put(file, metadata)
       upload
-        .then((snapshot) => snapshot.ref.getDownloadURL())
-        .then((url) => {
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
           console.log(`背景图成功上传到数据库~'${url}`)
-          firebase.auth().onAuthStateChanged((user) => {
+          firebase.auth().onAuthStateChanged(user => {
             db.collection('user')
               .doc(user.uid)
               .collection('Setting')
@@ -75,7 +75,7 @@ export default function Background(props) {
   const customBgRender =
     props.customBg.length === 0
       ? null
-      : props.customBg.map((bg) => (
+      : props.customBg.map(bg => (
           <img
             onClick={props.switchImgPreview}
             id={bg}

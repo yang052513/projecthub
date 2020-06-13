@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
-import Loading from '../Common/Loading'
+import { Loading } from '../Common/Loading'
 
 //初始化的看板模板
 const data = {
@@ -58,13 +58,13 @@ function Kanban() {
   //加载数据库，看是否有内容
   useEffect(() => {
     window.scrollTo(0, 0)
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')
         .doc(params.ref)
         .get()
-        .then((doc) => {
+        .then(doc => {
           if (doc.data().kanbanData) {
             setKanban(doc.data().kanbanData)
             setLoading(true)
@@ -88,7 +88,7 @@ function Kanban() {
   function handleCardChange(kanbanData) {
     console.log(kanbanData)
     //保存所有更改过的数据到数据库
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Project')

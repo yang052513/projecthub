@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import Progress from '../Common/Progress'
+import { Progress } from '../Common/Progress'
 import Feedback from '../Common/Feedback'
-import Loading from '../Common/Loading'
+import { Loading } from '../Common/Loading'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -50,7 +50,7 @@ function Profile(props) {
 
   function handleTextField(event) {
     const { name, value } = event.target
-    setProfile((prevProfile) => ({
+    setProfile(prevProfile => ({
       ...prevProfile,
       [name]: value,
     }))
@@ -68,10 +68,10 @@ function Profile(props) {
 
       let upload = storageRef.child(file.name).put(file, metadata)
       upload
-        .then((snapshot) => snapshot.ref.getDownloadURL())
-        .then((url) => {
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
           console.log(`头像成功上传到数据库~'${url}`)
-          firebase.auth().onAuthStateChanged((user) => {
+          firebase.auth().onAuthStateChanged(user => {
             db.collection('user')
               .doc(user.uid)
               .collection('Setting')
@@ -99,7 +99,7 @@ function Profile(props) {
     } else {
       setLoading(true)
       setTimeout(() => {
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged(user => {
           db.collection('user')
             .doc(user.uid)
             .collection('Setting')
@@ -108,7 +108,7 @@ function Profile(props) {
               profile,
             })
             .then(console.log('用户信息保存成功'))
-            .catch((error) => {
+            .catch(error => {
               console.log('保存出错' + error)
             })
           db.collection('friends').doc(user.uid).update({
@@ -132,13 +132,13 @@ function Profile(props) {
 
   //初始化读取数据库信息
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
         .doc('Profile')
         .get()
-        .then((doc) => {
+        .then(doc => {
           if (doc.data().profile) {
             setProfile(doc.data().profile)
           } else {

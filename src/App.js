@@ -10,13 +10,13 @@ import { Explore } from './components/Explore'
 import { Group } from './components/Group'
 import { Mission } from './components/Mission'
 import { Friends } from './components/Friends'
-import Moment from './components/Moment'
+import { Moment } from './components/Moment'
 import Setting from './components/Setting'
 import { FAQ } from './components/FAQ'
 import CreateProject from './components/Common/CreateProject'
 
 //导航，副组件根据ref来决定渲染内容
-import ProfileMenu from './components/Navigation/ProfileMenu'
+import { ProfileMenu } from './components/Navigation/ProfileMenu'
 import Edit from './components/Common/Edit'
 import Kanban from './components/Home/Kanban'
 
