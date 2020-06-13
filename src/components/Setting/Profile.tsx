@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { Progress } from '../Common/Progress'
 import Feedback from '../Common/Feedback'
 import { Loading } from '../Common/Loading'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: '10px',
-  },
-
-  // 文本框样式
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '40ch',
-  },
-}))
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      marginTop: '10px',
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: '40ch',
+    },
+  })
+)
 
 const inputMargin = {
   margin: '12px 8px',
@@ -35,8 +35,14 @@ const profileInit = {
   profileGithub: '',
 }
 
-function Profile(props) {
+interface Props {
+  avatar: any
+}
+
+//Profile的信息从App用props传 直接在数据库更改
+export const Profile: React.FC<Props> = ({ avatar }) => {
   const classes = useStyles()
+  const user = firebase.auth().currentUser
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
@@ -45,33 +51,34 @@ function Profile(props) {
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
 
-  const [profile, setProfile] = useState({})
-  const [avatar, setAvatar] = useState(props.avatar)
+  const [profile, setProfile] = useState<any>({})
+  // const [avatar, setAvatar] = useState(avatar)
 
-  function handleTextField(event) {
+  function handleTextField(event: { target: { name: any; value: any } }) {
     const { name, value } = event.target
-    setProfile(prevProfile => ({
+    setProfile((prevProfile: any) => ({
       ...prevProfile,
       [name]: value,
     }))
   }
 
-  //上传用户保存的照片
-  function handleProfileUpload() {
+  //Handle Image Upload Task
+  const handleProfileUpload = () => {
     setLoading(true)
-    let file = document.getElementById('profile-input').files[0]
-    //如果更改了照片
+    let imageInput: any = document.getElementById('profile-input')
+    let file = imageInput.files[0]
+
+    //If detect any file upload in the stack
     if (file) {
       let metadata = {
         contentType: file.type,
       }
-
       let upload = storageRef.child(file.name).put(file, metadata)
       upload
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
           console.log(`头像成功上传到数据库~'${url}`)
-          firebase.auth().onAuthStateChanged(user => {
+          if (user) {
             db.collection('user')
               .doc(user.uid)
               .collection('Setting')
@@ -82,7 +89,7 @@ function Profile(props) {
             db.collection('friends').doc(user.uid).update({
               avatar: url,
             })
-          })
+          }
           setLoading(false)
           setFeedback(true)
         })
@@ -93,13 +100,13 @@ function Profile(props) {
   }
 
   //保存用户修改后的profile信息
-  function handleSubmit() {
+  const handleSubmit = () => {
     if (profile.profileEmail !== '' && !profile.profileEmail.includes('@')) {
       alert('错误')
     } else {
       setLoading(true)
       setTimeout(() => {
-        firebase.auth().onAuthStateChanged(user => {
+        if (user) {
           db.collection('user')
             .doc(user.uid)
             .collection('Setting')
@@ -107,7 +114,7 @@ function Profile(props) {
             .update({
               profile,
             })
-            .then(console.log('用户信息保存成功'))
+            .then(() => console.log('用户信息保存成功'))
             .catch(error => {
               console.log('保存出错' + error)
             })
@@ -115,41 +122,41 @@ function Profile(props) {
             Key: user.uid,
             profile,
           })
-        })
+        }
         setLoading(false)
         setFeedback(true)
       }, 1000)
     }
   }
 
-  function handleReload() {
+  const handleReload = () => {
     window.location.reload()
   }
 
-  function handleError() {
+  const handleError = () => {
     setError(false)
   }
 
   //初始化读取数据库信息
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
+    if (user) {
       db.collection('user')
         .doc(user.uid)
         .collection('Setting')
         .doc('Profile')
         .get()
-        .then(doc => {
+        .then((doc: any) => {
           if (doc.data().profile) {
             setProfile(doc.data().profile)
           } else {
             setProfile(profileInit)
           }
-          if (doc.data().avatar) {
-            setAvatar(doc.data().avatar)
-          }
+          // if (doc.data().avatar) {
+          //   setAvatar(doc.data().avatar)
+          // }
         })
-      setLaunch(false)
-    })
+    }
+    setLaunch(false)
   }, [])
 
   return (
@@ -306,5 +313,3 @@ function Profile(props) {
     </div>
   )
 }
-
-export default Profile

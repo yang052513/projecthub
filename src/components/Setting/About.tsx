@@ -1,6 +1,6 @@
 import React from 'react'
 
-function About() {
+export const About: React.FC = () => {
   return (
     <div>
       <div className="setting-content-intro">

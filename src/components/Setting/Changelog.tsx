@@ -1,9 +1,9 @@
 import React from 'react'
-import ChangeLogBlock from './ChangeLog/ChangeLogBlock'
+import { ChangeLogBlock } from './ChangeLog/ChangeLogBlock'
 import changelogData from '../../ChangeLog.json'
 
-function ChangeLog() {
-  const changelogBlock = changelogData.versions.map((item) => (
+export const ChangeLog: React.FC = () => {
+  const changelogBlock = changelogData.versions.map(item => (
     <ChangeLogBlock
       key={item.version}
       version={item.version}

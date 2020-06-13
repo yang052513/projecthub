@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import Flag from './Flag'
+import { Flag } from './Flag'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: '30px',
@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
   checked: {},
 }))
 
-export default function SelectLang() {
+export const SelectLang: React.FC = () => {
   const classes = useStyles()
-  const [lang, setLang] = React.useState('en')
+  const [lang, setLang] = useState<string>('')
 
-  const handleLang = (event) => {
+  const handleLang = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLang(event.target.value)
   }
 

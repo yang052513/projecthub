@@ -1,7 +1,7 @@
 import React from 'react'
-import SelectLang from './Language/SelectLang'
+import { SelectLang } from './Language/SelectLang'
 
-function Language() {
+export const Language: React.FC = () => {
   return (
     <div>
       <div className="setting-content-intro">

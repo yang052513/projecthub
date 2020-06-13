@@ -11,7 +11,7 @@ import { Group } from './components/Group'
 import { Mission } from './components/Mission'
 import { Friends } from './components/Friends'
 import { Moment } from './components/Moment'
-import Setting from './components/Setting'
+import { Setting } from './components/Setting'
 import { FAQ } from './components/FAQ'
 import CreateProject from './components/Common/CreateProject'
 

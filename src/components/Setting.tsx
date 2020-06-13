@@ -2,16 +2,40 @@ import React from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import Profile from './Setting/Profile'
-import Apparence from './Setting/Apparence'
-import Language from './Setting/Language'
-import About from './Setting/About'
-import ChangeLog from './Setting/Changelog'
+import { Profile } from './Setting/Profile'
+import { Apparence } from './Setting/Apparence'
+import { Language } from './Setting/Language'
+import { About } from './Setting/About'
+import { ChangeLog } from './Setting/Changelog'
 
-function Setting(props) {
+interface Props {
+  avatar: string | null | undefined
+  demo: string | null | undefined
+  options: string | null | undefined
+  customBg: string | null | undefined
+  opacity: object | null | undefined
+  switchImgPreview: any
+  switchColorPreview: any
+  switchOption: any
+  switchTheme: any
+  swicthOpacity: any
+}
+
+export const Setting: React.FC<Props> = ({
+  avatar,
+  demo,
+  options,
+  customBg,
+  opacity,
+  swicthOpacity,
+  switchColorPreview,
+  switchImgPreview,
+  switchOption,
+  switchTheme,
+}) => {
   let location = useLocation()
 
-  const currPathStyle = {
+  const currPathStyle: any = {
     color: 'rgb(14,93,211)',
   }
 
@@ -65,19 +89,19 @@ function Setting(props) {
           <section className="route-section">
             <Switch location={location}>
               <Route exact path="/setting/profile">
-                <Profile avatar={props.avatar} />
+                <Profile avatar={avatar} />
               </Route>
               <Route path="/setting/theme">
                 <Apparence
-                  options={props.options}
-                  demo={props.demo}
-                  customBg={props.customBg}
-                  opacity={props.opacity}
-                  switchImgPreview={props.switchImgPreview}
-                  switchColorPreview={props.switchColorPreview}
-                  switchOption={props.switchOption}
-                  switchTheme={props.switchTheme}
-                  swicthOpacity={props.swicthOpacity}
+                  options={options}
+                  demo={demo}
+                  customBg={customBg}
+                  opacity={opacity}
+                  switchImgPreview={switchImgPreview}
+                  switchColorPreview={switchColorPreview}
+                  switchOption={switchOption}
+                  switchTheme={switchTheme}
+                  swicthOpacity={swicthOpacity}
                 />
               </Route>
               <Route path="/setting/language">
@@ -96,5 +120,3 @@ function Setting(props) {
     </div>
   )
 }
-
-export default Setting
