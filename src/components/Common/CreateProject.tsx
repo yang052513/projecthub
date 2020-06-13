@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -33,66 +33,70 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function CreateProject(props) {
+//当前的时间 年-月-日格式
+const date = new Date()
+let month
+switch (date.getMonth()) {
+  case 0:
+    month = 'Jan'
+    break
+  case 1:
+    month = 'Feb'
+    break
+  case 2:
+    month = 'Mar'
+    break
+  case 3:
+    month = 'Apr'
+    break
+  case 4:
+    month = 'May'
+    break
+  case 5:
+    month = 'June'
+    break
+  case 6:
+    month = 'July'
+    break
+  case 7:
+    month = 'Aug'
+    break
+  case 8:
+    month = 'Sep'
+    break
+  case 9:
+    month = 'Oct'
+    break
+  case 10:
+    month = 'Nov'
+    break
+  case 11:
+    month = 'Dec'
+    break
+}
+const currentDay = `${date.getFullYear()}-${
+  date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
+}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
+
+const currentTime = `${month} ${
+  date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+} ${date.getHours()}:${
+  date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+}`
+
+interface Props {
+  profile: any
+}
+
+export const CreateProject: React.FC<Props> = ({ profile }) => {
   const classes = useStyles()
   const db = firebase.firestore()
+  const user: any = firebase.auth().currentUser
 
-  const [loading, setLoading] = useState(false)
-  const [feedback, setFeedback] = useState(false)
-  const [fail, setFail] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-
-  //当前的时间 年-月-日格式
-  const date = new Date()
-  let month
-  const currentDay = `${date.getFullYear()}-${
-    date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
-  }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
-
-  switch (date.getMonth()) {
-    case 0:
-      month = 'Jan'
-      break
-    case 1:
-      month = 'Feb'
-      break
-    case 2:
-      month = 'Mar'
-      break
-    case 3:
-      month = 'Apr'
-      break
-    case 4:
-      month = 'May'
-      break
-    case 5:
-      month = 'June'
-      break
-    case 6:
-      month = 'July'
-      break
-    case 7:
-      month = 'Aug'
-      break
-    case 8:
-      month = 'Sep'
-      break
-    case 9:
-      month = 'Oct'
-      break
-    case 10:
-      month = 'Nov'
-      break
-    case 11:
-      month = 'Dec'
-      break
-  }
-
-  const currentTime = `${month} ${
-    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  } ${date.getHours()}:${
-    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-  }`
+  const [loading, setLoading] = useState<boolean>(false)
+  const [feedback, setFeedback] = useState<boolean>(false)
+  const [fail, setFail] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string>('')
 
   const [textInput, setTextInput] = useState({
     projectName: '',
@@ -100,7 +104,7 @@ export default function CreateProject(props) {
     projectDesc: '',
     projectDate: currentDay,
   })
-  const [tool, setTool] = useState([])
+  const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
 
@@ -113,7 +117,7 @@ export default function CreateProject(props) {
   }
 
   //管理普通文本输入，名称，简介，分类
-  function handleTextField(event) {
+  function handleTextField(event: { target: { name: any; value: any } }) {
     const { name, value } = event.target
     setTextInput(prevText => ({
       ...prevText,
@@ -122,8 +126,10 @@ export default function CreateProject(props) {
   }
 
   // 管理项目的tool标签，点击添加按钮时会append到文本框下方
-  function handleTool() {
-    let toolInput = document.getElementById('project-tool-input').value
+  const handleTool = () => {
+    let toolInputTarget: any = document.getElementById('project-tool-input')
+    let toolInput = toolInputTarget.value
+
     if (toolInput === '') {
       setFail(true)
       setErrorMsg('Please add the tool you will use ヽ(￣д￣;)ノ')
@@ -131,26 +137,28 @@ export default function CreateProject(props) {
       setFail(true)
       setErrorMsg('You already included that tool... ヽ(￣д￣;)ノ')
     } else {
-      setTool(prevTool => [...prevTool, toolInput])
+      setTool((prevTool: any) => [...prevTool, toolInput])
     }
-
-    document.getElementById('project-tool-input').value = ''
+    //Empty text field
+    toolInput = ''
   }
 
-  const toolList = tool.map(item => <li key={item}>{item}</li>)
+  const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
 
   //管理项目进程 4个状态可选 默认In Progress
-  function handleStatus(event) {
+  const handleStatus = (event: { target: { value: any } }) => {
     setStatus(event.target.value)
   }
 
   //管理项目公开性 默认公开Public
-  function handlePublic(event) {
+  const handlePublic = (event: {
+    target: { checked: React.SetStateAction<boolean> }
+  }) => {
     setPublicProject(event.target.checked)
   }
 
   //上传项目信息到云端
-  function handleSubmit() {
+  const handleSubmit = () => {
     if (
       textInput.projectName === '' ||
       textInput.projectCategory === '' ||
@@ -173,64 +181,64 @@ export default function CreateProject(props) {
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
 
-        firebase.auth().onAuthStateChanged(user => {
-          //获取当前用户的头像
-          let userProfile
-          db.collection('user')
-            .doc(user.uid)
-            .get()
-            .then(doc => {
-              userProfile = doc.data().Profile
-            })
+        // firebase.auth().onAuthStateChanged(user => {
+        //获取当前用户的头像
+        let userProfile
+        db.collection('user')
+          .doc(user.uid)
+          .get()
+          .then((doc: any) => {
+            userProfile = doc.data().Profile
+          })
 
-          //保存到用户自己的数据库中
-          db.collection('user')
-            .doc(user.uid)
-            .collection('Project')
-            .add({
-              projectData,
-            })
-            .then(docRef => {
-              // console.log(docRef.id)
+        //保存到用户自己的数据库中
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Project')
+          .add({
+            projectData,
+          })
+          .then(docRef => {
+            // console.log(docRef.id)
 
-              //写入到日志中
-              db.collection('user')
-                .doc(user.uid)
-                .collection('Activity')
-                .add({
-                  Key: docRef.id,
-                  Time: currentTime,
-                  Content: `Created a new project ${textInput.projectName}`,
-                })
+            //写入到日志中
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Activity')
+              .add({
+                Key: docRef.id,
+                Time: currentTime,
+                Content: `Created a new project ${textInput.projectName}`,
+              })
 
-              //将项目的密匙写入到文档中
-              db.collection('user')
-                .doc(user.uid)
-                .collection('Project')
+            //将项目的密匙写入到文档中
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Project')
+              .doc(docRef.id)
+              .update({
+                Key: docRef.id,
+              })
+
+            //写入到公开的数据库中
+            if (publicProject)
+              db.collection('project')
                 .doc(docRef.id)
-                .update({
+                .set({
                   Key: docRef.id,
+                  Public: true,
+                  Like: 0,
+                  Author: {
+                    Id: user.uid,
+                    Profile: profile,
+                  },
+                  projectData,
                 })
-
-              //写入到公开的数据库中
-              if (publicProject)
-                db.collection('project')
-                  .doc(docRef.id)
-                  .set({
-                    Key: docRef.id,
-                    Public: true,
-                    Like: 0,
-                    Author: {
-                      Id: user.uid,
-                      Profile: props.profile,
-                    },
-                    projectData,
-                  })
-            })
-            .catch(error => {
-              console.log(`上传失败${error}`)
-            })
-        })
+          })
+          .catch(error => {
+            console.log(`上传失败${error}`)
+          })
+        // })
         setLoading(false)
         setFeedback(true)
       }, 2000)

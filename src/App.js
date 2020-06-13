@@ -13,12 +13,12 @@ import { Friends } from './components/Friends'
 import { Moment } from './components/Moment'
 import { Setting } from './components/Setting'
 import { FAQ } from './components/FAQ'
-import CreateProject from './components/Common/CreateProject'
+import { CreateProject } from './components/Common/CreateProject'
 
 //导航，副组件根据ref来决定渲染内容
 import { ProfileMenu } from './components/Navigation/ProfileMenu'
-import Edit from './components/Common/Edit'
-import Kanban from './components/Home/Kanban'
+import { Edit } from './components/Common/Edit'
+import { Kanban } from './components/Home/Kanban'
 
 export default function App() {
   const db = firebase.firestore()

@@ -34,13 +34,17 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function EditProject(props) {
+interface Props {
+  profile: any
+}
+
+export const Edit: React.FC<Props> = ({ profile }) => {
   const classes = useStyles()
   const db = firebase.firestore()
+  const user: any = firebase.auth().currentUser
 
   //用户选择的当前项目密匙
-  const params = useParams()
-  //   console.log(params.ref)
+  const params: any = useParams()
 
   //prompt信息：加载动画，modal反馈，错误提示和信息
   const [loading, setLoading] = useState(false)
@@ -111,32 +115,30 @@ export default function EditProject(props) {
     projectDesc: '',
     projectDate: currentDay,
   })
-  const [tool, setTool] = useState([])
+  const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
 
   //初始化加载数据库内该项目的信息
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Project')
-        .doc(params.ref)
-        .get()
-        .then(doc => {
-          setTextInput({
-            projectName: doc.data().projectData.Name,
-            projectCategory: doc.data().projectData.Category,
-            projectDesc: doc.data().projectData.Desc,
-            projectDate: doc.data().projectData.Date,
-          })
-          setTool(doc.data().projectData.Tools)
-          setStatus(doc.data().projectData.Status)
-          setPublicProject(
-            doc.data().projectData.Privacy === 'Public' ? true : false
-          )
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Project')
+      .doc(params.ref)
+      .get()
+      .then((doc: any) => {
+        setTextInput({
+          projectName: doc.data().projectData.Name,
+          projectCategory: doc.data().projectData.Category,
+          projectDesc: doc.data().projectData.Desc,
+          projectDate: doc.data().projectData.Date,
         })
-    })
+        setTool(doc.data().projectData.Tools)
+        setStatus(doc.data().projectData.Status)
+        setPublicProject(
+          doc.data().projectData.Privacy === 'Public' ? true : false
+        )
+      })
   }, [])
 
   function handleFail() {
@@ -148,8 +150,7 @@ export default function EditProject(props) {
   }
 
   //点击垃圾桶按钮弹出确认modal
-  function handleDelete(event) {
-    console.log(event.currentTarget.id)
+  const handleDelete = (event: { currentTarget: { id: any } }) => {
     setDeleteTool({
       status: true,
       name: event.currentTarget.id,
@@ -160,7 +161,7 @@ export default function EditProject(props) {
   }
 
   //   确认删除tool
-  function deleteYes() {
+  const deleteYes = () => {
     tool.splice(tool.indexOf(deleteTool.name), 1)
     setDeleteTool({
       status: false,
@@ -177,7 +178,7 @@ export default function EditProject(props) {
   }
 
   //管理普通文本输入，名称，简介，分类
-  function handleTextField(event) {
+  const handleTextField = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target
     setTextInput(prevText => ({
       ...prevText,
@@ -186,8 +187,10 @@ export default function EditProject(props) {
   }
 
   // 管理项目的tool标签，点击添加按钮时会append到文本框下方
-  function handleTool() {
-    let toolInput = document.getElementById('project-tool-input').value
+  const handleTool = () => {
+    let toolInputTarget: any = document.getElementById('project-tool-input')
+    let toolInput = toolInputTarget.value
+
     if (toolInput === '') {
       setFail(true)
       setErrorMsg('Please add the tool you will use ヽ(￣д￣;)ノ')
@@ -195,13 +198,13 @@ export default function EditProject(props) {
       setFail(true)
       setErrorMsg('You already included that tool... ヽ(￣д￣;)ノ')
     } else {
-      setTool(prevTool => [...prevTool, toolInput])
+      setTool((prevTool: any) => [...prevTool, toolInput])
     }
 
-    document.getElementById('project-tool-input').value = ''
+    toolInput = ''
   }
 
-  const toolList = tool.map(item => (
+  const toolList = tool.map((item: any) => (
     <li key={item}>
       <i onClick={handleDelete} id={item} className="fas fa-trash-alt"></i>
       {item}
@@ -209,17 +212,19 @@ export default function EditProject(props) {
   ))
 
   //管理项目进程 4个状态可选 默认In Progress
-  function handleStatus(event) {
+  const handleStatus = (event: { target: { value: any } }) => {
     setStatus(event.target.value)
   }
 
   //管理项目公开性 默认公开Public
-  function handlePublic(event) {
+  const handlePublic = (event: {
+    target: { checked: React.SetStateAction<boolean> }
+  }) => {
     setPublicProject(event.target.checked)
   }
 
   //上传项目信息到云端
-  function handleSave() {
+  const handleSave = () => {
     if (
       textInput.projectName === '' ||
       textInput.projectCategory === '' ||
@@ -241,55 +246,55 @@ export default function EditProject(props) {
           Status: status,
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
-        firebase.auth().onAuthStateChanged(user => {
-          db.collection('user')
-            .doc(user.uid)
-            .collection('Project')
+        // firebase.auth().onAuthStateChanged(user => {
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Project')
+          .doc(params.ref)
+          .update({
+            projectData: changedData,
+          })
+
+        //写入到日志中
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Activity')
+          .add({
+            Key: params.ref,
+            Time: currentTime,
+            Content: `Edited project ${textInput.projectName}`,
+          })
+
+        //写入到公开数据库
+        //如果改为公开项目 写入到公开集合
+        if (publicProject) {
+          db.collection('project')
             .doc(params.ref)
-            .update({
-              projectData: changedData,
-            })
-
-          //写入到日志中
-          db.collection('user')
-            .doc(user.uid)
-            .collection('Activity')
-            .add({
+            .set({
               Key: params.ref,
-              Time: currentTime,
-              Content: `Edited project ${textInput.projectName}`,
+              Public: true,
+              Like: 0,
+              Author: {
+                Id: user.uid,
+                Profile: profile,
+              },
+              changedData,
             })
-
-          //写入到公开数据库
-          //如果改为公开项目 写入到公开集合
-          if (publicProject) {
-            db.collection('project')
-              .doc(params.ref)
-              .set({
-                Key: params.ref,
-                Public: true,
-                Like: 0,
-                Author: {
-                  Id: user.uid,
-                  Profile: props.profile,
-                },
-                changedData,
-              })
-          } else {
-            //If the project changed from public to private, delete from public database
-            let projectRef = db.collection('project').doc(params.ref)
-            projectRef.get().then(doc => {
-              if (doc.exists) {
-                db.collection('project')
-                  .doc(params.ref)
-                  .delete()
-                  .then(() => {
-                    console.log('已经从公开数据中删除该项目')
-                  })
-              }
-            })
-          }
-        })
+        } else {
+          //If the project changed from public to private, delete from public database
+          let projectRef = db.collection('project').doc(params.ref)
+          projectRef.get().then(doc => {
+            if (doc.exists) {
+              db.collection('project')
+                .doc(params.ref)
+                .delete()
+                .then(() => {
+                  console.log('已经从公开数据中删除该项目')
+                })
+            }
+          })
+        }
+        // })
         setLoading(false)
         setFeedback(true)
       }, 2000)
