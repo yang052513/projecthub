@@ -23,9 +23,26 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function Background(props) {
+interface Props {
+  options: string | null | undefined
+  demo: any
+  customBg: any
+  switchImgPreview: any
+  switchColorPreview: any
+  switchOption: any
+}
+
+export const Background: React.FC<Props> = ({
+  options,
+  demo,
+  customBg,
+  switchColorPreview,
+  switchImgPreview,
+  switchOption,
+}) => {
   const classes = useStyles()
   const db = firebase.firestore()
+  const user = firebase.auth().currentUser
   const storageRef = firebase.storage().ref()
   const [loading, setLoading] = useState(false)
   const [feedback, setFeedback] = useState(false)
@@ -34,7 +51,9 @@ export default function Background(props) {
   //更改背景图片
   function handleBgUpload() {
     setLoading(true)
-    let file = document.getElementById('img-input').files[0]
+    let imgInput: any = document.getElementById('img-input')
+    let file = imgInput.files[0]
+
     if (file) {
       let metadata = {
         contentType: file.type,
@@ -44,7 +63,7 @@ export default function Background(props) {
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
           console.log(`背景图成功上传到数据库~'${url}`)
-          firebase.auth().onAuthStateChanged(user => {
+          if (user) {
             db.collection('user')
               .doc(user.uid)
               .collection('Setting')
@@ -54,7 +73,7 @@ export default function Background(props) {
                 backgroundColor: false,
                 customBackground: firebase.firestore.FieldValue.arrayUnion(url),
               })
-          })
+          }
           setLoading(false)
           setFeedback(true)
         })
@@ -73,16 +92,10 @@ export default function Background(props) {
   }
 
   const customBgRender =
-    props.customBg.length === 0
+    customBg.length === 0
       ? null
-      : props.customBg.map(bg => (
-          <img
-            onClick={props.switchImgPreview}
-            id={bg}
-            key={bg}
-            src={bg}
-            alt=""
-          />
+      : customBg.map((bg: any) => (
+          <img onClick={switchImgPreview} id={bg} key={bg} src={bg} alt="" />
         ))
 
   return (
@@ -116,11 +129,7 @@ export default function Background(props) {
 
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
-          <Select
-            value={props.options}
-            onChange={props.switchOption}
-            label="Options"
-          >
+          <Select value={options} onChange={switchOption} label="Options">
             <MenuItem className={classes.menuItem} value={'Color'}>
               Color
             </MenuItem>
@@ -132,55 +141,55 @@ export default function Background(props) {
       </div>
 
       <div className="setting-content-background-demo">
-        {props.demo.backgroundColor ? (
+        {demo.backgroundColor ? (
           <div
-            style={{ backgroundColor: props.demo.backgroundRef }}
+            style={{ backgroundColor: demo.backgroundRef }}
             className="color-placeholder"
           ></div>
         ) : (
-          <img src={props.demo.backgroundRef} alt="preview demo placeholder" />
+          <img src={demo.backgroundRef} alt="preview demo placeholder" />
         )}
       </div>
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
-        {props.options === 'Color' ? (
+        {options === 'Color' ? (
           <div>
             <SwatchesPicker
-              width={'600px'}
-              height={'300px'}
-              onChange={props.switchColorPreview}
+              width={600}
+              height={300}
+              onChange={switchColorPreview}
             />
           </div>
         ) : (
           <div>
             <img
               id="/images/theme/background/1.jpg"
-              onClick={props.switchImgPreview}
+              onClick={switchImgPreview}
               src="/images/theme/background/1-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/2.jpg"
-              onClick={props.switchImgPreview}
+              onClick={switchImgPreview}
               src="/images/theme/background/2-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/3.jpg"
-              onClick={props.switchImgPreview}
+              onClick={switchImgPreview}
               src="/images/theme/background/3-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/4.jpg"
-              onClick={props.switchImgPreview}
+              onClick={switchImgPreview}
               src="/images/theme/background/4-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/5.jpg"
-              onClick={props.switchImgPreview}
+              onClick={switchImgPreview}
               src="/images/theme/background/5-demo.jpg"
               alt=""
             />

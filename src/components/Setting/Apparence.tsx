@@ -1,7 +1,7 @@
 import React from 'react'
-import Theme from './Apparence/Theme'
-import Background from './Apparence/Background'
-import Opacity from './Apparence/Opacity'
+import { Theme } from './Apparence/Theme'
+import { Background } from './Apparence/Background'
+import { Opacity } from './Apparence/Opacity'
 
 interface Props {
   options: string | null | undefined

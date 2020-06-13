@@ -1,12 +1,15 @@
 import React from 'react'
 import { CirclePicker } from 'react-color'
 
-export default function Theme(props) {
+interface Props {
+  switchTheme: any
+}
+
+export const Theme: React.FC<Props> = ({ switchTheme }) => {
   return (
     <div className="setting-content-theme">
       <h3 className="setting-content-subtit">Theme</h3>
       <CirclePicker
-        id="sdasdasdasd"
         colors={[
           '#0e5dd3',
           '#3f51b5',
@@ -29,7 +32,7 @@ export default function Theme(props) {
         ]}
         width={'600px'}
         circleSize={50}
-        onChange={props.switchTheme}
+        onChange={switchTheme}
       />
     </div>
   )

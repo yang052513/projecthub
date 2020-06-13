@@ -8,7 +8,12 @@ const useStyles = makeStyles({
   },
 })
 
-export default function OpacitySlider(props) {
+interface Props {
+  opacity: any
+  switchOpacity: any
+}
+
+export const OpacitySlider: React.FC<Props> = ({ opacity, switchOpacity }) => {
   const classes = useStyles()
 
   return (
@@ -17,8 +22,8 @@ export default function OpacitySlider(props) {
         <p>Side Bar</p>
         <Slider
           name="sidebar"
-          value={props.opacity.sidebar}
-          onChange={props.switchOpacity('sidebar')}
+          value={opacity.sidebar}
+          onChange={switchOpacity('sidebar')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -27,8 +32,8 @@ export default function OpacitySlider(props) {
         <p>Top Bar</p>
         <Slider
           name="topbar"
-          value={props.opacity.topbar}
-          onChange={props.switchOpacity('topbar')}
+          value={opacity.topbar}
+          onChange={switchOpacity('topbar')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -37,8 +42,8 @@ export default function OpacitySlider(props) {
         <p>Project Card</p>
         <Slider
           name="card"
-          value={props.opacity.card}
-          onChange={props.switchOpacity('card')}
+          value={opacity.card}
+          onChange={switchOpacity('card')}
           aria-labelledby="input-slider"
         />
       </div>
@@ -47,8 +52,8 @@ export default function OpacitySlider(props) {
         <p>Background</p>
         <Slider
           name="background"
-          value={props.opacity.background}
-          onChange={props.switchOpacity('background')}
+          value={opacity.background}
+          onChange={switchOpacity('background')}
           aria-labelledby="input-slider"
         />
       </div>
