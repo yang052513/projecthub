@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StorySocial } from './StorySocial'
+import firebase from 'firebase'
 
 interface Props {
   avatar: string
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const StoryCard: React.FC<Props> = ({
+  docRef,
   avatar,
   name,
   time,
@@ -22,6 +24,18 @@ export const StoryCard: React.FC<Props> = ({
   like,
   comment,
 }) => {
+  const db = firebase.firestore()
+  const [likeCnt, setLikeCnt] = useState<number>(like)
+
+  const likePost = () => {
+    setLikeCnt(prevState => prevState + 1)
+  }
+
+  useEffect(() => {
+    db.collection('moment').doc(docRef).update({
+      Like: likeCnt,
+    })
+  }, [likeCnt])
   return (
     <div className="moment-story-card-container">
       <img className="moment-story-user" src={avatar} alt="" />
@@ -34,7 +48,7 @@ export const StoryCard: React.FC<Props> = ({
         {picture === '' ? null : (
           <img className="moment-story-image" src={picture} alt="" />
         )}
-        {/* <StorySocial like={like} comment={comment} /> */}
+        <StorySocial like={likeCnt} comment={comment} likePost={likePost} />
       </div>
     </div>
   )

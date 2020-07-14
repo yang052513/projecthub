@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { StoryEditor } from './Moment/StoryEditor'
 import { StoryCard } from './Moment/StoryCard'
 import firebase from 'firebase'
+import { Loading } from './Common/Loading'
 
 export function Moment(props: any) {
   const db = firebase.firestore()
 
+  const [loading, setLoading] = useState<boolean>(true)
   const [editor, setEditor] = useState<boolean>(false)
   const [moment, setMoment] = useState<Array<object | null | undefined>>([])
 
@@ -18,13 +20,16 @@ export function Moment(props: any) {
   //Initialize and read all the moment that stores in the database
   useEffect(() => {
     db.collection('moment')
-      .orderBy('Time', 'desc')
+      .orderBy('Time', 'asc')
       .get()
       .then(query => {
         query.forEach(doc => {
           setMoment(prevMoment => [...prevMoment, doc.data()])
         })
       })
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
   }, [])
 
   //Loop all the moment and render in storycard component
@@ -45,6 +50,17 @@ export function Moment(props: any) {
 
   return (
     <div className="component-layout moment-container">
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="moment-story-card-wrap">{momentList}</div>
+      )}
+
+      {/* Creat a new moment button */}
+      <div className="post-moment-container">
+        <i onClick={displayEditor} className="fas fa-feather"></i>
+      </div>
+
       {/* Display the moment editor container */}
       {editor ? (
         <StoryEditor
@@ -53,14 +69,6 @@ export function Moment(props: any) {
           toggle={offEditor}
         />
       ) : null}
-
-      {/* Display all the moments from database */}
-      <div className="moment-story-card-wrap">{momentList}</div>
-
-      {/* Creat a new moment button */}
-      <div className="post-moment-container">
-        <i onClick={displayEditor} className="fas fa-feather"></i>
-      </div>
     </div>
   )
 }
