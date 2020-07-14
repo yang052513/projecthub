@@ -14,6 +14,9 @@ export const Friends: React.FC = () => {
           setUser(prevUser => [...prevUser, doc.data()])
         })
       })
+    return () => {
+      console.log('friends')
+    }
   }, [])
 
   const userList = user.map((user: any) => (

@@ -126,7 +126,7 @@ export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
       <div onClick={toggle} className="overlay-post"></div>
       <div className="moment-editor-container">
         <div className="moment-editor-textarea">
-          <img src="images/user.jpg" width="50px" height="50px" />
+          <img src={avatar} width="50px" height="50px" alt="" />
           <textarea
             onChange={handleContent}
             placeholder="What's happening?"
