@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
+import { Comment } from './Comment'
 
 interface Props {
   comment?: any
@@ -69,14 +70,22 @@ export const StoryComment: React.FC<Props> = ({
   return (
     <div>
       <div onClick={hideComment} className="overlay-post"></div>
+
       <div className="story-comment-container">
-        <h3>Comments</h3>
-        {commentList.map((item: any) => (
-          <p key={item.CommentId}>{item.UserId}</p>
-        ))}
-        <p>Write your comments</p>
-        <input type="text" onChange={handleInput} />
-        <button onClick={sumbitComment}>Post</button>
+        <div className="comment-list-container">
+          <h3>Comments</h3>
+          {commentList.map((item: any) => (
+            <Comment />
+          ))}
+          <div className="write-comment-container">
+            <input
+              type="text"
+              onChange={handleInput}
+              placeholder="Write your comments..."
+            />
+            <button onClick={sumbitComment}>Post</button>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -126,13 +126,59 @@ $storyImgSize: 50px;
   }
 }
 
+// =========================== 评论区 ======================================= //
 .story-comment-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(255, 88, 88);
-  width: 1000px;
+  background-color: rgb(255, 255, 255);
+  width: 500px;
   height: 600px;
   z-index: 1;
+  border-radius: 15px;
+  padding: 30px;
+  .write-comment-container {
+    position: absolute;
+    bottom: 30px;
+    input {
+      width: 400px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      border: 1px solid rgb(221, 221, 221);
+      font-size: 12px;
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      @include buttonStroke($sideNavBg);
+      margin-left: 10px;
+    }
+  }
+}
+
+.comment-item-container {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  .comment-user-name {
+    font-size: 18px;
+    font-weight: bold;
+    span {
+      font-size: 13px;
+      font-weight: normal;
+      color: gray;
+    }
+  }
+  .comment-body {
+    margin: 5px 0;
+    font-size: 14px;
+  }
 }
