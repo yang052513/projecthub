@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StorySocial } from './StorySocial'
+import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
 
 interface Props {
@@ -26,6 +27,7 @@ export const StoryCard: React.FC<Props> = ({
 }) => {
   const db = firebase.firestore()
   const [likeCnt, setLikeCnt] = useState<number>(like)
+  const [showComment, setShowComment] = useState<boolean>(false)
 
   const likePost = () => {
     setLikeCnt(prevState => prevState + 1)
@@ -36,20 +38,29 @@ export const StoryCard: React.FC<Props> = ({
       Like: likeCnt,
     })
   }, [likeCnt])
+
   return (
-    <div className="moment-story-card-container">
-      <img className="moment-story-user" src={avatar} alt="" />
-      <div>
-        <p className="moment-story-name">
-          {name}
-          <span className="moment-story-time"> @{time}</span>
-        </p>
-        <p className="moment-story-content">{content}</p>
-        {picture === '' ? null : (
-          <img className="moment-story-image" src={picture} alt="" />
-        )}
-        <StorySocial like={likeCnt} comment={comment} likePost={likePost} />
+    <div>
+      <div className="moment-story-card-container">
+        <img className="moment-story-user" src={avatar} alt="" />
+        <div>
+          <p className="moment-story-name">
+            {name}
+            <span className="moment-story-time"> @{time}</span>
+          </p>
+          <p className="moment-story-content">{content}</p>
+          {picture === '' ? null : (
+            <img className="moment-story-image" src={picture} alt="" />
+          )}
+          <StorySocial
+            like={likeCnt}
+            comment={comment}
+            likePost={likePost}
+            displayComment={() => setShowComment(true)}
+          />
+        </div>
       </div>
+      {showComment ? <StoryComment docRef={docRef} comment={comment} /> : null}
     </div>
   )
 }
