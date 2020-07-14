@@ -4,12 +4,18 @@ import firebase from 'firebase'
 interface Props {
   comment?: any
   docRef?: string
+  hideComment: () => void
 }
 
-export const StoryComment: React.FC<Props> = ({ comment, docRef }) => {
+export const StoryComment: React.FC<Props> = ({
+  comment,
+  docRef,
+  hideComment,
+}) => {
   const user: any = firebase.auth().currentUser
   const db = firebase.firestore()
   const [avatar, setAvatar] = useState<string>('')
+  const [overlay, setOverlay] = useState<boolean>(true)
   const [commentText, setCommentText] = useState<string>('')
 
   const [commentList, setCommentList] = useState<any>([])
@@ -39,24 +45,39 @@ export const StoryComment: React.FC<Props> = ({ comment, docRef }) => {
 
   const sumbitComment = () => {
     firebase.auth().onAuthStateChanged((user: any) => {
-      db.collection('moment').doc(docRef).collection('Comments').add({
-        UserId: user.uid,
-        userAvatar: avatar,
-        CommentBody: commentText,
-        CommentDate: '2020/07/14',
-      })
+      db.collection('moment')
+        .doc(docRef)
+        .collection('Comments')
+        .add({
+          UserId: user.uid,
+          userAvatar: avatar,
+          CommentBody: commentText,
+          CommentDate: '2020/07/14',
+        })
+        .then(commentRef => {
+          db.collection('moment')
+            .doc(docRef)
+            .collection('Comments')
+            .doc(commentRef.id)
+            .update({
+              CommentId: commentRef.id,
+            })
+        })
     })
   }
 
   return (
-    <div className="story-comment-container">
-      <h3>Comments</h3>
-      {commentList.map((item: any) => (
-        <p key={item.UserId}>{item.UserId}</p>
-      ))}
-      <p>Write your comments</p>
-      <input type="text" onChange={handleInput} />
-      <button onClick={sumbitComment}>Post</button>
+    <div>
+      <div onClick={hideComment} className="overlay-post"></div>
+      <div className="story-comment-container">
+        <h3>Comments</h3>
+        {commentList.map((item: any) => (
+          <p key={item.CommentId}>{item.UserId}</p>
+        ))}
+        <p>Write your comments</p>
+        <input type="text" onChange={handleInput} />
+        <button onClick={sumbitComment}>Post</button>
+      </div>
     </div>
   )
 }

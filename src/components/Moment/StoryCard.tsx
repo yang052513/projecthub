@@ -33,6 +33,10 @@ export const StoryCard: React.FC<Props> = ({
     setLikeCnt(prevState => prevState + 1)
   }
 
+  const hideComment = () => {
+    setShowComment(false)
+  }
+
   useEffect(() => {
     db.collection('moment').doc(docRef).update({
       Like: likeCnt,
@@ -60,7 +64,13 @@ export const StoryCard: React.FC<Props> = ({
           />
         </div>
       </div>
-      {showComment ? <StoryComment docRef={docRef} comment={comment} /> : null}
+      {showComment ? (
+        <StoryComment
+          docRef={docRef}
+          comment={comment}
+          hideComment={hideComment}
+        />
+      ) : null}
     </div>
   )
 }

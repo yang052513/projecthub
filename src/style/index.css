@@ -1141,8 +1141,10 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  background-color: white;
-  width: 800px;
+  background-color: #ff5858;
+  width: 1000px;
+  height: 600px;
+  z-index: 1;
 }
 
 .logout-container {
