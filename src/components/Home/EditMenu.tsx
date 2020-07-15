@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
+import { timeFormat } from 'current-time-format'
 
 const useStyles = makeStyles({
   root: {
@@ -20,6 +21,8 @@ interface Props {
   projectName: string | null | undefined
 }
 
+const { monthStrLong, day, hours, minutes } = timeFormat
+
 export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
@@ -30,43 +33,7 @@ export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
   const db = firebase.firestore()
   const user = firebase.auth().currentUser
 
-  let month
-  const date = new Date()
-
-  switch (date.getMonth()) {
-    case 0:
-      month = 'Jan'
-      break
-    case 1:
-      month = 'Feb'
-      break
-    case 2:
-      month = 'Mar'
-    case 3:
-      month = 'Apr'
-    case 4:
-      month = 'May'
-    case 5:
-      month = 'June'
-    case 6:
-      month = 'July'
-    case 7:
-      month = 'Aug'
-    case 8:
-      month = 'Sep'
-    case 9:
-      month = 'Oct'
-    case 10:
-      month = 'Nov'
-    case 11:
-      month = 'Dec'
-  }
-
-  const currentTime = `${month} ${
-    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  } ${date.getHours()}:${
-    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-  }`
+  const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)

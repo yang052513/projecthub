@@ -139,7 +139,7 @@ export const Edit: React.FC<Props> = ({ profile }) => {
           doc.data().projectData.Privacy === 'Public' ? true : false
         )
       })
-  }, [])
+  }, [db, params.ref, user.uid])
 
   function handleFail() {
     setFail(false)

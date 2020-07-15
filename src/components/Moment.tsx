@@ -30,7 +30,7 @@ export function Moment(props: any) {
     setTimeout(() => {
       setLoading(false)
     }, 2000)
-  }, [])
+  }, [db])
 
   //Loop all the moment and render in storycard component
   const momentList = moment.map((moment: any) => (

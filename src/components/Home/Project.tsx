@@ -30,21 +30,32 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
           setInitial(true)
         }
       })
-  }, [])
+  }, [db, user.uid])
 
-  const sortedProject = project.sort((a: any, b: any) => {
-    if (sort === 'Name') {
-      return a.projectData.Name < b.projectData.Name ? -1 : 1
-    } else if (sort === 'Status') {
-      return a.projectData.Status < b.projectData.Status ? -1 : 1
-    } else if (sort === 'Newest') {
-      return a.projectData.Date < b.projectData.Date ? 1 : -1
-    } else if (sort === 'Oldest') {
-      return a.projectData.Date < b.projectData.Date ? -1 : 1
-    }
-  })
+  // const sortedProject = project.sort((a: any, b: any) => {
+  //   if (sort === 'Name') {
+  //     return a.projectData.Name < b.projectData.Name ? -1 : 1
+  //   } else if (sort === 'Status') {
+  //     return a.projectData.Status < b.projectData.Status ? -1 : 1
+  //   } else if (sort === 'Newest') {
+  //     return a.projectData.Date < b.projectData.Date ? 1 : -1
+  //   } else if (sort === 'Oldest') {
+  //     return a.projectData.Date < b.projectData.Date ? -1 : 1
+  //   }
+  // })
 
-  const filteredProject = sortedProject
+  const renderProject = project
+    .sort((a: any, b: any) => {
+      if (sort === 'Name') {
+        return a.projectData.Name < b.projectData.Name ? -1 : 1
+      } else if (sort === 'Status') {
+        return a.projectData.Status < b.projectData.Status ? -1 : 1
+      } else if (sort === 'Newest') {
+        return a.projectData.Date < b.projectData.Date ? 1 : -1
+      } else if (sort === 'Oldest') {
+        return a.projectData.Date < b.projectData.Date ? -1 : 1
+      }
+    })
     .filter((item: any) => {
       if (filter === 'All My Projects') {
         return item && item.projectData.Name.includes(search)
@@ -66,21 +77,21 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
   return (
     <div className="project-card-container">
       {/* Initialzie all the project */}
-      {project.length === 0 && !initial ? <Loading /> : filteredProject}
+      {project.length === 0 && !initial ? <Loading /> : renderProject}
 
       {/* First time use the app, prompt message */}
       {project.length === 0 && initial ? (
         <div className="project-no-result-container">
           <p>Welcome to Projecthub</p>
-          <img src="/images/noresult.png" />
+          <img src="/images/noresult.png" alt="" />
         </div>
       ) : null}
 
       {/* No searched or filter result */}
-      {filteredProject.length === 0 && project.length !== 0 ? (
+      {renderProject.length === 0 && project.length !== 0 ? (
         <div className="project-no-result-container">
           <p>It seems like no such projects...</p>
-          <img src="/images/noresult.png" />
+          <img src="/images/noresult.png" alt="" />
         </div>
       ) : null}
     </div>

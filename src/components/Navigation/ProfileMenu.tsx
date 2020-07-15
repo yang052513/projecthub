@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from 'firebase'
+
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -20,7 +20,6 @@ interface Props {
 
 export const ProfileMenu: React.FC<Props> = ({ avatar }) => {
   const classes = useStyles()
-  const db = firebase.firestore()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [logout, setLogout] = useState<boolean>(false)

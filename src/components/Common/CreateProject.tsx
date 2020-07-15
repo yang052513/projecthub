@@ -181,16 +181,6 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
           Privacy: publicProject === true ? 'Public' : 'Private',
         }
 
-        // firebase.auth().onAuthStateChanged(user => {
-        //获取当前用户的头像
-        let userProfile
-        db.collection('user')
-          .doc(user.uid)
-          .get()
-          .then((doc: any) => {
-            userProfile = doc.data().Profile
-          })
-
         //保存到用户自己的数据库中
         db.collection('user')
           .doc(user.uid)

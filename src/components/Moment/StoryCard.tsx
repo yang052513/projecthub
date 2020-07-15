@@ -25,6 +25,7 @@ export const StoryCard: React.FC<Props> = ({
 }) => {
   const db = firebase.firestore()
   const [likeCnt, setLikeCnt] = useState<number>(like)
+  const [commentCnt, setCommentCnt] = useState<number>()
   const [showComment, setShowComment] = useState<boolean>(false)
 
   const likePost = () => {
@@ -39,7 +40,17 @@ export const StoryCard: React.FC<Props> = ({
     db.collection('moment').doc(docRef).update({
       Like: likeCnt,
     })
-  }, [likeCnt])
+  }, [likeCnt, db, docRef])
+
+  useEffect(() => {
+    db.collection('moment')
+      .doc(docRef)
+      .collection('Comments')
+      .get()
+      .then(docs => {
+        console.log(docRef, docs.size)
+      })
+  }, [db, docRef])
 
   return (
     <div>

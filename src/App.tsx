@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import firebase from 'firebase'
@@ -138,7 +138,7 @@ export default function App() {
         console.log(`读取用户保存的壁纸时出错了 ${error}`)
       })
     // })
-  }, [])
+  }, [db, user.displayName, user.email, user.uid])
 
   //用户当前所在的route
   const currRoute = useLocation().pathname
@@ -271,7 +271,7 @@ export default function App() {
 
       {/* Content container */}
       <div className="content-container">
-        <img className="logo" src="/images/logo.png" />
+        <img className="logo" src="/images/logo.png" alt="" />
 
         {/* Side nav bar */}
         <div

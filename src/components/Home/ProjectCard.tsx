@@ -7,12 +7,11 @@ const planning = 'rgb(206, 51, 90)'
 const dropped = 'rgb(128, 128, 128)'
 
 interface Props {
-  key: string | undefined
   project: any
   docRef: string | undefined
 }
 
-export const ProjectCard: React.FC<Props> = ({ key, project, docRef }) => {
+export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
   let statusColor
   if (project.Status === 'In Progress') {
     statusColor = { backgroundColor: inProgress }

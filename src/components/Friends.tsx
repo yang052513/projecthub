@@ -17,7 +17,7 @@ export const Friends: React.FC = () => {
     return () => {
       console.log('friends')
     }
-  }, [])
+  }, [db])
 
   const userList = user.map((user: any) => (
     <FriendCard
