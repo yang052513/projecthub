@@ -19,6 +19,7 @@ import { CreateProject } from './components/Common/CreateProject'
 import { ProfileMenu } from './components/Navigation/ProfileMenu'
 import { Edit } from './components/Common/Edit'
 import { Kanban } from './components/Home/Kanban'
+import { UserProfile } from './components/Common/UserProfile'
 
 export default function App() {
   const db = firebase.firestore()
@@ -373,7 +374,7 @@ export default function App() {
           <Route path="/mission/">
             <Mission />
           </Route>
-          <Route path="/friends">
+          <Route exact path="/friends/">
             <Friends />
           </Route>
           <Route path="/moment">
@@ -406,6 +407,9 @@ export default function App() {
           </Route>
           <Route path="/kanban/:ref">
             <Kanban />
+          </Route>
+          <Route path="/friends/:ref">
+            <UserProfile />
           </Route>
         </Switch>
       </div>

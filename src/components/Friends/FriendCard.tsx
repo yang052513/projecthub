@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 
 interface Profile {
@@ -39,7 +40,10 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
 
   return (
     <div className="friend-card-item-container">
-      <img src={avatar} alt="" />
+      <Link to={`/friends/${userId}`}>
+        <img src={avatar} alt="" />
+      </Link>
+
       <div className="friend-card-item-info">
         <div>
           <i style={online ? onlineColor : null} className="fas fa-circle"></i>
