@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Comment } from './Comment'
 import { timeFormat } from 'current-time-format'
-import { Feedback } from '../Common/Feedback'
 
 interface Props {
   docRef?: string
@@ -44,7 +43,7 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
         setCommentList((prevComment: any) => [...prevComment, document.data()])
       })
     })
-  }, [])
+  }, [commentRef, db, user.uid])
 
   const handleInput = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCommentText(event.target.value as string)

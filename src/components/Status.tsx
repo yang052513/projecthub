@@ -63,7 +63,7 @@ export const Status: React.FC = () => {
           })
         })
     }
-  }, [])
+  }, [db, user])
 
   useEffect(() => {
     let count: { [index: string]: any } = {}
@@ -88,7 +88,7 @@ export const Status: React.FC = () => {
     let mostFreqTag
     for (let i = 0; i < type.length; i++) {
       for (let j = i; j < type.length; j++) {
-        if (type[i] == type[j]) cnt++
+        if (type[i] === type[j]) cnt++
         if (maxFreq < cnt) {
           maxFreq = cnt
           mostFreqTag = type[i]

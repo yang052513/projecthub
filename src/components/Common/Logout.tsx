@@ -53,7 +53,7 @@ export const Logout: React.FC = () => {
           }
         )
     }, 4000)
-  }, [])
+  }, [byeMsg, db, randomBye, randomImg, user])
 
   return (
     <div
