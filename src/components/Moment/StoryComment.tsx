@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Comment } from './Comment'
+import { timeFormat } from 'current-time-format'
+import { Feedback } from '../Common/Feedback'
 
 interface Props {
   docRef?: string
   hideComment: () => void
 }
+
+const { year, monthStrShort, day, hours, minutes } = timeFormat
 
 export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
   const user: any = firebase.auth().currentUser
@@ -56,7 +60,7 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
           UserId: currUserInfo.id,
           UserAvatar: currUserInfo.avatar,
           CommentBody: commentText,
-          CommentDate: '2020/07/14',
+          CommentDate: `${monthStrShort} ${day}, ${year} ${hours}:${minutes}`,
         })
         .then(commentRef => {
           db.collection('moment')
@@ -68,9 +72,8 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
             })
         })
     })
-    setCommentText('')
   }
-
+  console.log(commentList)
   return (
     <div>
       <div onClick={hideComment} className="overlay-post"></div>
@@ -86,6 +89,7 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
               commentBody={comment.CommentBody}
               key={comment.CommentId}
               commentId={comment.CommentId}
+              commentDate={comment.CommentDate}
             />
           ))}
           <div className="write-comment-container">

@@ -6,13 +6,13 @@ interface Props {
   userAvatar: string
   commentBody: string
   commentId: string
+  commentDate: string
 }
 export const Comment: React.FC<Props> = ({
-  userId,
   userAvatar,
   userName,
   commentBody,
-  commentId,
+  commentDate,
 }) => {
   return (
     <div className="comment-item-container">
@@ -20,7 +20,7 @@ export const Comment: React.FC<Props> = ({
       <div>
         <p className="comment-user-name">
           {userName}
-          <span> @2020/07/14</span>
+          <span> @{commentDate}</span>
         </p>
         <p className="comment-body">{commentBody}</p>
       </div>
