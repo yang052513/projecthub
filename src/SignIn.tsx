@@ -69,6 +69,7 @@ class SignIn extends Component {
         if (user) {
           db.collection('user').doc(user.uid).set({
             Name: user.displayName,
+            Online: true,
           })
         }
       })

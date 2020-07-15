@@ -38,6 +38,10 @@ export const Logout: React.FC = () => {
         .then((doc: any) => {
           setUserName(doc.data().Name)
         })
+
+      db.collection('user').doc(user.uid).update({
+        Online: false,
+      })
     }
 
     setTimeout(() => {
@@ -53,7 +57,7 @@ export const Logout: React.FC = () => {
           }
         )
     }, 4000)
-  }, [byeMsg, db, randomBye, randomImg, user])
+  }, [])
 
   return (
     <div
