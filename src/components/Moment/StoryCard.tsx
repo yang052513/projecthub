@@ -10,7 +10,6 @@ interface Props {
   content: string
   picture: string | null | any
   like: number
-  comment: object | null | undefined
   docRef: string
   userId: string
 }
@@ -23,7 +22,6 @@ export const StoryCard: React.FC<Props> = ({
   content,
   picture,
   like,
-  comment,
 }) => {
   const db = firebase.firestore()
   const [likeCnt, setLikeCnt] = useState<number>(like)
@@ -58,18 +56,13 @@ export const StoryCard: React.FC<Props> = ({
           )}
           <StorySocial
             like={likeCnt}
-            comment={comment}
             likePost={likePost}
             displayComment={() => setShowComment(true)}
           />
         </div>
       </div>
       {showComment ? (
-        <StoryComment
-          docRef={docRef}
-          comment={comment}
-          hideComment={hideComment}
-        />
+        <StoryComment docRef={docRef} hideComment={hideComment} />
       ) : null}
     </div>
   )

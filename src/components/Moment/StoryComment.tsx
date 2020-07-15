@@ -3,22 +3,20 @@ import firebase from 'firebase'
 import { Comment } from './Comment'
 
 interface Props {
-  comment?: any
   docRef?: string
   hideComment: () => void
 }
 
-export const StoryComment: React.FC<Props> = ({
-  comment,
-  docRef,
-  hideComment,
-}) => {
+export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
   const user: any = firebase.auth().currentUser
   const db = firebase.firestore()
-  const [avatar, setAvatar] = useState<string>('')
-  const [overlay, setOverlay] = useState<boolean>(true)
-  const [commentText, setCommentText] = useState<string>('')
+  const [currUserInfo, setCurrUserInfo] = useState<any>({
+    name: '',
+    id: '',
+    avatar: '',
+  })
 
+  const [commentText, setCommentText] = useState<string>('')
   const [commentList, setCommentList] = useState<any>([])
 
   const commentRef = db.collection('moment').doc(docRef).collection('Comments')
@@ -30,7 +28,11 @@ export const StoryComment: React.FC<Props> = ({
       .doc('Profile')
       .get()
       .then((doc: any) => {
-        setAvatar(doc.data().avatar)
+        setCurrUserInfo({
+          name: doc.data().profile.profileName,
+          id: user.uid,
+          avatar: doc.data().avatar,
+        })
       })
 
     commentRef.get().then(docs => {
@@ -50,8 +52,9 @@ export const StoryComment: React.FC<Props> = ({
         .doc(docRef)
         .collection('Comments')
         .add({
-          UserId: user.uid,
-          userAvatar: avatar,
+          UserName: currUserInfo.name,
+          UserId: currUserInfo.id,
+          UserAvatar: currUserInfo.avatar,
           CommentBody: commentText,
           CommentDate: '2020/07/14',
         })
@@ -65,6 +68,7 @@ export const StoryComment: React.FC<Props> = ({
             })
         })
     })
+    setCommentText('')
   }
 
   return (
@@ -74,8 +78,15 @@ export const StoryComment: React.FC<Props> = ({
       <div className="story-comment-container">
         <div className="comment-list-container">
           <h3>Comments</h3>
-          {commentList.map((item: any) => (
-            <Comment />
+          {commentList.map((comment: any) => (
+            <Comment
+              userId={comment.UserId}
+              userName={comment.UserName}
+              userAvatar={comment.UserAvatar}
+              commentBody={comment.CommentBody}
+              key={comment.CommentId}
+              commentId={comment.CommentId}
+            />
           ))}
           <div className="write-comment-container">
             <input

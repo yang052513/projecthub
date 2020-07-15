@@ -2,13 +2,12 @@ import React from 'react'
 
 interface Props {
   like: number
-  comment: any
+
   likePost: () => void
   displayComment: () => void
 }
 export const StorySocial: React.FC<Props> = ({
   like,
-  comment,
   likePost,
   displayComment,
 }) => {

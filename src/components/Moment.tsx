@@ -44,7 +44,6 @@ export function Moment(props: any) {
       content={moment.Content}
       picture={moment.Picture}
       like={moment.Like}
-      comment={moment.Comments}
     />
   ))
 
