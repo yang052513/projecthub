@@ -37,12 +37,6 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
           avatar: doc.data().avatar,
         })
       })
-
-    // commentRef.get().then(docs => {
-    //   docs.forEach(document => {
-    //     setCommentList((prevComment: any) => [...prevComment, document.data()])
-    //   })
-    // })
   }, [db, user.uid])
 
   const fetchComments = () => {
@@ -52,7 +46,6 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
       })
     })
   }
-
   useEffect(fetchComments, [])
 
   const handleInput = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -82,7 +75,7 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
         })
     })
   }
-  console.log(commentList)
+
   return (
     <div>
       <div onClick={hideComment} className="overlay-post"></div>

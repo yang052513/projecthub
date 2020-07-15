@@ -18,11 +18,15 @@ interface Props {
 
 export const FriendCard: React.FC<Props> = ({ info, avatar }) => {
   return (
-    // 可以的话之后可以做一个个人空间展示，点击用户卡片转入详细页面 只能看
-    <div>
-      <p>{info.profileName}</p>
-      <p>{info.profileLocation}</p>
-      <img src={avatar} alt="" width="100px" height="100px" />
+    <div className="friend-card-item-container">
+      <img src={avatar} alt="" />
+      <div className="friend-card-item-info">
+        <div>
+          <i className="fas fa-circle"></i>
+          <p>{info.profileName}</p>
+        </div>
+        <button>Read More</button>
+      </div>
     </div>
   )
 }

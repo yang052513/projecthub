@@ -29,14 +29,9 @@ export const Friends: React.FC = () => {
   ))
 
   return (
-    <div className="component-layout">
-      <ul>
-        <li>交友系统</li>
-        <li>所有用户显示 根据profile有的信息</li>
-        <li>sort排序</li>
-        <li>添加好友</li>
-      </ul>
-      {userList}
+    <div className="component-layout friend-container">
+      <p>Appreciate for everyone who uses Projecthub!</p>
+      <div className="friend-card-list">{userList}</div>
     </div>
   )
 }
