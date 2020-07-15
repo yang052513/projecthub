@@ -38,12 +38,22 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
         })
       })
 
-    commentRef.get().then(docs => {
-      docs.forEach(document => {
+    // commentRef.get().then(docs => {
+    //   docs.forEach(document => {
+    //     setCommentList((prevComment: any) => [...prevComment, document.data()])
+    //   })
+    // })
+  }, [db, user.uid])
+
+  const fetchComments = () => {
+    commentRef.get().then((docs: any) => {
+      docs.forEach((document: any) => {
         setCommentList((prevComment: any) => [...prevComment, document.data()])
       })
     })
-  }, [commentRef, db, user.uid])
+  }
+
+  useEffect(fetchComments, [])
 
   const handleInput = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCommentText(event.target.value as string)

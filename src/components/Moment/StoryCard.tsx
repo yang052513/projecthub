@@ -48,7 +48,7 @@ export const StoryCard: React.FC<Props> = ({
       .collection('Comments')
       .get()
       .then(docs => {
-        console.log(docRef, docs.size)
+        setCommentCnt(docs.size)
       })
   }, [db, docRef])
 
@@ -66,6 +66,7 @@ export const StoryCard: React.FC<Props> = ({
             <img className="moment-story-image" src={picture} alt="" />
           )}
           <StorySocial
+            comment={commentCnt}
             like={likeCnt}
             likePost={likePost}
             displayComment={() => setShowComment(true)}
