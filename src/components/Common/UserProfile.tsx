@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { Loading } from './Loading'
+import { render } from '@testing-library/react'
 
 export const UserProfile = () => {
   const userId: any = useParams()
@@ -40,7 +41,14 @@ export const UserProfile = () => {
 
   useEffect(fetchUserInfo, [])
 
-  console.log(userRepo)
+  const renderProject = userRepo.map((repo: any) => (
+    <div className="user-profile-repo-card" key={repo.Key}>
+      <p>{repo.projectData.Name}</p>
+      <p>{repo.projectData.Status}</p>
+      <p>{repo.projectData.Desc}</p>
+    </div>
+  ))
+
   return (
     <div>
       {isLoading ? (
@@ -49,19 +57,31 @@ export const UserProfile = () => {
         <div className="user-profile-container">
           <div className="user-profile-info-container">
             <img src={userInfo.avatar} alt="" width="100px" height="100px" />
-            <p>Alex Wang</p>
-            <p>Bio: Just a test account for yang</p>
-            <p>Email: alexwang05@bcit.ca</p>
-            <p>Github: yang052513</p>
-            <p>Location: Vancouver</p>
-            <p>Website: yang0525.app.com</p>
-            <p>Linkedin: 3dcsd@dc.com</p>
+            <h3>Alex Wang</h3>
+            <p>
+              <i className="fas fa-book"></i>Just a test account for yang
+            </p>
+            <p>
+              <i className="fas fa-envelope"></i>alexwang05@bcit.ca
+            </p>
+            <p>
+              <i className="fab fa-github"></i>yang052513
+            </p>
+            <p>
+              <i className="fas fa-map-marker-alt"></i>Vancouver
+            </p>
+            <p>
+              <i className="fas fa-home"></i>yang0525.app.com
+            </p>
+            <p>
+              <i className="fab fa-linkedin-in"></i>3dcsd@dc.com
+            </p>
           </div>
           <div className="user-profile-repo-wrap">
             <h3>Alex Wang's Projects</h3>
             <div className="user-profile-repo-category-container">
-              <h4>Completed Projects</h4>
-              <p>Some projects using grid here</p>
+              <h4>All Projects</h4>
+              <div className="user-profile-repo-list">{renderProject}</div>
             </div>
           </div>
         </div>

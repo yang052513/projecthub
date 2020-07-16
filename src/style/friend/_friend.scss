@@ -35,9 +35,43 @@
 }
 
 .user-profile-container {
-  border: 1px solid red;
-  text-align: center;
-  img {
-    border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  .user-profile-info-container {
+    width: 15%;
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 1px solid gray;
+    }
+    h3 {
+      margin: 10px 0 20px 0;
+      font-size: 30px;
+    }
+    p {
+      margin: 15px 0;
+      color: rgb(68, 68, 68);
+      font-size: 14px;
+
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+  .user-profile-repo-wrap {
+    width: 50%;
+
+    .user-profile-repo-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+      .user-profile-repo-card {
+        border: 1px solid gray;
+        margin: 15px 10px;
+        padding: 20px;
+      }
+    }
   }
 }
