@@ -1296,6 +1296,15 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
+.user-profile-container {
+  border: 1px solid red;
+  text-align: center;
+}
+
+.user-profile-container img {
+  border-radius: 50%;
+}
+
 .logout-container {
   background-size: 100%;
   position: fixed;
