@@ -9,6 +9,7 @@ export const UserProfile = () => {
 
   const [userInfo, setUserInfo] = useState<any>()
   const [userRepo, setUserRepo] = useState<any>([])
+  const [statusList, setStatusList] = useState<Array<string>>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const fetchUserInfo = () => {
@@ -33,6 +34,10 @@ export const UserProfile = () => {
         projectDocs.forEach(docs => {
           if (docs.data().projectData.Privacy === 'Public') {
             setUserRepo((prevRepo: any) => [...prevRepo, docs.data()])
+            setStatusList(prevStatus => [
+              ...prevStatus,
+              docs.data().projectData.Status,
+            ])
           }
         })
         setIsLoading(false)
@@ -41,13 +46,26 @@ export const UserProfile = () => {
 
   useEffect(fetchUserInfo, [])
 
-  const renderProject = userRepo.map((repo: any) => (
-    <div className="user-profile-repo-card" key={repo.Key}>
-      <p>{repo.projectData.Name}</p>
-      <p>{repo.projectData.Status}</p>
-      <p>{repo.projectData.Desc}</p>
-    </div>
-  ))
+  const renderStatus = statusList
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .map((repo: any) => (
+      <div>
+        <h4>{repo}</h4>
+        <div className="user-profile-repo-list">
+          {userRepo
+            .filter((item: any) => {
+              return item.projectData.Status === repo
+            })
+            .map((project: any) => (
+              <div className="user-profile-repo-card" key={project.Key}>
+                <p>{project.projectData.Name}</p>
+                <p>{project.projectData.Status}</p>
+                <p>{project.projectData.Desc}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+    ))
 
   return (
     <div>
@@ -80,8 +98,7 @@ export const UserProfile = () => {
           <div className="user-profile-repo-wrap">
             <h3>Alex Wang's Projects</h3>
             <div className="user-profile-repo-category-container">
-              <h4>All Projects</h4>
-              <div className="user-profile-repo-list">{renderProject}</div>
+              {renderStatus}
             </div>
           </div>
         </div>
