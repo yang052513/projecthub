@@ -49,7 +49,7 @@ export const UserProfile = () => {
   const renderStatus = statusList
     .filter((value, index, self) => self.indexOf(value) === index)
     .map((repo: any) => (
-      <div>
+      <div className="user-profile-status-wrap">
         <h4>{repo}</h4>
         <div className="user-profile-repo-list">
           {userRepo
@@ -58,9 +58,17 @@ export const UserProfile = () => {
             })
             .map((project: any) => (
               <div className="user-profile-repo-card" key={project.Key}>
-                <p>{project.projectData.Name}</p>
-                <p>{project.projectData.Status}</p>
-                <p>{project.projectData.Desc}</p>
+                <div>
+                  <p className="user-profile-repo-card-name">
+                    {project.projectData.Name}
+                  </p>
+                  <p className="user-profile-repo-card-status">
+                    {project.projectData.Status}
+                  </p>
+                </div>
+                <p className="user-profile-repo-card-desc">
+                  {project.projectData.Desc}
+                </p>
               </div>
             ))}
         </div>
@@ -75,7 +83,7 @@ export const UserProfile = () => {
         <div className="user-profile-container">
           <div className="user-profile-info-container">
             <img src={userInfo.avatar} alt="" width="100px" height="100px" />
-            <h3>Alex Wang</h3>
+            <h3>{userInfo.profile.profileName}</h3>
             <p>
               <i className="fas fa-book"></i>Just a test account for yang
             </p>
@@ -96,7 +104,7 @@ export const UserProfile = () => {
             </p>
           </div>
           <div className="user-profile-repo-wrap">
-            <h3>Alex Wang's Projects</h3>
+            <h3>{userInfo.profile.profileName}'s Projects</h3>
             <div className="user-profile-repo-category-container">
               {renderStatus}
             </div>

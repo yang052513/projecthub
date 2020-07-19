@@ -1334,6 +1334,18 @@
 
 .user-profile-container .user-profile-repo-wrap {
   width: 50%;
+  margin-left: 50px;
+}
+
+.user-profile-container .user-profile-repo-wrap .user-profile-status-wrap {
+  margin: 15px 0;
+}
+
+.user-profile-container .user-profile-repo-wrap .user-profile-status-wrap h4 {
+  font-family: quicksand;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
 
 .user-profile-container .user-profile-repo-wrap .user-profile-repo-list {
@@ -1345,8 +1357,30 @@
 
 .user-profile-container .user-profile-repo-wrap .user-profile-repo-list .user-profile-repo-card {
   border: 1px solid gray;
-  margin: 15px 10px;
+  border-radius: 10px;
+  background-color: white;
+  margin: 15px 20px 15px 0;
   padding: 20px;
+  min-width: 350px;
+}
+
+.user-profile-container .user-profile-repo-wrap .user-profile-repo-list .user-profile-repo-card div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.user-profile-container .user-profile-repo-wrap .user-profile-repo-list .user-profile-repo-card div .user-profile-repo-card-name {
+  font-weight: bold;
+  letter-spacing: 1.2px;
+}
+
+.user-profile-container .user-profile-repo-wrap .user-profile-repo-list .user-profile-repo-card .user-profile-repo-card-desc {
+  font-size: 14px;
 }
 
 .logout-container {
@@ -1559,6 +1593,11 @@
 @font-face {
   font-family: normalText;
   src: url("../font/Helvetica.ttf");
+}
+
+@font-face {
+  font-family: quicksand;
+  src: url("../font/Quicksand.ttf");
 }
 
 * {

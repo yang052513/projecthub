@@ -62,15 +62,39 @@
   }
   .user-profile-repo-wrap {
     width: 50%;
-
+    margin-left: 50px;
+    .user-profile-status-wrap {
+      margin: 15px 0;
+      h4 {
+        // padding: 0 20px;
+        font-family: quicksand;
+        font-size: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+      }
+    }
     .user-profile-repo-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-
       .user-profile-repo-card {
         border: 1px solid gray;
-        margin: 15px 10px;
+        border-radius: 10px;
+        background-color: white;
+        margin: 15px 20px 15px 0;
         padding: 20px;
+        min-width: 350px;
+        div {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 15px;
+          .user-profile-repo-card-name {
+            font-weight: bold;
+            letter-spacing: 1.2px;
+          }
+        }
+        .user-profile-repo-card-desc {
+          font-size: 14px;
+        }
       }
     }
   }
