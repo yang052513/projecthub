@@ -6,7 +6,7 @@ interface Props {
 
 export const StatusLog: React.FC<Props> = ({ activity }) => {
   const activityLog = activity.map((item: any) => (
-    <li key={item.Content}>
+    <li key={item.Key}>
       {item.Content} on {item.Time}{' '}
     </li>
   ))

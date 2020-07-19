@@ -196,9 +196,18 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
               .doc(user.uid)
               .collection('Activity')
               .add({
-                Key: docRef.id,
+                ProjectKey: docRef.id,
                 Time: currentTime,
                 Content: `Created a new project ${textInput.projectName}`,
+              })
+              .then(activityRef => {
+                db.collection('user')
+                  .doc(user.uid)
+                  .collection('Activity')
+                  .doc(activityRef.id)
+                  .update({
+                    Key: activityRef.id,
+                  })
               })
 
             //将项目的密匙写入到文档中

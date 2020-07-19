@@ -21,9 +21,6 @@ export const Friends: React.FC = () => {
   }
   useEffect(fetchFriends, [])
 
-  const test = useFetch('friends')
-  console.log(test)
-
   const userList = user.map((user: any) => (
     <FriendCard
       key={user.Key}

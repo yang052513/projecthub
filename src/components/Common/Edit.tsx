@@ -260,9 +260,18 @@ export const Edit: React.FC<Props> = ({ profile }) => {
           .doc(user.uid)
           .collection('Activity')
           .add({
-            Key: params.ref,
+            ProjectKey: params.ref,
             Time: currentTime,
             Content: `Edited project ${textInput.projectName}`,
+          })
+          .then(activityRef => {
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Activity')
+              .doc(activityRef.id)
+              .update({
+                Key: activityRef.id,
+              })
           })
 
         //写入到公开数据库
