@@ -84,24 +84,36 @@ export const UserProfile = () => {
           <div className="user-profile-info-container">
             <img src={userInfo.avatar} alt="" width="100px" height="100px" />
             <h3>{userInfo.profile.profileName}</h3>
-            <p>
-              <i className="fas fa-book"></i>Just a test account for yang
-            </p>
-            <p>
-              <i className="fas fa-envelope"></i>alexwang05@bcit.ca
-            </p>
-            <p>
-              <i className="fab fa-github"></i>yang052513
-            </p>
-            <p>
-              <i className="fas fa-map-marker-alt"></i>Vancouver
-            </p>
-            <p>
-              <i className="fas fa-home"></i>yang0525.app.com
-            </p>
-            <p>
-              <i className="fab fa-linkedin-in"></i>3dcsd@dc.com
-            </p>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fas fa-book"></i>
+              <p>{userInfo.profile.profileBio}</p>
+            </div>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fas fa-envelope"></i>
+              <p>{userInfo.profile.profileEmail}</p>
+            </div>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fab fa-github"></i>
+              <p> {userInfo.profile.profileGithub}</p>
+            </div>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fas fa-map-marker-alt"></i>
+              <p> {userInfo.profile.profileLocation}</p>
+            </div>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fab fa-linkedin-in"></i>
+              <p> {userInfo.profile.profileWeb}</p>
+            </div>
+
+            <div className="user-profile-icon-wrap">
+              <i className="fas fa-home"></i>
+              <p> {userInfo.profile.profileLinkedin}</p>
+            </div>
           </div>
           <div className="user-profile-repo-wrap">
             <h3>{userInfo.profile.profileName}'s Projects</h3>

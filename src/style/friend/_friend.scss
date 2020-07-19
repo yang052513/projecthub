@@ -40,6 +40,13 @@
   margin-top: 30px;
   .user-profile-info-container {
     width: 15%;
+    .user-profile-icon-wrap {
+      display: flex;
+      margin: 15px 0;
+      i {
+        margin-right: 10px;
+      }
+    }
     img {
       width: 150px;
       height: 150px;
@@ -51,7 +58,6 @@
       font-size: 30px;
     }
     p {
-      margin: 15px 0;
       color: rgb(68, 68, 68);
       font-size: 14px;
 

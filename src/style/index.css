@@ -1310,6 +1310,17 @@
   width: 15%;
 }
 
+.user-profile-container .user-profile-info-container .user-profile-icon-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 15px 0;
+}
+
+.user-profile-container .user-profile-info-container .user-profile-icon-wrap i {
+  margin-right: 10px;
+}
+
 .user-profile-container .user-profile-info-container img {
   width: 150px;
   height: 150px;
@@ -1323,7 +1334,6 @@
 }
 
 .user-profile-container .user-profile-info-container p {
-  margin: 15px 0;
   color: #444444;
   font-size: 14px;
 }
@@ -1615,7 +1625,7 @@ a {
 
 p,
 li {
-  font-family: raleway;
+  font-family: quicksand;
 }
 
 hr {
