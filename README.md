@@ -1,94 +1,81 @@
-Underconstruction
+# Projecthub
 
-<!-- # Pinboard
-
-> https://pinboard-25.web.app/
+> https://projecthub.web.app/
 
 ## Table of Contents
 
 - [Introduction](#01)
 - [Install](#02)
 - [Usage](#03)
-- [Taskflow](#04)
 - [Features](#05)
 - [Preview](#06)
 - [Tools](#07)
-- [APIs](#08)
-- [Resource](#09)
-- [Change Log](#10)
 
 #
 
 ## <span id="01">Introduction</span>
 
-Beside my academic studies, I always passionated about making projects either is helping me to solve problems or just practice certain skills. Mostly I would just wirte down my ideas on my mac notepad. However, I feel not really efficient because I need to change back and forth between Github project and my notepad to manage my projects. Thus, I came up the idea that I want to build a app that could manage my projects with different status such as completed, working, ...etc.
+This project was created for my summer algorithim part time course. The app allows students filter and search courses easily without submit a form then direct to a new page everytime Then the app will generate a timetable for student to preview the course schedule. Easy and quick. No more long time gap between classes.
 
-Later on, I found maybe it could be used with other people which everyone post projects on the room, and other people could ask for joining it or just learned about.
+Right now I only update Coquitlam College course lists due to the project time constraints. I am looking into UBC and other school course scraping. Anyway, the idea is to help students to simplify the process of enrolling courses and avoid the time conficlts.
 
 #
 
 ## <span id="02">Install</span>
 
-> `npm install`
+Install all the necessary dependencies before running the application. In your shell, type the following:
+
+```shell
+cd course-flex
+npm install
+```
+
+You might need to install `nodemon` and `concurrently` if giving error based on above code
+
+```shell
+cd course-flex
+npm install nodemon concurrently --save
+```
 
 #
 
 ## <span id="03">Usage</span>
 
-> `npm start`
+### Live Demo
 
-#
+The project is hosting at [Heroku courseflex](https://courseflex.herokuapp.com/)
 
-## <span id="04">Taskflow</span>
+### Running on Local Machine
 
+Typing the following command in your shell, and the application should be running at `localhost:3000`. The server will start at port `8080`.
 
+```shell
+cd course-flex
+npm run dev
+```
 
 #
 
 ## <span id="05">Features</span>
 
-- Add a project to your workflow and track the status as you working
-- Change the status of your project
-- Basic kanban style to manage projects
-- Add other contributors to your projects
-- Explore other people's projects
+- Search the course by course title or codes keywords
+- Filter the course with department, level, class start time, weekdays
+- Prompt if there are conflicts with the course choosed
+- Prompt if there are too many courses taken
+- Edit or empty course cart
+- Generate a timetable for visiualizing course schedule to avoid time gap
 
 #
 
 ## <span id="06">Preview</span>
 
->
-
-#
+![](client/public/img/demo/2.png)
+![](client/public/img/demo/3.png)
 
 ## <span id="07">Tools</span>
 
-- HTML5, CSS3
-- JavaScript
 - React
+- Firebase Firestore, Cloud Storage, Hosting
+- Typescript
 - Sass
-- Firebase
-
-#
-
-## <span id="08">API & Libraries </span>
-
-- [Google Map React](https://github.com/google-map-react/google-map-react)
-- [Material UI Framework](https://material-ui.com/)
-- [jQuery](https://jquery.com/)
-- [AOS](https://github.com/michalsnik/aos)
-
-#
-
-## <span id="09">Resources</span>
-
-- [FLATICON](https://www.flaticon.com/home)
-- [Freepik](https://www.freepik.com/)
-
-
-#
-
-## <span id="11">Change Log</span>
-
-
- -->
+- Material UI
