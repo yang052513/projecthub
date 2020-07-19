@@ -26,10 +26,8 @@ export function Moment(props: any) {
         query.forEach(doc => {
           setMoment(prevMoment => [...prevMoment, doc.data()])
         })
+        setLoading(false)
       })
-    setTimeout(() => {
-      setLoading(false)
-    }, 2000)
   }, [db])
 
   //Loop all the moment and render in storycard component

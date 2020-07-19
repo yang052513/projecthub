@@ -49,7 +49,7 @@ export const UserProfile = () => {
   const renderStatus = statusList
     .filter((value, index, self) => self.indexOf(value) === index)
     .map((repo: any) => (
-      <div className="user-profile-status-wrap">
+      <div key={Math.random() * 16} className="user-profile-status-wrap">
         <h4>{repo}</h4>
         <div className="user-profile-repo-list">
           {userRepo

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { StorySocial } from './StorySocial'
 import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
@@ -22,6 +23,7 @@ export const StoryCard: React.FC<Props> = ({
   content,
   picture,
   like,
+  userId,
 }) => {
   const db = firebase.firestore()
   const [likeCnt, setLikeCnt] = useState<number>(like)
@@ -55,7 +57,10 @@ export const StoryCard: React.FC<Props> = ({
   return (
     <div>
       <div className="moment-story-card-container">
-        <img className="moment-story-user" src={avatar} alt="" />
+        <Link to={`/friends/${userId}`}>
+          <img className="moment-story-user" src={avatar} alt="" />
+        </Link>
+
         <div>
           <p className="moment-story-name">
             {name}
