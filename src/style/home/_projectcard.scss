@@ -82,7 +82,7 @@
 //=================================Explore=====================================
 .explore-container {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 3fr 30%;
   width: 70%;
   position: absolute;
   left: 50%;
@@ -92,14 +92,45 @@
     margin: 0 30px;
     .project-card-item {
       width: auto;
+      margin: 20px 0;
     }
   }
 
   .explore-author-container {
     border: 1px solid red;
+    text-align: center;
+    img {
+      border-radius: 50%;
+      height: 150px;
+      width: 150px;
+    }
   }
 
   .explore-trending-container {
     border: 1px solid purple;
+    padding: 10px 20px;
+    .explore-trending-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div {
+        display: flex;
+        align-items: center;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      button {
+        @include buttonStroke($sideNavBg);
+        border-radius: 10px;
+        margin-right: 10px;
+      }
+    }
   }
 }
