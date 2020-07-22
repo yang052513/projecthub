@@ -10,8 +10,8 @@
 //每个单一的项目卡片样式化
 .project-card-item {
   width: 330px;
-  padding: 20px 30px;
-  border-radius: 25px;
+  padding: 20px 30px 5px 30px;
+  border-radius: 15px;
   background-color: rgba(255, 255, 255, 1);
   position: relative;
   // box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.75);
@@ -23,6 +23,12 @@
   }
   .project-header {
     @include flexCenter(space-between);
+  }
+
+  .project-author-avatar {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
   }
   .project-title {
     font-family: title;
@@ -70,5 +76,30 @@
     i {
       color: gray;
     }
+  }
+}
+
+//=================================Explore=====================================
+.explore-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  width: 70%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  .explore-project-list-container {
+    border: 1px solid blue;
+    margin: 0 30px;
+    .project-card-item {
+      width: auto;
+    }
+  }
+
+  .explore-author-container {
+    border: 1px solid red;
+  }
+
+  .explore-trending-container {
+    border: 1px solid purple;
   }
 }

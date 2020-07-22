@@ -357,8 +357,8 @@
 
 .project-card-item {
   width: 330px;
-  padding: 20px 30px;
-  border-radius: 25px;
+  padding: 20px 30px 5px 30px;
+  border-radius: 15px;
   background-color: white;
   position: relative;
   opacity: 1;
@@ -384,6 +384,12 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.project-card-item .project-author-avatar {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
 
 .project-card-item .project-title {
@@ -474,6 +480,35 @@
 
 .project-card-item .project-footer i {
   color: gray;
+}
+
+.explore-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr 1fr;
+      grid-template-columns: 1fr 3fr 1fr;
+  width: 70%;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.explore-container .explore-project-list-container {
+  border: 1px solid blue;
+  margin: 0 30px;
+}
+
+.explore-container .explore-project-list-container .project-card-item {
+  width: auto;
+}
+
+.explore-container .explore-author-container {
+  border: 1px solid red;
+}
+
+.explore-container .explore-trending-container {
+  border: 1px solid purple;
 }
 
 .project-header-container {

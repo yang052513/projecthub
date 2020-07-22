@@ -6,7 +6,6 @@ export const ExploreProject: React.FC = () => {
       <div className="project-card-item">
         <div className="project-header">
           <p className="project-title">Course Flex</p>
-          <img src="/images/user.jpg" alt="" width="80px" height="80px" />
         </div>
         <p className="project-category">Web App</p>
         <p className="project-desc">
@@ -21,6 +20,7 @@ export const ExploreProject: React.FC = () => {
         </ul>
 
         <p className="project-category">last updated on Jul 22, 2020 13:20</p>
+        <img className="project-author-avatar" src="/images/user.jpg" alt="" />
       </div>
     </div>
   )
