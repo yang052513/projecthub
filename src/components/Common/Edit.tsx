@@ -287,7 +287,7 @@ export const Edit: React.FC<Props> = ({ profile }) => {
                 Id: user.uid,
                 Profile: profile,
               },
-              changedData,
+              projectData: changedData,
             })
         } else {
           //If the project changed from public to private, delete from public database

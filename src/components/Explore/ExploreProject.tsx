@@ -1,6 +1,10 @@
 import React from 'react'
 
-export const ExploreProject: React.FC = () => {
+interface Props {
+  projectData: any
+}
+
+export const ExploreProject: React.FC<Props> = ({ projectData }) => {
   return (
     <div className="explore-project-list-container">
       <h2>Explore Projects</h2>
