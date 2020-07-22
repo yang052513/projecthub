@@ -1,16 +1,27 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export const ExploreTrending: React.FC = () => {
+interface Props {
+  userData: any
+}
+
+export const ExploreTrending: React.FC<Props> = ({ userData }) => {
   return (
     <div className="explore-trending-container">
       <h3>Trending</h3>
-      <div className="explore-trending-item">
-        <div>
-          <img src="./images/user.jpg" alt="" width="80px" height="80px" />
-          <p>Nathan Lee</p>
+
+      {userData.map((item: any) => (
+        <div key={item.Key} className="explore-trending-item">
+          <div>
+            <Link to={`/friends/${item.Key}`}>
+              <img src={item.avatar} alt="" />
+            </Link>
+
+            <p>{item.profile.profileName}</p>
+          </div>
+          <button>Follow</button>
         </div>
-        <button>Follow</button>
-      </div>
+      ))}
     </div>
   )
 }

@@ -485,8 +485,8 @@
 .explore-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 3fr 30%;
-      grid-template-columns: 1fr 3fr 30%;
+  -ms-grid-columns: 1fr 3fr 350px;
+      grid-template-columns: 1fr 3fr 350px;
   width: 70%;
   position: absolute;
   left: 50%;
@@ -495,7 +495,6 @@
 }
 
 .explore-container .explore-project-list-container {
-  border: 1px solid blue;
   margin: 0 30px;
 }
 
@@ -505,8 +504,8 @@
 }
 
 .explore-container .explore-author-container {
-  border: 1px solid red;
   text-align: center;
+  height: 20%;
 }
 
 .explore-container .explore-author-container img {
@@ -516,8 +515,8 @@
 }
 
 .explore-container .explore-trending-container {
-  border: 1px solid purple;
   padding: 10px 20px;
+  height: 40%;
 }
 
 .explore-container .explore-trending-container .explore-trending-item {
@@ -530,6 +529,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin: 15px 0;
 }
 
 .explore-container .explore-trending-container .explore-trending-item div {

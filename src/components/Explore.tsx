@@ -6,6 +6,7 @@ import { ExploreTrending } from './Explore/ExploreTrending'
 
 export const Explore: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
+  const [userList, setUserList] = useState<Array<object | null | undefined>>([])
 
   useEffect(() => {
     const fetchProject = () => {
@@ -18,6 +19,16 @@ export const Explore: React.FC = () => {
             setProject(prevProject => [...prevProject, doc.data()])
           })
         })
+
+      firebase
+        .firestore()
+        .collection('friends')
+        .get()
+        .then(userDoc => {
+          userDoc.forEach(doc => {
+            setUserList(prevUser => [...prevUser, doc.data()])
+          })
+        })
     }
     fetchProject()
   }, [])
@@ -26,7 +37,7 @@ export const Explore: React.FC = () => {
     <div className="component-layout explore-container">
       <ExploreAuthor />
       <ExploreProject projectData={project} />
-      <ExploreTrending />
+      <ExploreTrending userData={userList} />
     </div>
   )
 }
