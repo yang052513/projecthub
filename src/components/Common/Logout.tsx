@@ -27,7 +27,7 @@ export const Logout: React.FC = () => {
   const randomImg: number = Math.floor(Math.random() * maxImages) + 1
   const randomBye: number = Math.floor(Math.random() * maxByes)
 
-  useEffect(() => {
+  const logoutAnimation = () => {
     setBgImg(randomImg)
     setBye(byeMsg[randomBye])
 
@@ -57,7 +57,9 @@ export const Logout: React.FC = () => {
           }
         )
     }, 4000)
-  }, [])
+  }
+
+  useEffect(logoutAnimation, [])
 
   return (
     <div

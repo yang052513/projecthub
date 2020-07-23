@@ -304,12 +304,7 @@ export default function App() {
               className="far fa-calendar-alt"
             ></i>
           </Link>
-          <Link to="/mission">
-            <i
-              style={currRoute === '/mission' ? currLinkStyle : null}
-              className="fas fa-book"
-            ></i>
-          </Link>
+
           <Link to="/friends">
             <i
               style={currRoute === '/friends' ? currLinkStyle : null}
@@ -332,6 +327,12 @@ export default function App() {
             <i
               style={currRoute === '/faq' ? currLinkStyle : null}
               className="far fa-question-circle"
+            ></i>
+          </Link>
+          <Link to="/mission">
+            <i
+              style={currRoute === '/mission' ? currLinkStyle : null}
+              className="fas fa-exclamation-circle"
             ></i>
           </Link>
           <Link to="/create">

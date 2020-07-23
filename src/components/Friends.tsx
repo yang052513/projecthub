@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { FriendCard } from './Friends/FriendCard'
 import { Loading } from './Common/Loading'
-import { useFetch } from './Hooks/useFetch'
 
 export const Friends: React.FC = () => {
   const [user, setUser] = useState<Array<object | null | undefined>>([])

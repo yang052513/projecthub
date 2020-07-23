@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { Loading } from './Loading'
-import { render } from '@testing-library/react'
 
 export const UserProfile = () => {
   const userId: any = useParams()
