@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-
+import firebase from 'firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
   },
-  // 文本框样式
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -19,15 +19,16 @@ const useStyles = makeStyles(theme => ({
 
 export const GroupForm: React.FC = () => {
   const classes = useStyles()
+  const user: firebase.User | null | any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
 
-  const [textInput, setTextInput] = useState<Object | null>({
+  const [textInput, setTextInput] = useState({
     name: '',
     startDate: '',
     endDate: '',
     category: '',
     contributors: '',
     description: '',
-    tools: '',
   })
 
   const [tool, setTool] = useState<Array<string>>([])
@@ -50,13 +51,45 @@ export const GroupForm: React.FC = () => {
       alert('already included ')
     } else {
       setTool((prevTool: any) => [...prevTool, toolInput])
+      toolInputTarget.value = ''
     }
-
-    toolInput = ''
   }
 
   const handleSubmit = () => {
-    console.log(textInput, tool)
+    const docData = {
+      Creator: { Id: user.uid, Avatar: profile.avatar },
+      Name: textInput.name,
+      StartDate: textInput.startDate,
+      EndDate: textInput.endDate,
+      Category: textInput.category,
+      Contributors: textInput.contributors,
+      Description: textInput.description,
+    }
+    firebase
+      .firestore()
+      .collection('group')
+      .add({
+        docData,
+      })
+      .then(docRef => {
+        firebase.firestore().collection('group').doc(docRef.id).update({
+          Key: docRef.id,
+        })
+
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(user.uid)
+          .collection('Queue')
+          .doc(docRef.id)
+          .set({
+            docData,
+          })
+        console.log(`创建新的合作项目成功，密匙为${docRef.id}`)
+      })
+      .catch(error => {
+        console.log(`上传错误 ${error}`)
+      })
   }
 
   const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
@@ -160,7 +193,6 @@ export const GroupForm: React.FC = () => {
           <div className="project-tool-input-container">
             <TextField
               name="tools"
-              onChange={handleTextField}
               id="project-tool-input"
               label="Required Technology"
               placeholder="Tools that used"
