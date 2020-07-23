@@ -56,13 +56,19 @@ export const GroupForm: React.FC = () => {
   }
 
   const handleSubmit = () => {
+    let contributor_list: Array<Object> = [
+      { Id: user.uid, Avatar: profile.avatar },
+    ]
+    for (let i = 1; i < parseInt(textInput.contributors); i++) {
+      contributor_list.push({ Id: 'None', Avatar: 'None' })
+    }
     const docData = {
       Creator: { Id: user.uid, Avatar: profile.avatar },
       Name: textInput.name,
       StartDate: textInput.startDate,
       EndDate: textInput.endDate,
       Category: textInput.category,
-      Contributors: textInput.contributors,
+      Contributors: contributor_list,
       Description: textInput.description,
       Tools: tool,
     }

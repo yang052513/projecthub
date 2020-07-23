@@ -35,11 +35,19 @@ export const Group: React.FC = () => {
       <p className="project-category">
         {item.docData.StartDate} - {item.docData.EndDate}
       </p>
-      <img
-        className="project-author-avatar"
-        src={item.docData.Creator.Avatar}
-        alt=""
-      />
+
+      {item.docData.Contributors.map((contributor: any) => (
+        <img
+          key={Math.random() * 255}
+          className="project-author-avatar"
+          src={
+            contributor.Avatar === 'None'
+              ? './images/add.png'
+              : contributor.Avatar
+          }
+          alt=""
+        />
+      ))}
     </div>
   ))
 
