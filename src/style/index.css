@@ -1597,6 +1597,7 @@
   font-size: 14px;
   color: gray;
   margin: 10px 0 30px 0;
+  line-height: 1.5rem;
 }
 
 .project-form-container .project-tool-input-container {
