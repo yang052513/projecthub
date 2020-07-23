@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
@@ -20,6 +20,47 @@ const useStyles = makeStyles(theme => ({
 export const GroupForm: React.FC = () => {
   const classes = useStyles()
 
+  const [textInput, setTextInput] = useState<Object | null>({
+    name: '',
+    startDate: '',
+    endDate: '',
+    category: '',
+    contributors: '',
+    description: '',
+    tools: '',
+  })
+
+  const [tool, setTool] = useState<Array<string>>([])
+
+  const handleTextField = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target
+    setTextInput(prevText => ({
+      ...prevText,
+      [name]: value,
+    }))
+  }
+
+  const handleTool = () => {
+    let toolInputTarget: any = document.getElementById('project-tool-input')
+    let toolInput = toolInputTarget.value
+
+    if (toolInput === '') {
+      alert('add the tool')
+    } else if (tool.includes(toolInput)) {
+      alert('already included ')
+    } else {
+      setTool((prevTool: any) => [...prevTool, toolInput])
+    }
+
+    toolInput = ''
+  }
+
+  const handleSubmit = () => {
+    console.log(textInput, tool)
+  }
+
+  const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
+
   return (
     <div className="project-form-container component-layout">
       <div className={classes.root}>
@@ -35,6 +76,8 @@ export const GroupForm: React.FC = () => {
           </div>
 
           <TextField
+            name="name"
+            onChange={handleTextField}
             label="Project Name"
             style={{ margin: '8px 8px 20px 8px' }}
             placeholder="Enter your project name"
@@ -47,6 +90,8 @@ export const GroupForm: React.FC = () => {
           />
 
           <TextField
+            name="startDate"
+            onChange={handleTextField}
             label="Estimated Start Date"
             type="date"
             className={classes.textField}
@@ -58,6 +103,8 @@ export const GroupForm: React.FC = () => {
           />
 
           <TextField
+            name="endDate"
+            onChange={handleTextField}
             label="Estimated End Date"
             type="date"
             className={classes.textField}
@@ -69,6 +116,8 @@ export const GroupForm: React.FC = () => {
           />
 
           <TextField
+            name="category"
+            onChange={handleTextField}
             label="Category"
             placeholder="Project category"
             className={classes.textField}
@@ -81,6 +130,8 @@ export const GroupForm: React.FC = () => {
           />
 
           <TextField
+            name="contributors"
+            onChange={handleTextField}
             label="Team Size"
             type="number"
             placeholder="How many contributor needed?"
@@ -93,6 +144,8 @@ export const GroupForm: React.FC = () => {
           />
 
           <TextField
+            name="description"
+            onChange={handleTextField}
             label="Description"
             style={{ margin: 8 }}
             placeholder="What does you project for?"
@@ -106,6 +159,9 @@ export const GroupForm: React.FC = () => {
 
           <div className="project-tool-input-container">
             <TextField
+              name="tools"
+              onChange={handleTextField}
+              id="project-tool-input"
               label="Required Technology"
               placeholder="Tools that used"
               className={classes.textField}
@@ -114,12 +170,14 @@ export const GroupForm: React.FC = () => {
               variant="outlined"
             />
 
-            <button className="project-add-tool-btn">Add</button>
-            <ul></ul>
+            <button onClick={handleTool} className="project-add-tool-btn">
+              Add
+            </button>
+            <ul>{toolList}</ul>
           </div>
 
           <div className="project-input-submit-container">
-            <button>Create Project</button>
+            <button onClick={handleSubmit}>Create Project</button>
           </div>
         </div>
       </div>
