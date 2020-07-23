@@ -20,6 +20,7 @@ import { ProfileMenu } from './components/Navigation/ProfileMenu'
 import { Edit } from './components/Common/Edit'
 import { Kanban } from './components/Home/Kanban'
 import { UserProfile } from './components/Common/UserProfile'
+import { GroupForm } from './components/Group/GroupForm'
 
 export default function App() {
   const db = firebase.firestore()
@@ -399,6 +400,9 @@ export default function App() {
           </Route>
           <Route path="/create">
             <CreateProject profile={profile} />
+          </Route>
+          <Route path="/request">
+            <GroupForm />
           </Route>
 
           {/* Other nested router */}
