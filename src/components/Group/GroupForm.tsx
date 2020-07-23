@@ -64,6 +64,7 @@ export const GroupForm: React.FC = () => {
       Category: textInput.category,
       Contributors: textInput.contributors,
       Description: textInput.description,
+      Tools: tool,
     }
     firebase
       .firestore()
