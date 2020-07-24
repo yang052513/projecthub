@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
+import { useFetchProfile } from './Hooks/useFetchProfile'
+import { useFetch } from './Hooks/useFetch'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
 
   const fetchProject = () => {
     firebase
@@ -20,11 +23,38 @@ export const Group: React.FC = () => {
 
   useEffect(fetchProject, [])
 
-  const handleApply = (creatorId: string) => {
+  const submitApply = (docKey: string, creatorId: string) => {
+    const requestRef = firebase
+      .firestore()
+      .collection('group')
+      .doc(docKey)
+      .collection('Requests')
+      .doc(user.uid)
+
+    const creatorRef = firebase
+      .firestore()
+      .collection('user')
+      .doc(creatorId)
+      .collection('Queue')
+      .doc(docKey)
+      .collection('Requests')
+      .doc(user.uid)
+    requestRef.get().then(reqDoc => {
+      if (reqDoc.exists) {
+        alert('你已经申请过了')
+      } else {
+        requestRef.set(profile)
+        creatorRef.set(profile)
+        console.log(`申请成功！`)
+      }
+    })
+  }
+
+  const handleApply = (creatorId: string, projectKey: string) => {
     if (user.uid === creatorId) {
       alert('You are the creator for this project')
     } else {
-      alert('why you want to reply')
+      submitApply(projectKey, creatorId)
     }
   }
 
@@ -49,7 +79,7 @@ export const Group: React.FC = () => {
         if (contributor.Avatar === 'None') {
           return (
             <img
-              onClick={() => handleApply(item.docData.Creator.Id)}
+              onClick={() => handleApply(item.docData.Creator.Id, item.Key)}
               key={Math.random() * 255}
               className="project-author-avatar"
               src="./images/add.png"
