@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
+import { GroupList } from './GroupList'
 
 export const GroupPost = () => {
   const user: any = firebase.auth().currentUser
 
   const [group, setGroup] = useState<Array<Object | null | undefined>>([])
-
   const [application, setApplication] = useState<
     Array<Object | null | undefined>
   >([])
@@ -56,13 +56,11 @@ export const GroupPost = () => {
 
   return (
     <div className="component-layout group-post-container">
-      <p>Your Created Posts:</p>
+      <p>My Posts</p>
+      <GroupList tableData={group} />
 
-      {groupPostList}
-
-      <p>Your Applied Posts:</p>
-
-      {appliedPostList}
+      <p>My Applications</p>
+      <GroupList tableData={application} />
     </div>
   )
 }
