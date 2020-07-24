@@ -38,29 +38,13 @@ export const GroupPost = () => {
 
   useEffect(fetchGroupPost, [])
 
-  const groupPostList = group.map((item: any) => (
-    <div key={item.Key}>
-      <p>{item.docData.Name}</p>
-      <p>{item.docData.Category}</p>
-      <p>{item.docData.Description}</p>
-    </div>
-  ))
-
-  const appliedPostList = application.map((item: any) => (
-    <div key={item.Key}>
-      <p>{item.docData.Name}</p>
-      <p>{item.docData.Category}</p>
-      <p>{item.docData.Description}</p>
-    </div>
-  ))
-
   return (
     <div className="component-layout group-post-container">
       <p>My Posts</p>
       <GroupList tableData={group} />
 
       <p>My Applications</p>
-      <GroupList tableData={application} />
+      {/* <GroupList tableData={application} /> */}
     </div>
   )
 }

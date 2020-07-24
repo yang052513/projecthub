@@ -1,0 +1,30 @@
+.group-queue-container {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 80%;
+  height: 600px;
+  padding: 30px 0;
+  h3 {
+    text-align: center;
+  }
+  .queue-item {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid gray;
+    }
+    p {
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+}
