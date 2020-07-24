@@ -3,13 +3,84 @@ import firebase from 'firebase'
 
 interface Props {
   queueData: any
+  queueRef: string
+  creatorRef: string
+  contributorList: any
+  capacity: number
 }
 
-export const GroupQueue: React.FC<Props> = ({ queueData }) => {
-  const handleAccept = () => {
-    //从公共group collection -> requests中删除这个用户 & 在contributor中加入
-    //从项目拥有者queue -> requests中删除这个用户 & 在contributor中加入
+export const GroupQueue: React.FC<Props> = ({
+  queueData,
+  queueRef,
+  creatorRef,
+  contributorList,
+  capacity,
+}) => {
+  const handleAccept = (userRef: any) => {
+    let updatedList = contributorList
+    updatedList[updatedList.length - capacity] = {
+      Avatar: userRef.profile.avatar,
+      Id: userRef.Key,
+    }
+
+    // 删除
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(queueRef)
+      .collection('Requests')
+      .doc(userRef.Key)
+      .delete()
+      .then(() => {
+        console.log('从公共项目列表中接受请求 并删除用户的requests')
+      })
+
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(creatorRef)
+      .collection('Queue')
+      .doc(queueRef)
+      .collection('Requests')
+      .doc(userRef.Key)
+      .delete()
+      .then(() => {
+        console.log('从项目所有者请求列表中删除该用户请求')
+      })
+
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(queueRef)
+      .update({
+        'docData.Contributors': updatedList,
+        'docData.Capacity': capacity - 1,
+      })
+
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(creatorRef)
+      .collection('Queue')
+      .doc(queueRef)
+      .update({
+        'docData.Contributors': updatedList,
+        'docData.Capacity': capacity - 1,
+      })
+
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(userRef.Key)
+      .collection('Application')
+      .doc(queueRef)
+      .update({
+        'docData.Contributors': updatedList,
+        'docData.Capacity': capacity - 1,
+        Result: true,
+      })
   }
+
   const queueList = queueData.map((queue: any) => (
     <div className="queue-item" key={Math.random() * 255}>
       <img src={queue.profile.avatar} alt="" />
@@ -29,7 +100,7 @@ export const GroupQueue: React.FC<Props> = ({ queueData }) => {
       </p>
       <button>Message</button>
       <button>Delete</button>
-      <button onClick={handleAccept}>Accept</button>
+      <button onClick={() => handleAccept(queue)}>Accept</button>
     </div>
   ))
   return (

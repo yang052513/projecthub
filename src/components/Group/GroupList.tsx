@@ -53,13 +53,23 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
 
+  const [contributor, setContributor] = useState<Array<Object>>([])
+  const [capacity, setCapacity] = useState<number>()
   const [queue, setQueue] = useState<any>({
     display: false,
+    groupRef: '',
+    creatorRef: '',
     data: [],
   })
 
-  const displayQueue = (queueRef: string) => {
-    console.log(queueRef)
+  const displayQueue = (
+    queueRef: string,
+    creatorRef: string,
+    contributorList: Array<Object>,
+    capacityNum: number
+  ) => {
+    setContributor(contributorList)
+    setCapacity(capacityNum)
 
     firebase
       .firestore()
@@ -73,6 +83,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         querySnapshot.forEach(requestDoc => {
           setQueue((prevState: any) => ({
             display: true,
+            groupRef: queueRef,
+            creatorRef: creatorRef,
             data: [...prevState.data, requestDoc.data()],
           }))
         })
@@ -120,7 +132,18 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                   {row.docData.Contributors.length}
                 </StyledTableCell>
                 <StyledTableCell>
-                  <button onClick={() => displayQueue(row.Key)}>View</button>
+                  <button
+                    onClick={() =>
+                      displayQueue(
+                        row.Key,
+                        row.docData.Creator.Id,
+                        row.docData.Contributors,
+                        row.docData.Capacity
+                      )
+                    }
+                  >
+                    View
+                  </button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -134,12 +157,20 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             onClick={() =>
               setQueue({
                 display: false,
+                groupRef: '',
+                creatorRef: '',
                 data: [],
               })
             }
             className="overlay-post"
           ></div>
-          <GroupQueue queueData={queue.data} />
+          <GroupQueue
+            contributorList={contributor}
+            queueRef={queue.groupRef}
+            creatorRef={queue.creatorRef}
+            queueData={queue.data}
+            capacity={capacity}
+          />
         </div>
       )}
     </div>
