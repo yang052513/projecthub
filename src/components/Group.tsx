@@ -25,6 +25,7 @@ export const Group: React.FC = () => {
   const submitApply = (docKey: string, creatorId: string) => {
     const requestRef = firebase.firestore().collection('group').doc(docKey)
 
+    // 项目拥有者集合
     const creatorRef = firebase
       .firestore()
       .collection('user')
@@ -34,6 +35,7 @@ export const Group: React.FC = () => {
       .collection('Requests')
       .doc(user.uid)
 
+    // 申请项目集合
     const contributorRef = firebase
       .firestore()
       .collection('user')
@@ -49,10 +51,17 @@ export const Group: React.FC = () => {
         if (reqDoc.exists) {
           alert('你已经申请过了')
         } else {
-          requestRef.collection('Requests').doc(user.uid).set(profile)
-          creatorRef.set(profile)
+          requestRef.collection('Requests').doc(user.uid).set({
+            Key: user.uid,
+            profile,
+          })
+          creatorRef.set({
+            Key: user.uid,
+            profile,
+          })
+
+          //将项目详细信息写入到申请者账户的 Application集合
           requestRef.get().then((doc: any) => contributorRef.set(doc.data()))
-          console.log(`申请成功！`)
         }
       })
   }

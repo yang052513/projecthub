@@ -59,6 +59,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   })
 
   const displayQueue = (queueRef: string) => {
+    console.log(queueRef)
+
     firebase
       .firestore()
       .collection('user')

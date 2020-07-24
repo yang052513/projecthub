@@ -71,6 +71,7 @@ export const GroupForm: React.FC = () => {
       Contributors: contributor_list,
       Description: textInput.description,
       Tools: tool,
+      Capacity: parseInt(textInput.contributors) - 1,
     }
     firebase
       .firestore()
