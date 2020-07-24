@@ -90,6 +90,7 @@ export const GroupForm: React.FC = () => {
           .collection('Queue')
           .doc(docRef.id)
           .set({
+            Key: docRef.id,
             docData,
           })
         console.log(`创建新的合作项目成功，密匙为${docRef.id}`)

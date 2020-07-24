@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
 import { useFetchProfile } from './Hooks/useFetchProfile'
-import { useFetch } from './Hooks/useFetch'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
 
-  const fetchProject = () => {
+  const fetchGroup = () => {
     firebase
       .firestore()
       .collection('group')
@@ -21,15 +20,10 @@ export const Group: React.FC = () => {
       })
   }
 
-  useEffect(fetchProject, [])
+  useEffect(fetchGroup, [])
 
   const submitApply = (docKey: string, creatorId: string) => {
-    const requestRef = firebase
-      .firestore()
-      .collection('group')
-      .doc(docKey)
-      .collection('Requests')
-      .doc(user.uid)
+    const requestRef = firebase.firestore().collection('group').doc(docKey)
 
     const creatorRef = firebase
       .firestore()
@@ -39,15 +33,28 @@ export const Group: React.FC = () => {
       .doc(docKey)
       .collection('Requests')
       .doc(user.uid)
-    requestRef.get().then(reqDoc => {
-      if (reqDoc.exists) {
-        alert('你已经申请过了')
-      } else {
-        requestRef.set(profile)
-        creatorRef.set(profile)
-        console.log(`申请成功！`)
-      }
-    })
+
+    const contributorRef = firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Application')
+      .doc(docKey)
+
+    requestRef
+      .collection('Requests')
+      .doc(user.uid)
+      .get()
+      .then(reqDoc => {
+        if (reqDoc.exists) {
+          alert('你已经申请过了')
+        } else {
+          requestRef.collection('Requests').doc(user.uid).set(profile)
+          creatorRef.set(profile)
+          requestRef.get().then((doc: any) => contributorRef.set(doc.data()))
+          console.log(`申请成功！`)
+        }
+      })
   }
 
   const handleApply = (creatorId: string, projectKey: string) => {
