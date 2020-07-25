@@ -22,6 +22,7 @@ import { Kanban } from './components/Home/Kanban'
 import { UserProfile } from './components/Common/UserProfile'
 import { GroupForm } from './components/Group/GroupForm'
 import { GroupPost } from './components/Group/GroupPost'
+import { GroupFormEdit } from './components/Group/GroupFormEdit'
 
 export default function App() {
   const db = firebase.firestore()
@@ -407,8 +408,12 @@ export default function App() {
             <GroupForm />
           </Route>
 
-          <Route path="/grouppost">
+          <Route exact path="/grouppost">
             <GroupPost />
+          </Route>
+
+          <Route path="/grouppost/:ref">
+            <GroupFormEdit />
           </Route>
 
           {/* Other nested router */}

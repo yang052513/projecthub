@@ -1,18 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
 interface Props {
   handleDelete: () => void
-  handleEdit: () => void
   handleDetails: () => void
+  groupKey: string
 }
 
 export const GroupMenu: React.FC<Props> = ({
   handleDelete,
-  handleEdit,
   handleDetails,
+  groupKey,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -40,7 +41,10 @@ export const GroupMenu: React.FC<Props> = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <Link to={`/grouppost/${groupKey}`}>
+          <MenuItem>Edit</MenuItem>
+        </Link>
+
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
         <MenuItem onClick={handleDetails}>Details</MenuItem>
       </Menu>

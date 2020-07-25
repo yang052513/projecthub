@@ -189,6 +189,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   <GroupMenu
+                    groupKey={row.Key}
                     handleDelete={() =>
                       handleDelete(
                         row.Key,
@@ -196,7 +197,6 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                         row.docData.Contributors
                       )
                     }
-                    handleEdit={handleEdit}
                     handleDetails={handleDetails}
                   />
                 </StyledTableCell>
