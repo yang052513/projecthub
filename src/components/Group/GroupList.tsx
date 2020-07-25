@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import firebase, { database } from 'firebase'
+import firebase from 'firebase'
 import { GroupQueue } from './GroupQueue'
+import { GroupMenu } from './GroupMenu'
 
 import {
   withStyles,
@@ -53,10 +54,10 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
 
+  const [display, setDisplay] = useState<boolean>(false)
   const [contributor, setContributor] = useState<Array<Object>>([])
   const [capacity, setCapacity] = useState<number>()
   const [queue, setQueue] = useState<any>({
-    display: false,
     groupRef: '',
     creatorRef: '',
     data: [],
@@ -68,6 +69,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     contributorList: Array<Object>,
     capacityNum: number
   ) => {
+    setDisplay(true)
     setContributor(contributorList)
     setCapacity(capacityNum)
 
@@ -82,7 +84,6 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       .then(querySnapshot => {
         querySnapshot.forEach(requestDoc => {
           setQueue((prevState: any) => ({
-            display: true,
             groupRef: queueRef,
             creatorRef: creatorRef,
             data: [...prevState.data, requestDoc.data()],
@@ -106,6 +107,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
               <StyledTableCell>End Date</StyledTableCell>
               <StyledTableCell>Team Members</StyledTableCell>
               <StyledTableCell>Applied Queue</StyledTableCell>
+              <StyledTableCell>More Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -145,23 +147,26 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                     View
                   </button>
                 </StyledTableCell>
+                <StyledTableCell align="center">
+                  <GroupMenu />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {queue.display && (
+      {display && (
         <div>
           <div
-            onClick={() =>
+            onClick={() => {
               setQueue({
-                display: false,
                 groupRef: '',
                 creatorRef: '',
                 data: [],
               })
-            }
+              setDisplay(false)
+            }}
             className="overlay-post"
           ></div>
           <GroupQueue

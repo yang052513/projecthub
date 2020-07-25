@@ -43,8 +43,8 @@ export const GroupPost = () => {
       <p>My Posts</p>
       <GroupList tableData={group} />
 
-      <p>My Applications</p>
-      {/* <GroupList tableData={application} /> */}
+      {/* <p>My Applications</p>
+      <GroupList tableData={application} /> */}
     </div>
   )
 }

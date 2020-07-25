@@ -6,7 +6,7 @@ interface Props {
   queueRef: string
   creatorRef: string
   contributorList: any
-  capacity: number
+  capacity: any
 }
 
 export const GroupQueue: React.FC<Props> = ({
