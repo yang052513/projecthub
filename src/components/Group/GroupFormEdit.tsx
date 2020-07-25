@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {

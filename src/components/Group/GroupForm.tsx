@@ -96,9 +96,6 @@ export const GroupForm: React.FC = () => {
           })
         console.log(`创建新的合作项目成功，密匙为${docRef.id}`)
       })
-      .catch(error => {
-        console.log(`上传错误 ${error}`)
-      })
   }
 
   const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
