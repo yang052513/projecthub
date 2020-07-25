@@ -40,14 +40,14 @@ export const GroupFormEdit: React.FC = () => {
       .get()
       .then((doc: any) => {
         setTextInput({
-          name: doc.data().docData.Name,
-          startDate: doc.data().docData.StartDate,
-          endDate: doc.data().docData.EndDate,
-          category: doc.data().docData.Category,
-          description: doc.data().docData.Description,
-          contributors: doc.data().docData.Capacity,
+          name: doc.data().Name,
+          startDate: doc.data().StartDate,
+          endDate: doc.data().EndDate,
+          category: doc.data().Category,
+          description: doc.data().Description,
+          contributors: doc.data().Capacity,
         })
-        setTool(doc.data().docData.Tools)
+        setTool(doc.data().Tools)
       })
   }
 
@@ -77,11 +77,11 @@ export const GroupFormEdit: React.FC = () => {
 
   const handleSubmit = () => {
     firebase.firestore().collection('group').doc(params.ref).update({
-      'docData.Name': textInput.name,
-      'docData.Description': textInput.description,
-      'docData.StartDate': textInput.startDate,
-      'docData.EndDate': textInput.endDate,
-      'docData.Tools': tool,
+      Name: textInput.name,
+      Description: textInput.description,
+      StartDate: textInput.startDate,
+      EndDate: textInput.endDate,
+      Tools: tool,
     })
   }
 

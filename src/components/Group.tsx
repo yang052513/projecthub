@@ -25,16 +25,6 @@ export const Group: React.FC = () => {
   const submitApply = (docKey: string, creatorId: string) => {
     const requestRef = firebase.firestore().collection('group').doc(docKey)
 
-    // 项目拥有者集合
-    const creatorRef = firebase
-      .firestore()
-      .collection('user')
-      .doc(creatorId)
-      .collection('Queue')
-      .doc(docKey)
-      .collection('Requests')
-      .doc(user.uid)
-
     // 申请项目集合
     const contributorRef = firebase
       .firestore()
@@ -55,13 +45,18 @@ export const Group: React.FC = () => {
             Key: user.uid,
             profile,
           })
-          creatorRef.set({
-            Key: user.uid,
-            profile,
-          })
 
           //将项目详细信息写入到申请者账户的 Application集合
-          requestRef.get().then((doc: any) => contributorRef.set(doc.data()))
+          requestRef.get().then((doc: any) =>
+            contributorRef.set({
+              Key: doc.data().Key,
+              Creator: {
+                Avatar: doc.data().Creator.Avatar,
+                Id: doc.data().Creator.Id,
+              },
+              Result: 'Applied',
+            })
+          )
         }
       })
   }
@@ -77,25 +72,25 @@ export const Group: React.FC = () => {
   const projectList = project.map((item: any) => (
     <div key={item.Key} className="project-card-item">
       <div className="project-header">
-        <p className="project-title">{item.docData.Name}</p>
+        <p className="project-title">{item.Name}</p>
       </div>
-      <p className="project-category">{item.docData.Category}</p>
-      <p className="project-desc">{item.docData.Description}</p>
+      <p className="project-category">{item.Category}</p>
+      <p className="project-desc">{item.Description}</p>
 
       <ul className="project-tools">
-        {item.docData.Tools.map((tool: any) => (
+        {item.Tools.map((tool: any) => (
           <li key={tool}>{tool}</li>
         ))}
       </ul>
       <p className="project-category">
-        {item.docData.StartDate} - {item.docData.EndDate}
+        {item.StartDate} - {item.EndDate}
       </p>
 
-      {item.docData.Contributors.map((contributor: any) => {
+      {item.Contributors.map((contributor: any) => {
         if (contributor.Avatar === 'None') {
           return (
             <img
-              onClick={() => handleApply(item.docData.Creator.Id, item.Key)}
+              onClick={() => handleApply(item.Creator.Id, item.Key)}
               key={Math.random() * 255}
               className="project-author-avatar"
               src="./images/add.png"

@@ -62,38 +62,25 @@ export const GroupForm: React.FC = () => {
     for (let i = 1; i < parseInt(textInput.contributors); i++) {
       contributor_list.push({ Id: 'None', Avatar: 'None' })
     }
-    const docData = {
-      Creator: { Id: user.uid, Avatar: profile.avatar },
-      Name: textInput.name,
-      StartDate: textInput.startDate,
-      EndDate: textInput.endDate,
-      Category: textInput.category,
-      Contributors: contributor_list,
-      Description: textInput.description,
-      Tools: tool,
-      Capacity: parseInt(textInput.contributors) - 1,
-    }
+
     firebase
       .firestore()
       .collection('group')
       .add({
-        docData,
+        Creator: { Id: user.uid, Avatar: profile.avatar },
+        Name: textInput.name,
+        StartDate: textInput.startDate,
+        EndDate: textInput.endDate,
+        Category: textInput.category,
+        Contributors: contributor_list,
+        Description: textInput.description,
+        Tools: tool,
+        Capacity: parseInt(textInput.contributors) - 1,
       })
       .then(docRef => {
         firebase.firestore().collection('group').doc(docRef.id).update({
           Key: docRef.id,
         })
-
-        firebase
-          .firestore()
-          .collection('user')
-          .doc(user.uid)
-          .collection('Queue')
-          .doc(docRef.id)
-          .set({
-            Key: docRef.id,
-            docData,
-          })
         console.log(`创建新的合作项目成功，密匙为${docRef.id}`)
       })
   }

@@ -13,25 +13,26 @@ export const GroupPost = () => {
   const fetchGroupPost = () => {
     const userRef = firebase.firestore().collection('user').doc(user.uid)
 
-    //所有创建的项目
-    userRef
-      .collection('Queue')
+    // userRef
+    //   .collection('Application')
+    //   .get()
+    //   .then(querySnapshot => {
+    //     if (querySnapshot.docs.length > 0) {
+    //       querySnapshot.forEach(doc => {
+    //         setApplication(prevApplication => [...prevApplication, doc.data()])
+    //       })
+    //     }
+    //   })
+
+    firebase
+      .firestore()
+      .collection('group')
+      .where('Creator.Id', '==', user.uid)
       .get()
       .then(querySnapshot => {
         if (querySnapshot.docs.length > 0) {
           querySnapshot.forEach(doc => {
             setGroup(prevGroup => [...prevGroup, doc.data()])
-          })
-        }
-      })
-
-    userRef
-      .collection('Application')
-      .get()
-      .then(querySnapshot => {
-        if (querySnapshot.docs.length > 0) {
-          querySnapshot.forEach(doc => {
-            setApplication(prevApplication => [...prevApplication, doc.data()])
           })
         }
       })

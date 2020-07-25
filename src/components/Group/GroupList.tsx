@@ -75,18 +75,16 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
     firebase
       .firestore()
-      .collection('user')
-      .doc(user.uid)
-      .collection('Queue')
+      .collection('group')
       .doc(queueRef)
       .collection('Requests')
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(requestDoc => {
+      .then(docs => {
+        docs.forEach(doc => {
           setQueue((prevState: any) => ({
             groupRef: queueRef,
             creatorRef: creatorRef,
-            data: [...prevState.data, requestDoc.data()],
+            data: [...prevState.data, doc.data()],
           }))
         })
       })
@@ -97,15 +95,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     creatorKey: string,
     contributorList: Array<any>
   ) => {
-    // 从Group, creator queue删除，从application
+    // 从Group, creator queue删除
     firebase.firestore().collection('group').doc(queueKey).delete()
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(creatorKey)
-      .collection('Queue')
-      .doc(queueKey)
-      .delete()
 
     //从Application中删除
     contributorList.forEach((contributor, index) => {
@@ -154,33 +145,31 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             {tableData.map((row: any) => (
               <StyledTableRow key={row.Key}>
                 <StyledTableCell component="th" scope="row">
-                  {row.docData.Name}
+                  {row.Name}
                 </StyledTableCell>
                 <StyledTableCell>
                   <img
-                    src={row.docData.Creator.Avatar}
+                    src={row.Creator.Avatar}
                     alt=""
                     width="40px"
                     height="40px"
                     style={{ borderRadius: '50%' }}
                   />
                 </StyledTableCell>
-                <StyledTableCell>{row.docData.Category}</StyledTableCell>
-                <StyledTableCell>{row.docData.Description}</StyledTableCell>
-                <StyledTableCell>{row.docData.Tools[0]}</StyledTableCell>
-                <StyledTableCell>{row.docData.StartDate}</StyledTableCell>
-                <StyledTableCell>{row.docData.EndDate}</StyledTableCell>
-                <StyledTableCell>
-                  {row.docData.Contributors.length}
-                </StyledTableCell>
+                <StyledTableCell>{row.Category}</StyledTableCell>
+                <StyledTableCell>{row.Description}</StyledTableCell>
+                <StyledTableCell>{row.Tools[0]}</StyledTableCell>
+                <StyledTableCell>{row.StartDate}</StyledTableCell>
+                <StyledTableCell>{row.EndDate}</StyledTableCell>
+                <StyledTableCell>{row.Contributors.length}</StyledTableCell>
                 <StyledTableCell>
                   <button
                     onClick={() =>
                       displayQueue(
                         row.Key,
-                        row.docData.Creator.Id,
-                        row.docData.Contributors,
-                        row.docData.Capacity
+                        row.Creator.Id,
+                        row.Contributors,
+                        row.Capacity
                       )
                     }
                   >
@@ -191,11 +180,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                   <GroupMenu
                     groupKey={row.Key}
                     handleDelete={() =>
-                      handleDelete(
-                        row.Key,
-                        row.docData.Creator.Id,
-                        row.docData.Contributors
-                      )
+                      handleDelete(row.Key, row.Creator.Id, row.Contributors)
                     }
                     handleDetails={handleDetails}
                   />

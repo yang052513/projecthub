@@ -37,35 +37,11 @@ export const GroupQueue: React.FC<Props> = ({
 
     firebase
       .firestore()
-      .collection('user')
-      .doc(creatorRef)
-      .collection('Queue')
-      .doc(queueRef)
-      .collection('Requests')
-      .doc(userRef.Key)
-      .delete()
-      .then(() => {
-        console.log('从项目所有者请求列表中删除该用户请求')
-      })
-
-    firebase
-      .firestore()
       .collection('group')
       .doc(queueRef)
       .update({
-        'docData.Contributors': updatedList,
-        'docData.Capacity': capacity - 1,
-      })
-
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(creatorRef)
-      .collection('Queue')
-      .doc(queueRef)
-      .update({
-        'docData.Contributors': updatedList,
-        'docData.Capacity': capacity - 1,
+        Contributors: updatedList,
+        Capacity: capacity - 1,
       })
 
     firebase
@@ -75,9 +51,7 @@ export const GroupQueue: React.FC<Props> = ({
       .collection('Application')
       .doc(queueRef)
       .update({
-        'docData.Contributors': updatedList,
-        'docData.Capacity': capacity - 1,
-        Result: true,
+        Result: 'Accepted',
       })
   }
 
