@@ -92,6 +92,46 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       })
   }
 
+  const handleDelete = (
+    queueKey: string,
+    creatorKey: string,
+    contributorList: Array<any>
+  ) => {
+    // 从Group, creator queue删除，从application
+    firebase.firestore().collection('group').doc(queueKey).delete()
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(creatorKey)
+      .collection('Queue')
+      .doc(queueKey)
+      .delete()
+
+    //从Application中删除
+    contributorList.forEach((contributor, index) => {
+      if (contributor.Id !== 'None' && index > 0) {
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(contributor.Id)
+          .collection('Application')
+          .doc(queueKey)
+          .delete()
+          .then(() => {
+            console.log(`从${contributor.Id}的申请中删除项目信息`)
+          })
+      }
+    })
+  }
+
+  const handleEdit = () => {
+    console.log('编辑这个项目')
+  }
+
+  const handleDetails = () => {
+    console.log('查看这个项目详细信息')
+  }
+
   return (
     <div>
       <TableContainer component={Paper} className={classes.root}>
@@ -148,7 +188,17 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                   </button>
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <GroupMenu />
+                  <GroupMenu
+                    handleDelete={() =>
+                      handleDelete(
+                        row.Key,
+                        row.docData.Creator.Id,
+                        row.docData.Contributors
+                      )
+                    }
+                    handleEdit={handleEdit}
+                    handleDetails={handleDetails}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}

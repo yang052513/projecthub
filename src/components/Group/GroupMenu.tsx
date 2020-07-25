@@ -3,7 +3,17 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
-export const GroupMenu: React.FC = () => {
+interface Props {
+  handleDelete: () => void
+  handleEdit: () => void
+  handleDetails: () => void
+}
+
+export const GroupMenu: React.FC<Props> = ({
+  handleDelete,
+  handleEdit,
+  handleDetails,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,9 +40,9 @@ export const GroupMenu: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
-        <MenuItem onClick={handleClose}>Details</MenuItem>
+        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        <MenuItem onClick={handleDetails}>Details</MenuItem>
       </Menu>
     </div>
   )

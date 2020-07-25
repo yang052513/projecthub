@@ -13,6 +13,7 @@ export const GroupPost = () => {
   const fetchGroupPost = () => {
     const userRef = firebase.firestore().collection('user').doc(user.uid)
 
+    //所有创建的项目
     userRef
       .collection('Queue')
       .get()
