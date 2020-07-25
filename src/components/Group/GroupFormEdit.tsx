@@ -21,8 +21,6 @@ const useStyles = makeStyles(theme => ({
 export const GroupFormEdit: React.FC = () => {
   const params: any = useParams()
   const classes = useStyles()
-  const user: firebase.User | null | any = firebase.auth().currentUser
-  const profile = useFetchProfile(user.uid)
 
   const [textInput, setTextInput] = useState<any>({
     name: '',
@@ -47,9 +45,10 @@ export const GroupFormEdit: React.FC = () => {
           startDate: doc.data().docData.StartDate,
           endDate: doc.data().docData.EndDate,
           category: doc.data().docData.Category,
-          description: doc.data().Description,
-          contributors: '',
+          description: doc.data().docData.Description,
+          contributors: doc.data().docData.Capacity,
         })
+        setTool(doc.data().docData.Tools)
       })
   }
 
@@ -78,38 +77,13 @@ export const GroupFormEdit: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    let contributor_list: Array<Object> = [
-      { Id: user.uid, Avatar: profile.avatar },
-    ]
-    for (let i = 1; i < parseInt(textInput.contributors); i++) {
-      contributor_list.push({ Id: 'None', Avatar: 'None' })
-    }
-    const docData = {
-      Creator: { Id: user.uid, Avatar: profile.avatar },
-      Name: textInput.name,
-      StartDate: textInput.startDate,
-      EndDate: textInput.endDate,
-      Category: textInput.category,
-      Contributors: contributor_list,
-      Description: textInput.description,
-      Tools: tool,
-      Capacity: parseInt(textInput.contributors) - 1,
-    }
-    firebase
-      .firestore()
-      .collection('group')
-      .add({
-        docData,
-      })
-      .then(docRef => {
-        firebase.firestore().collection('group').doc(docRef.id).update({
-          Key: docRef.id,
-        })
-        console.log(`创建新的合作项目成功，密匙为${docRef.id}`)
-      })
-      .catch(error => {
-        console.log(`上传错误 ${error}`)
-      })
+    firebase.firestore().collection('group').doc(params.ref).update({
+      'docData.Name': textInput.name,
+      'docData.Description': textInput.description,
+      'docData.StartDate': textInput.startDate,
+      'docData.EndDate': textInput.endDate,
+      'docData.Tools': tool,
+    })
   }
 
   const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
@@ -119,12 +93,10 @@ export const GroupFormEdit: React.FC = () => {
       <div className={classes.root}>
         <div>
           <div className="project-form-header-container">
-            <h2>Create a New Project Working With Others</h2>
+            <h2>Edit The Project</h2>
             <p>
-              Create a new project request will display on the hall that
-              everyone could apply to join your team! After created a project
-              request, you can always edited by clicking the request management.
-              button
+              Once you finish the editing, the project changes will be applied
+              to all the contributors who already joined the team.
             </p>
           </div>
 
@@ -145,6 +117,7 @@ export const GroupFormEdit: React.FC = () => {
 
           <TextField
             name="startDate"
+            value={textInput.startDate}
             onChange={handleTextField}
             label="Estimated Start Date"
             type="date"
@@ -158,6 +131,7 @@ export const GroupFormEdit: React.FC = () => {
 
           <TextField
             name="endDate"
+            value={textInput.endDate}
             onChange={handleTextField}
             label="Estimated End Date"
             type="date"
@@ -171,6 +145,7 @@ export const GroupFormEdit: React.FC = () => {
 
           <TextField
             name="category"
+            value={textInput.category}
             onChange={handleTextField}
             label="Category"
             placeholder="Project category"
@@ -186,9 +161,9 @@ export const GroupFormEdit: React.FC = () => {
           <TextField
             name="contributors"
             onChange={handleTextField}
-            label="Team Size"
-            type="number"
-            placeholder="How many contributor needed?"
+            disabled
+            label="Contributors Needed"
+            value={textInput.contributors}
             className={classes.textField}
             margin="dense"
             variant="outlined"
@@ -199,6 +174,7 @@ export const GroupFormEdit: React.FC = () => {
 
           <TextField
             name="description"
+            value={textInput.description}
             onChange={handleTextField}
             label="Description"
             style={{ margin: 8 }}
