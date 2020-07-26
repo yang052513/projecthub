@@ -91,9 +91,6 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   }
 
   const handleDelete = (queueKey: string, contributorList: Array<any>) => {
-    // 从Group, creator queue删除
-    firebase.firestore().collection('group').doc(queueKey).delete()
-
     // 从Request中删除记录
     firebase
       .firestore()
@@ -111,6 +108,14 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
               .doc(doc.data().Key)
               .collection('Application')
               .doc(queueKey)
+              .delete()
+
+            firebase
+              .firestore()
+              .collection('group')
+              .doc(queueKey)
+              .collection('Requests')
+              .doc(doc.data().Key)
               .delete()
           })
         }
@@ -130,6 +135,9 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           })
       }
     })
+
+    // 从Group, creator queue删除
+    firebase.firestore().collection('group').doc(queueKey).delete()
   }
 
   const handleCreate = (projectData: any): void => {
