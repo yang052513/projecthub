@@ -4,9 +4,15 @@ import { ExploreProject } from './Explore/ExploreProject'
 import { ExploreAuthor } from './Explore/ExploreAuthor'
 import { ExploreTrending } from './Explore/ExploreTrending'
 
+import { useFetchProfile } from './Hooks/useFetchProfile'
+
 export const Explore: React.FC = () => {
+  const user: any = firebase.auth().currentUser
+
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const [userList, setUserList] = useState<Array<object | null | undefined>>([])
+
+  const profile = useFetchProfile(user.uid)
 
   useEffect(() => {
     const fetchProject = () => {
@@ -35,7 +41,7 @@ export const Explore: React.FC = () => {
 
   return (
     <div className="component-layout explore-container">
-      <ExploreAuthor />
+      {/* <ExploreAuthor profileData={profile} /> */}
       <ExploreProject projectData={project} />
       <ExploreTrending userData={userList} />
     </div>

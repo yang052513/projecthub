@@ -26,7 +26,7 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
   const toolList = project.Tools.map((tool: any) => <li key={tool}>{tool}</li>)
 
   return (
-    <div className="project-card-item">
+    <div key={project.Key} className="project-card-item">
       <div style={statusColor} className="project-line"></div>
       <div className="project-header">
         <p className="project-title">{project.Name}</p>
@@ -38,7 +38,9 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
       <p className="project-desc">{project.Description}</p>
       <ul className="project-tools">{toolList}</ul>
       <div className="project-contributor">
-        <img src="/images/user.jpg" alt="contributor" />
+        {project.Contributors.map((contributor: any) => (
+          <img key={contributor.Key} src={contributor.Avatar} alt="" />
+        ))}
       </div>
       <div className="project-footer">
         <p>{project.Privacy}</p>

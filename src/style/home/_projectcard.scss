@@ -83,16 +83,20 @@
 //=================================Explore=====================================
 .explore-container {
   display: grid;
-  grid-template-columns: 1fr 3fr 350px;
+  grid-template-columns: 3fr 350px;
   width: 70%;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  .explore-project-list-container {
-    // border: 1px solid blue;
+  h2 {
     margin: 0 30px;
+  }
+  .explore-project-list-container {
+    margin: 0 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     .project-card-item {
-      width: auto;
+      width: 350px;
       margin: 20px 0;
     }
   }
@@ -109,7 +113,6 @@
   }
 
   .explore-trending-container {
-    // border: 1px solid purple;
     padding: 10px 20px;
     height: 40%;
     .explore-trending-item {

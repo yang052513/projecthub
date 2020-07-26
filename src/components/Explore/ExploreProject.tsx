@@ -19,13 +19,20 @@ export const ExploreProject: React.FC<Props> = ({ projectData }) => {
         ))}
       </ul>
       <p className="project-category">last updated on Jul 22, 2020 13:20</p>
-      <img className="project-author-avatar" src="/images/user.jpg" alt="" />
+      {item.Contributors.map((contributor: any) => (
+        <img
+          key={contributor.Id}
+          className="project-author-avatar"
+          src={contributor.Avatar}
+          alt=""
+        />
+      ))}
     </div>
   ))
   return (
-    <div className="explore-project-list-container">
+    <div>
       <h2>Explore Projects</h2>
-      {exploreProjectList}
+      <div className="explore-project-list-container">{exploreProjectList}</div>
     </div>
   )
 }

@@ -80,15 +80,17 @@ export const Group: React.FC = () => {
 
   return (
     <div className="group-container component-layout">
-      <Link to="/request">
-        <button>Create A Request</button>
-      </Link>
+      <div className="group-header-container">
+        <Link to="/request">
+          <button>Create A Request</button>
+        </Link>
 
-      <Link to="/grouppost">
-        <button>My Request</button>
-      </Link>
+        <Link to="/grouppost">
+          <button>My Request</button>
+        </Link>
+      </div>
 
-      {projectList}
+      <div className="group-project-list-container">{projectList}</div>
     </div>
   )
 }

@@ -1,9 +1,12 @@
 import React from 'react'
 
-export const ExploreAuthor: React.FC = () => {
+interface Props {
+  profileData: any
+}
+export const ExploreAuthor: React.FC<Props> = ({ profileData }) => {
   return (
     <div className="explore-author-container">
-      <img src="./images/user.jpg" alt="" width="100px" height="100px" />
+      <img src={profileData.avatar} alt="" width="100px" height="100px" />
       <p>Nathan Lee</p>
     </div>
   )

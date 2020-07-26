@@ -28,3 +28,18 @@
     }
   }
 }
+
+.group-container {
+  .group-header-container {
+    margin: 0px 30px 30px 30px;
+    button {
+      @include buttonStroke($sideNavBg);
+      margin-right: 15px;
+    }
+  }
+  .group-project-list-container {
+    margin: 15px 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}

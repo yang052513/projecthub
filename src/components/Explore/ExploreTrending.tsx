@@ -19,7 +19,7 @@ export const ExploreTrending: React.FC<Props> = ({ userData }) => {
 
             <p>{item.profile.profileName}</p>
           </div>
-          <button>Follow</button>
+          <button>Learn More</button>
         </div>
       ))}
     </div>

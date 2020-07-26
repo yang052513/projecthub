@@ -328,7 +328,7 @@
 
 .hitokoto-container {
   background-color: white;
-  border-radius: 25px;
+  border-radius: 15px;
   text-align: center;
   padding: 10px 10px;
   width: 85%;
@@ -338,6 +338,7 @@
 .hitokoto-container .hitokoto-content {
   font-size: 15px;
   margin: 10px 0;
+  letter-spacing: 5px;
 }
 
 .hitokoto-container .hitokoto-from {
@@ -486,8 +487,8 @@
 .explore-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 3fr 350px;
-      grid-template-columns: 1fr 3fr 350px;
+  -ms-grid-columns: 3fr 350px;
+      grid-template-columns: 3fr 350px;
   width: 70%;
   position: absolute;
   left: 50%;
@@ -495,12 +496,20 @@
           transform: translateX(-50%);
 }
 
-.explore-container .explore-project-list-container {
+.explore-container h2 {
   margin: 0 30px;
 }
 
+.explore-container .explore-project-list-container {
+  margin: 0 30px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
 .explore-container .explore-project-list-container .project-card-item {
-  width: auto;
+  width: 350px;
   margin: 20px 0;
 }
 
@@ -610,11 +619,16 @@
   border-radius: 25px;
   border: 1px solid #bbbbbb;
   padding: 5px 50px 5px 35px;
+  background-color: rgba(0, 0, 0, 0);
   font-size: 13px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .project-header-container .project-header-filter .project-header-search input:focus {
   outline: none;
+  color: #0e5dd3;
+  border: 1px solid #0e5dd3;
 }
 
 .project-header-container .project-header-filter button {
@@ -1527,6 +1541,36 @@
 
 .group-queue-container .queue-item p i {
   margin-right: 5px;
+}
+
+.group-container .group-header-container {
+  margin: 0px 30px 30px 30px;
+}
+
+.group-container .group-header-container button {
+  font-size: 13px;
+  color: #0e5dd3;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 5px 20px;
+  border-radius: 15px;
+  border: 1px solid #0e5dd3;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  margin-right: 15px;
+}
+
+.group-container .group-header-container button:hover {
+  color: white;
+  background-color: #0e5dd3;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.group-container .group-project-list-container {
+  margin: 15px 30px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .logout-container {

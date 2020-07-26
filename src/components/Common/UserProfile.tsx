@@ -31,12 +31,9 @@ export const UserProfile = () => {
       .get()
       .then(projectDocs => {
         projectDocs.forEach(docs => {
-          if (docs.data().projectData.Privacy === 'Public') {
+          if (docs.data().Privacy === 'Public') {
             setUserRepo((prevRepo: any) => [...prevRepo, docs.data()])
-            setStatusList(prevStatus => [
-              ...prevStatus,
-              docs.data().projectData.Status,
-            ])
+            setStatusList(prevStatus => [...prevStatus, docs.data().Status])
           }
         })
         setIsLoading(false)
@@ -53,20 +50,18 @@ export const UserProfile = () => {
         <div className="user-profile-repo-list">
           {userRepo
             .filter((item: any) => {
-              return item.projectData.Status === repo
+              return item.Status === repo
             })
             .map((project: any) => (
               <div className="user-profile-repo-card" key={project.Key}>
                 <div>
-                  <p className="user-profile-repo-card-name">
-                    {project.projectData.Name}
-                  </p>
+                  <p className="user-profile-repo-card-name">{project.Name}</p>
                   <p className="user-profile-repo-card-status">
-                    {project.projectData.Status}
+                    {project.Status}
                   </p>
                 </div>
                 <p className="user-profile-repo-card-desc">
-                  {project.projectData.Desc}
+                  {project.Description}
                 </p>
               </div>
             ))}
