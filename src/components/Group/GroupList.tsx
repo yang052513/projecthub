@@ -115,6 +115,56 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     })
   }
 
+  const handleCreate = (projectData: any): void => {
+    if (projectData.Capacity < 0) {
+      alert('You team still have position left')
+    } else {
+      //Delete Empty Contributor
+      let contributorList: any = []
+      projectData.Contributors.forEach((contributor: any) => {
+        if (contributor.Id !== 'None') {
+          contributorList.push(contributor)
+        }
+      })
+
+      //Project Details Doc Data
+      const projectDoc = {
+        Key: projectData.Key,
+        Creator: projectData.Creator,
+        Public: true,
+        Like: 0,
+        ProjectDetails: {
+          Name: projectData.Name,
+          Status: 'In Progress',
+          Category: projectData.Category,
+          Description: projectData.Description,
+          StartDate: projectData.StartDate,
+          EndDate: projectData.EndDate,
+          Tools: projectData.Tools,
+          Contributors: contributorList,
+        },
+      }
+
+      //Write to Public Project collection
+      firebase
+        .firestore()
+        .collection('project')
+        .doc(projectData.Key)
+        .set(projectDoc)
+
+      //Write to each individual contributor's Project collection
+      contributorList.forEach((contributor: any) => {
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(contributor.Id)
+          .collection('Project')
+          .doc(projectData.Key)
+          .set(projectDoc)
+      })
+    }
+  }
+
   return (
     <div>
       <TableContainer component={Paper} className={classes.root}>
@@ -167,7 +217,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                   </button>
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <button>Create</button>
+                  <button onClick={() => handleCreate(row)}>Create</button>
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   <GroupMenu
