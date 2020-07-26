@@ -81,6 +81,11 @@ export const GroupQueue: React.FC<Props> = ({
     <div className="group-queue-container">
       <h3>People Who Applied</h3>
       {queueList}
+
+      <h3>当前已经有的成员</h3>
+
+      <h3>当前的Team</h3>
+      <p>只放头像</p>
     </div>
   )
 }

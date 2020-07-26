@@ -52,9 +52,9 @@ interface Props {
 
 export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
-  const user: any = firebase.auth().currentUser
 
   const [display, setDisplay] = useState<boolean>(false)
+
   const [contributor, setContributor] = useState<Array<Object>>([])
   const [capacity, setCapacity] = useState<number>()
   const [queue, setQueue] = useState<any>({
@@ -115,14 +115,6 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     })
   }
 
-  const handleEdit = () => {
-    console.log('编辑这个项目')
-  }
-
-  const handleDetails = () => {
-    console.log('查看这个项目详细信息')
-  }
-
   return (
     <div>
       <TableContainer component={Paper} className={classes.root}>
@@ -130,15 +122,15 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           <TableHead>
             <TableRow>
               <StyledTableCell>Project Name</StyledTableCell>
-              <StyledTableCell>Creator</StyledTableCell>
-              <StyledTableCell>Category</StyledTableCell>
-              <StyledTableCell>Description</StyledTableCell>
-              <StyledTableCell>Technology</StyledTableCell>
-              <StyledTableCell>Start Date</StyledTableCell>
-              <StyledTableCell>End Date</StyledTableCell>
-              <StyledTableCell>Team Members</StyledTableCell>
-              <StyledTableCell>Applied Queue</StyledTableCell>
-              <StyledTableCell>More Actions</StyledTableCell>
+              <StyledTableCell align="center">Category</StyledTableCell>
+              <StyledTableCell align="center">Description</StyledTableCell>
+              <StyledTableCell align="center">Technology</StyledTableCell>
+              <StyledTableCell align="center">Start Date</StyledTableCell>
+              <StyledTableCell align="center">End Date</StyledTableCell>
+              <StyledTableCell align="center">Team Members</StyledTableCell>
+              <StyledTableCell align="center">Applied Queue</StyledTableCell>
+              <StyledTableCell align="center">Create</StyledTableCell>
+              <StyledTableCell align="center">More Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -147,22 +139,20 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                 <StyledTableCell component="th" scope="row">
                   {row.Name}
                 </StyledTableCell>
-                <StyledTableCell>
-                  <img
-                    src={row.Creator.Avatar}
-                    alt=""
-                    width="40px"
-                    height="40px"
-                    style={{ borderRadius: '50%' }}
-                  />
+                <StyledTableCell align="center">
+                  {row.Description}
                 </StyledTableCell>
-                <StyledTableCell>{row.Category}</StyledTableCell>
-                <StyledTableCell>{row.Description}</StyledTableCell>
-                <StyledTableCell>{row.Tools[0]}</StyledTableCell>
-                <StyledTableCell>{row.StartDate}</StyledTableCell>
-                <StyledTableCell>{row.EndDate}</StyledTableCell>
-                <StyledTableCell>{row.Contributors.length}</StyledTableCell>
-                <StyledTableCell>
+                <StyledTableCell align="center">{row.Category}</StyledTableCell>
+                <StyledTableCell align="center">{row.Tools[0]}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.StartDate}
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.EndDate}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.Contributors.length - row.Capacity}/
+                  {row.Contributors.length}
+                </StyledTableCell>
+                <StyledTableCell align="center">
                   <button
                     onClick={() =>
                       displayQueue(
@@ -177,12 +167,14 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                   </button>
                 </StyledTableCell>
                 <StyledTableCell align="center">
+                  <button>Create</button>
+                </StyledTableCell>
+                <StyledTableCell align="center">
                   <GroupMenu
                     groupKey={row.Key}
                     handleDelete={() =>
                       handleDelete(row.Key, row.Creator.Id, row.Contributors)
                     }
-                    handleDetails={handleDetails}
                   />
                 </StyledTableCell>
               </StyledTableRow>
@@ -191,6 +183,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         </Table>
       </TableContainer>
 
+      {/* Display the queue list: people who applied the project */}
       {display && (
         <div>
           <div

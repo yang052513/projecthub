@@ -45,7 +45,8 @@ export const GroupFormEdit: React.FC = () => {
           endDate: doc.data().EndDate,
           category: doc.data().Category,
           description: doc.data().Description,
-          contributors: doc.data().Capacity,
+          contributor: parseInt(doc.data().Contributors.length),
+          capacity: parseInt(doc.data().Capacity),
         })
         setTool(doc.data().Tools)
       })
@@ -157,12 +158,11 @@ export const GroupFormEdit: React.FC = () => {
             }}
           />
 
+          {/* 如果改成的数字小于当前team的规模，alert 否则写入数据库更新 */}
           <TextField
             name="contributors"
             onChange={handleTextField}
-            disabled
             label="Contributors Needed"
-            value={textInput.contributors}
             className={classes.textField}
             margin="dense"
             variant="outlined"

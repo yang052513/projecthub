@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
 import { useFetchProfile } from './Hooks/useFetchProfile'
+import { GroupDetailCard } from './Group/GroupDetailCard'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
@@ -70,46 +71,11 @@ export const Group: React.FC = () => {
   }
 
   const projectList = project.map((item: any) => (
-    <div key={item.Key} className="project-card-item">
-      <div className="project-header">
-        <p className="project-title">{item.Name}</p>
-      </div>
-      <p className="project-category">{item.Category}</p>
-      <p className="project-desc">{item.Description}</p>
-
-      <ul className="project-tools">
-        {item.Tools.map((tool: any) => (
-          <li key={tool}>{tool}</li>
-        ))}
-      </ul>
-      <p className="project-category">
-        {item.StartDate} - {item.EndDate}
-      </p>
-
-      {item.Contributors.map((contributor: any) => {
-        if (contributor.Avatar === 'None') {
-          return (
-            <img
-              onClick={() => handleApply(item.Creator.Id, item.Key)}
-              key={Math.random() * 255}
-              className="project-author-avatar"
-              src="./images/add.png"
-              alt=""
-            />
-          )
-        } else {
-          return (
-            <Link key={contributor.Id} to={`/friends/${contributor.Id}`}>
-              <img
-                className="project-author-avatar"
-                src={contributor.Avatar}
-                alt=""
-              />
-            </Link>
-          )
-        }
-      })}
-    </div>
+    <GroupDetailCard
+      key={item.Key}
+      cardData={item}
+      handleApply={() => handleApply(item.Creator.Id, item.Key)}
+    />
   ))
 
   return (

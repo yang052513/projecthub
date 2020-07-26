@@ -6,15 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 interface Props {
   handleDelete: () => void
-  handleDetails: () => void
   groupKey: string
 }
 
-export const GroupMenu: React.FC<Props> = ({
-  handleDelete,
-  handleDetails,
-  groupKey,
-}) => {
+export const GroupMenu: React.FC<Props> = ({ handleDelete, groupKey }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,7 +41,6 @@ export const GroupMenu: React.FC<Props> = ({
         </Link>
 
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
-        <MenuItem onClick={handleDetails}>Details</MenuItem>
       </Menu>
     </div>
   )
