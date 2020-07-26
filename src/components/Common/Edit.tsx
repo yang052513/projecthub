@@ -11,7 +11,9 @@ import firebase from 'firebase'
 import { Feedback } from './Feedback'
 import { Progress } from './Progress'
 import { Link, useParams } from 'react-router-dom'
-
+import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { timeFormat } from 'current-time-format'
+import { ProjectCard } from '../Home/ProjectCard'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -34,17 +36,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-interface Props {
-  profile: any
-}
-
-export const Edit: React.FC<Props> = ({ profile }) => {
+export const Edit: React.FC = () => {
   const classes = useStyles()
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
 
   //用户选择的当前项目密匙
   const params: any = useParams()
+
+  const profile = useFetchProfile(user.uid)
 
   //prompt信息：加载动画，modal反馈，错误提示和信息
   const [loading, setLoading] = useState(false)
@@ -57,56 +57,10 @@ export const Edit: React.FC<Props> = ({ profile }) => {
   })
 
   //当前的时间 年-月-日格式
-  const date = new Date()
-  const currentDay = `${date.getFullYear()}-${
-    date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
-  }-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
+  const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
 
-  let month
-  switch (date.getMonth()) {
-    case 0:
-      month = 'Jan'
-      break
-    case 1:
-      month = 'Feb'
-      break
-    case 2:
-      month = 'Mar'
-      break
-    case 3:
-      month = 'Apr'
-      break
-    case 4:
-      month = 'May'
-      break
-    case 5:
-      month = 'June'
-      break
-    case 6:
-      month = 'July'
-      break
-    case 7:
-      month = 'Aug'
-      break
-    case 8:
-      month = 'Sep'
-      break
-    case 9:
-      month = 'Oct'
-      break
-    case 10:
-      month = 'Nov'
-      break
-    case 11:
-      month = 'Dec'
-      break
-  }
-
-  const currentTime = `${month} ${
-    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  } ${date.getHours()}:${
-    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-  }`
+  const currentDay = `${year}-${monthNum}-${day}`
+  const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
   //从数据库读取的信息
   const [textInput, setTextInput] = useState({
@@ -128,16 +82,14 @@ export const Edit: React.FC<Props> = ({ profile }) => {
       .get()
       .then((doc: any) => {
         setTextInput({
-          projectName: doc.data().projectData.Name,
-          projectCategory: doc.data().projectData.Category,
-          projectDesc: doc.data().projectData.Desc,
-          projectDate: doc.data().projectData.Date,
+          projectName: doc.data().Name,
+          projectCategory: doc.data().Category,
+          projectDesc: doc.data().Description,
+          projectDate: doc.data().StartDate,
         })
-        setTool(doc.data().projectData.Tools)
-        setStatus(doc.data().projectData.Status)
-        setPublicProject(
-          doc.data().projectData.Privacy === 'Public' ? true : false
-        )
+        setTool(doc.data().Tools)
+        setStatus(doc.data().Status)
+        setPublicProject(doc.data().Privacy === 'Public' ? true : false)
       })
   }, [db, params.ref, user.uid])
 
@@ -237,23 +189,30 @@ export const Edit: React.FC<Props> = ({ profile }) => {
       //如果表格都填写
       setLoading(true)
       setTimeout(() => {
-        let changedData = {
+        let projectData = {
+          Key: params.ref,
+          Creator: {
+            Avatar: profile.avatar,
+            Id: user.uid,
+          },
+          Public: publicProject,
+          Like: 0,
           Name: textInput.projectName,
-          Date: textInput.projectDate,
-          Category: textInput.projectCategory,
-          Desc: textInput.projectDesc,
-          Tools: tool,
           Status: status,
+          Category: textInput.projectCategory,
+          StartDate: textInput.projectDate,
+          EndDate: '',
+          Description: textInput.projectDesc,
+          Tools: tool,
           Privacy: publicProject === true ? 'Public' : 'Private',
+          Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
         }
-        // firebase.auth().onAuthStateChanged(user => {
+
         db.collection('user')
           .doc(user.uid)
           .collection('Project')
           .doc(params.ref)
-          .update({
-            projectData: changedData,
-          })
+          .update(projectData)
 
         //写入到日志中
         db.collection('user')
@@ -277,18 +236,7 @@ export const Edit: React.FC<Props> = ({ profile }) => {
         //写入到公开数据库
         //如果改为公开项目 写入到公开集合
         if (publicProject) {
-          db.collection('project')
-            .doc(params.ref)
-            .set({
-              Key: params.ref,
-              Public: true,
-              Like: 0,
-              Author: {
-                Id: user.uid,
-                Profile: profile,
-              },
-              projectData: changedData,
-            })
+          db.collection('project').doc(params.ref).set(projectData)
         } else {
           //If the project changed from public to private, delete from public database
           let projectRef = db.collection('project').doc(params.ref)

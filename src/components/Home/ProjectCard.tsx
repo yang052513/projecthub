@@ -35,7 +35,7 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
         </p>
       </div>
       <p className="project-category">{project.Category}</p>
-      <p className="project-desc">{project.Desc}</p>
+      <p className="project-desc">{project.Description}</p>
       <ul className="project-tools">{toolList}</ul>
       <div className="project-contributor">
         <img src="/images/user.jpg" alt="contributor" />

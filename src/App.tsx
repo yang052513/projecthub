@@ -418,7 +418,7 @@ export default function App() {
 
           {/* Other nested router */}
           <Route path="/edit/:ref">
-            <Edit profile={profile} />
+            <Edit />
           </Route>
           <Route path="/kanban/:ref">
             <Kanban />

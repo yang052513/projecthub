@@ -45,9 +45,9 @@ export const Status: React.FC = () => {
         .then(collection => {
           collection.forEach(doc => {
             setProject(prevProject => [...prevProject, doc.data()])
-            setType(prevType => [...prevType, doc.data().projectData.Category])
+            setType(prevType => [...prevType, doc.data().Category])
 
-            doc.data().projectData.Tools.forEach((tag: any) => {
+            doc.data().Tools.forEach((tag: any) => {
               setTag(prevTag => [...prevTag, tag])
             })
           })

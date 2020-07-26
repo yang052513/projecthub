@@ -32,46 +32,27 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
       })
   }, [db, user.uid])
 
-  // const sortedProject = project.sort((a: any, b: any) => {
-  //   if (sort === 'Name') {
-  //     return a.projectData.Name < b.projectData.Name ? -1 : 1
-  //   } else if (sort === 'Status') {
-  //     return a.projectData.Status < b.projectData.Status ? -1 : 1
-  //   } else if (sort === 'Newest') {
-  //     return a.projectData.Date < b.projectData.Date ? 1 : -1
-  //   } else if (sort === 'Oldest') {
-  //     return a.projectData.Date < b.projectData.Date ? -1 : 1
-  //   }
-  // })
-
   const renderProject = project
     .sort((a: any, b: any) => {
       if (sort === 'Name') {
-        return a.projectData.Name < b.projectData.Name ? -1 : 1
+        return a.Name < b.Name ? -1 : 1
       } else if (sort === 'Status') {
-        return a.projectData.Status < b.projectData.Status ? -1 : 1
+        return a.Status < b.Status ? -1 : 1
       } else if (sort === 'Newest') {
-        return a.projectData.Date < b.projectData.Date ? 1 : -1
+        return a.StartDate < b.StartDate ? 1 : -1
       } else if (sort === 'Oldest') {
-        return a.projectData.Date < b.projectData.Date ? -1 : 1
+        return a.StartDate < b.StartDate ? -1 : 1
       }
     })
     .filter((item: any) => {
       if (filter === 'All My Projects') {
-        return item && item.projectData.Name.includes(search)
+        return item && item.Name.includes(search)
       } else {
-        return (
-          item.projectData.Status === filter &&
-          item.projectData.Name.includes(search)
-        )
+        return item.Status === filter && item.Name.includes(search)
       }
     })
     .map((project: any) => (
-      <ProjectCard
-        key={project.Key}
-        project={project.projectData}
-        docRef={project.Key}
-      />
+      <ProjectCard key={project.Key} project={project} docRef={project.Key} />
     ))
 
   return (

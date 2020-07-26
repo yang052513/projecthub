@@ -6,21 +6,15 @@ interface Props {
 }
 
 export const ProjectStatus: React.FC<Props> = ({ project }) => {
-  const completed = project.filter(
-    (item: any) => item.projectData.Status === 'Completed'
-  )
+  const completed = project.filter((item: any) => item.Status === 'Completed')
 
   const inprogress = project.filter(
-    (item: any) => item.projectData.Status === 'In Progress'
+    (item: any) => item.Status === 'In Progress'
   )
 
-  const planning = project.filter(
-    (item: any) => item.projectData.Status === 'Planning'
-  )
+  const planning = project.filter((item: any) => item.Status === 'Planning')
 
-  const dropped = project.filter(
-    (item: any) => item.projectData.Status === 'Dropped'
-  )
+  const dropped = project.filter((item: any) => item.Status === 'Dropped')
 
   return (
     <div className="project-status-container">
