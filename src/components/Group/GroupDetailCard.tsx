@@ -32,6 +32,8 @@ export const GroupDetailCard: React.FC<Props> = ({ cardData, handleApply }) => {
               className="project-author-avatar"
               src="./images/add.png"
               alt=""
+              style={{ cursor: 'pointer' }}
+              title={`Apply ${cardData.Name}`}
             />
           )
         } else {

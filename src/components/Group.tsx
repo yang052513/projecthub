@@ -4,10 +4,18 @@ import { Link } from 'react-router-dom'
 import { useFetchProfile } from './Hooks/useFetchProfile'
 import { GroupDetailCard } from './Group/GroupDetailCard'
 
+import { Feedback } from './Common/Feedback'
+
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
+
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
 
   const fetchGroup = () => {
     firebase
@@ -23,10 +31,8 @@ export const Group: React.FC = () => {
 
   useEffect(fetchGroup, [])
 
-  const submitApply = (docKey: string, creatorId: string) => {
+  const submitApply = (docKey: string) => {
     const requestRef = firebase.firestore().collection('group').doc(docKey)
-
-    // 申请项目集合
     const contributorRef = firebase
       .firestore()
       .collection('user')
@@ -39,15 +45,20 @@ export const Group: React.FC = () => {
       .doc(user.uid)
       .get()
       .then(reqDoc => {
+        // If user already applied the project -> Error Modal -> Direct to Dashboard
         if (reqDoc.exists) {
-          alert('你已经申请过了')
+          setFeedback({
+            show: true,
+            msg: 'Application Repeated',
+            info: `You have already applied this project, please check your application history by clicking My Request button`,
+          })
         } else {
           requestRef.collection('Requests').doc(user.uid).set({
             Key: user.uid,
             profile,
           })
 
-          //将项目详细信息写入到申请者账户的 Application集合
+          // Write to current user's application collection
           requestRef.get().then((doc: any) =>
             contributorRef.set({
               Key: doc.data().Key,
@@ -58,15 +69,27 @@ export const Group: React.FC = () => {
               Result: 'Applied',
             })
           )
+
+          // Application Success -> Success Modal to Reload
+          setFeedback({
+            show: true,
+            msg: 'Application Success',
+            info: 'Please wait the project owner response to your application',
+          })
         }
       })
   }
 
   const handleApply = (creatorId: string, projectKey: string) => {
+    // If the creator trying to apply his project -> Error Modal
     if (user.uid === creatorId) {
-      alert('You are the creator for this project')
+      setFeedback({
+        show: true,
+        msg: 'Application Failed',
+        info: 'You can not apply the project you created.',
+      })
     } else {
-      submitApply(projectKey, creatorId)
+      submitApply(projectKey)
     }
   }
 
@@ -91,6 +114,21 @@ export const Group: React.FC = () => {
       </div>
 
       <div className="group-project-list-container">{projectList}</div>
+
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_scare.png"
+          toggle={() => {
+            setFeedback({
+              show: false,
+              info: '',
+              msg: '',
+            })
+          }}
+        />
+      )}
     </div>
   )
 }
