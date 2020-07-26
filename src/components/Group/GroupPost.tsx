@@ -29,7 +29,7 @@ export const GroupPost = () => {
               .then(applicationDoc => {
                 setApplication(prevState => [
                   ...prevState,
-                  applicationDoc.data(),
+                  { result: doc.data().Result, data: applicationDoc.data() },
                 ])
               })
           })

@@ -50,7 +50,42 @@ interface Props {
 
 export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
   const classes = useStyles()
-  console.log(applicationList)
+  const user: any = firebase.auth().currentUser
+
+  const deleteDoc = (
+    collectionRef: string,
+    docRef: string,
+    subCollectionRef: string,
+    docKey: string
+  ): void => {
+    firebase
+      .firestore()
+      .collection(collectionRef)
+      .doc(docRef)
+      .collection(subCollectionRef)
+      .doc(docKey)
+      .delete()
+      .then(() => {
+        console.log(`从${user.uid}中删除`)
+      })
+  }
+  // Delete Request from database
+  const handleDelete = (groupRef: string): void => {
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(groupRef)
+      .collection('Requests')
+      .doc(user.uid)
+      .delete()
+      .then(() => {
+        console.log('从公共group集合中删除用户的请求成功')
+      })
+
+    deleteDoc('group', groupRef, 'Requests', user.uid)
+    deleteDoc('user', user.uid, 'Application', groupRef)
+  }
+
   return (
     <div>
       <TableContainer component={Paper} className={classes.root}>
@@ -65,39 +100,55 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
               <StyledTableCell align="center">Start Date</StyledTableCell>
               <StyledTableCell align="center">End Date</StyledTableCell>
               <StyledTableCell align="center">Team Members</StyledTableCell>
-
               <StyledTableCell align="center">Result</StyledTableCell>
               <StyledTableCell align="center">Delete</StyledTableCell>
             </TableRow>
           </TableHead>
-          {/* <TableBody>
-            {tableData.map((row: any) => (
-              <StyledTableRow key={row.Key}>
+          <TableBody>
+            {applicationList.map((row: any) => (
+              <StyledTableRow key={row.data.Key}>
                 <StyledTableCell component="th" scope="row">
-                  {row.Name}
+                  <img
+                    src={row.data.Creator.Avatar}
+                    alt=""
+                    width="50px"
+                    height="50px"
+                    style={{ borderRadius: '50%' }}
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.Description}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.Category}</StyledTableCell>
-                <StyledTableCell align="center">{row.Tools[0]}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.StartDate}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.EndDate}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.Contributors.length - row.Capacity}/
-                  {row.Contributors.length}
+                  {row.data.Name}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <button>View</button>
+                  {row.data.Category}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <button>Create</button>
+                  {row.data.Description}
+                </StyledTableCell>
+                <StyledTableCell>{row.data.Tools[0]}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.data.StartDate}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.data.EndDate}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.data.Contributors.length - row.data.Capacity}/
+                  {row.data.Contributors.length}
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.result}</StyledTableCell>
+                <StyledTableCell align="center">
+                  <button
+                    onClick={() => {
+                      handleDelete(row.data.Key)
+                    }}
+                  >
+                    Delete
+                  </button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
-          </TableBody> */}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
