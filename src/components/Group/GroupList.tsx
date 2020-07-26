@@ -134,16 +134,15 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         Public: true,
         Like: 0,
         Privacy: 'Public',
-        ProjectDetails: {
-          Name: projectData.Name,
-          Status: 'In Progress',
-          Category: projectData.Category,
-          Description: projectData.Description,
-          StartDate: projectData.StartDate,
-          EndDate: projectData.EndDate,
-          Tools: projectData.Tools,
-          Contributors: contributorList,
-        },
+
+        Name: projectData.Name,
+        Status: 'In Progress',
+        Category: projectData.Category,
+        Description: projectData.Description,
+        StartDate: projectData.StartDate,
+        EndDate: projectData.EndDate,
+        Tools: projectData.Tools,
+        Contributors: contributorList,
       }
 
       //Write to Public Project collection

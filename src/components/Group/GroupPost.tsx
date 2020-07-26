@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupList } from './GroupList'
+import { GroupApplication } from './GroupApplication'
 
 export const GroupPost = () => {
   const user: any = firebase.auth().currentUser
@@ -10,19 +11,30 @@ export const GroupPost = () => {
     Array<Object | null | undefined>
   >([])
 
-  const fetchGroupPost = () => {
-    const userRef = firebase.firestore().collection('user').doc(user.uid)
-
-    // userRef
-    //   .collection('Application')
-    //   .get()
-    //   .then(querySnapshot => {
-    //     if (querySnapshot.docs.length > 0) {
-    //       querySnapshot.forEach(doc => {
-    //         setApplication(prevApplication => [...prevApplication, doc.data()])
-    //       })
-    //     }
-    //   })
+  const fetchUserGroup = () => {
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Application')
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.docs.length > 0) {
+          querySnapshot.forEach(doc => {
+            firebase
+              .firestore()
+              .collection('group')
+              .doc(doc.data().Key)
+              .get()
+              .then(applicationDoc => {
+                setApplication(prevState => [
+                  ...prevState,
+                  applicationDoc.data(),
+                ])
+              })
+          })
+        }
+      })
 
     firebase
       .firestore()
@@ -38,15 +50,15 @@ export const GroupPost = () => {
       })
   }
 
-  useEffect(fetchGroupPost, [])
+  useEffect(fetchUserGroup, [])
 
   return (
     <div className="component-layout group-post-container">
       <p>My Posts</p>
       <GroupList tableData={group} />
 
-      {/* <p>My Applications</p>
-      <GroupList tableData={application} /> */}
+      <p>My Applications</p>
+      <GroupApplication applicationList={application} />
     </div>
   )
 }
