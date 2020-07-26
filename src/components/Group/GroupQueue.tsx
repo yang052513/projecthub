@@ -12,7 +12,6 @@ interface Props {
 export const GroupQueue: React.FC<Props> = ({
   queueData,
   queueRef,
-  creatorRef,
   contributorList,
   capacity,
 }) => {
@@ -55,6 +54,26 @@ export const GroupQueue: React.FC<Props> = ({
       })
   }
 
+  //从Application和Request中删除
+  const handleDelete = (userRef: any) => {
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(queueRef)
+      .collection('Requests')
+      .doc(userRef.Key)
+      .delete()
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(userRef.Key)
+      .collection('Application')
+      .doc(queueRef)
+      .update({
+        Result: 'Rejected',
+      })
+  }
+
   const queueList = queueData.map((queue: any) => (
     <div className="queue-item" key={Math.random() * 255}>
       <img src={queue.profile.avatar} alt="" />
@@ -73,7 +92,7 @@ export const GroupQueue: React.FC<Props> = ({
           : queue.profile.profile.profileGithub}
       </p>
       <button>Message</button>
-      <button>Delete</button>
+      <button onClick={() => handleDelete(queue)}>Delete</button>
       <button onClick={() => handleAccept(queue)}>Accept</button>
     </div>
   ))

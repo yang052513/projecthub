@@ -90,14 +90,31 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       })
   }
 
-  const handleDelete = (
-    queueKey: string,
-    creatorKey: string,
-    contributorList: Array<any>
-  ) => {
+  const handleDelete = (queueKey: string, contributorList: Array<any>) => {
     // 从Group, creator queue删除
     firebase.firestore().collection('group').doc(queueKey).delete()
 
+    // 从Request中删除记录
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(queueKey)
+      .collection('Requests')
+      .get()
+      .then(requestDocs => {
+        //If there are any Request exists
+        if (requestDocs.docs.length > 0) {
+          requestDocs.forEach(doc => {
+            firebase
+              .firestore()
+              .collection('user')
+              .doc(doc.data().Key)
+              .collection('Application')
+              .doc(queueKey)
+              .delete()
+          })
+        }
+      })
     //从Application中删除
     contributorList.forEach((contributor, index) => {
       if (contributor.Id !== 'None' && index > 0) {
@@ -224,9 +241,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                 <StyledTableCell align="center">
                   <GroupMenu
                     groupKey={row.Key}
-                    handleDelete={() =>
-                      handleDelete(row.Key, row.Creator.Id, row.Contributors)
-                    }
+                    handleDelete={() => handleDelete(row.Key, row.Contributors)}
                   />
                 </StyledTableCell>
               </StyledTableRow>
