@@ -133,6 +133,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         Creator: projectData.Creator,
         Public: true,
         Like: 0,
+        Privacy: 'Public',
         ProjectDetails: {
           Name: projectData.Name,
           Status: 'In Progress',
@@ -162,6 +163,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           .doc(projectData.Key)
           .set(projectDoc)
       })
+
+      //Delete from group Collection and contributor Application collection
     }
   }
 

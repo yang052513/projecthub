@@ -402,7 +402,7 @@ export default function App() {
             <FAQ />
           </Route>
           <Route path="/create">
-            <CreateProject profile={profile} />
+            <CreateProject />
           </Route>
           <Route path="/request">
             <GroupForm />

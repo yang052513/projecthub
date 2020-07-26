@@ -9,8 +9,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
 
+import { timeFormat } from 'current-time-format'
+
 import { Feedback } from './Feedback'
 import { Progress } from './Progress'
+
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,64 +38,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 //当前的时间 年-月-日格式
-const date = new Date()
-let month
-switch (date.getMonth()) {
-  case 0:
-    month = 'Jan'
-    break
-  case 1:
-    month = 'Feb'
-    break
-  case 2:
-    month = 'Mar'
-    break
-  case 3:
-    month = 'Apr'
-    break
-  case 4:
-    month = 'May'
-    break
-  case 5:
-    month = 'June'
-    break
-  case 6:
-    month = 'July'
-    break
-  case 7:
-    month = 'Aug'
-    break
-  case 8:
-    month = 'Sep'
-    break
-  case 9:
-    month = 'Oct'
-    break
-  case 10:
-    month = 'Nov'
-    break
-  case 11:
-    month = 'Dec'
-    break
-}
-const currentDay = `${date.getFullYear()}-${
-  date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
-}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`
+const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
 
-const currentTime = `${month} ${
-  date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-} ${date.getHours()}:${
-  date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-}`
+const currentDay = `${year}-${monthNum}-${day}`
+const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
-interface Props {
-  profile: any
-}
-
-export const CreateProject: React.FC<Props> = ({ profile }) => {
+export const CreateProject: React.FC = () => {
   const classes = useStyles()
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [feedback, setFeedback] = useState<boolean>(false)
@@ -171,27 +127,41 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
       //如果表格都填写
       setLoading(true)
       setTimeout(() => {
+        //Project Document Data
         let projectData = {
+          Creator: {
+            Avatar: profile.avatar,
+            Id: user.uid,
+          },
+          Public: publicProject,
+          Like: 0,
           Name: textInput.projectName,
-          Date: textInput.projectDate,
-          Category: textInput.projectCategory,
-          Desc: textInput.projectDesc,
-          Tools: tool,
           Status: status,
+          Category: textInput.projectCategory,
+          StartDate: textInput.projectDate,
+          EndDate: '',
+          Description: textInput.projectDesc,
+          Tools: tool,
           Privacy: publicProject === true ? 'Public' : 'Private',
+          Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
         }
 
-        //保存到用户自己的数据库中
+        //Save the project document to user's Project collection
         db.collection('user')
           .doc(user.uid)
           .collection('Project')
-          .add({
-            projectData,
-          })
+          .add(projectData)
           .then(docRef => {
-            // console.log(docRef.id)
+            //Update the project Uid Key to document
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Project')
+              .doc(docRef.id)
+              .update({
+                Key: docRef.id,
+              })
 
-            //写入到日志中
+            //Write 'create project' activity to Activity collection
             db.collection('user')
               .doc(user.uid)
               .collection('Activity')
@@ -210,34 +180,15 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
                   })
               })
 
-            //将项目的密匙写入到文档中
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Project')
-              .doc(docRef.id)
-              .update({
-                Key: docRef.id,
-              })
-
-            //写入到公开的数据库中
-            if (publicProject)
-              db.collection('project')
-                .doc(docRef.id)
-                .set({
-                  Key: docRef.id,
-                  Public: true,
-                  Like: 0,
-                  Author: {
-                    Id: user.uid,
-                    Profile: profile,
-                  },
-                  projectData,
-                })
+            //Write the project to public project collection: Explore Component
+            if (publicProject) {
+              db.collection('project').doc(docRef.id).set(projectData)
+              db.collection('project').doc(docRef.id).update({ Key: docRef.id })
+            }
           })
           .catch(error => {
             console.log(`上传失败${error}`)
           })
-        // })
         setLoading(false)
         setFeedback(true)
       }, 2000)
@@ -248,10 +199,11 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
 
   return (
     <div>
-      {loading === true ? <Progress /> : null}
+      {/* Loading Animation While Writing Data to Firestore */}
+      {loading && <Progress />}
 
-      {/* 项目创建成功反馈 */}
-      {feedback === true ? (
+      {/* Display Success Feedback Modal Once Created Project */}
+      {feedback && (
         <div>
           <Feedback
             msg="Success"
@@ -260,19 +212,19 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
             toggle={handleReload}
           />
         </div>
-      ) : null}
+      )}
 
-      {/* 项目缺少信息错误反馈 */}
-      {fail === true ? (
+      {/* Project Input Missing Field Error Modal */}
+      {fail && (
         <Feedback
           msg="Error"
           info={errorMsg}
           imgUrl="/images/emoji/emoji_scare.png"
           toggle={handleFail}
         />
-      ) : null}
+      )}
 
-      {/* 项目表单信息容器 */}
+      {/* Project Form Input Container */}
       <div className="project-form-container component-layout">
         <div className={classes.root}>
           <div>
@@ -284,9 +236,8 @@ export const CreateProject: React.FC<Props> = ({ profile }) => {
               </p>
             </div>
 
-            {/* 项目名称输入 */}
+            {/* Project Name */}
             <TextField
-              id="project-name-input"
               name="projectName"
               onChange={handleTextField}
               label="Project Name"
