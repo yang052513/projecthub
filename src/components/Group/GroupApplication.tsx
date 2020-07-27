@@ -70,7 +70,7 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
       })
   }
   // Delete Request from database
-  const handleDelete = (groupRef: string): void => {
+  const handleDelete = (groupRef: string, groupData: any): void => {
     firebase
       .firestore()
       .collection('group')
@@ -84,6 +84,26 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
 
     deleteDoc('group', groupRef, 'Requests', user.uid)
     deleteDoc('user', user.uid, 'Application', groupRef)
+
+    //如果已经加入成功选择删除，要把contributorList的位置改为None
+
+    let contributorList = groupData.Contributors
+    groupData.Contributors.forEach(
+      (contributor: any, index: string | number) => {
+        if (contributor.Id === user.uid) {
+          contributorList[index] = { Avatar: 'None', Id: 'None' }
+        }
+      }
+    )
+
+    firebase
+      .firestore()
+      .collection('group')
+      .doc(groupRef)
+      .update({
+        Contributors: contributorList,
+        Capacity: groupData.Capacity + 1,
+      })
   }
 
   return (
@@ -140,7 +160,7 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
                 <StyledTableCell align="center">
                   <button
                     onClick={() => {
-                      handleDelete(row.data.Key)
+                      handleDelete(row.data.Key, row.data)
                     }}
                   >
                     Delete
