@@ -104,6 +104,11 @@ export const Group: React.FC = () => {
   return (
     <div className="group-container component-layout">
       <div className="group-header-container">
+        <h2>Find Your Teams</h2>
+        <p>
+          Looking for some teammates to start your projects? Create a request
+          and let other contributors to join.
+        </p>
         <Link to="/request">
           <button>Create A Request</button>
         </Link>

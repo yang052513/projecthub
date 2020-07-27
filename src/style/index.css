@@ -362,7 +362,7 @@
   border-radius: 15px;
   background-color: white;
   position: relative;
-  opacity: 1;
+  margin-bottom: 25px;
 }
 
 .project-card-item .project-line {
@@ -1544,7 +1544,13 @@
 }
 
 .group-container .group-header-container {
-  margin: 0px 30px 30px 30px;
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.group-container .group-header-container p {
+  margin: 20px 0;
+  font-size: 14px;
 }
 
 .group-container .group-header-container button {
@@ -1571,6 +1577,7 @@
   display: grid;
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  justify-items: center;
 }
 
 .group-list-post-container {
@@ -1916,5 +1923,7 @@ body {
   opacity: 0;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  width: 100px;
+  z-index: 3;
 }
 /*# sourceMappingURL=index.css.map */
