@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import { GroupQueue } from './GroupQueue'
 import { GroupMenu } from './GroupMenu'
-
+import { Feedback } from '../Common/Feedback'
+import { Progress } from '../Common/Progress'
 import {
   withStyles,
   Theme,
@@ -21,7 +22,7 @@ import Paper from '@material-ui/core/Paper'
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: 'black',
+      backgroundColor: '#03a9f4',
       color: theme.palette.common.white,
     },
     body: {
@@ -43,6 +44,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 const useStyles = makeStyles({
   root: {
     width: '80%',
+    margin: '0 auto',
   },
 })
 
@@ -52,6 +54,12 @@ interface Props {
 
 export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
+  const [progress, setProgress] = useState<boolean>(false)
 
   const [display, setDisplay] = useState<boolean>(false)
 
@@ -63,6 +71,11 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     data: [],
   })
 
+  const handleReload = () => {
+    window.location.reload()
+  }
+
+  // Display people who applied, people who already in the team
   const displayQueue = (
     queueRef: string,
     creatorRef: string,
@@ -90,54 +103,65 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       })
   }
 
+  // Delete the posts from 'group' and 'Application' database
   const handleDelete = (queueKey: string, contributorList: Array<any>) => {
-    // 从Request中删除记录
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(queueKey)
-      .collection('Requests')
-      .get()
-      .then(requestDocs => {
-        //If there are any Request exists
-        if (requestDocs.docs.length > 0) {
-          requestDocs.forEach(doc => {
-            firebase
-              .firestore()
-              .collection('user')
-              .doc(doc.data().Key)
-              .collection('Application')
-              .doc(queueKey)
-              .delete()
+    setProgress(true)
 
-            firebase
-              .firestore()
-              .collection('group')
-              .doc(queueKey)
-              .collection('Requests')
-              .doc(doc.data().Key)
-              .delete()
-          })
+    setTimeout(() => {
+      // Delete Request docs
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(queueKey)
+        .collection('Requests')
+        .get()
+        .then(requestDocs => {
+          //If there are any Request docs exists
+          if (requestDocs.docs.length > 0) {
+            requestDocs.forEach(doc => {
+              firebase
+                .firestore()
+                .collection('user')
+                .doc(doc.data().Key)
+                .collection('Application')
+                .doc(queueKey)
+                .delete()
+              // Delet from each user that applied
+              firebase
+                .firestore()
+                .collection('group')
+                .doc(queueKey)
+                .collection('Requests')
+                .doc(doc.data().Key)
+                .delete()
+            })
+          }
+        })
+      // Delete from user Application collection
+      contributorList.forEach((contributor, index) => {
+        if (contributor.Id !== 'None' && index > 0) {
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(contributor.Id)
+            .collection('Application')
+            .doc(queueKey)
+            .delete()
+            .then(() => {
+              console.log(`从${contributor.Id}的申请中删除项目信息`)
+            })
         }
       })
-    //从Application中删除
-    contributorList.forEach((contributor, index) => {
-      if (contributor.Id !== 'None' && index > 0) {
-        firebase
-          .firestore()
-          .collection('user')
-          .doc(contributor.Id)
-          .collection('Application')
-          .doc(queueKey)
-          .delete()
-          .then(() => {
-            console.log(`从${contributor.Id}的申请中删除项目信息`)
-          })
-      }
-    })
 
-    // 从Group, creator queue删除
-    firebase.firestore().collection('group').doc(queueKey).delete()
+      firebase.firestore().collection('group').doc(queueKey).delete()
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Delete Success',
+        info:
+          'Delete successfully, all contributors will not have access to it.',
+      })
+    }, 1500)
   }
 
   const handleCreate = (projectData: any): void => {
@@ -188,12 +212,13 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           .set(projectDoc)
       })
 
+      // 创建成功后
       //Delete from group Collection and contributor Application collection
     }
   }
 
   return (
-    <div>
+    <div className="group-list-post-container group-list-container">
       <TableContainer component={Paper} className={classes.root}>
         <Table aria-label="customized table">
           <TableHead>
@@ -280,6 +305,16 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             capacity={capacity}
           />
         </div>
+      )}
+
+      {progress && <Progress />}
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={handleReload}
+        />
       )}
     </div>
   )

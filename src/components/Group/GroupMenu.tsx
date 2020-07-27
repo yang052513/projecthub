@@ -21,7 +21,7 @@ export const GroupMenu: React.FC<Props> = ({ handleDelete, groupKey }) => {
   }
 
   return (
-    <div>
+    <div className="group-menu-container">
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
@@ -36,7 +36,7 @@ export const GroupMenu: React.FC<Props> = ({ handleDelete, groupKey }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <Link to={`/grouppost/${groupKey}`}>
+        <Link to={`/grouppost/${groupKey}`} style={{ color: 'black' }}>
           <MenuItem>Edit</MenuItem>
         </Link>
 

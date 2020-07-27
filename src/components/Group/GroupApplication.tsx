@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper'
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: 'black',
+      backgroundColor: '#03a9f4',
       color: theme.palette.common.white,
     },
     body: {
@@ -41,6 +41,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 const useStyles = makeStyles({
   root: {
     width: '80%',
+    margin: '0 auto',
   },
 })
 
@@ -107,7 +108,7 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
   }
 
   return (
-    <div>
+    <div className="group-list-application-container group-list-container">
       <TableContainer component={Paper} className={classes.root}>
         <Table aria-label="customized table">
           <TableHead>

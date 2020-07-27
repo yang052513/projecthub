@@ -54,10 +54,10 @@ export const GroupPost = () => {
 
   return (
     <div className="component-layout group-post-container">
-      <p>My Posts</p>
+      <h2 className="styled-heading">My Posts</h2>
       <GroupList tableData={group} />
 
-      <p>My Applications</p>
+      <h2 className="styled-heading">My Applications</h2>
       <GroupApplication applicationList={application} />
     </div>
   )

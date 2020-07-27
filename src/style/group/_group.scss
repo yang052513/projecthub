@@ -43,3 +43,13 @@
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
 }
+
+.group-list-post-container {
+  margin-bottom: 50px;
+}
+
+.group-list-container {
+  button {
+    @include buttonStroke(#03a9f4);
+  }
+}
