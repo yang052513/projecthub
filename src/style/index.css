@@ -1511,9 +1511,10 @@
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   background-color: white;
-  width: 80%;
+  width: 60%;
   height: 600px;
   padding: 30px 0;
+  border-radius: 10px;
 }
 
 .group-queue-container h3 {
@@ -1599,6 +1600,17 @@
   color: white;
   background-color: #03a9f4;
   border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.group-list-result {
+  background-color: #c2ecffab;
+  border-radius: 10px;
+  padding: 5px 10px;
+  color: #03a9f4;
+  font-weight: bold;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .logout-container {
@@ -1921,6 +1933,7 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   opacity: 0;
+  visibility: hidden;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   width: 100px;

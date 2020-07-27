@@ -1,5 +1,6 @@
 import React from 'react'
 import firebase from 'firebase'
+import { GroupQueueItem } from './GroupQueueItem'
 
 interface Props {
   queueData: any
@@ -75,36 +76,40 @@ export const GroupQueue: React.FC<Props> = ({
   }
 
   const queueList = queueData.map((queue: any) => (
-    <div className="queue-item" key={Math.random() * 255}>
-      <img src={queue.profile.avatar} alt="" />
-      <p>
-        <i className="far fa-user"></i>
-        {queue.profile.profile.profileName}
-      </p>
-      <p>
-        <i className="far fa-envelope"></i>
-        {queue.profile.profile.profileEmail}
-      </p>
-      <p>
-        <i className="fab fa-github"></i>
-        {queue.profile.profile.profileGithub === ''
-          ? 'Not Provided'
-          : queue.profile.profile.profileGithub}
-      </p>
-      <button>Message</button>
-      <button onClick={() => handleDelete(queue)}>Delete</button>
-      <button onClick={() => handleAccept(queue)}>Accept</button>
-    </div>
+    <GroupQueueItem
+      key={queue.Key}
+      avatar={queue.profile.avatar}
+      username={queue.profile.profile.profileName}
+      email={queue.profile.profile.profileEmail}
+      github={queue.profile.profile.profileGithub}
+      handleDelete={() => handleDelete(queue)}
+      handleAccept={() => handleAccept(queue)}
+    />
+    // <div className="queue-item" key={Math.random() * 255}>
+    //   <img src={queue.profile.avatar} alt="" />
+    //   <p>
+    //     <i className="far fa-user"></i>
+    //     {queue.profile.profile.profileName}
+    //   </p>
+    //   <p>
+    //     <i className="far fa-envelope"></i>
+    //     {queue.profile.profile.profileEmail}
+    //   </p>
+    //   <p>
+    //     <i className="fab fa-github"></i>
+    //     {queue.profile.profile.profileGithub === ''
+    //       ? 'Not Provided'
+    //       : queue.profile.profile.profileGithub}
+    //   </p>
+    //   <button>Message</button>
+    //   <button onClick={() => handleDelete(queue)}>Delete</button>
+    //   <button onClick={() => handleAccept(queue)}>Accept</button>
+    // </div>
   ))
   return (
     <div className="group-queue-container">
       <h3>People Who Applied</h3>
       {queueList}
-
-      <h3>当前已经有的成员</h3>
-
-      <h3>当前的Team</h3>
-      <p>只放头像</p>
     </div>
   )
 }

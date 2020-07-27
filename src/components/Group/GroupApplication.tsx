@@ -132,6 +132,16 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
     }, 1500)
   }
 
+  const acceptedStyle: any = {
+    color: '#07c045',
+    backgroundColor: '#c2ffd1ab',
+  }
+
+  const rejectedStyle: any = {
+    color: '#f40303',
+    backgroundColor: '#ffc2c2ab',
+  }
+
   return (
     <div className="group-list-application-container group-list-container">
       <TableContainer component={Paper} className={classes.root}>
@@ -182,7 +192,20 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
                   {row.data.Contributors.length - row.data.Capacity}/
                   {row.data.Contributors.length}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.result}</StyledTableCell>
+                <StyledTableCell align="center">
+                  <p
+                    style={
+                      row.result === 'Accepted'
+                        ? acceptedStyle
+                        : row.result === 'Rejected'
+                        ? rejectedStyle
+                        : null
+                    }
+                    className="group-list-result"
+                  >
+                    {row.result}
+                  </p>
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <button
                     onClick={() => {

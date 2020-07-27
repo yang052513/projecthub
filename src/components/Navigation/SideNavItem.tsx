@@ -26,6 +26,7 @@ export const SideNavItem: React.FC<Props> = ({
 
   const promptStyle: any = {
     opacity: 1,
+    visibility: 'visible',
   }
 
   return (
