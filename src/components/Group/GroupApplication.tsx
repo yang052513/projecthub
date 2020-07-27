@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import firebase from 'firebase'
 
 import {
@@ -14,6 +14,9 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+
+import { Feedback } from '../Common/Feedback'
+import { Progress } from '../Common/Progress'
 
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -53,6 +56,17 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
 
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
+  const [progress, setProgress] = useState<boolean>(false)
+
+  const handleReload = () => {
+    window.location.reload()
+  }
+
   const deleteDoc = (
     collectionRef: string,
     docRef: string,
@@ -70,41 +84,52 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
         console.log(`从${user.uid}中删除`)
       })
   }
+
   // Delete Request from database
   const handleDelete = (groupRef: string, groupData: any): void => {
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(groupRef)
-      .collection('Requests')
-      .doc(user.uid)
-      .delete()
-      .then(() => {
-        console.log('从公共group集合中删除用户的请求成功')
-      })
+    setProgress(true)
 
-    deleteDoc('group', groupRef, 'Requests', user.uid)
-    deleteDoc('user', user.uid, 'Application', groupRef)
+    setTimeout(() => {
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(groupRef)
+        .collection('Requests')
+        .doc(user.uid)
+        .delete()
+        .then(() => {
+          console.log('从公共group集合中删除用户的请求成功')
+        })
 
-    //如果已经加入成功选择删除，要把contributorList的位置改为None
+      deleteDoc('group', groupRef, 'Requests', user.uid)
+      deleteDoc('user', user.uid, 'Application', groupRef)
 
-    let contributorList = groupData.Contributors
-    groupData.Contributors.forEach(
-      (contributor: any, index: string | number) => {
-        if (contributor.Id === user.uid) {
-          contributorList[index] = { Avatar: 'None', Id: 'None' }
+      //如果已经加入成功选择删除，要把contributorList的位置改为None
+      let contributorList = groupData.Contributors
+      groupData.Contributors.forEach(
+        (contributor: any, index: string | number) => {
+          if (contributor.Id === user.uid) {
+            contributorList[index] = { Avatar: 'None', Id: 'None' }
+          }
         }
-      }
-    )
+      )
 
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(groupRef)
-      .update({
-        Contributors: contributorList,
-        Capacity: groupData.Capacity + 1,
+      //更新group的贡献者列表以及空缺位子
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(groupRef)
+        .update({
+          Contributors: contributorList,
+          Capacity: groupData.Capacity + 1,
+        })
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Delete Success',
+        info: 'Your request has been deleted successfully',
       })
+    }, 1500)
   }
 
   return (
@@ -172,6 +197,16 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {progress && <Progress />}
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={handleReload}
+        />
+      )}
     </div>
   )
 }

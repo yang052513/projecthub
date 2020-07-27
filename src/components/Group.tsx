@@ -5,6 +5,7 @@ import { useFetchProfile } from './Hooks/useFetchProfile'
 import { GroupDetailCard } from './Group/GroupDetailCard'
 
 import { Feedback } from './Common/Feedback'
+import { Loading } from './Common/Loading'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
@@ -17,6 +18,8 @@ export const Group: React.FC = () => {
     info: '',
   })
 
+  const [loading, setLoading] = useState<boolean>(true)
+
   const fetchGroup = () => {
     firebase
       .firestore()
@@ -26,6 +29,7 @@ export const Group: React.FC = () => {
         querySnapshot.forEach(doc => {
           setProject(prevProject => [...prevProject, doc.data()])
         })
+        setLoading(false)
       })
   }
 
@@ -118,7 +122,11 @@ export const Group: React.FC = () => {
         </Link>
       </div>
 
-      <div className="group-project-list-container">{projectList}</div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="group-project-list-container">{projectList}</div>
+      )}
 
       {feedback.show && (
         <Feedback

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupList } from './GroupList'
 import { GroupApplication } from './GroupApplication'
+import { Loading } from '../Common/Loading'
 
 export const GroupPost = () => {
   const user: any = firebase.auth().currentUser
@@ -10,6 +11,8 @@ export const GroupPost = () => {
   const [application, setApplication] = useState<
     Array<Object | null | undefined>
   >([])
+
+  const [loading, setLoading] = useState<boolean>(true)
 
   const fetchUserGroup = () => {
     firebase
@@ -47,6 +50,7 @@ export const GroupPost = () => {
             setGroup(prevGroup => [...prevGroup, doc.data()])
           })
         }
+        setLoading(false)
       })
   }
 
@@ -54,11 +58,17 @@ export const GroupPost = () => {
 
   return (
     <div className="component-layout group-post-container">
-      <h2 className="styled-heading">My Posts</h2>
-      <GroupList tableData={group} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="group-post-content-container">
+          <h2 className="styled-heading">My Posts</h2>
+          <GroupList tableData={group} />
 
-      <h2 className="styled-heading">My Applications</h2>
-      <GroupApplication applicationList={application} />
+          <h2 className="styled-heading">My Applications</h2>
+          <GroupApplication applicationList={application} />
+        </div>
+      )}
     </div>
   )
 }
