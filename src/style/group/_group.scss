@@ -16,6 +16,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
     img {
       width: 60px;
       height: 60px;
@@ -63,6 +64,7 @@
 .group-list-container {
   button {
     @include buttonStroke(#03a9f4);
+    margin-right: 20px;
   }
 }
 

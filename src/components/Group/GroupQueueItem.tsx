@@ -1,6 +1,8 @@
 import React from 'react'
+import firebase from 'firebase'
 
 interface Props {
+  userRef: string
   avatar: string
   username: string
   email: string
@@ -10,6 +12,7 @@ interface Props {
 }
 
 export const GroupQueueItem: React.FC<Props> = ({
+  userRef,
   avatar,
   username,
   email,
@@ -17,6 +20,7 @@ export const GroupQueueItem: React.FC<Props> = ({
   handleAccept,
   handleDelete,
 }) => {
+  const user: any = firebase.auth().currentUser
   return (
     <div className="queue-item">
       <img src={avatar} alt="" />
@@ -32,9 +36,16 @@ export const GroupQueueItem: React.FC<Props> = ({
         <i className="fab fa-github"></i>
         {github === '' ? 'Not Provided' : github}
       </p>
-      <button>Message</button>
-      <button onClick={() => handleDelete()}>Delete</button>
-      <button onClick={() => handleAccept()}>Accept</button>
+
+      {userRef === user.uid ? (
+        <p className="group-list-result">Owner</p>
+      ) : (
+        <div>
+          <button>Message</button>
+          <button onClick={() => handleDelete()}>Delete</button>
+          <button onClick={() => handleAccept()}>Accept</button>
+        </div>
+      )}
     </div>
   )
 }

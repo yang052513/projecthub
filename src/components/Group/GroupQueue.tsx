@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupQueueItem } from './GroupQueueItem'
 
@@ -16,6 +16,32 @@ export const GroupQueue: React.FC<Props> = ({
   contributorList,
   capacity,
 }) => {
+  const [team, setTeam] = useState<any>([])
+
+  const fetchContributorProfile = () => {
+    contributorList.forEach((contributor: any, index: any) => {
+      if (contributor.Id !== 'None') {
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(contributor.Id)
+          .collection('Setting')
+          .doc('Profile')
+          .get()
+          .then(doc => {
+            let profile: any = doc.data()
+            const profileData = {
+              Key: contributor.Id,
+              profile: profile,
+            }
+            setTeam((prevTeam: any) => [...prevTeam, profileData])
+          })
+      }
+    })
+  }
+
+  useEffect(fetchContributorProfile, [])
+
   const handleAccept = (userRef: any) => {
     let updatedList = contributorList
     updatedList[updatedList.length - capacity] = {
@@ -78,6 +104,7 @@ export const GroupQueue: React.FC<Props> = ({
   const queueList = queueData.map((queue: any) => (
     <GroupQueueItem
       key={queue.Key}
+      userRef={queue.Key}
       avatar={queue.profile.avatar}
       username={queue.profile.profile.profileName}
       email={queue.profile.profile.profileEmail}
@@ -85,31 +112,29 @@ export const GroupQueue: React.FC<Props> = ({
       handleDelete={() => handleDelete(queue)}
       handleAccept={() => handleAccept(queue)}
     />
-    // <div className="queue-item" key={Math.random() * 255}>
-    //   <img src={queue.profile.avatar} alt="" />
-    //   <p>
-    //     <i className="far fa-user"></i>
-    //     {queue.profile.profile.profileName}
-    //   </p>
-    //   <p>
-    //     <i className="far fa-envelope"></i>
-    //     {queue.profile.profile.profileEmail}
-    //   </p>
-    //   <p>
-    //     <i className="fab fa-github"></i>
-    //     {queue.profile.profile.profileGithub === ''
-    //       ? 'Not Provided'
-    //       : queue.profile.profile.profileGithub}
-    //   </p>
-    //   <button>Message</button>
-    //   <button onClick={() => handleDelete(queue)}>Delete</button>
-    //   <button onClick={() => handleAccept(queue)}>Accept</button>
-    // </div>
+  ))
+
+  const teamList = team.map((queue: any) => (
+    <GroupQueueItem
+      key={queue.Key}
+      userRef={queue.Key}
+      avatar={queue.profile.avatar}
+      username={queue.profile.profile.profileName}
+      email={queue.profile.profile.profileEmail}
+      github={queue.profile.profile.profileGithub}
+      handleDelete={() => handleDelete(queue)}
+      handleAccept={() => handleAccept(queue)}
+    />
   ))
   return (
     <div className="group-queue-container">
       <h3>People Who Applied</h3>
       {queueList}
+
+      <h3>Team List</h3>
+      {teamList}
+
+      <h3>Team Status</h3>
     </div>
   )
 }

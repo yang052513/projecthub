@@ -1594,6 +1594,7 @@
   border: 1px solid #03a9f4;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  margin-right: 20px;
 }
 
 .group-list-container button:hover {
