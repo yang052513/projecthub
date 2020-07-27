@@ -4,6 +4,10 @@ import firebase from 'firebase'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 
+import { Feedback } from '../Common/Feedback'
+import { Progress } from '../Common/Progress'
+import { useHistory } from 'react-router-dom'
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -20,6 +24,14 @@ const useStyles = makeStyles(theme => ({
 export const GroupFormEdit: React.FC = () => {
   const params: any = useParams()
   const classes = useStyles()
+  const history = useHistory()
+
+  const [progress, setProgress] = useState<boolean>(false)
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
 
   const [textInput, setTextInput] = useState<any>({
     name: '',
@@ -77,138 +89,161 @@ export const GroupFormEdit: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    firebase.firestore().collection('group').doc(params.ref).update({
-      Name: textInput.name,
-      Description: textInput.description,
-      StartDate: textInput.startDate,
-      EndDate: textInput.endDate,
-      Tools: tool,
-    })
+    setProgress(true)
+
+    setTimeout(() => {
+      firebase.firestore().collection('group').doc(params.ref).update({
+        Name: textInput.name,
+        Description: textInput.description,
+        StartDate: textInput.startDate,
+        EndDate: textInput.endDate,
+        Tools: tool,
+      })
+
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Edit Saved',
+        info: 'Project changes has been saved',
+      })
+    }, 1500)
   }
 
   const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
 
   return (
-    <div className="project-form-container component-layout">
-      <div className={classes.root}>
-        <div>
-          <div className="project-form-header-container">
-            <h2>Edit The Project</h2>
-            <p>
-              Once you finish the editing, the project changes will be applied
-              to all the contributors who already joined the team.
-            </p>
-          </div>
+    <div>
+      <div className="project-form-container component-layout">
+        <div className={classes.root}>
+          <div>
+            <div className="project-form-header-container">
+              <h2>Edit The Project</h2>
+              <p>
+                Once you finish the editing, the project changes will be applied
+                to all the contributors who already joined the team.
+              </p>
+            </div>
 
-          <TextField
-            name="name"
-            value={textInput.name}
-            onChange={handleTextField}
-            label="Project Name"
-            style={{ margin: '8px 8px 20px 8px' }}
-            placeholder="Enter your project name"
-            helperText="Project name should be meaningful and memorable!"
-            fullWidth
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <TextField
-            name="startDate"
-            value={textInput.startDate}
-            onChange={handleTextField}
-            label="Estimated Start Date"
-            type="date"
-            className={classes.textField}
-            margin="dense"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <TextField
-            name="endDate"
-            value={textInput.endDate}
-            onChange={handleTextField}
-            label="Estimated End Date"
-            type="date"
-            className={classes.textField}
-            margin="dense"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <TextField
-            name="category"
-            value={textInput.category}
-            onChange={handleTextField}
-            label="Category"
-            placeholder="Project category"
-            className={classes.textField}
-            helperText="E.g. Web app, IOS app"
-            margin="dense"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          {/* 如果改成的数字小于当前team的规模，alert 否则写入数据库更新 */}
-          <TextField
-            name="contributors"
-            onChange={handleTextField}
-            label="Contributors Needed"
-            className={classes.textField}
-            margin="dense"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-
-          <TextField
-            name="description"
-            value={textInput.description}
-            onChange={handleTextField}
-            label="Description"
-            style={{ margin: 8 }}
-            placeholder="What does you project for?"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="outlined"
-          />
-
-          <div className="project-tool-input-container">
             <TextField
-              name="tools"
-              id="project-tool-input"
-              label="Required Technology"
-              placeholder="Tools that used"
+              name="name"
+              value={textInput.name}
+              onChange={handleTextField}
+              label="Project Name"
+              style={{ margin: '8px 8px 20px 8px' }}
+              placeholder="Enter your project name"
+              helperText="Project name should be meaningful and memorable!"
+              fullWidth
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            <TextField
+              name="startDate"
+              value={textInput.startDate}
+              onChange={handleTextField}
+              label="Estimated Start Date"
+              type="date"
               className={classes.textField}
-              helperText="Click add button to add more tools"
               margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            <TextField
+              name="endDate"
+              value={textInput.endDate}
+              onChange={handleTextField}
+              label="Estimated End Date"
+              type="date"
+              className={classes.textField}
+              margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            <TextField
+              name="category"
+              value={textInput.category}
+              onChange={handleTextField}
+              label="Category"
+              placeholder="Project category"
+              className={classes.textField}
+              helperText="E.g. Web app, IOS app"
+              margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            {/* 如果改成的数字小于当前team的规模，alert 否则写入数据库更新 */}
+            <TextField
+              name="contributors"
+              onChange={handleTextField}
+              label="Contributors Needed"
+              className={classes.textField}
+              margin="dense"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            <TextField
+              name="description"
+              value={textInput.description}
+              onChange={handleTextField}
+              label="Description"
+              style={{ margin: 8 }}
+              placeholder="What does you project for?"
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
               variant="outlined"
             />
 
-            <button onClick={handleTool} className="project-add-tool-btn">
-              Add
-            </button>
-            <ul>{toolList}</ul>
-          </div>
+            <div className="project-tool-input-container">
+              <TextField
+                name="tools"
+                id="project-tool-input"
+                label="Required Technology"
+                placeholder="Tools that used"
+                className={classes.textField}
+                helperText="Click add button to add more tools"
+                margin="dense"
+                variant="outlined"
+              />
 
-          <div className="project-input-submit-container">
-            <button onClick={handleSubmit}>Create Project</button>
+              <button onClick={handleTool} className="project-add-tool-btn">
+                Add
+              </button>
+              <ul>{toolList}</ul>
+            </div>
+
+            <div className="project-input-submit-container">
+              <button onClick={handleSubmit}>Save Changes</button>
+            </div>
           </div>
         </div>
       </div>
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={() => history.push('/grouppost')}
+        />
+      )}
+
+      {progress && <Progress />}
     </div>
   )
 }

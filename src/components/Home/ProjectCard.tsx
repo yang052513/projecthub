@@ -39,7 +39,7 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
       <ul className="project-tools">{toolList}</ul>
       <div className="project-contributor">
         {project.Contributors.map((contributor: any) => (
-          <img key={contributor.Key} src={contributor.Avatar} alt="" />
+          <img key={contributor.Id} src={contributor.Avatar} alt="" />
         ))}
       </div>
       <div className="project-footer">

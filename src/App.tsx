@@ -24,10 +24,13 @@ import { GroupForm } from './components/Group/GroupForm'
 import { GroupPost } from './components/Group/GroupPost'
 import { GroupFormEdit } from './components/Group/GroupFormEdit'
 
+import { SideNavItem } from './components/Navigation/SideNavItem'
+
 export default function App() {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
 
+  const [showPrompt, setShowPrompt] = useState<boolean>(false)
   //全局样式化
   //侧边导航栏样式
   const [theme, setTheme] = useState('#0e5dd3')
@@ -250,6 +253,10 @@ export default function App() {
     // })
   }
 
+  const demoStyle: any = {
+    opacity: 1,
+  }
+
   return (
     <div>
       {/* Global CSS styles */}
@@ -282,73 +289,81 @@ export default function App() {
           className="navbar"
           style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
         >
-          <Link to="/">
-            <i
-              style={currRoute === '/' ? currLinkStyle : null}
-              className="fas fa-home"
-            ></i>
-          </Link>
-          <Link to="/status">
-            <i
-              style={currRoute === '/status' ? currLinkStyle : null}
-              className="fas fa-tachometer-alt"
-            ></i>
-          </Link>
-          <Link to="/explore">
-            <i
-              style={currRoute === '/explore' ? currLinkStyle : null}
-              className="fab fa-wpexplorer"
-            ></i>
-          </Link>
-          <Link to="/group">
-            <i
-              style={currRoute === '/group' ? currLinkStyle : null}
-              className="far fa-calendar-alt"
-            ></i>
-          </Link>
+          <SideNavItem
+            theme={theme}
+            route={'/'}
+            icon="fas fa-home"
+            prompt="Home"
+          />
+          <SideNavItem
+            theme={theme}
+            route={'/status'}
+            icon="fas fa-tachometer-alt"
+            prompt="Status Analysis"
+          />
 
-          <Link to="/friends">
-            <i
-              style={currRoute === '/friends' ? currLinkStyle : null}
-              className="fas fa-user-friends"
-            ></i>
-          </Link>
-          <Link to="/moment">
-            <i
-              style={currRoute === '/moment' ? currLinkStyle : null}
-              className="far fa-clock"
-            ></i>
-          </Link>
-          <Link to="/setting/profile">
-            <i
-              style={currRoute === `/setting/profile` ? currLinkStyle : null}
-              className="fas fa-sliders-h"
-            ></i>
-          </Link>
-          <Link to="/faq">
-            <i
-              style={currRoute === '/faq' ? currLinkStyle : null}
-              className="far fa-question-circle"
-            ></i>
-          </Link>
-          <Link to="/mission">
-            <i
-              style={currRoute === '/mission' ? currLinkStyle : null}
-              className="fas fa-exclamation-circle"
-            ></i>
-          </Link>
-          <Link to="/create">
-            <i
-              style={currRoute === '/create' ? currLinkStyle : null}
-              className="fas fa-feather"
-            ></i>
-          </Link>
-          <Link to="/noidea">
-            <i
-              style={currRoute === '/noidea' ? currLinkStyle : null}
-              className="fas fa-sign-out-alt"
-            ></i>
-          </Link>
+          <SideNavItem
+            theme={theme}
+            route={'/explore'}
+            icon="fab fa-wpexplorer"
+            prompt="Explore Projects"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/group'}
+            icon="far fa-calendar-alt"
+            prompt="Group Projects"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/friends'}
+            icon="fas fa-user-friends"
+            prompt="Friends"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/moment'}
+            icon="far fa-clock"
+            prompt="Moment"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/setting/profile'}
+            icon="fas fa-sliders-h"
+            prompt="Settings"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/faq'}
+            icon="far fa-question-circle"
+            prompt="FAQ"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/mission'}
+            icon="fas fa-exclamation-circle"
+            prompt="About ProjectHub"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/create'}
+            icon="fas fa-feather"
+            prompt="Create a Project"
+          />
+
+          <SideNavItem
+            theme={theme}
+            route={'/noidea'}
+            icon="fas fa-sign-out-alt"
+            prompt="Logout"
+          />
         </div>
 
         {/* Header bar with notification and current page title */}
