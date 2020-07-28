@@ -31,7 +31,6 @@ export const Friends: React.FC = () => {
 
   return (
     <div className="component-layout friend-container">
-      <p>Appreciate for everyone who uses Projecthub!</p>
       {loading ? (
         <Loading />
       ) : (

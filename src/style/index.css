@@ -1186,6 +1186,7 @@
   margin: 20px;
   background-color: white;
   padding: 20px;
+  border-radius: 15px;
 }
 
 .moment-story-card-container .moment-story-user {
@@ -1352,6 +1353,10 @@
   justify-items: center;
 }
 
+.friend-container .friend-card-list {
+  width: 100%;
+}
+
 .friend-container .friend-card-item-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1359,37 +1364,82 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 15px 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 20px;
 }
 
-.friend-container .friend-card-item-container img {
-  width: 70px;
-  height: 70px;
+.friend-container .friend-card-item-container .friend-card-avatar {
+  margin-right: 40px;
+}
+
+.friend-container .friend-card-item-container .friend-card-avatar img {
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   border: 1px solid #c9c9c9;
 }
 
-.friend-container .friend-card-item-container .friend-card-item-info {
-  margin: 10px 0 0 15px;
+.friend-container .friend-card-item-container .friend-card-info {
+  margin-right: 50px;
 }
 
-.friend-container .friend-card-item-container .friend-card-item-info div {
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 5px;
 }
 
-.friend-container .friend-card-item-container .friend-card-item-info div i {
-  font-size: 8px;
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-name p {
+  font-weight: bold;
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-name div i {
+  font-size: 10px;
   margin: 1px 10px 0 0;
   color: #a7a7a7;
+  margin-right: 5px;
 }
 
-.friend-container .friend-card-item-container .friend-card-item-info button {
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-name div span {
+  font-size: 13px;
+  color: #585757;
+  font-family: quicksand;
+}
+
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-location {
+  color: #424242;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-bio {
+  font-size: 14px;
+}
+
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-skills {
+  margin: 10px 0;
+}
+
+.friend-container .friend-card-item-container .friend-card-info .friend-card-info-skills li {
+  margin: 0px 5px 2px 0;
+  padding: 2px 10px;
+  list-style-type: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 20px;
+  color: #474747;
+  border: 1px solid #818181;
+}
+
+.friend-container .friend-card-item-container .friend-card-button button {
   font-size: 13px;
   color: #03a9f4;
   background-color: rgba(0, 0, 0, 0);
@@ -1398,10 +1448,11 @@
   border: 1px solid #03a9f4;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  font-size: 12px;
+  margin-right: 25px;
+  font-size: 15px;
 }
 
-.friend-container .friend-card-item-container .friend-card-item-info button:hover {
+.friend-container .friend-card-item-container .friend-card-button button:hover {
   color: white;
   background-color: #03a9f4;
   border: 1px solid rgba(0, 0, 0, 0);

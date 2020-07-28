@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link, Switch, Route, useLocation } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import firebase from 'firebase'
 
 //所有主组件
@@ -30,7 +30,6 @@ export default function App() {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
 
-  const [showPrompt, setShowPrompt] = useState<boolean>(false)
   //全局样式化
   //侧边导航栏样式
   const [theme, setTheme] = useState('#0e5dd3')
@@ -147,9 +146,6 @@ export default function App() {
     // })
   }, [db, user.displayName, user.email, user.uid])
 
-  //用户当前所在的route
-  const currRoute = useLocation().pathname
-
   // active css style 当前所在的route对应的nav icon样式化
   const currLinkStyle: any = {
     backgroundColor: 'white',
@@ -242,7 +238,6 @@ export default function App() {
       ...prevOpacity,
       [name]: value,
     }))
-    // firebase.auth().onAuthStateChanged(user => {
     db.collection('user')
       .doc(user.uid)
       .collection('Setting')
@@ -250,11 +245,6 @@ export default function App() {
       .update({
         opacity,
       })
-    // })
-  }
-
-  const demoStyle: any = {
-    opacity: 1,
   }
 
   return (

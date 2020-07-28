@@ -44,7 +44,11 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
       </div>
       <div className="project-footer">
         <p>{project.Privacy}</p>
-        <EditMenu docRef={docRef} projectName={project.Name} />
+        <EditMenu
+          docRef={docRef}
+          projectName={project.Name}
+          creatorId={project.Creator.Id}
+        />
       </div>
     </div>
   )

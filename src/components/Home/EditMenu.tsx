@@ -19,11 +19,16 @@ const useStyles = makeStyles({
 interface Props {
   docRef: string | undefined
   projectName: string | null | undefined
+  creatorId: string
 }
 
 const { monthStrLong, day, hours, minutes } = timeFormat
 
-export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
+export const EditMenu: React.FC<Props> = ({
+  docRef,
+  projectName,
+  creatorId,
+}) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
@@ -31,7 +36,7 @@ export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
   const [showReturn, setShowReturn] = useState<boolean>(false)
 
   const db = firebase.firestore()
-  const user = firebase.auth().currentUser
+  const user: any = firebase.auth().currentUser
 
   const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
@@ -128,20 +133,26 @@ export const EditMenu: React.FC<Props> = ({ docRef, projectName }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <Link to={`/edit/${docRef}`}>
-            <MenuItem className={classes.root} onClick={handleClose}>
-              Edit
-            </MenuItem>
-          </Link>
           <Link to={`/kanban/${docRef}`}>
             <MenuItem className={classes.root} onClick={handleClose}>
               Kanban
             </MenuItem>
           </Link>
 
-          <MenuItem className={classes.root} onClick={showDeleteConfirm}>
-            Delete
-          </MenuItem>
+          {/* 如果不是项目拥有者，屏蔽编辑和删除功能 */}
+          {creatorId === user.uid && (
+            <div>
+              <Link to={`/edit/${docRef}`}>
+                <MenuItem className={classes.root} onClick={handleClose}>
+                  Edit
+                </MenuItem>
+              </Link>
+
+              <MenuItem className={classes.root} onClick={showDeleteConfirm}>
+                Delete
+              </MenuItem>
+            </div>
+          )}
         </Menu>
       </div>
     </div>

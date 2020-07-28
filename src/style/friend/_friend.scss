@@ -2,33 +2,72 @@
   display: grid;
   justify-items: center;
 
+  .friend-card-list {
+    width: 100%;
+  }
   .friend-card-item-container {
     display: flex;
     align-items: center;
-    margin: 15px 0;
-    img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 1px solid rgb(201, 201, 201);
+    justify-content: center;
+    margin-bottom: 20px;
+    .friend-card-avatar {
+      margin-right: 40px;
+      img {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 1px solid rgb(201, 201, 201);
+      }
     }
-    .friend-card-item-info {
-      margin: 10px 0 0 15px;
-      div {
+
+    .friend-card-info {
+      margin-right: 50px;
+      .friend-card-info-name {
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
-        i {
-          font-size: 8px;
-          margin: 1px 10px 0 0;
-          color: rgb(167, 167, 167);
+        p {
+          font-weight: bold;
+          font-size: 25px;
+          margin-right: 10px;
+        }
+        div {
+          i {
+            font-size: 10px;
+            margin: 1px 10px 0 0;
+            color: rgb(167, 167, 167);
+            margin-right: 5px;
+          }
+          span {
+            font-size: 13px;
+            color: rgb(88, 87, 87);
+            font-family: quicksand;
+          }
         }
       }
+      .friend-card-info-location {
+        color: rgb(66, 66, 66);
+        font-weight: bold;
+        margin: 10px 0;
+        font-size: 14px;
+      }
 
+      .friend-card-info-bio {
+        font-size: 14px;
+      }
+
+      .friend-card-info-skills {
+        margin: 10px 0;
+        li {
+          @include liTag();
+        }
+      }
+    }
+
+    .friend-card-button {
       button {
         @include buttonStroke($sideNavBg);
-
-        font-size: 12px;
+        margin-right: 25px;
+        font-size: 15px;
       }
     }
   }

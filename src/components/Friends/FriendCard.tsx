@@ -40,16 +40,46 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
 
   return (
     <div className="friend-card-item-container">
-      <Link to={`/friends/${userId}`}>
-        <img src={avatar} alt="" />
-      </Link>
+      <div className="friend-card-avatar">
+        <Link to={`/friends/${userId}`}>
+          <img src={avatar} alt="" />
+        </Link>
+      </div>
 
-      <div className="friend-card-item-info">
-        <div>
-          <i style={online ? onlineColor : null} className="fas fa-circle"></i>
-          <p>{info.profileName}</p>
+      <div className="friend-card-info">
+        <div className="friend-card-info-name">
+          <p>Nathan Lee</p>
+          <div>
+            <i
+              style={online ? onlineColor : null}
+              className="fas fa-circle"
+            ></i>
+            <span>Online</span>
+          </div>
         </div>
-        <button>Read More</button>
+        <p className="friend-card-info-location">Burnaby, BC</p>
+        <p className="friend-card-info-bio">
+          I am currently BCIT CST term 3 students and passionated about web
+          development
+        </p>
+
+        <ul className="friend-card-info-skills">
+          <li>React</li>
+          <li>MongoDB</li>
+          <li>Sass</li>
+          <li>HTML5</li>
+          <li>Javascript</li>
+          <li>SQL</li>
+          <li>Less</li>
+          <li>Python</li>
+          <li>Java</li>
+          <li>GraphQL</li>
+        </ul>
+      </div>
+
+      <div className="friend-card-button">
+        <button>Add Friends</button>
+        <button>Message</button>
       </div>
     </div>
   )
