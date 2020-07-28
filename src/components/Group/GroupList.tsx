@@ -17,7 +17,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-
+import { useHistory } from 'react-router-dom'
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -54,15 +54,17 @@ interface Props {
 
 export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
+  const history = useHistory()
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',
     info: '',
+    imgUrl: '',
+    toggle: '',
   })
   const [progress, setProgress] = useState<boolean>(false)
 
   const [queueKey, setQueueKey] = useState<string>()
-
   const [display, setDisplay] = useState<boolean>(false)
 
   const [contributor, setContributor] = useState<Array<Object>>([])
@@ -73,8 +75,12 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     data: [],
   })
 
-  const handleReload = () => {
+  const toggleReload = () => {
     window.location.reload()
+  }
+
+  const toggleHomeDirect = () => {
+    history.push('/')
   }
 
   // Display people who applied, people who already in the team
@@ -163,61 +169,94 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         msg: 'Delete Success',
         info:
           'Delete successfully, all contributors will not have access to it.',
+        imgUrl: '/images/emoji/emoji_happy.png',
+        toggle: toggleReload,
       })
     }, 1500)
   }
 
   const handleCreate = (projectData: any): void => {
-    if (projectData.Capacity < 0) {
-      alert('You team still have position left')
-    } else {
-      //Delete Empty Contributor
-      let contributorList: any = []
-      projectData.Contributors.forEach((contributor: any) => {
-        if (contributor.Id !== 'None') {
-          contributorList.push(contributor)
+    setProgress(true)
+
+    setTimeout(() => {
+      //队伍还有空缺位置
+      if (projectData.Capacity > 0) {
+        setProgress(false)
+        setFeedback({
+          show: true,
+          msg: 'Create Failed',
+          info: 'There are still position lefts for your team',
+          toggle: toggleReload,
+          imgUrl: '/images/emoji/emoji_relax.png',
+        })
+      } else {
+        //Delete Empty Contributor
+        let contributorList: any = []
+        projectData.Contributors.forEach((contributor: any, index: any) => {
+          if (contributor.Id !== 'None') {
+            contributorList.push(contributor)
+          }
+
+          if (contributor.Id !== 'None' && index > 0) {
+            firebase
+              .firestore()
+              .collection('user')
+              .doc(contributor.Id)
+              .collection('Application')
+              .doc(projectData.Key)
+              .delete()
+          }
+        })
+
+        //声明 项目信息
+        const projectDoc = {
+          Key: projectData.Key,
+          Creator: projectData.Creator,
+          Public: true,
+          Like: 0,
+          Privacy: 'Public',
+          Name: projectData.Name,
+          Status: 'In Progress',
+          Category: projectData.Category,
+          Description: projectData.Description,
+          StartDate: projectData.StartDate,
+          EndDate: projectData.EndDate,
+          Tools: projectData.Tools,
+          Contributors: contributorList,
         }
-      })
 
-      //Project Details Doc Data
-      const projectDoc = {
-        Key: projectData.Key,
-        Creator: projectData.Creator,
-        Public: true,
-        Like: 0,
-        Privacy: 'Public',
-
-        Name: projectData.Name,
-        Status: 'In Progress',
-        Category: projectData.Category,
-        Description: projectData.Description,
-        StartDate: projectData.StartDate,
-        EndDate: projectData.EndDate,
-        Tools: projectData.Tools,
-        Contributors: contributorList,
-      }
-
-      //Write to Public Project collection
-      firebase
-        .firestore()
-        .collection('project')
-        .doc(projectData.Key)
-        .set(projectDoc)
-
-      //Write to each individual contributor's Project collection
-      contributorList.forEach((contributor: any) => {
+        // 写入到project集合 默认公开 进行中
         firebase
           .firestore()
-          .collection('user')
-          .doc(contributor.Id)
-          .collection('Project')
+          .collection('project')
           .doc(projectData.Key)
           .set(projectDoc)
-      })
 
-      // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //Delete from group Collection and contributor Application collection
-    }
+        // 写入到每个用户的Project的集合中
+        contributorList.forEach((contributor: any) => {
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(contributor.Id)
+            .collection('Project')
+            .doc(projectData.Key)
+            .set(projectDoc)
+        })
+
+        // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //Delete from group Collection and contributor Application collection 创建状态
+        firebase.firestore().collection('group').doc(projectData.Key).delete()
+
+        setProgress(false)
+        setFeedback({
+          show: true,
+          msg: 'Create Success',
+          info: 'Project created successfully, please check your dashboard',
+          imgUrl: '/images/emoji/emoji_happy.png',
+          toggle: toggleHomeDirect,
+        })
+      }
+    }, 1000)
   }
 
   return (
@@ -314,8 +353,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
-          imgUrl="/images/emoji/emoji_happy.png"
-          toggle={handleReload}
+          imgUrl={feedback.imgUrl}
+          toggle={feedback.toggle}
         />
       )}
     </div>
