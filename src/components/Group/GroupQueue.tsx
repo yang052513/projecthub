@@ -17,10 +17,11 @@ export const GroupQueue: React.FC<Props> = ({
   capacity,
 }) => {
   const [team, setTeam] = useState<any>([])
+  const [teamStatus, setStatus] = useState<any>([])
 
   const fetchContributorProfile = () => {
     contributorList.forEach((contributor: any, index: any) => {
-      if (contributor.Id !== 'None') {
+      if (contributor.Id !== 'None' && index > 0) {
         firebase
           .firestore()
           .collection('user')
@@ -126,15 +127,45 @@ export const GroupQueue: React.FC<Props> = ({
       handleAccept={() => handleAccept(queue)}
     />
   ))
+
+  const teamStatusList = contributorList.map((contributor: any, index: any) => {
+    if (contributor.Id !== 'None') {
+      if (index === 0) {
+        return (
+          <div key={contributor.Id} className="group-queue-contributor">
+            <img src={contributor.Avatar} alt="" />
+            <p className="group-list-result">Owner</p>
+          </div>
+        )
+      }
+
+      return (
+        <div key={contributor.Id} className="group-queue-contributor">
+          <img src={contributor.Avatar} alt="" />
+          <p className="group-list-result">Contributor</p>
+        </div>
+      )
+    }
+  })
+
   return (
     <div className="group-queue-container">
       <h3>People Who Applied</h3>
-      {queueList}
+      {queueList.length > 0 ? (
+        queueList
+      ) : (
+        <p className="group-no-result">No one applied yet</p>
+      )}
 
       <h3>Team List</h3>
-      {teamList}
+      {teamList.length > 0 ? (
+        teamList
+      ) : (
+        <p className="group-no-result">No one in your team right now</p>
+      )}
 
       <h3>Team Status</h3>
+      <div className="group-queue-team-status-container">{teamStatusList}</div>
     </div>
   )
 }

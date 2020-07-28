@@ -1512,13 +1512,20 @@
           transform: translate(-50%, -50%);
   background-color: white;
   width: 60%;
-  height: 600px;
   padding: 30px 0;
   border-radius: 10px;
 }
 
 .group-queue-container h3 {
-  text-align: center;
+  font-family: quicksand;
+  margin: 20px 50px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #03a9f4;
+}
+
+.group-queue-container .group-no-result {
+  margin: 0 50px;
 }
 
 .group-queue-container .queue-item {
@@ -1609,9 +1616,34 @@
   padding: 5px 10px;
   color: #03a9f4;
   font-weight: bold;
-  font-size: 13px;
-  text-transform: uppercase;
+  font-size: 12px;
   letter-spacing: 1px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.group-queue-contributor {
+  width: 80px;
+  display: -ms-grid;
+  display: grid;
+  justify-items: center;
+  margin-right: 20px;
+}
+
+.group-queue-contributor img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 1px solid gray;
+}
+
+.group-queue-team-status-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 50px;
 }
 
 .logout-container {
