@@ -1,7 +1,9 @@
 import React from 'react'
 import firebase from 'firebase'
+import { Link } from 'react-router-dom'
 
 interface Props {
+  isTeam?: boolean
   userRef: string
   avatar: string
   username: string
@@ -12,6 +14,7 @@ interface Props {
 }
 
 export const GroupQueueItem: React.FC<Props> = ({
+  isTeam,
   userRef,
   avatar,
   username,
@@ -43,7 +46,14 @@ export const GroupQueueItem: React.FC<Props> = ({
         <div>
           <button>Message</button>
           <button onClick={handleDelete}>Delete</button>
-          <button onClick={handleAccept}>Accept</button>
+
+          {!isTeam ? (
+            <button onClick={handleAccept}>Accept</button>
+          ) : (
+            <Link to={`/friends/${userRef}`}>
+              <button>View</button>
+            </Link>
+          )}
         </div>
       )}
     </div>

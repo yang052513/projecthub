@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupQueueItem } from './GroupQueueItem'
-import { ProjectCard } from '../Home/ProjectCard'
+import { Feedback } from '../Common/Feedback'
+import { Progress } from '../Common/Progress'
+import { setPriority } from 'os'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   queueData: any
@@ -17,6 +20,13 @@ export const GroupQueue: React.FC<Props> = ({
   capacity,
 }) => {
   const [team, setTeam] = useState<any>([])
+  const history = useHistory()
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
+  const [progress, setProgress] = useState<boolean>(false)
 
   const fetchContributorProfile = () => {
     contributorList.forEach((contributor: any, index: any) => {
@@ -104,25 +114,40 @@ export const GroupQueue: React.FC<Props> = ({
 
   //用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
   const handleDeleteContributor = (contributorKey: any) => {
-    let updated_contributorList = contributorList
-    updated_contributorList.forEach(
-      (contributor: any, index: string | number) => {
-        if (contributor.Id === contributorKey) {
-          updated_contributorList[index] = { Avatar: 'None', Id: 'None' }
+    setProgress(true)
+
+    setTimeout(() => {
+      let updated_contributorList = contributorList
+      updated_contributorList.forEach(
+        (contributor: any, index: string | number) => {
+          if (contributor.Id === contributorKey) {
+            updated_contributorList[index] = { Avatar: 'None', Id: 'None' }
+          }
         }
-      }
-    )
+      )
+      // 更新contributor list
+      firebase.firestore().collection('group').doc(queueRef).update({
+        Contributors: updated_contributorList,
+      })
 
-    console.log(updated_contributorList)
-    //   // 更新contributor list
-    // firebase.firestore().collection('group').doc(queueRef).update({
-    //   Contributor: updated_contributorList
-    // })
+      // 从该用户的application中改为rejected
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(contributorKey)
+        .collection('Application')
+        .doc(queueRef)
+        .update({
+          Result: 'Rejected',
+        })
 
-    // // 从该用户的application中改为rejected
-    // firebase.firestore().collection('user').doc(contributorKey).collection('Application').doc(queueRef).update({
-    //   Result: 'Rejected'
-    // })
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Delete Success',
+        info: 'Delete user from your team successfully',
+      })
+    }, 1000)
   }
 
   const queueList = queueData.map((queue: any) => (
@@ -141,6 +166,7 @@ export const GroupQueue: React.FC<Props> = ({
   const teamList = team.map((queue: any) => (
     <GroupQueueItem
       key={queue.Key}
+      isTeam={true}
       userRef={queue.Key}
       avatar={queue.profile.avatar}
       username={queue.profile.profile.profileName}
@@ -172,23 +198,37 @@ export const GroupQueue: React.FC<Props> = ({
   })
 
   return (
-    <div className="group-queue-container">
-      <h3>People Who Applied</h3>
-      {queueList.length > 0 ? (
-        queueList
-      ) : (
-        <p className="group-no-result">No one applied yet</p>
-      )}
+    <div>
+      <div className="group-queue-container">
+        <h3>People Who Applied</h3>
+        {queueList.length > 0 ? (
+          queueList
+        ) : (
+          <p className="group-no-result">No one applied yet</p>
+        )}
 
-      <h3>Team List</h3>
-      {teamList.length > 0 ? (
-        teamList
-      ) : (
-        <p className="group-no-result">No one in your team right now</p>
-      )}
+        <h3>Team List</h3>
+        {teamList.length > 0 ? (
+          teamList
+        ) : (
+          <p className="group-no-result">No one in your team right now</p>
+        )}
 
-      <h3>Team Status</h3>
-      <div className="group-queue-team-status-container">{teamStatusList}</div>
+        <h3>Team Status</h3>
+        <div className="group-queue-team-status-container">
+          {teamStatusList}
+        </div>
+      </div>
+
+      {progress && <Progress />}
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={() => history.push('/grouppost')}
+        />
+      )}
     </div>
   )
 }
