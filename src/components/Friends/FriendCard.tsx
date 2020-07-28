@@ -70,6 +70,28 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
   useEffect(fecthOnlineStatus, [])
   useEffect(fetchApplicationStatus, [])
 
+  //用户申请写入到被申请用户的通知里
+  const addNotification = () => {
+    const notificatonRef = firebase
+      .firestore()
+      .collection('user')
+      .doc(userId)
+      .collection('Notification')
+    notificatonRef
+      .add({
+        Unread: true,
+        Message: `${info.profileName} sent you a friend request`,
+        Date: currentDay,
+        Category: 'Friend',
+      })
+      .then(docKey => {
+        notificatonRef.doc(docKey.id).update({
+          Key: docKey.id,
+        })
+        console.log(`通知已经写入到用户数据库中${docKey.id}`)
+      })
+  }
+
   //向点击的用户发起好友请求
   const handleFriend = () => {
     //写入到当前用户的Application中
@@ -108,6 +130,8 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
         },
         Date: currentDay,
       })
+
+    addNotification()
     setIsApplied(true)
 
     setFeedback({
