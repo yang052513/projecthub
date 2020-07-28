@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
-import { UserProfile } from '../Common/UserProfile'
+import { timeFormat } from 'current-time-format'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { Feedback } from '../Common/Feedback'
 
 interface Profile {
   profileName: string | null
@@ -22,6 +24,20 @@ interface Props {
 export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
   const [online, setOnline] = useState<boolean>(false)
   const user: firebase.User | null | any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
+
+  const [isApplied, setIsApplied] = useState<boolean>(false)
+
+  const [feedback, setFeedback] = useState<any>({
+    show: false,
+    msg: '',
+    info: '',
+  })
+  const { year, monthStrLong, day } = timeFormat
+
+  const currentDay = `${monthStrLong} ${day}, ${year}`
+
+  //检测该用户是否处于在线状态
   const fecthOnlineStatus = () => {
     firebase
       .firestore()
@@ -33,7 +49,75 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
       })
   }
 
+  //检测该用户是否已经申请过了
+  const fetchApplicationStatus = () => {
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Friend')
+      .doc('Notification')
+      .collection('Application')
+      .doc(userId)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          setIsApplied(true)
+        }
+      })
+  }
+
   useEffect(fecthOnlineStatus, [])
+  useEffect(fetchApplicationStatus, [])
+
+  //向点击的用户发起好友请求
+  const handleFriend = () => {
+    //写入到当前用户的Application中
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Friend')
+      .doc('Notification')
+      .collection('Application')
+      .doc(userId)
+      .set({
+        FriendKey: userId,
+        FriendProfile: {
+          Avatar: avatar,
+          Profile: info,
+        },
+        Date: currentDay,
+        Result: 'Sent',
+      })
+
+    //写入到被加用户的请求中
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(userId)
+      .collection('Friend')
+      .doc('Notification')
+      .collection('Request')
+      .doc(user.uid)
+      .set({
+        FriendKey: user.uid,
+        FriendProfile: {
+          Avatar: profile.avatar,
+          Profile: profile.profile,
+        },
+        Date: currentDay,
+      })
+    setIsApplied(true)
+
+    setFeedback({
+      show: true,
+      msg: 'Request Made',
+      info: `Request has been sent to ${info.profileName}.`,
+    })
+
+    console.log('好友请求发起成功')
+  }
 
   const onlineColor: any = {
     color: 'rgb(15, 207, 89)',
@@ -74,9 +158,29 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
 
       {!(user.uid === userId) && (
         <div className="friend-card-button">
-          <button>Add Friends</button>
+          {isApplied ? (
+            <button className="requested-button">Requested</button>
+          ) : (
+            <button onClick={handleFriend}>Add Friends</button>
+          )}
+
           <button>Message</button>
         </div>
+      )}
+
+      {feedback.show && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={() =>
+            setFeedback({
+              show: false,
+              msg: '',
+              info: '',
+            })
+          }
+        />
       )}
     </div>
   )

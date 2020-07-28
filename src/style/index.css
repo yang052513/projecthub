@@ -1450,6 +1450,18 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
+.friend-container .friend-card-item-container .friend-card-button .requested-button {
+  font-size: 13px;
+  color: white;
+  background-color: #03a9f4;
+  padding: 5px 20px;
+  border-radius: 15px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  margin-right: 25px;
+  font-size: 15px;
+}
+
 .user-profile-container {
   display: -webkit-box;
   display: -ms-flexbox;
