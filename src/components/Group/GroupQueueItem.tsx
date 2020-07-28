@@ -42,8 +42,8 @@ export const GroupQueueItem: React.FC<Props> = ({
       ) : (
         <div>
           <button>Message</button>
-          <button onClick={() => handleDelete()}>Delete</button>
-          <button onClick={() => handleAccept()}>Accept</button>
+          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleAccept}>Accept</button>
         </div>
       )}
     </div>

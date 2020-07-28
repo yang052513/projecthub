@@ -61,6 +61,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   })
   const [progress, setProgress] = useState<boolean>(false)
 
+  const [queueKey, setQueueKey] = useState<string>()
+
   const [display, setDisplay] = useState<boolean>(false)
 
   const [contributor, setContributor] = useState<Array<Object>>([])
@@ -85,6 +87,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     setDisplay(true)
     setContributor(contributorList)
     setCapacity(capacityNum)
+    setQueueKey(queueRef)
 
     firebase
       .firestore()
@@ -212,7 +215,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           .set(projectDoc)
       })
 
-      // 创建成功后
+      // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       //Delete from group Collection and contributor Application collection
     }
   }
@@ -299,8 +302,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           ></div>
           <GroupQueue
             contributorList={contributor}
-            queueRef={queue.groupRef}
-            creatorRef={queue.creatorRef}
+            queueRef={queueKey}
             queueData={queue.data}
             capacity={capacity}
           />

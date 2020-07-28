@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupQueueItem } from './GroupQueueItem'
+import { ProjectCard } from '../Home/ProjectCard'
 
 interface Props {
   queueData: any
-  queueRef: string
-  creatorRef: string
+  queueRef: any
   contributorList: any
   capacity: any
 }
@@ -17,7 +17,6 @@ export const GroupQueue: React.FC<Props> = ({
   capacity,
 }) => {
   const [team, setTeam] = useState<any>([])
-  const [teamStatus, setStatus] = useState<any>([])
 
   const fetchContributorProfile = () => {
     contributorList.forEach((contributor: any, index: any) => {
@@ -100,6 +99,30 @@ export const GroupQueue: React.FC<Props> = ({
       .update({
         Result: 'Rejected',
       })
+    console.log(queueRef)
+  }
+
+  //用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
+  const handleDeleteContributor = (contributorKey: any) => {
+    let updated_contributorList = contributorList
+    updated_contributorList.forEach(
+      (contributor: any, index: string | number) => {
+        if (contributor.Id === contributorKey) {
+          updated_contributorList[index] = { Avatar: 'None', Id: 'None' }
+        }
+      }
+    )
+
+    console.log(updated_contributorList)
+    //   // 更新contributor list
+    // firebase.firestore().collection('group').doc(queueRef).update({
+    //   Contributor: updated_contributorList
+    // })
+
+    // // 从该用户的application中改为rejected
+    // firebase.firestore().collection('user').doc(contributorKey).collection('Application').doc(queueRef).update({
+    //   Result: 'Rejected'
+    // })
   }
 
   const queueList = queueData.map((queue: any) => (
@@ -123,7 +146,7 @@ export const GroupQueue: React.FC<Props> = ({
       username={queue.profile.profile.profileName}
       email={queue.profile.profile.profileEmail}
       github={queue.profile.profile.profileGithub}
-      handleDelete={() => handleDelete(queue)}
+      handleDelete={() => handleDeleteContributor(queue.Key)}
       handleAccept={() => handleAccept(queue)}
     />
   ))
