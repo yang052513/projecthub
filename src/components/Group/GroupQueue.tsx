@@ -28,6 +28,10 @@ export const GroupQueue: React.FC<Props> = ({
   })
   const [progress, setProgress] = useState<boolean>(false)
 
+  const handleReload = () => {
+    window.location.reload()
+  }
+
   const fetchContributorProfile = () => {
     contributorList.forEach((contributor: any, index: any) => {
       if (contributor.Id !== 'None' && index > 0) {
@@ -53,42 +57,53 @@ export const GroupQueue: React.FC<Props> = ({
   useEffect(fetchContributorProfile, [])
 
   const handleAccept = (userRef: any) => {
-    let updatedList = contributorList
-    updatedList[updatedList.length - capacity] = {
-      Avatar: userRef.profile.avatar,
-      Id: userRef.Key,
-    }
+    setProgress(true)
 
-    // 删除
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(queueRef)
-      .collection('Requests')
-      .doc(userRef.Key)
-      .delete()
-      .then(() => {
-        console.log('从公共项目列表中接受请求 并删除用户的requests')
-      })
+    setTimeout(() => {
+      let updatedList = contributorList
+      updatedList[updatedList.length - capacity] = {
+        Avatar: userRef.profile.avatar,
+        Id: userRef.Key,
+      }
 
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(queueRef)
-      .update({
-        Contributors: updatedList,
-        Capacity: capacity - 1,
-      })
+      // 删除
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(queueRef)
+        .collection('Requests')
+        .doc(userRef.Key)
+        .delete()
+        .then(() => {
+          console.log('从公共项目列表中接受请求 并删除用户的requests')
+        })
 
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(userRef.Key)
-      .collection('Application')
-      .doc(queueRef)
-      .update({
-        Result: 'Accepted',
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(queueRef)
+        .update({
+          Contributors: updatedList,
+          Capacity: capacity - 1,
+        })
+
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(userRef.Key)
+        .collection('Application')
+        .doc(queueRef)
+        .update({
+          Result: 'Accepted',
+        })
+
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Added Successfully',
+        info: `${userRef.profile.profile.profileName} has been added to your team`,
       })
+    }, 1000)
   }
 
   //从Application和Request中删除
@@ -109,7 +124,6 @@ export const GroupQueue: React.FC<Props> = ({
       .update({
         Result: 'Rejected',
       })
-    console.log(queueRef)
   }
 
   //用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
@@ -126,9 +140,14 @@ export const GroupQueue: React.FC<Props> = ({
         }
       )
       // 更新contributor list
-      firebase.firestore().collection('group').doc(queueRef).update({
-        Contributors: updated_contributorList,
-      })
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(queueRef)
+        .update({
+          Contributors: updated_contributorList,
+          Capacity: capacity + 1,
+        })
 
       // 从该用户的application中改为rejected
       firebase
@@ -226,7 +245,7 @@ export const GroupQueue: React.FC<Props> = ({
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
-          toggle={() => history.push('/grouppost')}
+          toggle={handleReload}
         />
       )}
     </div>

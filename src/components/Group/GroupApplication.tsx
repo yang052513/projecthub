@@ -106,23 +106,28 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
 
       //如果已经加入成功选择删除，要把contributorList的位置改为None
       let contributorList = groupData.Contributors
+      let isInContributor = false
       groupData.Contributors.forEach(
         (contributor: any, index: string | number) => {
           if (contributor.Id === user.uid) {
             contributorList[index] = { Avatar: 'None', Id: 'None' }
+            isInContributor = true
           }
         }
       )
 
       //更新group的贡献者列表以及空缺位子
-      firebase
-        .firestore()
-        .collection('group')
-        .doc(groupRef)
-        .update({
-          Contributors: contributorList,
-          Capacity: groupData.Capacity + 1,
-        })
+      if (isInContributor) {
+        firebase
+          .firestore()
+          .collection('group')
+          .doc(groupRef)
+          .update({
+            Contributors: contributorList,
+            Capacity: groupData.Capacity + 1,
+          })
+      }
+
       setProgress(false)
       setFeedback({
         show: true,
