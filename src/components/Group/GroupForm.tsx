@@ -234,7 +234,7 @@ export const GroupForm: React.FC = () => {
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
-          toggle={() => history.push('/group')}
+          toggle={() => history.push('/grouppost')}
         />
       )}
 

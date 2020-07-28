@@ -18,12 +18,13 @@
   }
   p {
     transform: translateY(-30px);
-    font-size: 14px;
+    font-size: 13px;
+    padding: 0 15px;
   }
 
   button {
     @include buttonStroke($sideNavBg);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 }
 

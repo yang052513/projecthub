@@ -61,6 +61,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     info: '',
     imgUrl: '',
     toggle: '',
+    confirm: false,
+    cancel: '',
   })
   const [progress, setProgress] = useState<boolean>(false)
 
@@ -81,6 +83,85 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
   const toggleHomeDirect = () => {
     history.push('/')
+  }
+
+  const toggleClose = () => {
+    setFeedback((prevState: any) => ({
+      ...prevState,
+      show: false,
+      confirm: false,
+    }))
+  }
+
+  const toggleCreate = (projectData: any) => {
+    setProgress(true)
+    setTimeout(() => {
+      //Delete Empty Contributor
+      let contributorList: any = []
+      projectData.Contributors.forEach((contributor: any, index: any) => {
+        if (contributor.Id !== 'None') {
+          contributorList.push(contributor)
+        }
+
+        if (contributor.Id !== 'None' && index > 0) {
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(contributor.Id)
+            .collection('Application')
+            .doc(projectData.Key)
+            .delete()
+        }
+      })
+
+      //声明 项目信息
+      const projectDoc = {
+        Key: projectData.Key,
+        Creator: projectData.Creator,
+        Public: true,
+        Like: 0,
+        Privacy: 'Public',
+        Name: projectData.Name,
+        Status: 'In Progress',
+        Category: projectData.Category,
+        Description: projectData.Description,
+        StartDate: projectData.StartDate,
+        EndDate: projectData.EndDate,
+        Tools: projectData.Tools,
+        Contributors: contributorList,
+      }
+
+      // 写入到project集合 默认公开 进行中
+      firebase
+        .firestore()
+        .collection('project')
+        .doc(projectData.Key)
+        .set(projectDoc)
+
+      // 写入到每个用户的Project的集合中
+      contributorList.forEach((contributor: any) => {
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(contributor.Id)
+          .collection('Project')
+          .doc(projectData.Key)
+          .set(projectDoc)
+      })
+
+      // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //Delete from group Collection and contributor Application collection 创建状态
+      firebase.firestore().collection('group').doc(projectData.Key).delete()
+
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Create Success',
+        info: 'Project created successfully, please check your dashboard',
+        imgUrl: '/images/emoji/emoji_happy.png',
+        toggle: toggleHomeDirect,
+      })
+    }, 1000)
   }
 
   // Display people who applied, people who already in the team
@@ -171,6 +252,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           'Delete successfully, all contributors will not have access to it.',
         imgUrl: '/images/emoji/emoji_happy.png',
         toggle: toggleReload,
+        confirm: false,
+        cancel: '',
       })
     }, 1500)
   }
@@ -185,76 +268,15 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         setFeedback({
           show: true,
           msg: 'Create Failed',
-          info: 'There are still position lefts for your team',
-          toggle: toggleReload,
-          imgUrl: '/images/emoji/emoji_relax.png',
+          info:
+            'There are still position lefts for your team, Do you still want to create the project?',
+          toggle: () => toggleCreate(projectData),
+          imgUrl: '/images/emoji/emoji_cry.png',
+          confirm: true,
+          cancel: toggleClose,
         })
       } else {
-        //Delete Empty Contributor
-        let contributorList: any = []
-        projectData.Contributors.forEach((contributor: any, index: any) => {
-          if (contributor.Id !== 'None') {
-            contributorList.push(contributor)
-          }
-
-          if (contributor.Id !== 'None' && index > 0) {
-            firebase
-              .firestore()
-              .collection('user')
-              .doc(contributor.Id)
-              .collection('Application')
-              .doc(projectData.Key)
-              .delete()
-          }
-        })
-
-        //声明 项目信息
-        const projectDoc = {
-          Key: projectData.Key,
-          Creator: projectData.Creator,
-          Public: true,
-          Like: 0,
-          Privacy: 'Public',
-          Name: projectData.Name,
-          Status: 'In Progress',
-          Category: projectData.Category,
-          Description: projectData.Description,
-          StartDate: projectData.StartDate,
-          EndDate: projectData.EndDate,
-          Tools: projectData.Tools,
-          Contributors: contributorList,
-        }
-
-        // 写入到project集合 默认公开 进行中
-        firebase
-          .firestore()
-          .collection('project')
-          .doc(projectData.Key)
-          .set(projectDoc)
-
-        // 写入到每个用户的Project的集合中
-        contributorList.forEach((contributor: any) => {
-          firebase
-            .firestore()
-            .collection('user')
-            .doc(contributor.Id)
-            .collection('Project')
-            .doc(projectData.Key)
-            .set(projectDoc)
-        })
-
-        // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //Delete from group Collection and contributor Application collection 创建状态
-        firebase.firestore().collection('group').doc(projectData.Key).delete()
-
-        setProgress(false)
-        setFeedback({
-          show: true,
-          msg: 'Create Success',
-          info: 'Project created successfully, please check your dashboard',
-          imgUrl: '/images/emoji/emoji_happy.png',
-          toggle: toggleHomeDirect,
-        })
+        toggleCreate(projectData)
       }
     }, 1000)
   }
@@ -355,6 +377,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           info={feedback.info}
           imgUrl={feedback.imgUrl}
           toggle={feedback.toggle}
+          confirm={feedback.confirm}
+          cancel={feedback.cancel}
         />
       )}
     </div>
