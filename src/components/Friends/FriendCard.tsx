@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
+import { UserProfile } from '../Common/UserProfile'
 
 interface Profile {
   profileName: string | null
@@ -20,7 +21,7 @@ interface Props {
 
 export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
   const [online, setOnline] = useState<boolean>(false)
-
+  const user: firebase.User | null | any = firebase.auth().currentUser
   const fecthOnlineStatus = () => {
     firebase
       .firestore()
@@ -48,7 +49,7 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
 
       <div className="friend-card-info">
         <div className="friend-card-info-name">
-          <p>Nathan Lee</p>
+          <p>{info.profileName}</p>
           <div>
             <i
               style={online ? onlineColor : null}
@@ -57,11 +58,8 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
             <span>Online</span>
           </div>
         </div>
-        <p className="friend-card-info-location">Burnaby, BC</p>
-        <p className="friend-card-info-bio">
-          I am currently BCIT CST term 3 students and passionated about web
-          development
-        </p>
+        <p className="friend-card-info-location">{info.profileLocation}</p>
+        <p className="friend-card-info-bio">{info.profileBio}</p>
 
         <ul className="friend-card-info-skills">
           <li>React</li>
@@ -71,16 +69,15 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
           <li>Javascript</li>
           <li>SQL</li>
           <li>Less</li>
-          <li>Python</li>
-          <li>Java</li>
-          <li>GraphQL</li>
         </ul>
       </div>
 
-      <div className="friend-card-button">
-        <button>Add Friends</button>
-        <button>Message</button>
-      </div>
+      {!(user.uid === userId) && (
+        <div className="friend-card-button">
+          <button>Add Friends</button>
+          <button>Message</button>
+        </div>
+      )}
     </div>
   )
 }

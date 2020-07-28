@@ -1347,20 +1347,11 @@
   font-size: 14px;
 }
 
-.friend-container {
+.friend-container .friend-card-item-container {
   display: -ms-grid;
   display: grid;
-  justify-items: center;
-}
-
-.friend-container .friend-card-list {
-  width: 100%;
-}
-
-.friend-container .friend-card-item-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  -ms-grid-columns: 200px 600px 300px;
+      grid-template-columns: 200px 600px 300px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -1396,6 +1387,7 @@
 
 .friend-container .friend-card-item-container .friend-card-info .friend-card-info-name p {
   font-weight: bold;
+  color: #03a9f4;
   font-size: 25px;
   margin-right: 10px;
 }
@@ -1425,7 +1417,7 @@
 }
 
 .friend-container .friend-card-item-container .friend-card-info .friend-card-info-skills {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .friend-container .friend-card-item-container .friend-card-info .friend-card-info-skills li {
