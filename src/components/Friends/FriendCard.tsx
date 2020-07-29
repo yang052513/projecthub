@@ -83,6 +83,7 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
         Message: `${profile.profile.profileName} sent you a friend request`,
         Date: currentDay,
         Category: 'Friend Request',
+        Redirect: '/messenger',
       })
       .then(docKey => {
         notificatonRef.doc(docKey.id).update({

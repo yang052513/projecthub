@@ -6,11 +6,16 @@ import { GroupDetailCard } from './Group/GroupDetailCard'
 
 import { Feedback } from './Common/Feedback'
 import { Loading } from './Common/Loading'
+import { timeFormat } from 'current-time-format'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
+
+  const { monthStrLong, day, hours, minutes } = timeFormat
+
+  const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
 
   const [feedback, setFeedback] = useState<any>({
     show: false,
@@ -73,18 +78,34 @@ export const Group: React.FC = () => {
               Result: 'Applied',
             })
           )
-
-          // Application Success -> Success Modal to Reload
-          setFeedback({
-            show: true,
-            msg: 'Application Success',
-            info: 'Please wait the project owner response to your application',
-          })
         }
       })
   }
 
-  const handleApply = (creatorId: string, projectKey: string) => {
+  const addNotification = (creatorId: string, projectData: any) => {
+    const notificatonRef = firebase
+      .firestore()
+      .collection('user')
+      .doc(creatorId)
+      .collection('Notification')
+
+    notificatonRef
+      .add({
+        Unread: true,
+        Message: `${profile.profile.profileName} applied your project ${projectData.Name}`,
+        Date: currentDay,
+        Category: 'Project Contributor Request',
+        Redirect: '/grouppost',
+      })
+      .then(docRef => {
+        notificatonRef.doc(docRef.id).update({
+          Key: docRef.id,
+        })
+        console.log(`通知已经写入到用户数据库中${docRef.id}`)
+      })
+  }
+
+  const handleApply = (creatorId: string, projectData: any) => {
     // If the creator trying to apply his project -> Error Modal
     if (user.uid === creatorId) {
       setFeedback({
@@ -93,7 +114,15 @@ export const Group: React.FC = () => {
         info: 'You can not apply the project you created.',
       })
     } else {
-      submitApply(projectKey)
+      submitApply(projectData.Key)
+      addNotification(creatorId, projectData)
+
+      // Application Success -> Success Modal to Reload
+      setFeedback({
+        show: true,
+        msg: 'Application Success',
+        info: 'Please wait the project owner response to your application',
+      })
     }
   }
 
@@ -101,7 +130,7 @@ export const Group: React.FC = () => {
     <GroupDetailCard
       key={item.Key}
       cardData={item}
-      handleApply={() => handleApply(item.Creator.Id, item.Key)}
+      handleApply={() => handleApply(item.Creator.Id, item)}
     />
   ))
 
