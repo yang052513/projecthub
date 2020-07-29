@@ -136,9 +136,9 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
     addNotification(
       userId,
       `${profile.profile.profileName} sent you a friend request`,
-      currentDay,
       'Friend Request',
-      '/messenger'
+      '/messenger',
+      profile.avatar
     )
     setIsApplied(true)
 

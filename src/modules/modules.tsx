@@ -1,12 +1,17 @@
 import firebase from 'firebase'
+import { timeFormat } from 'current-time-format'
 
 export function addNotification(
   userRef: string,
   message: string,
-  date: string,
   category: string,
-  redirect: string
+  redirect: string,
+  avatar: string
 ) {
+  const { monthStrLong, day, hours, minutes } = timeFormat
+
+  const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
+
   const notificatonRef = firebase
     .firestore()
     .collection('user')
@@ -17,9 +22,10 @@ export function addNotification(
     .add({
       Unread: true,
       Message: message,
-      Date: date,
+      Date: currentDay,
       Category: category,
       Redirect: redirect,
+      Avatar: avatar,
     })
     .then(docRef => {
       notificatonRef.doc(docRef.id).update({

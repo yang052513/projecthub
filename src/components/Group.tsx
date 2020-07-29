@@ -8,6 +8,8 @@ import { Feedback } from './Common/Feedback'
 import { Loading } from './Common/Loading'
 import { timeFormat } from 'current-time-format'
 
+import { addNotification } from '../modules/modules'
+
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const user: any = firebase.auth().currentUser
@@ -40,7 +42,7 @@ export const Group: React.FC = () => {
 
   useEffect(fetchGroup, [])
 
-  const submitApply = (docKey: string) => {
+  const submitApply = (docKey: string, creatorId: string, projectData: any) => {
     const requestRef = firebase.firestore().collection('group').doc(docKey)
     const contributorRef = firebase
       .firestore()
@@ -67,6 +69,14 @@ export const Group: React.FC = () => {
             profile,
           })
 
+          addNotification(
+            creatorId,
+            `${profile.profile.profileName} applied your project ${projectData.Name}`,
+            'Project Contributor Request',
+            '/grouppost',
+            profile.avatar
+          )
+
           // Write to current user's application collection
           requestRef.get().then((doc: any) =>
             contributorRef.set({
@@ -78,30 +88,13 @@ export const Group: React.FC = () => {
               Result: 'Applied',
             })
           )
+
+          setFeedback({
+            show: true,
+            msg: 'Application Success',
+            info: 'Please wait the project owner response to your application',
+          })
         }
-      })
-  }
-
-  const addNotification = (creatorId: string, projectData: any) => {
-    const notificatonRef = firebase
-      .firestore()
-      .collection('user')
-      .doc(creatorId)
-      .collection('Notification')
-
-    notificatonRef
-      .add({
-        Unread: true,
-        Message: `${profile.profile.profileName} applied your project ${projectData.Name}`,
-        Date: currentDay,
-        Category: 'Project Contributor Request',
-        Redirect: '/grouppost',
-      })
-      .then(docRef => {
-        notificatonRef.doc(docRef.id).update({
-          Key: docRef.id,
-        })
-        console.log(`通知已经写入到用户数据库中${docRef.id}`)
       })
   }
 
@@ -114,15 +107,7 @@ export const Group: React.FC = () => {
         info: 'You can not apply the project you created.',
       })
     } else {
-      submitApply(projectData.Key)
-      addNotification(creatorId, projectData)
-
-      // Application Success -> Success Modal to Reload
-      setFeedback({
-        show: true,
-        msg: 'Application Success',
-        info: 'Please wait the project owner response to your application',
-      })
+      submitApply(projectData.Key, creatorId, projectData)
     }
   }
 

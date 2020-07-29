@@ -3,14 +3,17 @@ import firebase from 'firebase'
 import { GroupQueueItem } from './GroupQueueItem'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
-import { setPriority } from 'os'
-import { useHistory } from 'react-router-dom'
+
+// Modules
+import { addNotification } from '../../modules/modules'
+import { updateApplication, deleteRequest } from '../../modules/group'
 
 interface Props {
   queueData: any
   queueRef: any
   contributorList: any
   capacity: any
+  groupData: any
 }
 
 export const GroupQueue: React.FC<Props> = ({
@@ -18,9 +21,9 @@ export const GroupQueue: React.FC<Props> = ({
   queueRef,
   contributorList,
   capacity,
+  groupData,
 }) => {
   const [team, setTeam] = useState<any>([])
-  const history = useHistory()
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',
@@ -56,6 +59,7 @@ export const GroupQueue: React.FC<Props> = ({
 
   useEffect(fetchContributorProfile, [])
 
+  // 同意用户加入项目团队的申请
   const handleAccept = (userRef: any) => {
     setProgress(true)
 
@@ -66,18 +70,7 @@ export const GroupQueue: React.FC<Props> = ({
         Id: userRef.Key,
       }
 
-      // 删除
-      firebase
-        .firestore()
-        .collection('group')
-        .doc(queueRef)
-        .collection('Requests')
-        .doc(userRef.Key)
-        .delete()
-        .then(() => {
-          console.log('从公共项目列表中接受请求 并删除用户的requests')
-        })
-
+      // 更新group该项目文档的贡献者列表 以及空缺位子
       firebase
         .firestore()
         .collection('group')
@@ -87,15 +80,18 @@ export const GroupQueue: React.FC<Props> = ({
           Capacity: capacity - 1,
         })
 
-      firebase
-        .firestore()
-        .collection('user')
-        .doc(userRef.Key)
-        .collection('Application')
-        .doc(queueRef)
-        .update({
-          Result: 'Accepted',
-        })
+      // 从请求集合中删除
+      deleteRequest(queueRef, userRef.Key)
+      // 更新被接受用户的申请状态
+      updateApplication(userRef.Key, queueRef, 'Accepted')
+      // 通知用户
+      addNotification(
+        userRef.Key,
+        `You application for ${groupData.Name} has been accepted`,
+        'Project Contributor Request',
+        '/grouppost',
+        groupData.Creator.Avatar
+      )
 
       setProgress(false)
       setFeedback({

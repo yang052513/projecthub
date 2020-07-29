@@ -18,6 +18,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { useHistory } from 'react-router-dom'
+import { group } from 'console'
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -64,6 +65,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     confirm: false,
     cancel: '',
   })
+
+  const [groupData, setGroupData] = useState<any>()
   const [progress, setProgress] = useState<boolean>(false)
 
   const [queueKey, setQueueKey] = useState<string>()
@@ -169,13 +172,14 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     queueRef: string,
     creatorRef: string,
     contributorList: Array<Object>,
-    capacityNum: number
+    capacityNum: number,
+    groupDoc: any
   ) => {
     setDisplay(true)
     setContributor(contributorList)
     setCapacity(capacityNum)
     setQueueKey(queueRef)
-
+    setGroupData(groupDoc)
     firebase
       .firestore()
       .collection('group')
@@ -325,7 +329,8 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                         row.Key,
                         row.Creator.Id,
                         row.Contributors,
-                        row.Capacity
+                        row.Capacity,
+                        row
                       )
                     }
                   >
@@ -366,6 +371,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             queueRef={queueKey}
             queueData={queue.data}
             capacity={capacity}
+            groupData={groupData}
           />
         </div>
       )}
