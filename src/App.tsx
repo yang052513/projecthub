@@ -25,6 +25,7 @@ import { GroupPost } from './components/Group/GroupPost'
 import { GroupFormEdit } from './components/Group/GroupFormEdit'
 
 import { SideNavItem } from './components/Navigation/SideNavItem'
+import { NotificationMenu } from './components/Notification/NotificationMenu'
 
 export default function App() {
   const db = firebase.firestore()
@@ -360,8 +361,7 @@ export default function App() {
         <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
           <h2>Project Dashboard</h2>
           <div className="user-navbar-icon">
-            <i className="fas fa-inbox"></i>
-            <i className="fas fa-bell"></i>
+            <NotificationMenu />
             <ProfileMenu avatar={avatar} />
           </div>
         </div>

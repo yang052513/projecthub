@@ -32,6 +32,7 @@ $logoSize: 50px;
   }
   .user-navbar-icon {
     @include flexAlign();
+    margin-right: 100px;
   }
   i {
     font-size: 20px;
@@ -42,5 +43,6 @@ $logoSize: 50px;
     @include roundedImage(30px);
     transform: translateX(-10px);
     border: 1px solid rgb(207, 207, 207);
+    margin-left: 15px;
   }
 }
