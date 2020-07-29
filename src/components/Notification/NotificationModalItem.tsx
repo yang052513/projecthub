@@ -9,12 +9,19 @@ export const NotificationModalItem: React.FC<Props> = ({
 }) => {
   return (
     <div className="notification-item">
-      <div className="notification-item-title">
-        <i className="fas fa-user-friends"></i>
-        <p>{notificationData.Category} Request Update</p>
+      <img
+        src="./images/user.jpg"
+        width="50px"
+        height="50px"
+        style={{ borderRadius: '50%' }}
+        alt=""
+      />
+      <div className="notification-item-text">
+        <p>New {notificationData.Category}</p>
+
+        <p className="notification-item-msg">{notificationData.Message}</p>
+        <p className="notification-item-time">{notificationData.Date}</p>
       </div>
-      <p className="notification-item-msg">{notificationData.Message}</p>
-      <p className="notification-item-time">{notificationData.Date}</p>
     </div>
   )
 }

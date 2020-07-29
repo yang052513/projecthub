@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { NotificationModalItem } from './NotificationModalItem'
 
 interface Props {
@@ -23,7 +24,6 @@ export const NotificationModal: React.FC<Props> = ({
 
       <div className="notification-item-button">
         <button onClick={offModal}>Close</button>
-        <button>View</button>
       </div>
     </div>
   )
