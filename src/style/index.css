@@ -1727,7 +1727,7 @@
 }
 
 .notification-modal-preview a {
-  color: #03a9f4;
+  color: black;
 }
 
 .notification-modal-preview:after {
@@ -1750,6 +1750,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.notification-item:hover {
+  background-color: #03a9f4;
+  color: white;
 }
 
 .notification-item img {
@@ -1759,24 +1766,22 @@
   margin: 15px 10px 0 15px;
 }
 
+.notification-item .notification-item-category {
+  font-weight: bold;
+}
+
 .notification-item .notification-item-text {
   padding: 15px 15px 0 0;
   font-size: 14px;
 }
 
-.notification-item .notification-item-text p {
-  font-weight: bold;
-}
-
 .notification-item .notification-item-msg {
-  color: #5e5e5e;
   font-size: 12px;
   margin: 8px 0;
   font-weight: normal;
 }
 
 .notification-item .notification-item-time {
-  color: #a5a5a5;
   font-size: 10px;
   margin-right: 5px;
 }
