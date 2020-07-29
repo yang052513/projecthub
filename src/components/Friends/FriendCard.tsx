@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
 import { useFetchProfile } from '../Hooks/useFetchProfile'
 import { Feedback } from '../Common/Feedback'
+import { addNotification } from '../../modules/modules'
 
 interface Profile {
   profileName: string | null
@@ -71,27 +72,27 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
   useEffect(fetchApplicationStatus, [])
 
   //用户申请写入到被申请用户的通知里
-  const addNotification = () => {
-    const notificatonRef = firebase
-      .firestore()
-      .collection('user')
-      .doc(userId)
-      .collection('Notification')
-    notificatonRef
-      .add({
-        Unread: true,
-        Message: `${profile.profile.profileName} sent you a friend request`,
-        Date: currentDay,
-        Category: 'Friend Request',
-        Redirect: '/messenger',
-      })
-      .then(docKey => {
-        notificatonRef.doc(docKey.id).update({
-          Key: docKey.id,
-        })
-        console.log(`通知已经写入到用户数据库中${docKey.id}`)
-      })
-  }
+  // const addNotification = () => {
+  //   const notificatonRef = firebase
+  //     .firestore()
+  //     .collection('user')
+  //     .doc(userId)
+  //     .collection('Notification')
+  //   notificatonRef
+  //     .add({
+  //       Unread: true,
+  //       Message: `${profile.profile.profileName} sent you a friend request`,
+  //       Date: currentDay,
+  //       Category: 'Friend Request',
+  //       Redirect: '/messenger',
+  //     })
+  //     .then(docKey => {
+  //       notificatonRef.doc(docKey.id).update({
+  //         Key: docKey.id,
+  //       })
+  //       console.log(`通知已经写入到用户数据库中${docKey.id}`)
+  //     })
+  // }
 
   //向点击的用户发起好友请求
   const handleFriend = () => {
@@ -132,7 +133,13 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
         Date: currentDay,
       })
 
-    addNotification()
+    addNotification(
+      userId,
+      `${profile.profile.profileName} sent you a friend request`,
+      currentDay,
+      'Friend Request',
+      '/messenger'
+    )
     setIsApplied(true)
 
     setFeedback({
