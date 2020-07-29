@@ -338,7 +338,7 @@ export default function App() {
           <SideNavItem
             theme={theme}
             route={'/mission'}
-            icon="fas fa-exclamation-circle"
+            icon="fab fa-facebook-messenger"
             prompt="About ProjectHub"
           />
 

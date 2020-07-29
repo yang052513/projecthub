@@ -32,7 +32,10 @@ export const NotificationMenu = () => {
       .get()
       .then(notificationDocs => {
         notificationDocs.forEach(doc => {
-          setNotification(doc.data())
+          setNotification((prevNotification: any) => [
+            ...prevNotification,
+            doc.data(),
+          ])
         })
       })
   }
@@ -42,13 +45,18 @@ export const NotificationMenu = () => {
   return (
     <div className="notification-menu">
       <IconButton onClick={() => setShow(true)} aria-label="cart">
-        <StyledBadge badgeContent={2} color="secondary">
+        <StyledBadge badgeContent={notification.length} color="secondary">
           <NotificationsNoneIcon />
         </StyledBadge>
       </IconButton>
 
       <div className="notification-modal-wrap">
-        {show && <NotificationModal offModal={() => setShow(false)} />}
+        {show && (
+          <NotificationModal
+            offModal={() => setShow(false)}
+            notification={notification}
+          />
+        )}
       </div>
     </div>
   )

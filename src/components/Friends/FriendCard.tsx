@@ -33,9 +33,9 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
     msg: '',
     info: '',
   })
-  const { year, monthStrLong, day } = timeFormat
+  const { monthStrLong, day, hours, minutes } = timeFormat
 
-  const currentDay = `${monthStrLong} ${day}, ${year}`
+  const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
 
   //检测该用户是否处于在线状态
   const fecthOnlineStatus = () => {
@@ -80,9 +80,9 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
     notificatonRef
       .add({
         Unread: true,
-        Message: `${info.profileName} sent you a friend request`,
+        Message: `${profile.profile.profileName} sent you a friend request`,
         Date: currentDay,
-        Category: 'Friend',
+        Category: 'Friend Request',
       })
       .then(docKey => {
         notificatonRef.doc(docKey.id).update({
