@@ -10,7 +10,7 @@ interface Props {
   email: string
   github: string
   handleDelete: () => void
-  handleAccept: () => void
+  handleAccept?: () => void
 }
 
 export const GroupQueueItem: React.FC<Props> = ({

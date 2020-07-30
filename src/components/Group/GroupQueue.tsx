@@ -62,7 +62,6 @@ export const GroupQueue: React.FC<Props> = ({
   // 同意用户加入项目团队的申请
   const handleAccept = (userRef: any) => {
     setProgress(true)
-
     setTimeout(() => {
       let updatedList = contributorList
       updatedList[updatedList.length - capacity] = {
@@ -102,30 +101,15 @@ export const GroupQueue: React.FC<Props> = ({
     }, 1000)
   }
 
-  //从Application和Request中删除
+  //queueList 从Application和Request中删除
   const handleDelete = (userRef: any) => {
-    firebase
-      .firestore()
-      .collection('group')
-      .doc(queueRef)
-      .collection('Requests')
-      .doc(userRef.Key)
-      .delete()
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(userRef.Key)
-      .collection('Application')
-      .doc(queueRef)
-      .update({
-        Result: 'Rejected',
-      })
+    deleteRequest(queueRef, userRef.Key)
+    updateApplication(userRef.Key, queueRef, 'Rejected')
   }
 
-  //用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
+  //teamList: 用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
   const handleDeleteContributor = (contributorKey: any) => {
     setProgress(true)
-
     setTimeout(() => {
       let updated_contributorList = contributorList
       updated_contributorList.forEach(
@@ -145,16 +129,14 @@ export const GroupQueue: React.FC<Props> = ({
           Capacity: capacity + 1,
         })
 
-      // 从该用户的application中改为rejected
-      firebase
-        .firestore()
-        .collection('user')
-        .doc(contributorKey)
-        .collection('Application')
-        .doc(queueRef)
-        .update({
-          Result: 'Rejected',
-        })
+      updateApplication(contributorKey, queueRef, 'Rejected')
+      addNotification(
+        contributorKey,
+        `You has been removed from ${groupData.Name}`,
+        'Project Contributor Request',
+        '/grouppost',
+        groupData.Creator.Avatar
+      )
 
       setProgress(false)
       setFeedback({
@@ -162,6 +144,7 @@ export const GroupQueue: React.FC<Props> = ({
         msg: 'Delete Success',
         info: 'Delete user from your team successfully',
       })
+      console.log('从Team中删除用户成功')
     }, 1000)
   }
 
@@ -188,7 +171,6 @@ export const GroupQueue: React.FC<Props> = ({
       email={queue.profile.profile.profileEmail}
       github={queue.profile.profile.profileGithub}
       handleDelete={() => handleDeleteContributor(queue.Key)}
-      handleAccept={() => handleAccept(queue)}
     />
   ))
 
