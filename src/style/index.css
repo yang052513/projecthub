@@ -1594,6 +1594,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  justify-items: center;
   margin: 5px 0;
 }
 
@@ -1601,11 +1602,12 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 1px solid gray;
+  border: 1px solid #03a9f4;
 }
 
 .group-queue-container .queue-item p i {
   margin-right: 5px;
+  color: #03a9f4;
 }
 
 .group-container .group-header-container {
@@ -1675,9 +1677,8 @@
   font-weight: bold;
   font-size: 12px;
   letter-spacing: 1px;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 70px;
+  text-align: center;
 }
 
 .group-queue-contributor {
@@ -1685,7 +1686,7 @@
   display: -ms-grid;
   display: grid;
   justify-items: center;
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .group-queue-contributor img {

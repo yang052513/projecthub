@@ -103,26 +103,43 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
     }))
   }
 
+  // Write project data to each contributor's Project collection 项目创建人创建项目 -> 写入到每个已加入队员的Project集合中
   const toggleCreate = (projectData: any) => {
     setProgress(true)
     setTimeout(() => {
-      //Delete Empty Contributor
-      let contributorList: any = []
+      // Delete Empty Contributor 删除空缺的位子
+      let contributorList: any = [
+        { Id: projectData.Creator.Id, Avatar: projectData.Creator.Avatar },
+      ]
       projectData.Contributors.forEach((contributor: any, index: any) => {
-        if (contributor.Id !== 'None') {
-          contributorList.push(contributor)
-        }
-
         if (contributor.Id !== 'None' && index > 0) {
-          firebase
-            .firestore()
-            .collection('user')
-            .doc(contributor.Id)
-            .collection('Application')
-            .doc(projectData.Key)
-            .delete()
+          contributorList.push(contributor)
+          updateApplication(contributor.Id, projectData.Key, 'Created')
+          addNotification(
+            contributor.Id,
+            `Project ${projectData.Name} has been created and added to your dashboard`,
+            'Project Status',
+            '/',
+            projectData.Creator.Avatar
+          )
         }
       })
+
+      //删除未处理的用户请求为Unavailable
+      firebase
+        .firestore()
+        .collection('group')
+        .doc(projectData.Key)
+        .collection('Requests')
+        .get()
+        .then(requestDocs => {
+          if (requestDocs.docs.length > 0) {
+            requestDocs.forEach(doc => {
+              updateApplication(doc.data().Key, groupData.Key, 'Unavailable')
+              deleteRequest(groupData.Key, doc.data().Key)
+            })
+          }
+        })
 
       //声明 项目信息
       const projectDoc = {
@@ -159,8 +176,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           .set(projectDoc)
       })
 
-      // 创建成功后!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //Delete from group Collection and contributor Application collection 创建状态
+      // Delete from group project docs
       firebase.firestore().collection('group').doc(projectData.Key).delete()
 
       setProgress(false)
@@ -171,6 +187,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         imgUrl: '/images/emoji/emoji_happy.png',
         toggle: toggleHomeDirect,
       })
+      console.log('项目创建成功')
     }, 1000)
   }
 
@@ -267,9 +284,9 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           msg: 'Create Confirm',
           info:
             'There are still position lefts for your team, Do you still want to create the project?',
-          toggle: () => toggleCreate(projectData),
           imgUrl: '/images/emoji/emoji_cry.png',
           confirm: true,
+          toggle: () => toggleCreate(projectData),
           cancel: toggleClose,
         })
       } else {
