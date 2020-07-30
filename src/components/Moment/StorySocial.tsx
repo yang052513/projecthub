@@ -1,23 +1,37 @@
 import React from 'react'
 
 interface Props {
-  like: number
+  like: any
+  hasLiked: boolean
   comment: any
-  likePost: () => void
+  handleLike: () => void
   displayComment: () => void
 }
 export const StorySocial: React.FC<Props> = ({
   like,
+  hasLiked,
   comment,
-  likePost,
+  handleLike,
   displayComment,
 }) => {
   return (
     <div className="moment-story-social-container">
-      <div>
-        <i onClick={likePost} className="far fa-heart"></i>
-        <p>{like > 0 ? like : null}</p>
-      </div>
+      {hasLiked ? (
+        <div>
+          <i
+            onClick={handleLike}
+            className="fas fa-heart"
+            style={{ color: 'red' }}
+          ></i>
+          <p>{like}</p>
+        </div>
+      ) : (
+        <div>
+          <i onClick={handleLike} className="far fa-heart"></i>
+
+          {like > 0 && <p>{like}</p>}
+        </div>
+      )}
       <div>
         <i onClick={displayComment} className="far fa-comment"></i>
         <p>{comment > 0 ? comment : ''}</p>

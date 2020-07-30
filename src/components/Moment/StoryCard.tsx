@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { StorySocial } from './StorySocial'
 import { StoryComment } from './StoryComment'
-import firebase from 'firebase'
+import firebase, { firestore } from 'firebase'
 
 interface Props {
   avatar: string
@@ -10,9 +10,9 @@ interface Props {
   time: string
   content: string
   picture: string | null | any
-  like: number
   docRef: string
   userId: string
+  currUserProfile: any
 }
 
 export const StoryCard: React.FC<Props> = ({
@@ -22,27 +22,39 @@ export const StoryCard: React.FC<Props> = ({
   time,
   content,
   picture,
-  like,
   userId,
+  currUserProfile,
 }) => {
   const db = firebase.firestore()
-  const [likeCnt, setLikeCnt] = useState<number>(like)
+  const user: any = firebase.auth().currentUser
+
+  const [likeCnt, setLikeCnt] = useState<number>()
+  const [hasLiked, setHasLiked] = useState<boolean>(false)
   const [commentCnt, setCommentCnt] = useState<number>()
   const [showComment, setShowComment] = useState<boolean>(false)
 
-  const likePost = () => {
-    setLikeCnt(prevState => prevState + 1)
+  const fetchLike = () => {
+    firebase
+      .firestore()
+      .collection('moment')
+      .doc(docRef)
+      .collection('Likes')
+      .get()
+      .then(docs => {
+        setLikeCnt(docs.size)
+        docs.forEach(doc => {
+          if (doc.data().Key === user.uid) {
+            setHasLiked(true)
+          }
+        })
+      })
   }
+
+  useEffect(fetchLike, [])
 
   const hideComment = () => {
     setShowComment(false)
   }
-
-  useEffect(() => {
-    db.collection('moment').doc(docRef).update({
-      Like: likeCnt,
-    })
-  }, [likeCnt, db, docRef])
 
   useEffect(() => {
     db.collection('moment')
@@ -53,6 +65,20 @@ export const StoryCard: React.FC<Props> = ({
         setCommentCnt(docs.size)
       })
   }, [db, docRef])
+
+  const handleLike = () => {
+    firebase
+      .firestore()
+      .collection('moment')
+      .doc(docRef)
+      .collection('Likes')
+      .doc(user.uid)
+      .set({
+        Key: user.uid,
+        Avatar: currUserProfile.avatar,
+      })
+    console.log(`用户${user.uid}赞了${docRef}`)
+  }
 
   return (
     <div>
@@ -73,14 +99,16 @@ export const StoryCard: React.FC<Props> = ({
           <StorySocial
             comment={commentCnt}
             like={likeCnt}
-            likePost={likePost}
+            hasLiked={hasLiked}
+            handleLike={handleLike}
             displayComment={() => setShowComment(true)}
           />
         </div>
       </div>
-      {showComment ? (
+
+      {showComment && (
         <StoryComment docRef={docRef} hideComment={hideComment} />
-      ) : null}
+      )}
     </div>
   )
 }

@@ -4,8 +4,13 @@ import { StoryCard } from './Moment/StoryCard'
 import firebase from 'firebase'
 import { Loading } from './Common/Loading'
 
+import { useFetchProfile } from '../components/Hooks/useFetchProfile'
+
 export function Moment(props: any) {
   const db = firebase.firestore()
+  const user: any = firebase.auth().currentUser
+
+  const currUserProfile = useFetchProfile(user.uid)
 
   const [loading, setLoading] = useState<boolean>(true)
   const [editor, setEditor] = useState<boolean>(false)
@@ -20,7 +25,7 @@ export function Moment(props: any) {
   //Initialize and read all the moment that stores in the database
   useEffect(() => {
     db.collection('moment')
-      .orderBy('Time', 'asc')
+      .orderBy('Time', 'desc')
       .get()
       .then(query => {
         query.forEach(doc => {
@@ -33,6 +38,7 @@ export function Moment(props: any) {
   //Loop all the moment and render in storycard component
   const momentList = moment.map((moment: any) => (
     <StoryCard
+      currUserProfile={currUserProfile}
       key={moment.Key}
       docRef={moment.Key}
       userId={moment.UserId}
@@ -41,7 +47,6 @@ export function Moment(props: any) {
       time={moment.Time}
       content={moment.Content}
       picture={moment.Picture}
-      like={moment.Like}
     />
   ))
 

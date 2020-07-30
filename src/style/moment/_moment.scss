@@ -72,7 +72,7 @@ $storyImgSize: 50px;
   margin: 20px;
   background-color: white;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 5px;
   .moment-story-user {
     width: 50px;
     height: 50px;
@@ -96,7 +96,8 @@ $storyImgSize: 50px;
     .moment-story-image {
       width: 30vw;
       height: auto;
-      border-radius: 0;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
     .moment-story-social-container {
       display: flex;

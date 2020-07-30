@@ -1188,7 +1188,7 @@
   margin: 20px;
   background-color: white;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 .moment-story-card-container .moment-story-user {
@@ -1217,7 +1217,8 @@
 .moment-story-card-container div .moment-story-image {
   width: 30vw;
   height: auto;
-  border-radius: 0;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .moment-story-card-container div .moment-story-social-container {
