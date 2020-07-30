@@ -21,10 +21,10 @@
     margin: 0 50px;
   }
   .queue-item {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 3fr;
     align-items: center;
-
+    margin: 5px 0;
     img {
       width: 60px;
       height: 60px;

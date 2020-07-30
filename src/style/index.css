@@ -1587,15 +1587,14 @@
 }
 
 .group-queue-container .queue-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 2fr 1fr 3fr;
+      grid-template-columns: 1fr 1fr 2fr 1fr 3fr;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin: 5px 0;
 }
 
 .group-queue-container .queue-item img {

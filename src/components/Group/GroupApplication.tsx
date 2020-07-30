@@ -160,6 +160,11 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
     backgroundColor: '#ffc2c2ab',
   }
 
+  const deletedStyle: any = {
+    color: '#f47303',
+    backgroundColor: '#ffdac2ab',
+  }
+
   return (
     <div className="group-list-application-container group-list-container">
       <TableContainer component={Paper} className={classes.root}>
@@ -217,6 +222,8 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
                         ? acceptedStyle
                         : row.result === 'Rejected'
                         ? rejectedStyle
+                        : row.result === 'Deleted'
+                        ? deletedStyle
                         : null
                     }
                     className="group-list-result"

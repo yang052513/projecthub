@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-import { ProjectCard } from '../components/Home/ProjectCard'
 
 // 更新用户申请项目的状态: Applied, Accepted, Rejected
 export function updateApplication(
@@ -21,6 +20,23 @@ export function updateApplication(
     })
     .catch(error => {
       console.log(`更新用户${userId}申请状态时出现异常，错误: ${error}`)
+    })
+}
+
+// 从用户Application集合中删除相关申请文档
+export function deleteApplication(userId: string, applicationId: string) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(userId)
+    .collection('Application')
+    .doc(applicationId)
+    .delete()
+    .then(() => {
+      console.log(`从${userId}的申请中删除项目信息`)
+    })
+    .catch(error => {
+      console.log(`删除用户${userId}的请求时出现异常 错误: ${error}`)
     })
 }
 

@@ -19,6 +19,13 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { useHistory } from 'react-router-dom'
 
+import {
+  deleteApplication,
+  deleteRequest,
+  updateApplication,
+} from '../../modules/group'
+import { addNotification } from '../../modules/modules'
+
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -198,56 +205,43 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
   }
 
   // Delete the posts from 'group' and 'Application' database
-  const handleDelete = (queueKey: string, contributorList: Array<any>) => {
+  // 项目创建人删除该项目 -> 从group集合 以及申请用户的Application集合中删除项目文档
+  const handleDelete = (groupData: any) => {
     setProgress(true)
-
     setTimeout(() => {
-      // Delete Request docs
+      // Delete Request docs 删除还处于申请状态的用户
       firebase
         .firestore()
         .collection('group')
-        .doc(queueKey)
+        .doc(groupData.Key)
         .collection('Requests')
         .get()
         .then(requestDocs => {
-          //If there are any Request docs exists
           if (requestDocs.docs.length > 0) {
             requestDocs.forEach(doc => {
-              firebase
-                .firestore()
-                .collection('user')
-                .doc(doc.data().Key)
-                .collection('Application')
-                .doc(queueKey)
-                .delete()
-              // Delet from each user that applied
-              firebase
-                .firestore()
-                .collection('group')
-                .doc(queueKey)
-                .collection('Requests')
-                .doc(doc.data().Key)
-                .delete()
+              updateApplication(doc.data().Key, groupData.Key, 'Deleted')
+              deleteRequest(groupData.Key, doc.data().Key)
             })
           }
         })
-      // Delete from user Application collection
-      contributorList.forEach((contributor, index) => {
-        if (contributor.Id !== 'None' && index > 0) {
-          firebase
-            .firestore()
-            .collection('user')
-            .doc(contributor.Id)
-            .collection('Application')
-            .doc(queueKey)
-            .delete()
-            .then(() => {
-              console.log(`从${contributor.Id}的申请中删除项目信息`)
-            })
-        }
-      })
 
-      firebase.firestore().collection('group').doc(queueKey).delete()
+      // Delete from user Application collection 删除已经加入的用户
+      groupData.Contributors.forEach(
+        (contributor: { Id: string }, index: number) => {
+          if (contributor.Id !== 'None' && index > 0) {
+            updateApplication(contributor.Id, groupData.Key, 'Deleted')
+            addNotification(
+              contributor.Id,
+              `${groupData.Name} has been deleted by the creator`,
+              'Project Status',
+              '/grouppost',
+              groupData.Creator.Avatar
+            )
+          }
+        }
+      )
+
+      firebase.firestore().collection('group').doc(groupData.Key).delete()
       setProgress(false)
       setFeedback({
         show: true,
@@ -264,14 +258,13 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
   const handleCreate = (projectData: any): void => {
     setProgress(true)
-
     setTimeout(() => {
       //队伍还有空缺位置
       if (projectData.Capacity > 0) {
         setProgress(false)
         setFeedback({
           show: true,
-          msg: 'Create Failed',
+          msg: 'Create Confirm',
           info:
             'There are still position lefts for your team, Do you still want to create the project?',
           toggle: () => toggleCreate(projectData),
@@ -343,7 +336,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
                 <StyledTableCell align="center">
                   <GroupMenu
                     groupKey={row.Key}
-                    handleDelete={() => handleDelete(row.Key, row.Contributors)}
+                    handleDelete={() => handleDelete(row)}
                   />
                 </StyledTableCell>
               </StyledTableRow>
