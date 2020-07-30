@@ -18,6 +18,10 @@ import Paper from '@material-ui/core/Paper'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 
+import { useFetchProfile } from '../Hooks/useFetchProfile'
+
+import { addNotification } from '../../modules/modules'
+
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -55,6 +59,7 @@ interface Props {
 export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
 
   const [feedback, setFeedback] = useState<any>({
     show: false,
@@ -107,6 +112,7 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
       //如果已经加入成功选择删除，要把contributorList的位置改为None
       let contributorList = groupData.Contributors
       let isInContributor = false
+
       groupData.Contributors.forEach(
         (contributor: any, index: string | number) => {
           if (contributor.Id === user.uid) {
@@ -126,6 +132,13 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
             Contributors: contributorList,
             Capacity: groupData.Capacity + 1,
           })
+        addNotification(
+          groupData.Creator.Id,
+          `${profile.profile.profileName} left from your project ${groupData.Name}`,
+          'Project Status',
+          '/grouppost',
+          profile.profile.profileName
+        )
       }
 
       setProgress(false)

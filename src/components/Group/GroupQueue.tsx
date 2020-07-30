@@ -7,6 +7,7 @@ import { Progress } from '../Common/Progress'
 // Modules
 import { addNotification } from '../../modules/modules'
 import { updateApplication, deleteRequest } from '../../modules/group'
+import { group } from 'console'
 
 interface Props {
   queueData: any
@@ -86,7 +87,7 @@ export const GroupQueue: React.FC<Props> = ({
       // 通知用户
       addNotification(
         userRef.Key,
-        `You application for ${groupData.Name} has been accepted`,
+        `Your application for ${groupData.Name} has been accepted`,
         'Project Contributor Request',
         '/grouppost',
         groupData.Creator.Avatar
@@ -103,8 +104,26 @@ export const GroupQueue: React.FC<Props> = ({
 
   //queueList 从Application和Request中删除
   const handleDelete = (userRef: any) => {
-    deleteRequest(queueRef, userRef.Key)
-    updateApplication(userRef.Key, queueRef, 'Rejected')
+    setProgress(true)
+    setTimeout(() => {
+      deleteRequest(queueRef, userRef.Key)
+      updateApplication(userRef.Key, queueRef, 'Rejected')
+      addNotification(
+        userRef.Key,
+        `Your request for project ${groupData.Name} has been rejected`,
+        'Project Request',
+        '/grouppost',
+        groupData.Creator.Avatar
+      )
+
+      setProgress(false)
+      setFeedback({
+        show: true,
+        msg: 'Delete Success',
+        info: 'Delete user from your team successfully',
+      })
+      console.log(`用户${userRef.Key}的请求以被拒绝`)
+    }, 1000)
   }
 
   //teamList: 用户已经加入了队伍 要把contributor里改为None 然后Application中改为rejected
