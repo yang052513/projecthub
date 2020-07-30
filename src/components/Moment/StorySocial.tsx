@@ -5,6 +5,7 @@ interface Props {
   hasLiked: boolean
   comment: any
   handleLike: () => void
+  handleDislike: () => void
   displayComment: () => void
 }
 export const StorySocial: React.FC<Props> = ({
@@ -12,6 +13,7 @@ export const StorySocial: React.FC<Props> = ({
   hasLiked,
   comment,
   handleLike,
+  handleDislike,
   displayComment,
 }) => {
   return (
@@ -19,7 +21,7 @@ export const StorySocial: React.FC<Props> = ({
       {hasLiked ? (
         <div>
           <i
-            onClick={handleLike}
+            onClick={handleDislike}
             className="fas fa-heart"
             style={{ color: 'red' }}
           ></i>

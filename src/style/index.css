@@ -1189,6 +1189,7 @@
   background-color: white;
   padding: 20px;
   border-radius: 5px;
+  position: relative;
 }
 
 .moment-story-card-container .moment-story-user {
@@ -1348,6 +1349,12 @@
 .comment-item-container .comment-body {
   margin: 5px 0;
   font-size: 14px;
+}
+
+.moment-menu-container {
+  position: absolute;
+  right: 0;
+  bottom: 40px;
 }
 
 .friend-container .friend-card-item-container {

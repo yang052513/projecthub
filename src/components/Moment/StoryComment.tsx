@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Comment } from './Comment'
 import { timeFormat } from 'current-time-format'
+import { addNotification } from '../../modules/modules'
 
 interface Props {
   docRef?: string
   hideComment: () => void
+  creatorId: string
 }
 
 const { year, monthStrShort, day, hours, minutes } = timeFormat
 
-export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
+export const StoryComment: React.FC<Props> = ({
+  docRef,
+  hideComment,
+  creatorId,
+}) => {
   const user: any = firebase.auth().currentUser
   const db = firebase.firestore()
   const [currUserInfo, setCurrUserInfo] = useState<any>({
@@ -53,27 +59,32 @@ export const StoryComment: React.FC<Props> = ({ docRef, hideComment }) => {
   }
 
   const sumbitComment = () => {
-    firebase.auth().onAuthStateChanged((user: any) => {
-      db.collection('moment')
-        .doc(docRef)
-        .collection('Comments')
-        .add({
-          UserName: currUserInfo.name,
-          UserId: currUserInfo.id,
-          UserAvatar: currUserInfo.avatar,
-          CommentBody: commentText,
-          CommentDate: `${monthStrShort} ${day}, ${year} ${hours}:${minutes}`,
-        })
-        .then(commentRef => {
-          db.collection('moment')
-            .doc(docRef)
-            .collection('Comments')
-            .doc(commentRef.id)
-            .update({
-              CommentId: commentRef.id,
-            })
-        })
-    })
+    db.collection('moment')
+      .doc(docRef)
+      .collection('Comments')
+      .add({
+        UserName: currUserInfo.name,
+        UserId: currUserInfo.id,
+        UserAvatar: currUserInfo.avatar,
+        CommentBody: commentText,
+        CommentDate: `${monthStrShort} ${day}, ${year} ${hours}:${minutes}`,
+      })
+      .then(commentRef => {
+        db.collection('moment')
+          .doc(docRef)
+          .collection('Comments')
+          .doc(commentRef.id)
+          .update({
+            CommentId: commentRef.id,
+          })
+      })
+    addNotification(
+      creatorId,
+      `${currUserInfo.name} commented your story as ${commentText}`,
+      'Story Comment',
+      `/moment/${user.uid}`,
+      currUserInfo.avatar
+    )
   }
 
   return (

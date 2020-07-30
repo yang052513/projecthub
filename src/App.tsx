@@ -27,6 +27,8 @@ import { GroupFormEdit } from './components/Group/GroupFormEdit'
 import { SideNavItem } from './components/Navigation/SideNavItem'
 import { NotificationMenu } from './components/Notification/NotificationMenu'
 
+import { MomentUser } from './components/Moment/MomentUser'
+
 export default function App() {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
@@ -386,7 +388,7 @@ export default function App() {
           <Route exact path="/friends/">
             <Friends />
           </Route>
-          <Route path="/moment">
+          <Route exact path="/moment">
             <Moment profile={profile} avatar={avatar} />
           </Route>
           <Route path="/setting/">
@@ -419,6 +421,10 @@ export default function App() {
 
           <Route path="/grouppost/:ref">
             <GroupFormEdit />
+          </Route>
+
+          <Route path="/moment/:ref">
+            <MomentUser />
           </Route>
 
           {/* Other nested router */}

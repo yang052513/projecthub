@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { StorySocial } from './StorySocial'
 import { StoryComment } from './StoryComment'
-import firebase, { firestore } from 'firebase'
+import firebase from 'firebase'
+import { addNotification } from '../../modules/modules'
+import { MomentMenu } from '../Moment/MomentMenu'
 
 interface Props {
   avatar: string
@@ -49,8 +51,7 @@ export const StoryCard: React.FC<Props> = ({
         })
       })
   }
-
-  useEffect(fetchLike, [])
+  useEffect(fetchLike, [hasLiked])
 
   const hideComment = () => {
     setShowComment(false)
@@ -77,7 +78,41 @@ export const StoryCard: React.FC<Props> = ({
         Key: user.uid,
         Avatar: currUserProfile.avatar,
       })
-    console.log(`用户${user.uid}赞了${docRef}`)
+    setHasLiked(true)
+    if (userId !== user.uid) {
+      addNotification(
+        userId,
+        `${currUserProfile.profile.profileName} liked your story`,
+        'Story Like',
+        `/moemnt/${userId}`,
+        currUserProfile.avatar
+      )
+    }
+  }
+
+  const handleDislike = () => {
+    firebase
+      .firestore()
+      .collection('moment')
+      .doc(docRef)
+      .collection('Likes')
+      .doc(user.uid)
+      .delete()
+      .then(() => {
+        console.log('取消对这个动态的赞')
+      })
+    setHasLiked(false)
+  }
+
+  const handleDelete = () => {
+    firebase
+      .firestore()
+      .collection('moment')
+      .doc(docRef)
+      .delete()
+      .then(() => {
+        console.log('动态删除成功')
+      })
   }
 
   return (
@@ -89,7 +124,7 @@ export const StoryCard: React.FC<Props> = ({
 
         <div>
           <p className="moment-story-name">
-            {name}
+            <Link to={`/moment/${userId}`}>{name}</Link>
             <span className="moment-story-time"> @{time}</span>
           </p>
           <p className="moment-story-content">{content}</p>
@@ -101,13 +136,19 @@ export const StoryCard: React.FC<Props> = ({
             like={likeCnt}
             hasLiked={hasLiked}
             handleLike={handleLike}
+            handleDislike={handleDislike}
             displayComment={() => setShowComment(true)}
           />
+          {user.uid === userId && <MomentMenu handleDelete={handleDelete} />}
         </div>
       </div>
 
       {showComment && (
-        <StoryComment docRef={docRef} hideComment={hideComment} />
+        <StoryComment
+          docRef={docRef}
+          creatorId={userId}
+          hideComment={hideComment}
+        />
       )}
     </div>
   )
