@@ -10,7 +10,7 @@ import { MessengerListRequest } from './MessengerList/MessengerListRequest'
 export const MessengerList: React.FC = () => {
   const user: any = firebase.auth().currentUser
 
-  const [friends, setFriends] = useState<any>([])
+  const [friend, setFriend] = useState<any>([])
   const [request, setRequest] = useState<any>([])
 
   const fetchRequest = () => {
@@ -29,7 +29,24 @@ export const MessengerList: React.FC = () => {
       })
   }
 
+  const fetchFriends = () => {
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Friend')
+      .doc('Added')
+      .collection('Friends')
+      .get()
+      .then(docs => {
+        docs.forEach(doc => {
+          setFriend((prevFriend: any) => [...prevFriend, doc.data()])
+        })
+      })
+  }
+
   useEffect(fetchRequest, [])
+  useEffect(fetchFriends, [])
 
   return (
     <div className="messenger-list-container">
@@ -38,7 +55,7 @@ export const MessengerList: React.FC = () => {
           <MessengerListChat />
         </Route>
         <Route path="/messenger/friends">
-          <MessengerListFriend />
+          <MessengerListFriend friend={friend} />
         </Route>
 
         <Route path="/messenger/request">
