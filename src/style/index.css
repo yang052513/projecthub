@@ -1712,6 +1712,69 @@
   margin: 0 50px;
 }
 
+.messenger-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 300px auto;
+      grid-template-columns: 300px auto;
+  margin: 30px 50px 30px 115px;
+}
+
+.messenger-list-container {
+  height: 85vh;
+  overflow-y: scroll;
+  margin-right: 10px;
+}
+
+.messenger-list-chat-item {
+  background-color: white;
+  padding: 20px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.messenger-list-chat-item h4 {
+  font-family: quicksand;
+  margin-bottom: 5px;
+}
+
+.messenger-list-chat-item p {
+  font-size: 13px;
+}
+
+.messenger-list-chat-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.messenger-chat-container {
+  background-color: white;
+  position: relative;
+}
+
+.messenger-chat-container .messenger-chat-header {
+  border: 1px solid red;
+  height: 10%;
+  background-color: #03a9f4;
+}
+
+.messenger-chat-container .messenger-chat-display-container {
+  border: 1px solid blue;
+  height: 70%;
+}
+
+.messenger-chat-container .messenger-chat-box-container {
+  border: 1px solid purple;
+  position: absolute;
+  bottom: 0;
+  height: 18%;
+  width: 100%;
+}
+
 .notification-menu {
   position: relative;
 }

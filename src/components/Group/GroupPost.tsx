@@ -8,9 +8,7 @@ export const GroupPost = () => {
   const user: any = firebase.auth().currentUser
 
   const [group, setGroup] = useState<Array<Object | null | undefined>>([])
-  const [application, setApplication] = useState<
-    Array<Object | null | undefined>
-  >([])
+  const [application, setApplication] = useState<any>([])
 
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -30,7 +28,7 @@ export const GroupPost = () => {
               .doc(doc.data().Key)
               .get()
               .then(applicationDoc => {
-                setApplication(prevState => [
+                setApplication((prevState: any) => [
                   ...prevState,
                   { result: doc.data().Result, data: applicationDoc.data() },
                 ])

@@ -61,6 +61,7 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
 
+  console.log(applicationList)
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',

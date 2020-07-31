@@ -8,7 +8,7 @@ import { Home } from './components/Home'
 import { Status } from './components/Status'
 import { Explore } from './components/Explore'
 import { Group } from './components/Group'
-import { Mission } from './components/Mission'
+import { Messenger } from './components/Messenger'
 import { Friends } from './components/Friends'
 import { Moment } from './components/Moment'
 import { Setting } from './components/Setting'
@@ -318,6 +318,13 @@ export default function App() {
 
           <SideNavItem
             theme={theme}
+            route={'/messenger'}
+            icon="fab fa-facebook-messenger"
+            prompt="Message"
+          />
+
+          <SideNavItem
+            theme={theme}
             route={'/moment'}
             icon="far fa-clock"
             prompt="Moment"
@@ -335,13 +342,6 @@ export default function App() {
             route={'/faq'}
             icon="far fa-question-circle"
             prompt="FAQ"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/mission'}
-            icon="fab fa-facebook-messenger"
-            prompt="About ProjectHub"
           />
 
           <SideNavItem
@@ -382,8 +382,8 @@ export default function App() {
           <Route path="/group">
             <Group />
           </Route>
-          <Route path="/mission/">
-            <Mission />
+          <Route path="/messenger/">
+            <Messenger />
           </Route>
           <Route exact path="/friends/">
             <Friends />
