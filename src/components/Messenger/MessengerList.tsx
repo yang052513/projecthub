@@ -1,95 +1,23 @@
 import React from 'react'
-
+import { Link, Switch, Route, useLocation } from 'react-router-dom'
+import { MessengerListChat } from './MessengerList/MessengerListChat'
+import { MessengerListFriend } from './MessengerList/MessengerListFriend'
+import { MessengerListRequest } from './MessengerList/MessengerListRequest'
 export const MessengerList: React.FC = () => {
   return (
     <div className="messenger-list-container">
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
+      <Switch>
+        <Route exact path="/messenger">
+          <MessengerListChat />
+        </Route>
+        <Route path="/messenger/friends">
+          <MessengerListFriend />
+        </Route>
 
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
-
-      <div className="messenger-list-chat-item">
-        <img src="./images/user.jpg" alt="" />
-        <div>
-          <h4>Nathan Lee</h4>
-          <p>Let me know what you think...</p>
-        </div>
-      </div>
+        <Route path="/messenger/request">
+          <MessengerListRequest />
+        </Route>
+      </Switch>
     </div>
   )
 }

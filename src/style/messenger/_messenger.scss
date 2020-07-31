@@ -1,18 +1,42 @@
 .messenger-container {
   display: grid;
-  grid-template-columns: 20% 60%;
+  grid-template-columns: 3% 20% 60%;
   justify-content: center;
   margin: 30px 50px 30px 115px;
+}
+
+// 切换面板
+.messenger-panel-container {
+  background-color: $sideNavBg;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 50px;
+  justify-items: center;
+  padding: 25px 0;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  i {
+    color: white;
+    font-size: 20px;
+  }
 }
 
 //对话框列表
 .messenger-list-container {
   height: 85vh;
   overflow-y: scroll;
-  //   border-top-left-radius: 25px;
-  //   border-bottom-left-radius: 25px;
-  margin-right: 10px;
 }
+.messenger-list-header {
+  height: 8%;
+  background-color: rgb(226, 226, 226);
+  p {
+    padding: 15px;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+}
+
 .messenger-list-chat-item {
   background-color: white;
   padding: 20px 10px;
@@ -35,18 +59,23 @@
 
 //聊天显示内容
 .messenger-chat-container {
-  //   border-top-right-radius: 25px;
-  //   border-bottom-right-radius: 25px;
   background-color: rgb(238, 238, 238);
   position: relative;
 
   .messenger-chat-header {
-    height: 10%;
+    height: 8%;
     background-color: $sideNavBg;
+    border-top-right-radius: 25px;
+    p {
+      padding: 15px;
+      font-size: 17px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+    }
   }
 
   .messenger-chat-display-container {
-    height: 70%;
+    height: 72%;
     // border: 1px solid blue;
     .messenger-chat-item {
       display: flex;
@@ -102,6 +131,7 @@
     width: 100%;
 
     textarea {
+      border-bottom-right-radius: 25px;
       resize: none;
       width: 100%;
       height: 100%;
