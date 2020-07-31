@@ -14,7 +14,7 @@ export const SideNavItem: React.FC<Props> = ({
   icon,
   prompt,
 }) => {
-  const currRoute = useLocation().pathname
+  const currRoute: any = useLocation().pathname
   const [show, setShow] = useState<boolean>(false)
 
   const currLinkStyle: any = {

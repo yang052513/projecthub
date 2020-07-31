@@ -6,7 +6,24 @@ export const MessengerListRequest = () => {
       <div className="messenger-list-header">
         <p>FRIENDS REQUEST</p>
       </div>
-      <p>所有好友申请在这里显示</p>
+
+      <div className="messenger-list-request-item">
+        <div className="messenger-list-request-profile">
+          <img src="../../images/user.jpg" alt="" />
+          <div>
+            <h4>Nathan Lee</h4>
+            <p>
+              <i className="fas fa-map-pin"></i>
+              Vancouver BC
+            </p>
+          </div>
+        </div>
+
+        <div className="messenger-list-request-button">
+          <button>Accept</button>
+          <button>Delete</button>
+        </div>
+      </div>
     </div>
   )
 }
