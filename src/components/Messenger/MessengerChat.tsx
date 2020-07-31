@@ -29,7 +29,14 @@ export const MessengerChat: React.FC = () => {
         </div>
       </div>
 
-      <div className="messenger-chat-box-container">Text area</div>
+      <div className="messenger-chat-tools-container">
+        <i className="far fa-laugh"></i>
+        <i className="far fa-image"></i>
+        <i className="fas fa-link"></i>
+      </div>
+      <div className="messenger-chat-box-container">
+        <textarea placeholder="Type Message..."></textarea>
+      </div>
     </div>
   )
 }

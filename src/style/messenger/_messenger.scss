@@ -1,6 +1,7 @@
 .messenger-container {
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 20% 60%;
+  justify-content: center;
   margin: 30px 50px 30px 115px;
 }
 
@@ -36,17 +37,17 @@
 .messenger-chat-container {
   //   border-top-right-radius: 25px;
   //   border-bottom-right-radius: 25px;
-  background-color: white;
+  background-color: rgb(238, 238, 238);
   position: relative;
+
   .messenger-chat-header {
-    border: 1px solid red;
     height: 10%;
     background-color: $sideNavBg;
   }
 
   .messenger-chat-display-container {
     height: 70%;
-
+    // border: 1px solid blue;
     .messenger-chat-item {
       display: flex;
       margin: 15px 20px;
@@ -56,13 +57,12 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
+        margin-right: 10px;
       }
       p {
-        background-color: $sideNavBg;
         border-radius: 15px;
-        color: white;
         padding: 15px;
-
+        margin-right: 10px;
         font-size: 14px;
       }
     }
@@ -70,18 +70,49 @@
 
   .chat-sender {
     float: right;
+    p {
+      background-color: $sideNavBg;
+      color: white;
+    }
   }
 
   .chat-receiver {
     float: left;
+    p {
+      background-color: rgb(255, 255, 255);
+      color: rgb(0, 0, 0);
+    }
   }
 
+  .messenger-chat-tools-container {
+    height: 5%;
+    background-color: white;
+    color: $sideNavBg;
+    padding: 10px 10px;
+    i {
+      margin-right: 30px;
+      font-size: 22px;
+    }
+  }
   //输入部分
   .messenger-chat-box-container {
-    border: 1px solid purple;
     position: absolute;
     bottom: 0;
-    height: 18%;
+    height: 15%;
     width: 100%;
+
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      font-family: quicksand;
+      font-size: 16px;
+      padding: 10px;
+      border: 1px solid rgba(0, 0, 0, 0);
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }

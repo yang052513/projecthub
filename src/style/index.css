@@ -1715,8 +1715,11 @@
 .messenger-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 300px auto;
-      grid-template-columns: 300px auto;
+  -ms-grid-columns: 20% 60%;
+      grid-template-columns: 20% 60%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 30px 50px 30px 115px;
 }
 
@@ -1752,12 +1755,11 @@
 }
 
 .messenger-chat-container {
-  background-color: white;
+  background-color: #eeeeee;
   position: relative;
 }
 
 .messenger-chat-container .messenger-chat-header {
-  border: 1px solid red;
   height: 10%;
   background-color: #03a9f4;
 }
@@ -1778,13 +1780,13 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
 .messenger-chat-container .messenger-chat-display-container .messenger-chat-item p {
-  background-color: #03a9f4;
   border-radius: 15px;
-  color: white;
   padding: 15px;
+  margin-right: 10px;
   font-size: 14px;
 }
 
@@ -1792,16 +1794,53 @@
   float: right;
 }
 
+.messenger-chat-container .chat-sender p {
+  background-color: #03a9f4;
+  color: white;
+}
+
 .messenger-chat-container .chat-receiver {
   float: left;
 }
 
+.messenger-chat-container .chat-receiver p {
+  background-color: white;
+  color: black;
+}
+
+.messenger-chat-container .messenger-chat-tools-container {
+  height: 5%;
+  background-color: white;
+  color: #03a9f4;
+  padding: 10px 10px;
+}
+
+.messenger-chat-container .messenger-chat-tools-container i {
+  margin-right: 30px;
+  font-size: 22px;
+}
+
 .messenger-chat-container .messenger-chat-box-container {
-  border: 1px solid purple;
   position: absolute;
   bottom: 0;
-  height: 18%;
+  height: 15%;
   width: 100%;
+}
+
+.messenger-chat-container .messenger-chat-box-container textarea {
+  resize: none;
+  width: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: quicksand;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.messenger-chat-container .messenger-chat-box-container textarea:focus {
+  outline: none;
 }
 
 .notification-menu {
