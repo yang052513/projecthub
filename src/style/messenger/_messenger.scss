@@ -66,6 +66,7 @@
     height: 8%;
     background-color: $sideNavBg;
     border-top-right-radius: 25px;
+    color: white;
     p {
       padding: 15px;
       font-size: 17px;
@@ -147,13 +148,15 @@
   }
 }
 
+// 好友请求列表
 .messenger-list-request-container {
   .messenger-list-request-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
+    background-color: white;
     padding: 10px;
+    margin: 5px 0;
     .messenger-list-request-profile {
       display: flex;
       align-items: center;
@@ -183,6 +186,27 @@
 
         margin-right: 5px;
       }
+    }
+  }
+}
+
+// 通过申请的好友列表
+.messenger-list-friend-container {
+  .messenger-list-friend-item {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    margin: 5px 0;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+    p {
+      font-size: 15px;
+      font-weight: bold;
     }
   }
 }

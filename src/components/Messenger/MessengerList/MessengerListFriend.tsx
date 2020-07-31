@@ -6,7 +6,22 @@ export const MessengerListFriend = () => {
       <div className="messenger-list-header">
         <p>YOUR FRIENDS</p>
       </div>
-      <p>这里显示所有好友申请</p>
+
+      <div className="messenger-list-friend-item">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
+          alt=""
+        />
+        <p>Nathan Lee</p>
+      </div>
+
+      <div className="messenger-list-friend-item">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
+          alt=""
+        />
+        <p>Nathan Lee</p>
+      </div>
     </div>
   )
 }

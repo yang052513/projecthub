@@ -8,7 +8,10 @@ export const MessengerChat: React.FC = () => {
       </div>
       <div className="messenger-chat-display-container">
         <div className="messenger-chat-item chat-receiver">
-          <img src="./images/user.jpg" alt="" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
+            alt=""
+          />
           <p>
             We're headed to Tahoe this weekend. Something warm would be nice...
           </p>
@@ -18,14 +21,20 @@ export const MessengerChat: React.FC = () => {
           <p>
             We're headed to Tahoe this weekend. Something warm would be nice...
           </p>
-          <img src="./images/user.jpg" alt="" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
+            alt=""
+          />
         </div>
 
         <div className="messenger-chat-item chat-sender">
           <p>
             We're headed to Tahoe this weekend. Something warm would be nice...
           </p>
-          <img src="./images/user.jpg" alt="" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
+            alt=""
+          />
         </div>
       </div>
 
