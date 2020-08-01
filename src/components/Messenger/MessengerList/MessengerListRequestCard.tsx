@@ -2,6 +2,12 @@ import React from 'react'
 import { addNotification } from '../../../modules/modules'
 import firebase from 'firebase'
 import { useFetchProfile } from '../../Hooks/useFetchProfile'
+import {
+  deleteFriendRequest,
+  deleteFriendApplication,
+  addFriend,
+} from '../../../modules/messenger'
+
 interface Props {
   requestUser: any
 }
@@ -10,6 +16,7 @@ export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
 
+  // 接受好友申请 并互相写入双方的个人信息
   const handleAccept = () => {
     const userData = {
       FriendKey: user.uid,
@@ -27,52 +34,24 @@ export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
       profile.avatar
     )
 
-    // 申请用户删除application
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(user.uid)
-      .collection('Friend')
-      .doc('Notification')
-      .collection('Request')
-      .doc(requestUser.FriendKey)
-      .delete()
-
-    // 当前用户删除request
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(requestUser.FriendKey)
-      .collection('Friend')
-      .doc('Notification')
-      .collection('Application')
-      .doc(user.uid)
-      .delete()
-
-    // 申请用户Added 集合加入 当前用户Added集合加入用户
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(user.uid)
-      .collection('Friend')
-      .doc('Added')
-      .collection('Friends')
-      .doc(requestUser.FriendKey)
-      .set(requestUser)
-
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(requestUser.FriendKey)
-      .collection('Friend')
-      .doc('Added')
-      .collection('Friends')
-      .doc(user.uid)
-      .set(userData)
+    deleteFriendRequest(user.uid, requestUser.FriendKey)
+    deleteFriendApplication(requestUser.FriendKey, user.uid)
+    addFriend(user.uid, requestUser.FriendKey, requestUser)
+    addFriend(requestUser.FriendKey, user.uid, userData)
   }
 
+  // 删除用户的申请 并不再显示该用户在申请列表
   const handleDelete = () => {
-    console.log(`删除申请${requestUser}`)
+    deleteFriendApplication(requestUser.FriendKey, user.uid)
+    deleteFriendRequest(user.uid, requestUser.FriendKey)
+
+    addNotification(
+      requestUser.FriendKey,
+      `${profile.profile.profileName} rejected your friend request`,
+      'Friend Request Update',
+      '/messenger',
+      profile.avatar
+    )
   }
 
   return (
