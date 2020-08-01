@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { addNotification } from '../../../modules/modules'
 import firebase from 'firebase'
 import { useFetchProfile } from '../../Hooks/useFetchProfile'
+import { useHistory } from 'react-router-dom'
 import {
   deleteFriendRequest,
   deleteFriendApplication,
   addFriend,
 } from '../../../modules/messenger'
+
+import { Feedback } from '../../Common/Feedback'
 
 interface Props {
   requestUser: any
@@ -15,6 +19,12 @@ interface Props {
 export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
+  const history = useHistory()
+  const [feedback, setFeedback] = useState<any>({
+    display: false,
+    msg: '',
+    info: '',
+  })
 
   // 接受好友申请 并互相写入双方的个人信息
   const handleAccept = () => {
@@ -38,6 +48,11 @@ export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
     deleteFriendApplication(requestUser.FriendKey, user.uid)
     addFriend(user.uid, requestUser.FriendKey, requestUser)
     addFriend(requestUser.FriendKey, user.uid, userData)
+    setFeedback({
+      display: true,
+      msg: 'Added New Friend',
+      info: `${requestUser.FriendProfile.Profile.profileName} are your friends now`,
+    })
   }
 
   // 删除用户的申请 并不再显示该用户在申请列表
@@ -52,25 +67,42 @@ export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
       '/messenger',
       profile.avatar
     )
+
+    setFeedback({
+      display: true,
+      msg: 'Delete Request',
+      info: `Delete ${requestUser.FriendProfile.Profile.profileName}'s friend request`,
+    })
   }
 
   return (
-    <div className="messenger-list-request-item">
-      <div className="messenger-list-request-profile">
-        <img src={requestUser.FriendProfile.Avatar} alt="" />
-        <div>
-          <h4>{requestUser.FriendProfile.Profile.profileName}</h4>
-          <p>
-            <i className="fas fa-map-pin"></i>
-            {requestUser.FriendProfile.Profile.profileLocation}
-          </p>
+    <div>
+      <div className="messenger-list-request-item">
+        <div className="messenger-list-request-profile">
+          <img src={requestUser.FriendProfile.Avatar} alt="" />
+          <div>
+            <h4>{requestUser.FriendProfile.Profile.profileName}</h4>
+            <p>
+              <i className="fas fa-map-pin"></i>
+              {requestUser.FriendProfile.Profile.profileLocation}
+            </p>
+          </div>
+        </div>
+
+        <div className="messenger-list-request-button">
+          <button onClick={handleAccept}>Accept</button>
+          <button onClick={handleDelete}>Delete</button>
         </div>
       </div>
 
-      <div className="messenger-list-request-button">
-        <button onClick={handleAccept}>Accept</button>
-        <button onClick={handleDelete}>Delete</button>
-      </div>
+      {feedback.display && (
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="../../images/emoji/emoji_noidea.png"
+          toggle={() => history.push('/messenger/friends')}
+        />
+      )}
     </div>
   )
 }
