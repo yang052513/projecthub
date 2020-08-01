@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const MessengerPanel = () => {
   return (
     <div className="messenger-panel-container">
-      <Link to="/messenger">
+      <Link to="/messenger/chat">
         <i className="fas fa-comment"></i>
       </Link>
 

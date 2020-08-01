@@ -51,8 +51,8 @@ export const MessengerList: React.FC = () => {
   return (
     <div className="messenger-list-container">
       <Switch>
-        <Route exact path="/messenger">
-          <MessengerListChat />
+        <Route path="/messenger/chat">
+          <MessengerListChat friend={friend} />
         </Route>
         <Route path="/messenger/friends">
           <MessengerListFriend friend={friend} />

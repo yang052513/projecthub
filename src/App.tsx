@@ -318,7 +318,7 @@ export default function App() {
 
           <SideNavItem
             theme={theme}
-            route={'/messenger'}
+            route={'/messenger/chat'}
             icon="fab fa-facebook-messenger"
             prompt="Message"
           />
