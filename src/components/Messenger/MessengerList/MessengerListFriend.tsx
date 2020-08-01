@@ -7,7 +7,7 @@ interface Props {
 export const MessengerListFriend: React.FC<Props> = ({ friend }) => {
   const friendList = friend.map((item: any) => (
     <div className="messenger-list-friend-item">
-      <img src={item.FriendProfile.Profile.profileName} alt="" />
+      <img src={item.FriendProfile.Avatar} alt="" />
       <p>{item.FriendProfile.Profile.profileName}</p>
     </div>
   ))

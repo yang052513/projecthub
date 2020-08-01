@@ -30,7 +30,7 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
           setInitial(true)
         }
       })
-  }, [db, user.uid])
+  }, [])
 
   const renderProject = project
     .sort((a: any, b: any) => {

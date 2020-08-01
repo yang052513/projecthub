@@ -147,7 +147,7 @@ export default function App() {
         console.log(`读取用户保存的壁纸时出错了 ${error}`)
       })
     // })
-  }, [db, user.displayName, user.email, user.uid])
+  }, [])
 
   // active css style 当前所在的route对应的nav icon样式化
   const currLinkStyle: any = {

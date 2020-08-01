@@ -157,7 +157,7 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
         })
     }
     setLaunch(false)
-  }, [db, user])
+  }, [])
 
   return (
     <div>

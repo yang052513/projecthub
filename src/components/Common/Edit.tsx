@@ -91,7 +91,7 @@ export const Edit: React.FC = () => {
         setStatus(doc.data().Status)
         setPublicProject(doc.data().Privacy === 'Public' ? true : false)
       })
-  }, [db, params.ref, user.uid])
+  }, [])
 
   function handleFail() {
     setFail(false)

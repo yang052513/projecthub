@@ -78,7 +78,7 @@ export const Kanban: React.FC = () => {
           }
         })
     }
-  }, [db, params.ref, user])
+  }, [])
 
   //添加新的卡片到列表中 保存到数据库
   const handleCardAdd = (card: any, laneId: any) => {

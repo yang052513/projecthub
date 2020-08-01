@@ -63,7 +63,7 @@ export const Status: React.FC = () => {
           })
         })
     }
-  }, [db, user])
+  }, [])
 
   useEffect(() => {
     let count: { [index: string]: any } = {}
