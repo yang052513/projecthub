@@ -63,3 +63,21 @@ export function addFriend(
       console.log(`添加好友时出现错误 ${error}`)
     })
 }
+
+export function deleteFriend(currUserKey: string, deleteFriendKey: string) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(currUserKey)
+    .collection('Friend')
+    .doc('Added')
+    .collection('Friends')
+    .doc(deleteFriendKey)
+    .delete()
+    .then(() => {
+      console.log(`${deleteFriendKey}不再是${currUserKey}的好友`)
+    })
+    .catch(error => {
+      console.log(`删除好友${deleteFriendKey}时出现错误 ${error}`)
+    })
+}

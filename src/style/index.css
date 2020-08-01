@@ -1960,7 +1960,7 @@
   margin: 5px 0;
 }
 
-.messenger-list-friend-container .messenger-list-friend-item img {
+.messenger-list-friend-container .messenger-list-friend-item .friend-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1969,7 +1969,10 @@
 
 .messenger-list-friend-container .messenger-list-friend-item p {
   font-size: 15px;
-  font-weight: bold;
+}
+
+.messenger-list-friend-container .messenger-list-friend-item div {
+  margin: 0 0px 0 auto;
 }
 
 .notification-menu {
