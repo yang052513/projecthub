@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
@@ -14,6 +14,27 @@ export const MessengerChat: React.FC = () => {
   const profile = useFetchProfile(user.uid)
   const [chatMsg, setChatMsg] = useState<string>('')
 
+  const [chat, setChat] = useState<any>([])
+
+  const fetchChat = () => {
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Friend')
+      .doc('Added')
+      .collection('Friends')
+      .doc(params.ref)
+      .collection('Chat')
+      .get()
+      .then(chatDocs => {
+        chatDocs.forEach(doc => {
+          setChat((prevChat: any) => [...prevChat, doc.data()])
+        })
+      })
+  }
+  useEffect(fetchChat, [])
+
   const handleMsg = (e: { target: { value: any } }) => {
     setChatMsg(e.target.value)
   }
@@ -25,9 +46,20 @@ export const MessengerChat: React.FC = () => {
       Date: currentDay,
       UserRef: user.uid,
     }
-
     sendMessage(user.uid, params.ref, chatData)
   }
+
+  const chatList = chat.map((chatItem: any) => (
+    <div
+      key={chatItem.ChatKey}
+      className={`messenger-chat-item ${
+        chatItem.UserRef === user.uid ? 'chat-sender' : 'chat-receiver'
+      }`}
+    >
+      <img src={chatItem.Avatar} alt="" />
+      <p>{chatItem.Message}</p>
+    </div>
+  ))
 
   return (
     <div className="messenger-chat-container">
@@ -36,27 +68,7 @@ export const MessengerChat: React.FC = () => {
       </div>
 
       {/* 聊天内容展示 */}
-      <div className="messenger-chat-display-container">
-        <div className="messenger-chat-item chat-receiver">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
-            alt=""
-          />
-          <p>
-            We're headed to Tahoe this weekend. Something warm would be nice...
-          </p>
-        </div>
-
-        <div className="messenger-chat-item chat-sender">
-          <p>
-            We're headed to Tahoe this weekend. Something warm would be nice...
-          </p>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/unnamed.jpg?alt=media&token=16c03822-c35e-4eb2-ac5f-2e7e1e0f98fb"
-            alt=""
-          />
-        </div>
-      </div>
+      <div className="messenger-chat-display-container">{chatList}</div>
 
       {/* 发布信息区域 */}
       <div className="messenger-chat-tools-container">
