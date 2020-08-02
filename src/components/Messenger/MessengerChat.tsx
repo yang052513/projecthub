@@ -28,10 +28,11 @@ export const MessengerChat: React.FC = () => {
       .collection('Friends')
       .doc(params.ref)
       .collection('Chat')
-      .get()
-      .then(chatDocs => {
-        chatDocs.forEach(doc => {
-          setChat((prevChat: any) => [...prevChat, doc.data()])
+      .onSnapshot(snap => {
+        snap.docChanges().forEach(change => {
+          if (change.type == 'added') {
+            setChat((prevChat: any) => [...prevChat, change.doc.data()])
+          }
         })
       })
   }
@@ -49,6 +50,7 @@ export const MessengerChat: React.FC = () => {
       UserRef: user.uid,
     }
     sendMessage(user.uid, params.ref, chatData)
+    setChatMsg('')
   }
 
   const chatList = chat.map((chatItem: any) => (
@@ -71,7 +73,11 @@ export const MessengerChat: React.FC = () => {
         <i className="fas fa-link"></i>
       </div>
       <div className="messenger-chat-box-container">
-        <textarea onChange={handleMsg} placeholder="Type Message..."></textarea>
+        <textarea
+          value={chatMsg}
+          onChange={handleMsg}
+          placeholder="Type Message..."
+        ></textarea>
         <button onClick={submitMsg}>Send</button>
       </div>
     </div>
