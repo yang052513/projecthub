@@ -1744,11 +1744,12 @@
 
 .messenger-list-container {
   height: 85vh;
+  border: 1px solid #d4d4d4;
   overflow-y: scroll;
 }
 
 .messenger-list-header {
-  height: 8%;
+  height: 60px;
   background-color: #e2e2e2;
 }
 
@@ -1759,25 +1760,36 @@
   letter-spacing: 1.5px;
 }
 
-.messenger-list-chat-item {
+.messenger-list-chat-wrap {
+  color: black;
+}
+
+.messenger-list-chat-wrap .messenger-list-chat-item {
   background-color: white;
   padding: 20px 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 5px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
-.messenger-list-chat-item h4 {
+.messenger-list-chat-wrap .messenger-list-chat-item:hover {
+  background-color: #03a9f4;
+  color: white;
+}
+
+.messenger-list-chat-wrap .messenger-list-chat-item h4 {
   font-family: quicksand;
   margin-bottom: 5px;
 }
 
-.messenger-list-chat-item p {
+.messenger-list-chat-wrap .messenger-list-chat-item p {
   font-size: 13px;
 }
 
-.messenger-list-chat-item img {
+.messenger-list-chat-wrap .messenger-list-chat-item img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1790,7 +1802,7 @@
 }
 
 .messenger-chat-container .messenger-chat-header {
-  height: 8%;
+  height: 60px;
   background-color: #03a9f4;
   border-top-right-radius: 25px;
   color: white;

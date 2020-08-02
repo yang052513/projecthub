@@ -7,7 +7,11 @@ interface Props {
 }
 export const MessengerListChat: React.FC<Props> = ({ friend }) => {
   const chatList = friend.map((item: any) => (
-    <Link key={item.FriendKey} to={`/messenger/chat/${item.FriendKey}`}>
+    <Link
+      className="messenger-list-chat-wrap"
+      key={item.FriendKey}
+      to={`/messenger/chat/${item.FriendKey}`}
+    >
       <div className="messenger-list-chat-item">
         <img src={item.FriendProfile.Avatar} alt="" />
         <div>

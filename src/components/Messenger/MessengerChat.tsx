@@ -13,6 +13,9 @@ export const MessengerChat: React.FC = () => {
   const params: any = useParams()
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
+
+  const [friendUserName, setFriendUserName] = useState<string>('')
+
   const [chatMsg, setChatMsg] = useState<string>('')
 
   const [chat, setChat] = useState<any>([])
@@ -35,6 +38,17 @@ export const MessengerChat: React.FC = () => {
             setChat((prevChat: any) => [...prevChat, change.doc.data()])
           }
         })
+      })
+
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(params.ref)
+      .collection('Setting')
+      .doc('Profile')
+      .get()
+      .then((doc: any) => {
+        setFriendUserName(doc.data().profile.profileName)
       })
   }
 
@@ -72,7 +86,7 @@ export const MessengerChat: React.FC = () => {
   return (
     <div className="messenger-chat-container">
       <div className="messenger-chat-header">
-        <p>Nathan Lee</p>
+        <p>{friendUserName}</p>
       </div>
 
       {/* 聊天内容展示 */}

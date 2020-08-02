@@ -24,11 +24,11 @@
 //对话框列表
 .messenger-list-container {
   height: 85vh;
-
+  border: 1px solid rgb(212, 212, 212);
   overflow-y: scroll;
 }
 .messenger-list-header {
-  height: 8%;
+  height: 60px;
   background-color: rgb(226, 226, 226);
   p {
     padding: 15px;
@@ -38,23 +38,31 @@
   }
 }
 
-.messenger-list-chat-item {
-  background-color: white;
-  padding: 20px 10px;
-  display: flex;
-  margin-bottom: 5px;
-  h4 {
-    font-family: quicksand;
+.messenger-list-chat-wrap {
+  color: black;
+  .messenger-list-chat-item {
+    background-color: white;
+    padding: 20px 10px;
+    display: flex;
     margin-bottom: 5px;
-  }
-  p {
-    font-size: 13px;
-  }
-  img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+    transition: all 0.5s;
+    &:hover {
+      background-color: $sideNavBg;
+      color: white;
+    }
+    h4 {
+      font-family: quicksand;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 13px;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
   }
 }
 
@@ -64,7 +72,7 @@
   position: relative;
 
   .messenger-chat-header {
-    height: 8%;
+    height: 60px;
     background-color: $sideNavBg;
     border-top-right-radius: 25px;
     color: white;

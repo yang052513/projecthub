@@ -10,7 +10,6 @@ export const MessengerChatItem: React.FC<Props> = ({ chatItem }) => {
   const chatTime = chatItem.Date.split(' on ')[0]
   const chatDate = chatItem.Date.split(' on ')[1]
 
-  console.log(chatTime)
   return (
     <div>
       {chatItem.UserRef === user.uid ? (
