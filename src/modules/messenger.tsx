@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { send } from 'process'
 
 export function deleteFriendRequest(
   currUserKey: string,
@@ -80,4 +81,62 @@ export function deleteFriend(currUserKey: string, deleteFriendKey: string) {
     .catch(error => {
       console.log(`删除好友${deleteFriendKey}时出现错误 ${error}`)
     })
+}
+
+export function sendMessage(
+  currUserKey: string,
+  sendUserKey: string,
+  chatDoc: any
+) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(currUserKey)
+    .collection('Friend')
+    .doc('Added')
+    .collection('Friends')
+    .doc(sendUserKey)
+    .collection('Chat')
+    .add(chatDoc)
+    .then(chatDocRef => {
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(currUserKey)
+        .collection('Friend')
+        .doc('Added')
+        .collection('Friends')
+        .doc(sendUserKey)
+        .collection('Chat')
+        .doc(chatDocRef.id)
+        .update({
+          ChatKey: chatDocRef.id,
+        })
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(sendUserKey)
+        .collection('Friend')
+        .doc('Added')
+        .collection('Friends')
+        .doc(currUserKey)
+        .collection('Chat')
+        .doc(chatDocRef.id)
+        .set(chatDoc)
+
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(sendUserKey)
+        .collection('Friend')
+        .doc('Added')
+        .collection('Friends')
+        .doc(currUserKey)
+        .collection('Chat')
+        .doc(chatDocRef.id)
+        .update({
+          ChatKey: chatDocRef.id,
+        })
+    })
+  console.log(`${chatDoc.Message}发送到${currUserKey}和${sendUserKey}集合中`)
 }
