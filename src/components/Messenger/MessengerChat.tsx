@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
 import { useFetchProfile } from '../Hooks/useFetchProfile'
 import { sendMessage } from '../../modules/messenger'
+import { MessengerChatItem } from './MessengerChatItem'
 
 const { monthNum, day, hours, minutes } = timeFormat
 const currentDay = `${hours}:${minutes} on ${monthNum}/${day}`
@@ -17,6 +18,7 @@ export const MessengerChat: React.FC = () => {
   const [chat, setChat] = useState<any>([])
 
   const fetchChat = () => {
+    setChat([])
     firebase
       .firestore()
       .collection('user')
@@ -33,7 +35,7 @@ export const MessengerChat: React.FC = () => {
         })
       })
   }
-  useEffect(fetchChat, [])
+  useEffect(fetchChat, [params.ref])
 
   const handleMsg = (e: { target: { value: any } }) => {
     setChatMsg(e.target.value)
@@ -50,15 +52,7 @@ export const MessengerChat: React.FC = () => {
   }
 
   const chatList = chat.map((chatItem: any) => (
-    <div
-      key={chatItem.ChatKey}
-      className={`messenger-chat-item ${
-        chatItem.UserRef === user.uid ? 'chat-sender' : 'chat-receiver'
-      }`}
-    >
-      <img src={chatItem.Avatar} alt="" />
-      <p>{chatItem.Message}</p>
-    </div>
+    <MessengerChatItem key={chatItem.ChatKey} chatItem={chatItem} />
   ))
 
   return (

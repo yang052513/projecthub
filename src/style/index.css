@@ -1808,9 +1808,6 @@
 }
 
 .messenger-chat-container .messenger-chat-display-container .messenger-chat-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   margin: 15px 20px;
   width: 500px;
 }
@@ -1831,20 +1828,35 @@
 
 .messenger-chat-container .chat-sender {
   float: right;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 60px;
+      grid-template-columns: auto 60px;
+  justify-items: right;
 }
 
 .messenger-chat-container .chat-sender p {
   background-color: #03a9f4;
   color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .messenger-chat-container .chat-receiver {
   float: left;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 60px auto;
+      grid-template-columns: 60px auto;
 }
 
 .messenger-chat-container .chat-receiver p {
   background-color: white;
   color: black;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .messenger-chat-container .messenger-chat-tools-container {
