@@ -1842,6 +1842,14 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  position: relative;
+}
+
+.messenger-chat-container .chat-sender span {
+  position: absolute;
+  left: -100px;
+  color: black;
+  font-size: 12px;
 }
 
 .messenger-chat-container .chat-receiver {
@@ -1858,6 +1866,14 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  position: relative;
+}
+
+.messenger-chat-container .chat-receiver span {
+  position: absolute;
+  right: -100px;
+  color: black;
+  font-size: 12px;
 }
 
 .messenger-chat-container .messenger-chat-tools-container {

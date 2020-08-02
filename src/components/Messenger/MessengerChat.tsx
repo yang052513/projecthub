@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import firebase from 'firebase'
+import firebase, { analytics } from 'firebase'
 import { timeFormat } from 'current-time-format'
 import { useFetchProfile } from '../Hooks/useFetchProfile'
 import { sendMessage } from '../../modules/messenger'
@@ -28,6 +28,7 @@ export const MessengerChat: React.FC = () => {
       .collection('Friends')
       .doc(params.ref)
       .collection('Chat')
+      .orderBy('Date', 'asc')
       .onSnapshot(snap => {
         snap.docChanges().forEach(change => {
           if (change.type == 'added') {
@@ -54,9 +55,19 @@ export const MessengerChat: React.FC = () => {
     setChatMsg('')
   }
 
-  const chatList = chat.map((chatItem: any, index: any) => (
-    <MessengerChatItem key={chatItem.ChatKey} chatItem={chatItem} />
-  ))
+  const handleSubmit = (e: { key: string; shiftKey: any }) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      submitMsg()
+    }
+  }
+
+  const chatList = chat
+    .sort((a: any, b: any) => {
+      return a.Date.split(' on ')[1] < b.Date.split(' on ')[1] ? -1 : 1
+    })
+    .map((chatItem: any, index: any) => (
+      <MessengerChatItem key={chatItem.ChatKey} chatItem={chatItem} />
+    ))
 
   return (
     <div className="messenger-chat-container">
@@ -78,6 +89,7 @@ export const MessengerChat: React.FC = () => {
           value={chatMsg}
           onChange={handleMsg}
           placeholder="Type Message..."
+          onKeyPress={handleSubmit}
         ></textarea>
         <button onClick={submitMsg}>Send</button>
       </div>

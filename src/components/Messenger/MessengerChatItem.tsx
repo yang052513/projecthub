@@ -7,18 +7,26 @@ interface Props {
 
 export const MessengerChatItem: React.FC<Props> = ({ chatItem }) => {
   const user: any = firebase.auth().currentUser
+  const chatTime = chatItem.Date.split(' on ')[0]
+  const chatDate = chatItem.Date.split(' on ')[1]
 
+  console.log(chatTime)
   return (
     <div>
       {chatItem.UserRef === user.uid ? (
         <div className="messenger-chat-item chat-sender">
-          <p>{chatItem.Message}</p>
+          <p>
+            <span>{chatItem.Date}</span>
+            {chatItem.Message}
+          </p>
           <img src={chatItem.Avatar} alt="" />
         </div>
       ) : (
         <div className="messenger-chat-item chat-receiver">
           <img src={chatItem.Avatar} alt="" />
-          <p>{chatItem.Message}</p>
+          <p>
+            {chatItem.Message} <span>{chatItem.Date}</span>
+          </p>
         </div>
       )}
     </div>

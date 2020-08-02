@@ -106,6 +106,13 @@
       background-color: $sideNavBg;
       color: white;
       width: fit-content;
+      position: relative;
+    }
+    span {
+      position: absolute;
+      left: -100px;
+      color: black;
+      font-size: 12px;
     }
   }
 
@@ -117,6 +124,13 @@
       background-color: rgb(255, 255, 255);
       color: rgb(0, 0, 0);
       width: fit-content;
+      position: relative;
+    }
+    span {
+      position: absolute;
+      right: -100px;
+      color: black;
+      font-size: 12px;
     }
   }
 
