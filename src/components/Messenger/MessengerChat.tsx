@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
@@ -36,6 +36,7 @@ export const MessengerChat: React.FC = () => {
         })
       })
   }
+
   useEffect(fetchChat, [params.ref])
 
   const handleMsg = (e: { target: { value: any } }) => {
@@ -53,7 +54,7 @@ export const MessengerChat: React.FC = () => {
     setChatMsg('')
   }
 
-  const chatList = chat.map((chatItem: any) => (
+  const chatList = chat.map((chatItem: any, index: any) => (
     <MessengerChatItem key={chatItem.ChatKey} chatItem={chatItem} />
   ))
 

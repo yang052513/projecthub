@@ -23,7 +23,7 @@
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
     "react-trello": "^2.2.6",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start": "react-scripts start",
