@@ -2465,4 +2465,24 @@ body {
   width: 100px;
   z-index: 3;
 }
+
+.fade-in-enter {
+  opacity: 0;
+}
+
+.fade-in-enter-active {
+  opacity: 1;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.fade-in-exit {
+  opacity: 1;
+}
+
+.fade-in-exit-active {
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
 /*# sourceMappingURL=index.css.map */

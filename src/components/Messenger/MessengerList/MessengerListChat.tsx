@@ -32,8 +32,6 @@ export const MessengerListChat: React.FC<Props> = ({ friend }) => {
 
   // useEffect(fetchLatestMessage, [])
 
-  console.log(friend[0])
-
   const chatList = friend.map((item: any) => (
     <Link
       className="messenger-list-chat-wrap"

@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     selectItem: {
       fontSize: '13px',
       color: 'black',
+      fontFamily: 'quicksand',
     },
   })
 )
@@ -49,6 +50,7 @@ export const Home: React.FC = () => {
   return (
     <div className="home-container component-layout">
       <Hitokoto />
+
       <div className="project-header-container">
         <h3>{status}</h3>
 
@@ -67,6 +69,7 @@ export const Home: React.FC = () => {
           <FormControl className={classes.formControl}>
             <InputLabel id="project-sort-label">Sort</InputLabel>
             <Select
+              className={classes.selectItem}
               labelId="project-sort"
               id="project-sort"
               value={sort}
@@ -91,6 +94,7 @@ export const Home: React.FC = () => {
           <FormControl className={classes.formControl}>
             <InputLabel id="status-filter-label">Status</InputLabel>
             <Select
+              className={classes.selectItem}
               labelId="status-filter"
               id="status-filter"
               value={status}

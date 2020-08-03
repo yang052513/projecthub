@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Loading } from '../Common/Loading'
 import { ProjectCard } from './ProjectCard'
+import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   sort: string | undefined | null
@@ -69,12 +70,17 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
       ) : null}
 
       {/* No searched or filter result */}
-      {renderProject.length === 0 && project.length !== 0 ? (
+      <CSSTransition
+        in={renderProject.length === 0 && project.length !== 0}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div className="project-no-result-container">
           <p>It seems like no such projects...</p>
           <img src="/images/noresult.png" alt="" />
         </div>
-      ) : null}
+      </CSSTransition>
     </div>
   )
 }

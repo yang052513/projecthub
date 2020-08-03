@@ -340,8 +340,8 @@ export default function App() {
           <SideNavItem
             theme={theme}
             route={'/faq'}
-            icon="far fa-question-circle"
-            prompt="FAQ"
+            icon="fas fa-book"
+            prompt="Documentation"
           />
 
           <SideNavItem

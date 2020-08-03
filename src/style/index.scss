@@ -146,3 +146,19 @@ body {
   width: 100px;
   z-index: 3;
 }
+
+// 透明度动画转场
+.fade-in-enter {
+  opacity: 0;
+}
+.fade-in-enter-active {
+  opacity: 1;
+  transition: all 0.5s;
+}
+.fade-in-exit {
+  opacity: 1;
+}
+.fade-in-exit-active {
+  opacity: 0;
+  transition: all 0.5s;
+}
