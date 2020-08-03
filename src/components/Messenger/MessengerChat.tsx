@@ -71,7 +71,11 @@ export const MessengerChat: React.FC = () => {
 
   const handleSubmit = (e: { key: string; shiftKey: any }) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      submitMsg()
+      if (chatMsg !== '') {
+        submitMsg()
+      } else {
+        alert('消息不能为空')
+      }
     }
   }
 
@@ -105,7 +109,6 @@ export const MessengerChat: React.FC = () => {
           placeholder="Type Message..."
           onKeyPress={handleSubmit}
         ></textarea>
-        <button onClick={submitMsg}>Send</button>
       </div>
     </div>
   )

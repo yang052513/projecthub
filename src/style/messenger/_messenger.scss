@@ -143,8 +143,9 @@
   }
 
   .messenger-chat-tools-container {
-    height: 5%;
+    height: 20px;
     background-color: white;
+    // border: 1px solid red;
     color: $sideNavBg;
     padding: 10px 10px;
     i {
@@ -156,9 +157,9 @@
   .messenger-chat-box-container {
     position: absolute;
     bottom: 0;
-    height: 15%;
+    height: 18%;
     width: 100%;
-
+    // border: 1px solid green;
     textarea {
       border-bottom-right-radius: 25px;
       resize: none;

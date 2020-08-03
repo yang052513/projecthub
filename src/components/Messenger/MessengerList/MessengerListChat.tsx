@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
 
@@ -6,6 +6,34 @@ interface Props {
   friend: any
 }
 export const MessengerListChat: React.FC<Props> = ({ friend }) => {
+  const user: any = firebase.auth().currentUser
+
+  const [message, setMessage] = useState<string>('')
+
+  // const fetchLatestMessage = () => {
+  //   firebase
+  //     .firestore()
+  //     .collection('user')
+  //     .doc(friend[0].FriendKey)
+  //     .collection('Friend')
+  //     .doc('Added')
+  //     .collection('Friends')
+  //     .doc(user.uid)
+  //     .collection('Chat')
+  //     .get()
+  //     .then(docs => {
+  //       docs.forEach(doc => {
+  //         if (doc.data().UserRef !== user.uid) {
+  //           setMessage(doc.data().Message)
+  //         }
+  //       })
+  //     })
+  // }
+
+  // useEffect(fetchLatestMessage, [])
+
+  console.log(friend[0])
+
   const chatList = friend.map((item: any) => (
     <Link
       className="messenger-list-chat-wrap"
