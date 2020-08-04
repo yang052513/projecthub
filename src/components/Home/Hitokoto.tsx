@@ -21,8 +21,11 @@ export const Hitokoto: React.FC = () => {
 
   return (
     <div className="hitokoto-container">
-      <p className="hitokoto-content">{hitokoto.content}</p>
-      <p className="hitokoto-from">「{hitokoto.from}」</p>
+      <p className="hitokoto-content">
+        {hitokoto.content}
+        <span className="hitokoto-from">「{hitokoto.from}」</span>
+      </p>
+      <div className="hitokoto-overlay"></div>
     </div>
   )
 }
