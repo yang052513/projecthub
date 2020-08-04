@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
 import { Loading } from '../Common/Loading'
+import { useFetchContributor } from '../Hooks/useFetchContributor'
 
 //初始化的看板模板
 const data = {
@@ -44,41 +45,41 @@ const data = {
 
 export const Kanban: React.FC = () => {
   const params: any = useParams()
-  const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
-
   const [loading, setLoading] = useState<boolean>(false)
+  const [kanban, setKanban] = useState({})
+  const contributorList: any = useFetchContributor(user.uid, params.ref)
 
   const cardStyle = {
     minWidth: '340px',
     borderRadius: '6px',
   }
 
-  //先初始化为空的列表
-  const [kanban, setKanban] = useState({})
-
   //加载数据库，看是否有内容
-  useEffect(() => {
+  const fetchKanban = (): void => {
     window.scrollTo(0, 0)
-    if (user) {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Project')
-        .doc(params.ref)
-        .get()
-        .then((doc: any) => {
-          if (doc.data().kanbanData) {
-            setKanban(doc.data().kanbanData)
-            setLoading(true)
-            console.log('数据库有您的看板记录，将读取您的历史看板 ╰(*°▽°*)╯')
-          } else {
-            setKanban(data)
-            setLoading(true)
-            console.log('第一次使用看板，已经帮你配置好啦 ︿(￣︶￣)︿')
-          }
-        })
-    }
-  }, [])
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Project')
+      .doc(params.ref)
+      .get()
+      .then((doc: any) => {
+        //数据库有看板历史记录
+        if (doc.data().kanbanData) {
+          setKanban(doc.data().kanbanData)
+          setLoading(true)
+          console.log('数据库有您的看板记录，将读取您的历史看板 ╰(*°▽°*)╯')
+        } else {
+          //加载看板模板 写入数据库
+          setKanban(data)
+          setLoading(true)
+          console.log('第一次使用看板，已经帮你配置好啦 ︿(￣︶￣)︿')
+        }
+      })
+  }
+  useEffect(fetchKanban, [])
 
   //添加新的卡片到列表中 保存到数据库
   const handleCardAdd = (card: any, laneId: any) => {
@@ -88,14 +89,18 @@ export const Kanban: React.FC = () => {
 
   //任何改动更新到数据库
   const handleCardChange = (kanbanData: any) => {
-    console.log(kanbanData)
-    db.collection('user')
-      .doc(user.uid)
-      .collection('Project')
-      .doc(params.ref)
-      .update({
-        kanbanData: kanbanData,
-      })
+    //更新所有队伍中贡献者的看板数据
+    contributorList.forEach((contributor: any) => {
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(contributor.Id)
+        .collection('Project')
+        .doc(params.ref)
+        .update({
+          kanbanData: kanbanData,
+        })
+    })
   }
 
   return (
@@ -116,5 +121,3 @@ export const Kanban: React.FC = () => {
     </div>
   )
 }
-
-export default Kanban

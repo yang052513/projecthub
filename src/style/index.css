@@ -127,12 +127,14 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 1vh 5vh 1vh 3vh;
+  padding: 3px 5vh 3px 3vh;
 }
 
 .user-navbar h2 {
-  font-size: 20px;
-  font-family: title;
+  font-size: 18px;
+  font-family: raleway;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .user-navbar .user-navbar-icon {

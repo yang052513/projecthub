@@ -26,9 +26,12 @@ $logoSize: 50px;
 
   @include flexCenter(space-between);
   // padding: 20px 50px 10px 30px;
-  padding: 1vh 5vh 1vh 3vh;
+  padding: 3px 5vh 3px 3vh;
   h2 {
-    @include headerTitle();
+    font-size: 18px;
+    font-family: raleway;
+    text-transform: uppercase;
+    letter-spacing: 2px;
   }
   .user-navbar-icon {
     @include flexAlign();
