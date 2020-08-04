@@ -34,3 +34,21 @@ export function addNotification(
       console.log(`通知已经写入到用户数据库中${docRef.id}`)
     })
 }
+
+export function addActivity(
+  userRef: string,
+  activityInfo: { Time: string; Content: string; Category: string }
+) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(userRef)
+    .collection('Activity')
+    .add(activityInfo)
+    .then(() => {
+      console.log(`成功保存到活动面板中`)
+    })
+    .catch(error => {
+      console.log(`保存活动状态时出错 ${error}`)
+    })
+}

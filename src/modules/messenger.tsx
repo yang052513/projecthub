@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-import { send } from 'process'
 
 export function deleteFriendRequest(
   currUserKey: string,

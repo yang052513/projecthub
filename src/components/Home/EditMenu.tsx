@@ -8,6 +8,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { timeFormat } from 'current-time-format'
+import { useFetchContributor } from '../Hooks/useFetchContributor'
+import { addActivity, addNotification } from '../../modules/modules'
+import { deleteProject } from '../../modules/home'
 
 const useStyles = makeStyles({
   root: {
@@ -17,12 +20,13 @@ const useStyles = makeStyles({
 })
 
 interface Props {
-  docRef: string | undefined
+  docRef: string | undefined | any
   projectName: string | null | undefined
   creatorId: string
 }
 
 const { monthStrLong, day, hours, minutes } = timeFormat
+const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
 export const EditMenu: React.FC<Props> = ({
   docRef,
@@ -31,14 +35,12 @@ export const EditMenu: React.FC<Props> = ({
 }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
+  const user: any = firebase.auth().currentUser
+  const contributorList: any = useFetchContributor(user.uid, docRef)
+
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [showReturn, setShowReturn] = useState<boolean>(false)
-
-  const db = firebase.firestore()
-  const user: any = firebase.auth().currentUser
-
-  const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
@@ -48,55 +50,56 @@ export const EditMenu: React.FC<Props> = ({
     setAnchorEl(null)
   }
 
-  //第一层确认
-  function showDeleteConfirm() {
+  const showDeleteConfirm = () => {
     setDeleteConfirm(true)
     setAnchorEl(null)
   }
 
-  function offDeleteConfirm() {
-    setDeleteConfirm(false)
-  }
-
   //从数据库中删除项目
-  function handleDelete() {
+  const handleDelete = () => {
     setLoading(true)
     setTimeout(() => {
-      if (user) {
-        db.collection('user')
-          .doc(user.uid)
-          .collection('Project')
-          .doc(docRef)
-          .delete()
-          .then(() => {
-            console.log('(๑•̀ㅂ•́)و✧ 已经删除这个项目啦')
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Activity')
-              .add({
-                Time: currentTime,
-                Content: `Deleted project ${projectName}`,
-                Key: docRef,
-              })
-          })
-          .catch(error => {
-            console.log('Σ( ° △ °|||)︴ 删除项目时出错了...', error)
-          })
+      const activityInfo = {
+        Time: currentTime,
+        Content: `Deleted project ${projectName}`,
+        Category: 'Project Delete',
       }
+
+      // 如果是团队项目 通知其他用户
+      if (contributorList.length > 1) {
+        contributorList.forEach((contributor: any, index: any) => {
+          if (index > 0) {
+            addNotification(
+              contributor.Id,
+              `${projectName} has been deleted by the owner and not available anymore`,
+              'Project Unavailable',
+              '/',
+              contributor.Avatar
+            )
+          }
+        })
+      }
+
+      //从每个贡献者的集合中删除该项目
+      contributorList.forEach((contributor: any) => {
+        deleteProject(contributor.Id, docRef)
+      })
+      addActivity(user.uid, activityInfo)
+
       setLoading(false)
       setDeleteConfirm(false)
       setShowReturn(true)
-    }, 1000)
+    }, 500)
     setAnchorEl(null)
   }
 
-  function handleReload() {
+  const handleReload = () => {
     window.location.reload()
   }
 
   return (
     <div>
-      {loading === true ? <Progress /> : null}
+      {loading && <Progress />}
 
       {deleteConfirm === true ? (
         <Feedback
@@ -105,7 +108,7 @@ export const EditMenu: React.FC<Props> = ({
           imgUrl="/images/emoji/emoji_scare.png"
           confirm={true}
           toggle={handleDelete}
-          cancel={offDeleteConfirm}
+          cancel={() => setDeleteConfirm(false)}
         />
       ) : null}
 
@@ -117,6 +120,7 @@ export const EditMenu: React.FC<Props> = ({
           toggle={handleReload}
         />
       ) : null}
+
       <div>
         <Button
           aria-controls="edit-menu"
