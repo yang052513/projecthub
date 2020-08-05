@@ -1,22 +1,40 @@
 .project-status-container {
   @include flexCenter(space-evenly);
   background-color: white;
-  border-radius: 25px;
+  border-radius: 10px;
   padding: 20px 0;
   margin: 0 auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  &:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
   .project-status-item-container {
     text-align: center;
+
+    h4 {
+      font-family: quicksand;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
     p {
       margin: 20px 0 0 0;
-      font-size: 20px;
+      font-size: 30px;
     }
   }
 }
 
 .status-container {
   .status-card-container {
+    min-height: 300px;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    &:hover {
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+    }
   }
 }

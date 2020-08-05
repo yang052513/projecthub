@@ -8,6 +8,8 @@ import { StatusTag } from './Status/StatusTag'
 import { StatusType } from './Status/StatusType'
 import { StatusContributor } from './Status/StatusContributor'
 import { StatusLog } from './Status/StatusLog'
+import { StatusActivity } from './Status/StatusActivity'
+import { StatusLike } from './Status/StatusLike'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,6 +111,15 @@ export const Status: React.FC = () => {
           <Grid item xs={12}>
             <ProjectStatus project={project} />
           </Grid>
+          <Grid item xs={6}>
+            <StatusActivity />
+          </Grid>
+          <Grid item xs={3}>
+            <StatusLog activity={activity} />
+          </Grid>
+          <Grid item xs={3}>
+            <StatusLike />
+          </Grid>
           <Grid item xs={4}>
             <StatusTag tagSort={tagSort} />
           </Grid>
@@ -117,15 +128,6 @@ export const Status: React.FC = () => {
           </Grid>
           <Grid item xs={4}>
             <StatusContributor />
-          </Grid>
-          <Grid item xs={6}>
-            <p>Chart js 最近一个月内完成的项目</p>
-          </Grid>
-          <Grid item xs={6}>
-            <StatusLog activity={activity} />
-          </Grid>
-          <Grid item xs={6}>
-            <p>获得最多赞的项目</p>
           </Grid>
         </Grid>
       </div>

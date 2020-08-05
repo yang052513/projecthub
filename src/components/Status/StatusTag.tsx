@@ -12,9 +12,11 @@ export const StatusTag: React.FC<Props> = ({ tagSort }) => {
   ))
 
   return (
-    <div className="status-card-container">
-      <p>最常使用的标签</p>
-      <ul>{topThreeTag}</ul>
+    <div className="status-card-item-wrap">
+      <h3>Most Used Technology</h3>
+      <div className="status-card-container">
+        <ul>{topThreeTag}</ul>
+      </div>
     </div>
   )
 }

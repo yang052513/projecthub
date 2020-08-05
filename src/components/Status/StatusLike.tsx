@@ -1,12 +1,12 @@
 import React from 'react'
 
-export const StatusContributor: React.FC = () => {
+export const StatusLike: React.FC = () => {
   return (
     <div className="status-card-item-wrap">
-      <h3>Contributor Analysis</h3>
+      <h3>Most Liked Projects</h3>
 
       <div className="status-card-container">
-        <p>Solo guy</p>
+        <p>Projecthub</p>
       </div>
     </div>
   )
