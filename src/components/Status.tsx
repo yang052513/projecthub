@@ -114,11 +114,12 @@ export const Status: React.FC = () => {
           <Grid item xs={6}>
             <StatusActivity />
           </Grid>
-          <Grid item xs={3}>
-            <StatusLog activity={activity} />
-          </Grid>
+
           <Grid item xs={3}>
             <StatusLike />
+          </Grid>
+          <Grid item xs={3}>
+            <StatusLog activity={activity} />
           </Grid>
           <Grid item xs={4}>
             <StatusTag tagSort={tagSort} />

@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const StatusTag: React.FC<Props> = ({ tagSort }) => {
-  const topThreeTag = tagSort.slice(0, 3).map((item: any) => (
+  const topThreeTag = tagSort.map((item: any) => (
     <li key={item.name}>
       {item.name} {item.cnt}
     </li>
