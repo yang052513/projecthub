@@ -32,10 +32,10 @@ export const Status: React.FC = () => {
   const [type, setType] = useState<Array<string | null>>([])
   const [typeSort, setTypeSort] = useState<Array<any>>([])
 
-  const [typeCnt, setTypeCnt] = useState<any>({
-    typeCountt: '',
-    typeContent: '',
-  })
+  // const [typeCnt, setTypeCnt] = useState<any>({
+  //   typeCountt: '',
+  //   typeContent: '',
+  // })
 
   const [tag, setTag] = useState<Array<object | null>>([])
   const [tagSort, setTagSort] = useState<Array<any>>([])
@@ -103,25 +103,25 @@ export const Status: React.FC = () => {
     )
   }, [type])
 
-  useEffect(() => {
-    let maxFreq = 1
-    let cnt = 0
-    let mostFreqTag
-    for (let i = 0; i < type.length; i++) {
-      for (let j = i; j < type.length; j++) {
-        if (type[i] === type[j]) cnt++
-        if (maxFreq < cnt) {
-          maxFreq = cnt
-          mostFreqTag = type[i]
-        }
-      }
-      cnt = 0
-    }
-    setTypeCnt({
-      typeCount: maxFreq,
-      typeContent: mostFreqTag,
-    })
-  }, [type])
+  // useEffect(() => {
+  //   let maxFreq = 1
+  //   let cnt = 0
+  //   let mostFreqTag
+  //   for (let i = 0; i < type.length; i++) {
+  //     for (let j = i; j < type.length; j++) {
+  //       if (type[i] === type[j]) cnt++
+  //       if (maxFreq < cnt) {
+  //         maxFreq = cnt
+  //         mostFreqTag = type[i]
+  //       }
+  //     }
+  //     cnt = 0
+  //   }
+  //   setTypeCnt({
+  //     typeCount: maxFreq,
+  //     typeContent: mostFreqTag,
+  //   })
+  // }, [type])
 
   return (
     <div className="component-layout status-container">
