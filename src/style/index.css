@@ -862,6 +862,14 @@
   margin: 15px 0;
 }
 
+.status-container .status-card-item-wrap h4 {
+  font-family: quicksand;
+  color: #4a4a4a;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+
 .status-container .status-card-container {
   min-height: 400px;
   max-height: 400px;
@@ -905,6 +913,22 @@
 .recharts-text {
   font-size: 12px;
   font-family: quicksand;
+}
+
+.status-contributor-list {
+  margin: 10px 0;
+}
+
+.status-contributor-list img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #c5c5c5;
+  margin-right: 10px;
+}
+
+.status-contributor-container {
+  padding: 0 20px;
 }
 
 .setting-container {

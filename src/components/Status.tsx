@@ -130,14 +130,14 @@ export const Status: React.FC = () => {
           <Grid item xs={12}>
             <ProjectStatus project={project} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <StatusActivity />
           </Grid>
 
-          <Grid item xs={3}>
+          {/* <Grid item xs={3}>
             <StatusLike />
-          </Grid>
-          <Grid item xs={3}>
+          </Grid> */}
+          <Grid item xs={4}>
             <StatusLog activity={activity} />
           </Grid>
           <Grid item xs={4}>

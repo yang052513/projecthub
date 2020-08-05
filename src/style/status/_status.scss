@@ -33,6 +33,13 @@
       letter-spacing: 0.5px;
       margin: 15px 0;
     }
+    h4 {
+      font-family: quicksand;
+      color: #4a4a4a;
+      font-weight: normal;
+      letter-spacing: 0.5px;
+      font-weight: bold;
+    }
   }
   .status-card-container {
     min-height: 400px;
@@ -78,4 +85,19 @@
 .recharts-text {
   font-size: 12px;
   font-family: quicksand;
+}
+
+.status-contributor-list {
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid rgb(197, 197, 197);
+    margin-right: 10px;
+  }
+  margin: 10px 0;
+}
+
+.status-contributor-container {
+  padding: 0 20px;
 }

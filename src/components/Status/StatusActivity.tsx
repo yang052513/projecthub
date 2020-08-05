@@ -107,7 +107,7 @@ export const StatusActivity: React.FC = () => {
       <h3>Project Status Analysis</h3>
 
       <div className="status-card-container">
-        <LineChart width={700} height={350} data={data}>
+        <LineChart width={950} height={350} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis domain={[0, 'dataMax']} />
