@@ -13,7 +13,9 @@ import { Progress } from './Progress'
 import { Link, useParams } from 'react-router-dom'
 import { useFetchProfile } from '../Hooks/useFetchProfile'
 import { timeFormat } from 'current-time-format'
-import { ProjectCard } from '../Home/ProjectCard'
+import { useFetchContributor } from '../Hooks/useFetchContributor'
+import { addNotification } from '../../modules/modules'
+import { useHistory } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -40,7 +42,7 @@ export const Edit: React.FC = () => {
   const classes = useStyles()
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
-
+  const history = useHistory()
   //用户选择的当前项目密匙
   const params: any = useParams()
 
@@ -72,6 +74,8 @@ export const Edit: React.FC = () => {
   const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
+
+  const contributorList: any = useFetchContributor(user.uid, params.ref)
 
   //初始化加载数据库内该项目的信息
   useEffect(() => {
@@ -205,16 +209,29 @@ export const Edit: React.FC = () => {
           Description: textInput.projectDesc,
           Tools: tool,
           Privacy: publicProject === true ? 'Public' : 'Private',
-          Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
+          Contributors: contributorList,
         }
 
-        db.collection('user')
-          .doc(user.uid)
-          .collection('Project')
-          .doc(params.ref)
-          .update(projectData)
+        //更新所有队员
+        contributorList.forEach((contributor: any, index: any) => {
+          db.collection('user')
+            .doc(contributor.Id)
+            .collection('Project')
+            .doc(params.ref)
+            .update(projectData)
 
-        //写入到日志中
+          if (index > 0) {
+            addNotification(
+              contributor.Id,
+              `${profile.profile.profileName} edited project ${textInput.projectName}`,
+              'Project Details Update',
+              '/',
+              profile.avatar
+            )
+          }
+        })
+
+        //只写入项目拥有者 写入到日志中
         db.collection('user')
           .doc(user.uid)
           .collection('Activity')
@@ -264,14 +281,14 @@ export const Edit: React.FC = () => {
     <div>
       {loading === true ? <Progress /> : null}
 
-      {/* 项目创建成功反馈 */}
+      {/* 项目修改成功反馈 */}
       {feedback === true ? (
         <div>
           <Feedback
             msg="Success"
             info="The project saved successfully ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
-            toggle={handleReload}
+            toggle={() => history.push('/')}
           />
         </div>
       ) : null}
