@@ -537,12 +537,7 @@
           transform: translateX(-50%);
 }
 
-.explore-container h2 {
-  margin: 0 30px;
-}
-
 .explore-container .explore-project-list-container {
-  margin: 0 30px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];

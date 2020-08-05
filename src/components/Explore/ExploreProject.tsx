@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface Props {
   projectData: any
@@ -20,17 +21,19 @@ export const ExploreProject: React.FC<Props> = ({ projectData }) => {
       </ul>
       <p className="project-category">last updated on Jul 22, 2020 13:20</p>
       {item.Contributors.map((contributor: any) => (
-        <img
-          key={contributor.Id}
-          className="project-author-avatar"
-          src={contributor.Avatar}
-          alt=""
-        />
+        <Link to={`/friends/${contributor.Id}`}>
+          <img
+            key={contributor.Id}
+            className="project-author-avatar"
+            src={contributor.Avatar}
+            alt=""
+          />
+        </Link>
       ))}
     </div>
   ))
   return (
-    <div>
+    <div className="explore-project-container">
       <h2>Explore Projects</h2>
       <div className="explore-project-list-container">{exploreProjectList}</div>
     </div>

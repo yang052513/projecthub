@@ -1,49 +1,52 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { ExploreProject } from './Explore/ExploreProject'
-import { ExploreAuthor } from './Explore/ExploreAuthor'
 import { ExploreTrending } from './Explore/ExploreTrending'
-
-import { useFetchProfile } from './Hooks/useFetchProfile'
+import { Loading } from './Common/Loading'
 
 export const Explore: React.FC = () => {
-  const user: any = firebase.auth().currentUser
+  const [loadingProject, setLoadingProject] = useState<boolean>(true)
+  const [loadingFriend, setLoadingFriend] = useState<boolean>(true)
 
   const [project, setProject] = useState<Array<object | null | undefined>>([])
   const [userList, setUserList] = useState<Array<object | null | undefined>>([])
 
-  const profile = useFetchProfile(user.uid)
-
-  useEffect(() => {
-    const fetchProject = () => {
-      firebase
-        .firestore()
-        .collection('project')
-        .get()
-        .then(projectDoc => {
-          projectDoc.forEach(doc => {
-            setProject(prevProject => [...prevProject, doc.data()])
-          })
+  const fetchProject = () => {
+    firebase
+      .firestore()
+      .collection('project')
+      .get()
+      .then(projectDoc => {
+        projectDoc.forEach(doc => {
+          setProject(prevProject => [...prevProject, doc.data()])
         })
+        setLoadingProject(false)
+      })
 
-      firebase
-        .firestore()
-        .collection('friends')
-        .get()
-        .then(userDoc => {
-          userDoc.forEach(doc => {
-            setUserList(prevUser => [...prevUser, doc.data()])
-          })
+    firebase
+      .firestore()
+      .collection('friends')
+      .get()
+      .then(userDoc => {
+        userDoc.forEach(doc => {
+          setUserList(prevUser => [...prevUser, doc.data()])
         })
-    }
-    fetchProject()
-  }, [])
+        setLoadingFriend(false)
+      })
+  }
+
+  useEffect(fetchProject, [])
 
   return (
-    <div className="component-layout explore-container">
-      {/* <ExploreAuthor profileData={profile} /> */}
-      <ExploreProject projectData={project} />
-      <ExploreTrending userData={userList} />
+    <div className="component-layout ">
+      {!(loadingProject && loadingFriend) ? (
+        <div className="explore-container">
+          <ExploreProject projectData={project} />
+          <ExploreTrending userData={userList} />
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   )
 }

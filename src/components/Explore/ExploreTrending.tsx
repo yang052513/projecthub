@@ -8,7 +8,7 @@ interface Props {
 export const ExploreTrending: React.FC<Props> = ({ userData }) => {
   return (
     <div className="explore-trending-container">
-      <h3>Trending</h3>
+      <h2>Trending</h2>
 
       {userData.map((item: any) => (
         <div key={item.Key} className="explore-trending-item">
@@ -19,7 +19,7 @@ export const ExploreTrending: React.FC<Props> = ({ userData }) => {
 
             <p>{item.profile.profileName}</p>
           </div>
-          <button>Learn More</button>
+          <button>Add Friends</button>
         </div>
       ))}
     </div>

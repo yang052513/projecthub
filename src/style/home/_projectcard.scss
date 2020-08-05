@@ -89,11 +89,9 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  h2 {
-    margin: 0 30px;
-  }
+
   .explore-project-list-container {
-    margin: 0 30px;
+    // margin: 0 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     .project-card-item {
