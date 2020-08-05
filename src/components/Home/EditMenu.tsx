@@ -59,12 +59,6 @@ export const EditMenu: React.FC<Props> = ({
   const handleDelete = () => {
     setLoading(true)
     setTimeout(() => {
-      const activityInfo = {
-        Time: currentTime,
-        Content: `Deleted project ${projectName}`,
-        Category: 'Project Delete',
-      }
-
       // 如果是团队项目 通知其他用户
       if (contributorList.length > 1) {
         contributorList.forEach((contributor: any, index: any) => {
@@ -84,7 +78,7 @@ export const EditMenu: React.FC<Props> = ({
       contributorList.forEach((contributor: any) => {
         deleteProject(contributor.Id, docRef)
       })
-      addActivity(user.uid, activityInfo)
+      addActivity(user.uid, `Deleted project ${projectName}`, 'Delete')
 
       setLoading(false)
       setDeleteConfirm(false)

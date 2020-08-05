@@ -14,7 +14,7 @@ export const StatusLog: React.FC<Props> = ({ activity }) => {
   ))
   return (
     <div className="status-card-item-wrap">
-      <h3>Activity Log</h3>
+      <h3>Project Log</h3>
       <div className="status-card-container status-activity-log-list">
         <ul>{activityLog}</ul>
       </div>

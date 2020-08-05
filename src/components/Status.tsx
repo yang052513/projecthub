@@ -10,6 +10,8 @@ import { StatusContributor } from './Status/StatusContributor'
 import { StatusLog } from './Status/StatusLog'
 import { StatusActivity } from './Status/StatusActivity'
 import { StatusLike } from './Status/StatusLike'
+import { triggerAsyncId } from 'async_hooks'
+import { Loading } from './Common/Loading'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +42,13 @@ export const Status: React.FC = () => {
   const [tag, setTag] = useState<Array<object | null>>([])
   const [tagSort, setTagSort] = useState<Array<any>>([])
 
+  const [loading, setLoading] = useState({
+    project: true,
+    activity: true,
+    type: true,
+    tag: true,
+  })
+
   useEffect(() => {
     if (user) {
       db.collection('user')
@@ -55,6 +64,13 @@ export const Status: React.FC = () => {
               setTag(prevTag => [...prevTag, tag])
             })
           })
+
+          setLoading({
+            ...loading,
+            project: false,
+            type: false,
+            tag: false,
+          })
         })
 
       db.collection('user')
@@ -64,6 +80,10 @@ export const Status: React.FC = () => {
         .then(collection => {
           collection.forEach(doc => {
             setActivity(prevActivity => [...prevActivity, doc.data()])
+          })
+          setLoading({
+            ...loading,
+            activity: false,
           })
         })
     }
@@ -125,32 +145,37 @@ export const Status: React.FC = () => {
 
   return (
     <div className="component-layout status-container">
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <ProjectStatus project={project} />
-          </Grid>
-          <Grid item xs={8}>
-            <StatusActivity />
-          </Grid>
+      {!(loading.project && loading.activity && loading.tag && loading.type) ? (
+        <div className={classes.root}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <ProjectStatus project={project} />
+            </Grid>
+            <Grid item xs={8}>
+              <StatusActivity />
+            </Grid>
 
-          {/* <Grid item xs={3}>
-            <StatusLike />
-          </Grid> */}
-          <Grid item xs={4}>
-            <StatusLog activity={activity} />
+            <Grid item xs={4}>
+              <StatusLog activity={activity} />
+            </Grid>
+            <Grid item xs={4}>
+              <StatusTag tagSort={tagSort} />
+            </Grid>
+            <Grid item xs={4}>
+              <StatusType typeSort={typeSort} />
+            </Grid>
+            <Grid item xs={4}>
+              <StatusContributor />
+            </Grid>
+
+            <Grid item xs={4}>
+              <StatusLike />
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <StatusTag tagSort={tagSort} />
-          </Grid>
-          <Grid item xs={4}>
-            <StatusType typeSort={typeSort} />
-          </Grid>
-          <Grid item xs={4}>
-            <StatusContributor />
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   )
 }

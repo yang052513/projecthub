@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { addNotification } from '../../../modules/modules'
+import { addNotification, addActivity } from '../../../modules/modules'
 import firebase from 'firebase'
 import { useFetchProfile } from '../../Hooks/useFetchProfile'
 import { useHistory } from 'react-router-dom'
@@ -48,6 +48,11 @@ export const MessengerListRequestCard: React.FC<Props> = ({ requestUser }) => {
     deleteFriendApplication(requestUser.FriendKey, user.uid)
     addFriend(user.uid, requestUser.FriendKey, requestUser)
     addFriend(requestUser.FriendKey, user.uid, userData)
+    addActivity(
+      user.uid,
+      `Accepted ${requestUser.FriendProfile.Profile.profileName}'s friend request`,
+      'Friend'
+    )
     setFeedback({
       display: true,
       msg: 'Added New Friend',

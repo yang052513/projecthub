@@ -1,6 +1,10 @@
 import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
 
+const { monthStrLong, day, hours, minutes } = timeFormat
+const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
+const activityTime = `${monthStrLong} ${day} ${hours}:${minutes}`
+
 export function addNotification(
   userRef: string,
   message: string,
@@ -8,10 +12,6 @@ export function addNotification(
   redirect: string,
   avatar: string
 ) {
-  const { monthStrLong, day, hours, minutes } = timeFormat
-
-  const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
-
   const notificatonRef = firebase
     .firestore()
     .collection('user')
@@ -37,14 +37,15 @@ export function addNotification(
 
 export function addActivity(
   userRef: string,
-  activityInfo: { Time: string; Content: string; Category: string }
+  content: string,
+  category: string
 ) {
   firebase
     .firestore()
     .collection('user')
     .doc(userRef)
     .collection('Activity')
-    .add(activityInfo)
+    .add({ Content: content, Category: category, Time: activityTime })
     .then(() => {
       console.log(`成功保存到活动面板中`)
     })
