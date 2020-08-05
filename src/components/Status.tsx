@@ -30,6 +30,8 @@ export const Status: React.FC = () => {
   const [activity, setActivity] = useState<Array<object | null>>([])
 
   const [type, setType] = useState<Array<string | null>>([])
+  const [typeSort, setTypeSort] = useState<Array<any>>([])
+
   const [typeCnt, setTypeCnt] = useState<any>({
     typeCountt: '',
     typeContent: '',
@@ -85,6 +87,23 @@ export const Status: React.FC = () => {
   }, [tag])
 
   useEffect(() => {
+    let count: { [index: string]: any } = {}
+    type.forEach((i: any) => {
+      count[i] = (count[i] || 0) + 1
+    })
+
+    let sortable = []
+    for (let x in count) {
+      sortable.push({ name: x, cnt: count[x] })
+    }
+    setTypeSort(
+      sortable.sort((a: any, b: any) => {
+        return b[1] - a[1]
+      })
+    )
+  }, [type])
+
+  useEffect(() => {
     let maxFreq = 1
     let cnt = 0
     let mostFreqTag
@@ -125,7 +144,7 @@ export const Status: React.FC = () => {
             <StatusTag tagSort={tagSort} />
           </Grid>
           <Grid item xs={4}>
-            <StatusType typeCnt={typeCnt} />
+            <StatusType typeSort={typeSort} />
           </Grid>
           <Grid item xs={4}>
             <StatusContributor />

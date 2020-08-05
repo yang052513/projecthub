@@ -898,6 +898,21 @@
   color: #4a4a4a;
 }
 
+.status-tag-container {
+  position: relative;
+}
+
+.recharts-wrapper {
+  position: absolute;
+  left: 25px;
+  top: 10px;
+}
+
+.recharts-text {
+  font-size: 12px;
+  font-family: quicksand;
+}
+
 .setting-container {
   display: -webkit-box;
   display: -ms-flexbox;

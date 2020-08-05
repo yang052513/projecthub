@@ -64,3 +64,18 @@
     }
   }
 }
+
+.status-tag-container {
+  position: relative;
+}
+
+.recharts-wrapper {
+  position: absolute;
+  left: 25px;
+  top: 10px;
+}
+
+.recharts-text {
+  font-size: 12px;
+  font-family: quicksand;
+}
