@@ -156,20 +156,22 @@ export const Status: React.FC = () => {
             </Grid>
 
             <Grid item xs={4}>
-              <StatusLog activity={activity} />
+              <StatusLike />
             </Grid>
+
             <Grid item xs={4}>
               <StatusTag tagSort={tagSort} />
             </Grid>
             <Grid item xs={4}>
               <StatusType typeSort={typeSort} />
             </Grid>
-            <Grid item xs={4}>
-              <StatusContributor />
-            </Grid>
 
             <Grid item xs={4}>
-              <StatusLike />
+              <StatusLog activity={activity} />
+            </Grid>
+
+            <Grid item xs={6}>
+              <StatusContributor />
             </Grid>
           </Grid>
         </div>

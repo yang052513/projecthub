@@ -915,20 +915,88 @@
   font-family: quicksand;
 }
 
-.status-contributor-list {
-  margin: 10px 0;
+.status-contributor-container {
+  padding: 0 20px;
+  display: -ms-grid;
+  display: grid;
 }
 
-.status-contributor-list img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+.status-contributor-container .status-contributor-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+}
+
+.status-contributor-container .status-contributor-item {
+  background-color: #03a9f4;
+  margin: 10px 0;
+  padding: 10px 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  border-radius: 10px;
+}
+
+.status-contributor-container .status-contributor-item img {
+  width: 50px;
+  height: 50px;
   border: 1px solid #c5c5c5;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.status-like-item,
+.status-log-item {
+  margin-bottom: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.status-like-item img,
+.status-log-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   margin-right: 10px;
 }
 
-.status-contributor-container {
-  padding: 0 20px;
+.status-like-item .status-like-msg,
+.status-log-item .status-like-msg {
+  font-size: 13px;
+  line-height: 1.5rem;
+  margin-right: 60px;
+}
+
+.status-like-item .status-like-msg .status-like-msg-user,
+.status-log-item .status-like-msg .status-like-msg-user {
+  font-weight: bold;
+}
+
+.status-like-item .status-like-msg .status-like-msg-content,
+.status-log-item .status-like-msg .status-like-msg-content {
+  color: #03a9f4;
+  margin-left: 5px;
+}
+
+.status-like-item .status-like-time,
+.status-log-item .status-like-time {
+  font-size: 12px;
+  margin-left: auto;
+  min-width: 80px;
+}
+
+.status-log-item {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .setting-container {
