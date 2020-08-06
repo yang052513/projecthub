@@ -1,15 +1,20 @@
 .friend-container {
   .friend-card-item-container {
     display: grid;
-    grid-template-columns: 200px 600px 300px;
-    align-items: center;
+    grid-template-columns: 100px 600px 300px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 10px;
+    height: 110px;
+    width: 60%;
     justify-content: center;
-    margin-bottom: 20px;
+    align-items: center;
+    margin: 20px auto;
     .friend-card-avatar {
       margin-right: 40px;
       img {
-        width: 140px;
-        height: 140px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         border: 1px solid rgb(201, 201, 201);
       }
@@ -22,8 +27,7 @@
         align-items: center;
         p {
           font-weight: bold;
-          color: $sideNavBg;
-          font-size: 25px;
+          font-size: 16px;
           margin-right: 10px;
         }
         div {
@@ -41,8 +45,8 @@
         }
       }
       .friend-card-info-location {
-        color: rgb(66, 66, 66);
-        font-weight: bold;
+        color: #7c7c7c;
+        font-weight: normal;
         margin: 10px 0;
         font-size: 14px;
       }
@@ -63,12 +67,12 @@
       button {
         @include buttonStroke($sideNavBg);
         margin-right: 25px;
-        font-size: 15px;
+        font-size: 12px;
       }
       .requested-button {
         @include buttonPrimary($sideNavBg);
         margin-right: 25px;
-        font-size: 15px;
+        font-size: 12px;
       }
     }
   }

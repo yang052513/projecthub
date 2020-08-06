@@ -171,12 +171,12 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
               style={online ? onlineColor : null}
               className="fas fa-circle"
             ></i>
-            <span>Online</span>
+            <span>{online ? 'Online' : 'Offline'}</span>
           </div>
         </div>
         <p className="friend-card-info-location">{info.profileLocation}</p>
         <p className="friend-card-info-bio">{info.profileBio}</p>
-
+        {/* 
         <ul className="friend-card-info-skills">
           <li>React</li>
           <li>MongoDB</li>
@@ -185,7 +185,7 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
           <li>Javascript</li>
           <li>SQL</li>
           <li>Less</li>
-        </ul>
+        </ul> */}
       </div>
 
       {!(user.uid === userId) && (
