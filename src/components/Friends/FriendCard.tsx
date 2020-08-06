@@ -193,10 +193,12 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
           {isApplied ? (
             <button className="requested-button">Requested</button>
           ) : (
-            <button onClick={handleFriend}>Add Friends</button>
+            <button onClick={handleFriend}>
+              <i className="fas fa-user-plus"></i>
+            </button>
           )}
-
-          <button>Message</button>
+          {/* 
+          <button>Message</button> */}
         </div>
       )}
 
