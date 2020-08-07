@@ -27,6 +27,8 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
   const user: firebase.User | null | any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
 
+  const [showPrompt, setShowPrompt] = useState<boolean>(false)
+
   const [isApplied, setIsApplied] = useState<boolean>(false)
 
   const [feedback, setFeedback] = useState<any>({
@@ -155,6 +157,10 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
     color: 'rgb(15, 207, 89)',
   }
 
+  const promptStyle: any = {
+    opacity: '1',
+  }
+
   return (
     <div className="friend-card-item-container">
       <div className="friend-card-avatar">
@@ -194,11 +200,18 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
             <button className="requested-button">Requested</button>
           ) : (
             <button onClick={handleFriend}>
-              <i className="fas fa-user-plus"></i>
+              <i
+                onMouseEnter={() => setShowPrompt(true)}
+                onMouseLeave={() => setShowPrompt(false)}
+                className="fas fa-user-plus"
+              ></i>
             </button>
           )}
           {/* 
           <button>Message</button> */}
+          <p style={showPrompt ? promptStyle : null} className="friend-prompt">
+            Add Friend
+          </p>
         </div>
       )}
 

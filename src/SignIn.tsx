@@ -3,7 +3,6 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Particles from 'react-particles-js'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',

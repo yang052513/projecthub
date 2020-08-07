@@ -42,7 +42,7 @@ interface Props {
 //Profile的信息从App用props传 直接在数据库更改
 export const Profile: React.FC<Props> = ({ avatar }) => {
   const classes = useStyles()
-  const user = firebase.auth().currentUser
+  const user: any = firebase.auth().currentUser
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
@@ -78,18 +78,116 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
           console.log(`头像成功上传到数据库~'${url}`)
-          if (user) {
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Setting')
-              .doc('Profile')
-              .update({
-                avatar: url,
-              })
-            db.collection('friends').doc(user.uid).update({
+
+          //更改个人页面
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Setting')
+            .doc('Profile')
+            .update({
               avatar: url,
             })
-          }
+
+          //更新个人项目
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Project')
+            .get()
+            .then(updateList => {
+              updateList.forEach(doc => {
+                let contributorList = doc.data().Contributors
+                contributorList.forEach((contributor: any, index: any) => {
+                  if (contributor.Id === user.uid) {
+                    contributorList[index] = { Avatar: url, Id: user.uid }
+                    db.collection('user')
+                      .doc(user.uid)
+                      .collection('Project')
+                      .doc(doc.id)
+                      .update({
+                        Contributors: contributorList,
+                      })
+                    db.collection('project').doc(doc.id).update({
+                      Contributors: contributorList,
+                    })
+                  }
+                })
+              })
+              console.log('用户所有的项目同步头像成功')
+            })
+
+          //更新聊天列表
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Friend')
+            .doc('Added')
+            .collection('Friends')
+            .get()
+            .then(friendUpdateList => {
+              friendUpdateList.forEach(doc => {
+                db.collection('user')
+                  .doc(doc.id)
+                  .collection('Friend')
+                  .doc('Added')
+                  .collection('Friends')
+                  .doc(user.uid)
+                  .update({
+                    FriendProfile: {
+                      Avatar: url,
+                      Profile: profile,
+                    },
+                  })
+
+                const chatUpdateRef = db
+                  .collection('user')
+                  .doc(user.uid)
+                  .collection('Friend')
+                  .doc('Added')
+                  .collection('Friends')
+                  .doc(doc.id)
+                  .collection('Chat')
+                const chatFriendRef = db
+                  .collection('user')
+                  .doc(doc.id)
+                  .collection('Friend')
+                  .doc('Added')
+                  .collection('Friends')
+                  .doc(user.uid)
+                  .collection('Chat')
+
+                chatUpdateRef
+                  .where('UserRef', '==', user.uid)
+                  .get()
+                  .then(chatList => {
+                    chatList.forEach(chatDoc => {
+                      chatUpdateRef.doc(chatDoc.id).update({
+                        Avatar: url,
+                      })
+                      chatFriendRef.doc(chatDoc.id).update({
+                        Avatar: url,
+                      })
+                    })
+                  })
+              })
+            })
+
+          // 更改好友集合
+          db.collection('friends').doc(user.uid).update({
+            avatar: url,
+          })
+
+          //找到所有相关用户的post 并进行更新
+          db.collection('moment')
+            .where('UserId', '==', `${user.uid}`)
+            .get()
+            .then(updateList => {
+              updateList.forEach(doc => {
+                db.collection('moment').doc(doc.id).update({
+                  Avatar: url,
+                })
+              })
+              console.log('用户的所有动态同步头像成功')
+            })
+
           setLoading(false)
           setFeedback(true)
         })
@@ -139,23 +237,22 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
 
   //初始化读取数据库信息
   useEffect(() => {
-    if (user) {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Setting')
-        .doc('Profile')
-        .get()
-        .then((doc: any) => {
-          if (doc.data().profile) {
-            setProfile(doc.data().profile)
-          } else {
-            setProfile(profileInit)
-          }
-          // if (doc.data().avatar) {
-          //   setAvatar(doc.data().avatar)
-          // }
-        })
-    }
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Setting')
+      .doc('Profile')
+      .get()
+      .then((doc: any) => {
+        if (doc.data().profile) {
+          setProfile(doc.data().profile)
+        } else {
+          setProfile(profileInit)
+        }
+        // if (doc.data().avatar) {
+        //   setAvatar(doc.data().avatar)
+        // }
+      })
+
     setLaunch(false)
   }, [])
 

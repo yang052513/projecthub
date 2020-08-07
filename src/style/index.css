@@ -1588,6 +1588,22 @@
       -ms-flex-align: center;
           align-items: center;
   margin: 20px auto;
+  border-radius: 10px;
+  position: relative;
+}
+
+.friend-container .friend-card-item-container .friend-prompt {
+  background-color: #03a9f4;
+  color: white;
+  position: absolute;
+  right: 0px;
+  top: 60px;
+  font-size: 13px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .friend-container .friend-card-item-container .friend-card-avatar {
