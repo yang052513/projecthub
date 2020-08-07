@@ -1,6 +1,29 @@
 {
   "versions": [
     {
+      "version": "Version 0.0.2",
+      "release": "RELEASED AUGUST 6, 2020",
+      "content": [
+        {
+          "status": "ADDED",
+          "info": "Added friend and chat system"
+        },
+        {
+          "status": "ADDED",
+          "info": "Story share and comment"
+        },
+        {
+          "status": "ADDED",
+          "info": "Multiple chart analysis for users activity"
+        },
+        {
+          "status": "ADDED",
+          "info": "Create a team and invite people to join"
+        }
+      ]
+    },
+
+    {
       "version": "Version 0.0.1",
       "release": "RELEASED JUNE 6, 2020",
       "content": [
