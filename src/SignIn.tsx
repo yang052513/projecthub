@@ -3,6 +3,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
+import Particles from 'react-particles-js'
 
 const config = {
   apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
@@ -51,6 +52,8 @@ class SignIn extends Component {
     if (!this.state.isSignedIn) {
       return (
         <div className="signin-container">
+          <div className="signin-overlay"></div>
+
           <div className="signin-ui-container">
             <div className="signin-ui-text-wrap">
               <h2>ProjectHub</h2>
