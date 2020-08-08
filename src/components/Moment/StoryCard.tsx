@@ -5,6 +5,8 @@ import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
 import { addNotification } from '../../modules/modules'
 import { MomentMenu } from '../Moment/MomentMenu'
+import { Feedback } from '../Common/Feedback'
+import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   avatar: string
@@ -35,23 +37,27 @@ export const StoryCard: React.FC<Props> = ({
   const [commentCnt, setCommentCnt] = useState<number>()
   const [showComment, setShowComment] = useState<boolean>(false)
 
+  const [feedback, setFeedback] = useState({
+    display: false,
+    msg: '',
+    info: '',
+  })
+
   const fetchLike = () => {
-    if (docRef) {
-      firebase
-        .firestore()
-        .collection('moment')
-        .doc(docRef)
-        .collection('Likes')
-        .get()
-        .then(docs => {
-          setLikeCnt(docs.size)
-          docs.forEach(doc => {
-            if (doc.data().Key === user.uid) {
-              setHasLiked(true)
-            }
-          })
+    firebase
+      .firestore()
+      .collection('moment')
+      .doc(docRef)
+      .collection('Likes')
+      .get()
+      .then(docs => {
+        setLikeCnt(docs.size)
+        docs.forEach(doc => {
+          if (doc.data().Key === user.uid) {
+            setHasLiked(true)
+          }
         })
-    }
+      })
   }
   useEffect(fetchLike, [hasLiked])
 
@@ -60,16 +66,14 @@ export const StoryCard: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (docRef) {
-      db.collection('moment')
-        .doc(docRef)
-        .collection('Comments')
-        .get()
-        .then(docs => {
-          setCommentCnt(docs.size)
-        })
-    }
-  }, [db, docRef])
+    db.collection('moment')
+      .doc(docRef)
+      .collection('Comments')
+      .get()
+      .then(docs => {
+        setCommentCnt(docs.size)
+      })
+  }, [])
 
   const handleLike = () => {
     firebase
@@ -82,6 +86,7 @@ export const StoryCard: React.FC<Props> = ({
         Key: user.uid,
         Avatar: currUserProfile.avatar,
       })
+
     setHasLiked(true)
     if (userId !== user.uid) {
       addNotification(
@@ -108,6 +113,10 @@ export const StoryCard: React.FC<Props> = ({
     setHasLiked(false)
   }
 
+  const handleReload = () => {
+    window.location.reload()
+  }
+
   const handleDelete = () => {
     firebase
       .firestore()
@@ -116,6 +125,12 @@ export const StoryCard: React.FC<Props> = ({
       .delete()
       .then(() => {
         console.log('动态删除成功')
+
+        setFeedback({
+          display: true,
+          msg: 'Moment deleted',
+          info: 'Moment has been deleted from your post',
+        })
       })
   }
 
@@ -154,6 +169,20 @@ export const StoryCard: React.FC<Props> = ({
           hideComment={hideComment}
         />
       )}
+
+      <CSSTransition
+        in={feedback.display}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={handleReload}
+        />
+      </CSSTransition>
     </div>
   )
 }

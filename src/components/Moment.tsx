@@ -17,18 +17,18 @@ export function Moment(props: any) {
   const [editor, setEditor] = useState<boolean>(false)
   const [moment, setMoment] = useState<Array<object | null | undefined>>([])
 
-  const fetchMoment = () => {
-    db.collection('moment').onSnapshot(snap => {
-      snap.docChanges().forEach(change => {
-        if (change.type == 'added') {
-          setMoment(prevMoment => [...prevMoment, change.doc.data()])
-        }
-      })
-      setLoading(false)
-    })
-  }
+  // const fetchMoment = () => {
+  //   db.collection('moment').onSnapshot(snap => {
+  //     snap.docChanges().forEach(change => {
+  //       if (change.type == 'added') {
+  //         setMoment(prevMoment => [...prevMoment, change.doc.data()])
+  //       }
+  //     })
+  //     setLoading(false)
+  //   })
+  // }
 
-  useEffect(fetchMoment, [])
+  // useEffect(fetchMoment, [])
 
   const displayEditor = () => {
     setEditor(true)
@@ -36,33 +36,38 @@ export function Moment(props: any) {
   const offEditor = () => {
     setEditor(false)
   }
+
   //Initialize and read all the moment that stores in the database
-  // useEffect(() => {
-  //   db.collection('moment')
-  //     .orderBy('Time', 'desc')
-  //     .get()
-  //     .then(query => {
-  //       query.forEach(doc => {
-  //         setMoment(prevMoment => [...prevMoment, doc.data()])
-  //       })
-  //       setLoading(false)
-  //     })
-  // }, [])
+  useEffect(() => {
+    db.collection('moment')
+      .orderBy('Time', 'desc')
+      .get()
+      .then(query => {
+        query.forEach(doc => {
+          setMoment(prevMoment => [...prevMoment, doc.data()])
+        })
+        setLoading(false)
+      })
+  }, [])
 
   //Loop all the moment and render in storycard component
-  const momentList = moment.map((moment: any) => (
-    <StoryCard
-      currUserProfile={currUserProfile}
-      key={moment.Key}
-      docRef={moment.Key}
-      userId={moment.UserId}
-      avatar={moment.Avatar}
-      name={moment.Author}
-      time={moment.Time}
-      content={moment.Content}
-      picture={moment.Picture}
-    />
-  ))
+  const momentList = moment
+    .sort((a: any, b: any) => {
+      return a.Time.split(' on ')[1] < b.Time.split(' on ')[1] ? 1 : -1
+    })
+    .map((moment: any) => (
+      <StoryCard
+        currUserProfile={currUserProfile}
+        key={moment.Key}
+        docRef={moment.Key}
+        userId={moment.UserId}
+        avatar={moment.Avatar}
+        name={moment.Author}
+        time={moment.Time}
+        content={moment.Content}
+        picture={moment.Picture}
+      />
+    ))
 
   return (
     <div className="component-layout moment-container">
