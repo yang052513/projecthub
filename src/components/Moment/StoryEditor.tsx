@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
 import { Progress } from '../Common/Progress'
+import { timeFormat } from 'current-time-format'
 
 interface Props {
   profile: object | any
   avatar: string
   toggle: any
 }
+
+const { monthNum, day, hours, minutes } = timeFormat
+const currentTime = `${hours}:${minutes} on ${monthNum}/${day}`
 
 export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
   const db = firebase.firestore()
@@ -19,52 +23,6 @@ export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
     Status: false,
     Name: '',
   })
-  const date = new Date()
-  let month
-  switch (date.getMonth()) {
-    case 0:
-      month = 'Jan'
-      break
-    case 1:
-      month = 'Feb'
-      break
-    case 2:
-      month = 'Mar'
-      break
-    case 3:
-      month = 'Apr'
-      break
-    case 4:
-      month = 'May'
-      break
-    case 5:
-      month = 'June'
-      break
-    case 6:
-      month = 'July'
-      break
-    case 7:
-      month = 'Aug'
-      break
-    case 8:
-      month = 'Sep'
-      break
-    case 9:
-      month = 'Oct'
-      break
-    case 10:
-      month = 'Nov'
-      break
-    case 11:
-      month = 'Dec'
-      break
-  }
-
-  const currentTime = `${date.getHours()}:${
-    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-  } ${month} ${
-    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  },${date.getFullYear()}`
 
   const handleMoment = () => {
     if (post !== '') {
