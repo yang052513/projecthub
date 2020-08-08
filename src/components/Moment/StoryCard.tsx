@@ -36,20 +36,22 @@ export const StoryCard: React.FC<Props> = ({
   const [showComment, setShowComment] = useState<boolean>(false)
 
   const fetchLike = () => {
-    firebase
-      .firestore()
-      .collection('moment')
-      .doc(docRef)
-      .collection('Likes')
-      .get()
-      .then(docs => {
-        setLikeCnt(docs.size)
-        docs.forEach(doc => {
-          if (doc.data().Key === user.uid) {
-            setHasLiked(true)
-          }
+    if (docRef) {
+      firebase
+        .firestore()
+        .collection('moment')
+        .doc(docRef)
+        .collection('Likes')
+        .get()
+        .then(docs => {
+          setLikeCnt(docs.size)
+          docs.forEach(doc => {
+            if (doc.data().Key === user.uid) {
+              setHasLiked(true)
+            }
+          })
         })
-      })
+    }
   }
   useEffect(fetchLike, [hasLiked])
 
@@ -58,13 +60,15 @@ export const StoryCard: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    db.collection('moment')
-      .doc(docRef)
-      .collection('Comments')
-      .get()
-      .then(docs => {
-        setCommentCnt(docs.size)
-      })
+    if (docRef) {
+      db.collection('moment')
+        .doc(docRef)
+        .collection('Comments')
+        .get()
+        .then(docs => {
+          setCommentCnt(docs.size)
+        })
+    }
   }, [db, docRef])
 
   const handleLike = () => {

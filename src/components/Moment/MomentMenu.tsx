@@ -44,13 +44,6 @@ export const MomentMenu: React.FC<Props> = ({ handleDelete, handleEdit }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem
-          className={classes.root}
-          onClick={() => console.log('编辑动态信息 加入编辑过状态 看看有空做')}
-        >
-          Edit
-        </MenuItem>
-
         <MenuItem className={classes.root} onClick={handleDelete}>
           Delete
         </MenuItem>

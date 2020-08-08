@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import { Loading } from './Common/Loading'
 
 import { useFetchProfile } from '../components/Hooks/useFetchProfile'
+import { CSSTransition } from 'react-transition-group'
 
 export function Moment(props: any) {
   const db = firebase.firestore()
@@ -16,6 +17,19 @@ export function Moment(props: any) {
   const [editor, setEditor] = useState<boolean>(false)
   const [moment, setMoment] = useState<Array<object | null | undefined>>([])
 
+  const fetchMoment = () => {
+    db.collection('moment').onSnapshot(snap => {
+      snap.docChanges().forEach(change => {
+        if (change.type == 'added') {
+          setMoment(prevMoment => [...prevMoment, change.doc.data()])
+        }
+      })
+      setLoading(false)
+    })
+  }
+
+  useEffect(fetchMoment, [])
+
   const displayEditor = () => {
     setEditor(true)
   }
@@ -23,17 +37,17 @@ export function Moment(props: any) {
     setEditor(false)
   }
   //Initialize and read all the moment that stores in the database
-  useEffect(() => {
-    db.collection('moment')
-      .orderBy('Time', 'desc')
-      .get()
-      .then(query => {
-        query.forEach(doc => {
-          setMoment(prevMoment => [...prevMoment, doc.data()])
-        })
-        setLoading(false)
-      })
-  }, [])
+  // useEffect(() => {
+  //   db.collection('moment')
+  //     .orderBy('Time', 'desc')
+  //     .get()
+  //     .then(query => {
+  //       query.forEach(doc => {
+  //         setMoment(prevMoment => [...prevMoment, doc.data()])
+  //       })
+  //       setLoading(false)
+  //     })
+  // }, [])
 
   //Loop all the moment and render in storycard component
   const momentList = moment.map((moment: any) => (
@@ -64,13 +78,19 @@ export function Moment(props: any) {
       </div>
 
       {/* Display the moment editor container */}
-      {editor ? (
+
+      <CSSTransition
+        in={editor}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <StoryEditor
           profile={props.profile}
           avatar={props.avatar}
           toggle={offEditor}
         />
-      ) : null}
+      </CSSTransition>
     </div>
   )
 }
