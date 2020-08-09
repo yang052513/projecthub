@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import { ExploreProject } from './Explore/ExploreProject'
 import { ExploreTrending } from './Explore/ExploreTrending'
 import { Loading } from './Common/Loading'
+import { CSSTransition } from 'react-transition-group'
 
 export const Explore: React.FC = () => {
   const [loadingProject, setLoadingProject] = useState<boolean>(true)
@@ -39,14 +40,19 @@ export const Explore: React.FC = () => {
 
   return (
     <div className="component-layout ">
-      {!(loadingProject && loadingFriend) ? (
+      {loadingProject || (loadingFriend && <Loading />)}
+
+      <CSSTransition
+        in={!(loadingProject && loadingFriend)}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div className="explore-container">
           <ExploreProject projectData={project} />
           <ExploreTrending userData={userList} />
         </div>
-      ) : (
-        <Loading />
-      )}
+      </CSSTransition>
     </div>
   )
 }

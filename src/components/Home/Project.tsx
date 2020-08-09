@@ -59,15 +59,24 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
   return (
     <div className="project-card-container">
       {/* Initialzie all the project */}
-      {project.length === 0 && !initial ? <Loading /> : renderProject}
+      {project.length === 0 && !initial && <Loading />}
+
+      <CSSTransition
+        in={!(project.length === 0 && !initial)}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <div className="project-card-list-container">{renderProject}</div>
+      </CSSTransition>
 
       {/* First time use the app, prompt message */}
-      {project.length === 0 && initial ? (
+      {project.length === 0 && initial && (
         <div className="project-no-result-container">
           <p>Welcome to Projecthub</p>
           <img src="/images/noresult.png" alt="" />
         </div>
-      ) : null}
+      )}
 
       {/* No searched or filter result */}
       <CSSTransition

@@ -9,6 +9,7 @@ import { Loading } from './Common/Loading'
 import { timeFormat } from 'current-time-format'
 
 import { addNotification } from '../modules/modules'
+import { CSSTransition } from 'react-transition-group'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
@@ -121,26 +122,37 @@ export const Group: React.FC = () => {
 
   return (
     <div className="group-container component-layout">
-      <div className="group-header-container">
-        <h2>Find Your Teams</h2>
-        <p>
-          Looking for some teammates to start your projects? Create a request
-          and let other contributors to join.
-        </p>
-        <Link to="/request">
-          <button>Create A Request</button>
-        </Link>
+      {loading && <Loading />}
 
-        <Link to="/grouppost">
-          <button>My Request</button>
-        </Link>
-      </div>
+      <CSSTransition
+        in={!loading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <div>
+          <div className="group-header-container">
+            <h2>Find Your Teams</h2>
+            <p>
+              Looking for some teammates to start your projects? Create a
+              request and let other contributors to join.
+            </p>
+          </div>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="group-project-list-container">{projectList}</div>
-      )}
+          <div className="group-filter-container">
+            <input type="text" placeholder="Search by title..." />
+
+            <Link to="/request">
+              <button>Create A Request</button>
+            </Link>
+            <Link to="/grouppost">
+              <button>My Request</button>
+            </Link>
+          </div>
+
+          <div className="group-project-list-container">{projectList}</div>
+        </div>
+      </CSSTransition>
 
       {feedback.show && (
         <Feedback

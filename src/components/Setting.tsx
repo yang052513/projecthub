@@ -36,7 +36,8 @@ export const Setting: React.FC<Props> = ({
   let location = useLocation()
 
   const currPathStyle: any = {
-    color: 'rgb(14,93,211)',
+    color: '#03a9f4',
+    fontWeight: 'bold',
   }
 
   return (

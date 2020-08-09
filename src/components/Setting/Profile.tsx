@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField'
 import { Progress } from '../Common/Progress'
 import { Feedback } from '../Common/Feedback'
 import { Loading } from '../Common/Loading'
+import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -282,9 +283,14 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
         </div>
       ) : null}
 
-      {launch ? (
-        <Loading />
-      ) : (
+      {launch && <Loading />}
+
+      <CSSTransition
+        in={!launch}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div>
           <div className="setting-content-intro">
             <h2>Profile</h2>
@@ -406,7 +412,7 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
             <button onClick={handleSubmit}>Save</button>
           </div>
         </div>
-      )}
+      </CSSTransition>
     </div>
   )
 }

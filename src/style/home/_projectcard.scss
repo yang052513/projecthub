@@ -1,16 +1,18 @@
 //所有卡片容器grid排版
 .project-card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  .project-card-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 
-  row-gap: 30px;
-  padding: 25px 50px;
+    row-gap: 30px;
+    padding: 25px 50px;
+  }
 }
 
 //每个单一的项目卡片样式化
 .project-card-item {
   width: 330px;
-  padding: 20px 30px 5px 30px;
+  padding: 20px 30px 15px 30px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 1);
   position: relative;

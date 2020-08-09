@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { FriendCard } from './Friends/FriendCard'
 import { Loading } from './Common/Loading'
+import { CSSTransition } from 'react-transition-group'
 
 export const Friends: React.FC = () => {
   const [user, setUser] = useState<Array<object | null | undefined>>([])
@@ -31,11 +32,16 @@ export const Friends: React.FC = () => {
 
   return (
     <div className="component-layout friend-container">
-      {loading ? (
-        <Loading />
-      ) : (
+      {loading && <Loading />}
+
+      <CSSTransition
+        in={!loading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div className="friend-card-list">{userList}</div>
-      )}
+      </CSSTransition>
     </div>
   )
 }

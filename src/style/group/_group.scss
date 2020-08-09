@@ -54,11 +54,14 @@
       margin: 20px 0;
       font-size: 14px;
     }
+    margin: 0 0 50px 0;
+  }
+  .group-filter-container {
+    border: 1px solid red;
     button {
       @include buttonStroke($sideNavBg);
       margin-right: 15px;
     }
-    margin: 0 0 50px 0;
   }
   .group-project-list-container {
     margin: 15px 30px;

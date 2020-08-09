@@ -413,7 +413,7 @@
   letter-spacing: 0;
 }
 
-.project-card-container {
+.project-card-container .project-card-list-container {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
@@ -424,7 +424,7 @@
 
 .project-card-item {
   width: 330px;
-  padding: 20px 30px 5px 30px;
+  padding: 20px 30px 15px 30px;
   border-radius: 10px;
   background-color: white;
   position: relative;
@@ -1879,7 +1879,11 @@
   font-size: 14px;
 }
 
-.group-container .group-header-container button {
+.group-container .group-filter-container {
+  border: 1px solid red;
+}
+
+.group-container .group-filter-container button {
   font-size: 13px;
   color: #03a9f4;
   background-color: rgba(0, 0, 0, 0);
@@ -1891,7 +1895,7 @@
   margin-right: 15px;
 }
 
-.group-container .group-header-container button:hover {
+.group-container .group-filter-container button:hover {
   color: white;
   background-color: #03a9f4;
   border: 1px solid rgba(0, 0, 0, 0);
