@@ -1427,6 +1427,10 @@
   margin-right: 20px;
 }
 
+.moment-story-card-container div a {
+  color: #03a9f4;
+}
+
 .moment-story-card-container div .moment-story-name {
   font-size: 18px;
   font-weight: bold;

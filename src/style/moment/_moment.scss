@@ -82,6 +82,9 @@ $storyImgSize: 50px;
     margin-right: 20px;
   }
   div {
+    a {
+      color: $sideNavBg;
+    }
     .moment-story-name {
       font-size: 18px;
       font-weight: bold;

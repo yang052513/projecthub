@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import { Comment } from './Comment'
 import { timeFormat } from 'current-time-format'
 import { addNotification } from '../../modules/modules'
+import { Hidden } from '@material-ui/core'
 
 interface Props {
   docRef?: string
@@ -29,12 +30,6 @@ export const StoryComment: React.FC<Props> = ({
   const [commentList, setCommentList] = useState<any>([])
 
   const commentRef = db.collection('moment').doc(docRef).collection('Comments')
-
-  const [feedback, setFeedback] = useState({
-    display: false,
-    msg: '',
-    info: '',
-  })
 
   useEffect(() => {
     db.collection('user')
@@ -91,12 +86,7 @@ export const StoryComment: React.FC<Props> = ({
       `/moment/${user.uid}`,
       currUserInfo.avatar
     )
-
-    setFeedback({
-      display: true,
-      msg: 'Comment Success',
-      info: 'You comment has been added',
-    })
+    hideComment()
   }
 
   return (
