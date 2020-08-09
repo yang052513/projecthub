@@ -162,13 +162,18 @@ export const StoryCard: React.FC<Props> = ({
         </div>
       </div>
 
-      {showComment && (
+      <CSSTransition
+        in={showComment}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <StoryComment
           docRef={docRef}
           creatorId={userId}
           hideComment={hideComment}
         />
-      )}
+      </CSSTransition>
 
       <CSSTransition
         in={feedback.display}

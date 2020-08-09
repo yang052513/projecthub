@@ -71,11 +71,15 @@ export function Moment(props: any) {
 
   return (
     <div className="component-layout moment-container">
-      {loading ? (
-        <Loading />
-      ) : (
+      {loading && <Loading />}
+      <CSSTransition
+        in={!loading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div className="moment-story-card-wrap">{momentList}</div>
-      )}
+      </CSSTransition>
 
       {/* Creat a new moment button */}
       <div className="post-moment-container">
@@ -83,7 +87,6 @@ export function Moment(props: any) {
       </div>
 
       {/* Display the moment editor container */}
-
       <CSSTransition
         in={editor}
         timeout={500}

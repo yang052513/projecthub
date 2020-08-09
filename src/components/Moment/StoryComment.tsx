@@ -30,6 +30,12 @@ export const StoryComment: React.FC<Props> = ({
 
   const commentRef = db.collection('moment').doc(docRef).collection('Comments')
 
+  const [feedback, setFeedback] = useState({
+    display: false,
+    msg: '',
+    info: '',
+  })
+
   useEffect(() => {
     db.collection('user')
       .doc(user.uid)
@@ -43,7 +49,7 @@ export const StoryComment: React.FC<Props> = ({
           avatar: doc.data().avatar,
         })
       })
-  }, [db, user.uid])
+  }, [])
 
   const fetchComments = () => {
     commentRef.get().then((docs: any) => {
@@ -85,6 +91,12 @@ export const StoryComment: React.FC<Props> = ({
       `/moment/${user.uid}`,
       currUserInfo.avatar
     )
+
+    setFeedback({
+      display: true,
+      msg: 'Comment Success',
+      info: 'You comment has been added',
+    })
   }
 
   return (

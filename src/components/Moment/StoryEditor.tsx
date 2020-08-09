@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import { Progress } from '../Common/Progress'
 import { timeFormat } from 'current-time-format'
+import { Feedback } from '../Common/Feedback'
+import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   profile: object | any
@@ -23,6 +25,15 @@ export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
     Status: false,
     Name: '',
   })
+  const [feedback, setFeedback] = useState({
+    display: false,
+    msg: '',
+    info: '',
+  })
+
+  const handleReload = () => {
+    window.location.reload()
+  }
 
   const handleMoment = () => {
     if (post !== '') {
@@ -44,10 +55,18 @@ export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
             })
           })
       })
-
-      toggle()
+      // toggle()
+      setFeedback({
+        display: true,
+        msg: 'Shared Success',
+        info: 'You story has been shared successfully',
+      })
     } else {
-      alert('说点什么吧')
+      setFeedback({
+        display: true,
+        msg: 'Input Error',
+        info: 'Please enter the message',
+      })
     }
   }
 
@@ -103,6 +122,20 @@ export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
           {pictureInfo.Status ? <p>{pictureInfo.Name}</p> : null}
         </div>
       </div>
+
+      <CSSTransition
+        in={feedback.display}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Feedback
+          msg={feedback.msg}
+          info={feedback.info}
+          imgUrl="/images/emoji/emoji_happy.png"
+          toggle={handleReload}
+        />
+      </CSSTransition>
     </div>
   )
 }
