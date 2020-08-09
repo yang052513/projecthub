@@ -1880,7 +1880,16 @@
 }
 
 .group-container .group-filter-container {
-  border: 1px solid red;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 50px 20px 50px;
 }
 
 .group-container .group-filter-container button {

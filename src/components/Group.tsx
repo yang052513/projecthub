@@ -10,6 +10,7 @@ import { timeFormat } from 'current-time-format'
 
 import { addNotification } from '../modules/modules'
 import { CSSTransition } from 'react-transition-group'
+import { GroupSort } from './Group/Form/GroupSort'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
@@ -142,12 +143,28 @@ export const Group: React.FC = () => {
           <div className="group-filter-container">
             <input type="text" placeholder="Search by title..." />
 
-            <Link to="/request">
-              <button>Create A Request</button>
-            </Link>
-            <Link to="/grouppost">
-              <button>My Request</button>
-            </Link>
+            <div className="group-filter-wrap">
+              <GroupSort />
+
+              <select>
+                <option>Cateory</option>
+              </select>
+
+              <select>
+                <option>Team Size</option>
+              </select>
+
+              <select>
+                <option>Project Length</option>
+              </select>
+
+              <Link to="/request">
+                <button>Create A Request</button>
+              </Link>
+              <Link to="/grouppost">
+                <button>My Request</button>
+              </Link>
+            </div>
           </div>
 
           <div className="group-project-list-container">{projectList}</div>
