@@ -28,6 +28,7 @@ import { SideNavItem } from './components/Navigation/SideNavItem'
 import { NotificationMenu } from './components/Notification/NotificationMenu'
 
 import { MomentUser } from './components/Moment/MomentUser'
+import { Header } from './components/Navigation/Header'
 
 export default function App() {
   const db = firebase.firestore()
@@ -361,7 +362,7 @@ export default function App() {
 
         {/* Header bar with notification and current page title */}
         <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
-          <h2>Project Dashboard</h2>
+          <Header />
           <div className="user-navbar-icon">
             <NotificationMenu />
             <ProfileMenu avatar={avatar} />

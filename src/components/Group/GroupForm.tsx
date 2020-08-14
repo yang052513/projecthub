@@ -224,6 +224,7 @@ export const GroupForm: React.FC = () => {
             </div>
 
             <div className="project-input-submit-container">
+              <button onClick={() => history.push('/group')}>Cancel</button>
               <button onClick={handleSubmit}>Create Project</button>
             </div>
           </div>

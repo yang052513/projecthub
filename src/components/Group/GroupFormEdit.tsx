@@ -229,6 +229,7 @@ export const GroupFormEdit: React.FC = () => {
             </div>
 
             <div className="project-input-submit-container">
+              <button onClick={() => history.push('/group')}>Cancel</button>
               <button onClick={handleSubmit}>Save Changes</button>
             </div>
           </div>

@@ -113,6 +113,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       projectData.Contributors.forEach((contributor: any, index: any) => {
         if (contributor.Id !== 'None' && index > 0) {
           contributorList.push(contributor)
+
           updateApplication(contributor.Id, projectData.Key, 'Created')
           addNotification(
             contributor.Id,
