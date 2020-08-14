@@ -21,6 +21,21 @@ export const Group: React.FC = () => {
 
   const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
 
+  //排序 过滤控制
+  const [selector, setSelector] = useState({
+    search: ' ',
+    category: ' ',
+    team: ' ',
+    duration: ' ',
+  })
+
+  const handleSelector = (event: any) => {
+    setSelector({
+      ...selector,
+      [event.target.name]: event.target.value,
+    })
+  }
+
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',
@@ -113,13 +128,53 @@ export const Group: React.FC = () => {
     }
   }
 
-  const projectList = project.map((item: any) => (
-    <GroupDetailCard
-      key={item.Key}
-      cardData={item}
-      handleApply={() => handleApply(item.Creator.Id, item)}
-    />
-  ))
+  const projectList = project
+    .filter((item: any) => {
+      if (selector.search !== ' ') {
+        return item.Name.includes(selector.search)
+      } else {
+        return item
+      }
+    })
+    .filter((item: any) => {
+      if (selector.category !== ' ') {
+        return item.Category === selector.category
+      } else {
+        return item
+      }
+    })
+    .filter((item: any) => {
+      if (selector.team !== ' ') {
+        return item.Contributors.length >= selector.team
+      } else {
+        return item
+      }
+    })
+    .filter((item: any) => {
+      const timeDiff = Date.parse(item.EndDate) - Date.parse(item.StartDate)
+      const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+
+      if (selector.duration !== ' ') {
+        if (selector.duration === '0') {
+          return daysDiff < 7
+        } else if (selector.duration === '1') {
+          return daysDiff >= 7 && daysDiff < 28
+        } else if (selector.duration === '2') {
+          return daysDiff >= 28 && daysDiff < 90
+        } else {
+          return daysDiff >= 90
+        }
+      } else {
+        return item
+      }
+    })
+    .map((item: any) => (
+      <GroupDetailCard
+        key={item.Key}
+        cardData={item}
+        handleApply={() => handleApply(item.Creator.Id, item)}
+      />
+    ))
 
   return (
     <div className="group-container component-layout">
@@ -142,13 +197,15 @@ export const Group: React.FC = () => {
 
           <div className="group-filter-container">
             <input
+              name="search"
+              onChange={handleSelector}
               className="group-search"
               type="text"
               placeholder="Search by title..."
             />
 
             <div className="group-filter-wrap">
-              <GroupSort />
+              <GroupSort selector={selector} handleSelector={handleSelector} />
               <Link to="/request">
                 <button>Create A Request</button>
               </Link>

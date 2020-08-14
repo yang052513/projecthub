@@ -22,25 +22,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const GroupSort = () => {
-  const classes = useStyles()
-  const [category, setCategory] = useState('Web App')
-  const [team, setTeam] = useState('Team Size')
-  const [duration, setDuration] = useState(0)
+interface Props {
+  selector: any
+  handleSelector: (event: any) => void
+}
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setCategory(event.target.value as string)
-  }
+export const GroupSort: React.FC<Props> = ({ handleSelector, selector }) => {
+  const classes = useStyles()
 
   return (
     <div className="group-form-container">
       <FormControl className={classes.formControl}>
         <Select
           className={classes.selectItem}
-          value={category}
-          onChange={handleChange}
+          value={selector.category}
+          onChange={handleSelector}
           name="category"
         >
+          <MenuItem className={classes.selectItem} value={' '}>
+            All Categories
+          </MenuItem>
           <MenuItem className={classes.selectItem} value={'Web App'}>
             Web
           </MenuItem>
@@ -65,12 +66,12 @@ export const GroupSort = () => {
       <FormControl className={classes.formControl}>
         <Select
           className={classes.selectItem}
-          value={team}
-          onChange={handleChange}
-          name="teamsize"
+          value={selector.team}
+          onChange={handleSelector}
+          name="team"
         >
-          <MenuItem className={classes.selectItem} value={'Team Size'}>
-            Team Size
+          <MenuItem className={classes.selectItem} value={' '}>
+            All Teams
           </MenuItem>
           <MenuItem className={classes.selectItem} value={1}>
             1
@@ -88,7 +89,7 @@ export const GroupSort = () => {
             5
           </MenuItem>
           <MenuItem className={classes.selectItem} value={6}>
-            6
+            More than 5
           </MenuItem>
         </Select>
       </FormControl>
@@ -96,20 +97,23 @@ export const GroupSort = () => {
       <FormControl className={classes.formControl}>
         <Select
           className={classes.selectItem}
-          value={duration}
-          onChange={handleChange}
+          value={selector.duration}
+          onChange={handleSelector}
           name="duration"
         >
-          <MenuItem className={classes.selectItem} value={0}>
+          <MenuItem className={classes.selectItem} value={' '}>
+            All Durations
+          </MenuItem>
+          <MenuItem className={classes.selectItem} value={'0'}>
             Less than one Week
           </MenuItem>
-          <MenuItem className={classes.selectItem} value={1}>
+          <MenuItem className={classes.selectItem} value={'1'}>
             1 - 4 Weeks
           </MenuItem>
-          <MenuItem className={classes.selectItem} value={2}>
+          <MenuItem className={classes.selectItem} value={'2'}>
             1 - 3 Months
           </MenuItem>
-          <MenuItem className={classes.selectItem} value={3}>
+          <MenuItem className={classes.selectItem} value={'3'}>
             More than 3 months
           </MenuItem>
         </Select>
