@@ -1919,6 +1919,36 @@
   justify-items: center;
 }
 
+.group-filter-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.group-form-container {
+  margin-right: 30px;
+}
+
+.group-search {
+  width: 400px;
+  padding: 5px 20px 5px 10px;
+  border-radius: 10px;
+  border: 1px solid #b3b2b2;
+  background: none;
+  font-size: 12px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.group-search:focus {
+  outline: none;
+  -webkit-box-shadow: 1px 1px 14px -4px #03a9f4;
+          box-shadow: 1px 1px 14px -4px #03a9f4;
+}
+
 .group-list-post-container {
   margin-bottom: 50px;
 }

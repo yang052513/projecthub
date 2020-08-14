@@ -141,23 +141,14 @@ export const Group: React.FC = () => {
           </div>
 
           <div className="group-filter-container">
-            <input type="text" placeholder="Search by title..." />
+            <input
+              className="group-search"
+              type="text"
+              placeholder="Search by title..."
+            />
 
             <div className="group-filter-wrap">
               <GroupSort />
-
-              <select>
-                <option>Cateory</option>
-              </select>
-
-              <select>
-                <option>Team Size</option>
-              </select>
-
-              <select>
-                <option>Project Length</option>
-              </select>
-
               <Link to="/request">
                 <button>Create A Request</button>
               </Link>
