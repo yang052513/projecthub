@@ -3,10 +3,10 @@ import firebase from 'firebase'
 import { GroupList } from './GroupList'
 import { GroupApplication } from './GroupApplication'
 import { Loading } from '../Common/Loading'
-
+import { useHistory } from 'react-router-dom'
 export const GroupPost = () => {
   const user: any = firebase.auth().currentUser
-
+  const history = useHistory()
   const [group, setGroup] = useState<Array<Object | null | undefined>>([])
   const [application, setApplication] = useState<any>([])
 
@@ -60,6 +60,9 @@ export const GroupPost = () => {
         <Loading />
       ) : (
         <div className="group-post-content-container">
+          <div className="group-return-container">
+            <button onClick={() => history.push('/group')}>Return</button>
+          </div>
           <h2 className="styled-heading">My Posts</h2>
           <GroupList tableData={group} />
 

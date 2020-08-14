@@ -41,6 +41,17 @@
     }
   }
 }
+.group-post-content-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.group-return-container {
+  button {
+    @include buttonStroke($sideNavBg);
+    margin-bottom: 30px;
+  }
+}
 
 .group-container {
   // border: 1px solid red;
@@ -95,6 +106,10 @@
     outline: none;
     box-shadow: 1px 1px 14px -4px rgba(3, 169, 244, 1);
   }
+}
+
+.group-post-header {
+  border: 1px solid red;
 }
 
 .group-list-post-container {

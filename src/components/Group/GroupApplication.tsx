@@ -47,7 +47,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
 
 const useStyles = makeStyles({
   root: {
-    width: '80%',
     margin: '0 auto',
   },
 })
