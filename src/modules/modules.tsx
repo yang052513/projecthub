@@ -57,6 +57,7 @@ export function addActivity(
 // 项目添加，修改，删除大厅项目发起，修改，删除，创建 更新活动日志
 export function addProjectLog(
   userRef: string,
+  collection: string,
   avatar: string,
   name: string,
   action: string,
@@ -66,7 +67,7 @@ export function addProjectLog(
     .firestore()
     .collection('user')
     .doc(userRef)
-    .collection('Activity')
+    .collection(collection)
     .add({
       Avatar: avatar,
       Message: {
@@ -81,7 +82,7 @@ export function addProjectLog(
         .firestore()
         .collection('user')
         .doc(userRef)
-        .collection('Activity')
+        .collection(collection)
         .doc(activityRef.id)
         .update({
           Key: activityRef.id,

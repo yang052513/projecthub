@@ -105,6 +105,7 @@ export const GroupFormEdit: React.FC = () => {
       })
       addProjectLog(
         user.uid,
+        'Activity',
         profile.avatar,
         'You',
         'edited team project',

@@ -185,6 +185,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
         addProjectLog(
           contributor.Id,
+          'Activity',
           contributor.Avatar,
           subjectName,
           'created the team project',
@@ -272,6 +273,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             )
             addProjectLog(
               contributor.Id,
+              'Activity',
               contributor.Avatar,
               'The Project Owner',
               'deleted team project',
@@ -283,6 +285,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
       addProjectLog(
         groupData.Creator.Id,
+        'Activity',
         groupData.Creator.Avatar,
         'You',
         'deleted team project',

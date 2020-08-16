@@ -30,6 +30,7 @@ export const Status: React.FC = () => {
 
   const [project, setProject] = useState<Array<object | null>>([])
   const [activity, setActivity] = useState<Array<object | null>>([])
+  const [social, setSocial] = useState<Array<object | null>>([])
 
   const [type, setType] = useState<Array<string | null>>([])
   const [typeSort, setTypeSort] = useState<Array<any>>([])
@@ -47,6 +48,7 @@ export const Status: React.FC = () => {
     activity: true,
     type: true,
     tag: true,
+    social: true,
   })
 
   useEffect(() => {
@@ -84,6 +86,20 @@ export const Status: React.FC = () => {
           setLoading({
             ...loading,
             activity: false,
+          })
+        })
+
+      db.collection('user')
+        .doc(user.uid)
+        .collection('Social')
+        .get()
+        .then(collection => {
+          collection.forEach(doc => {
+            setSocial(prevSocial => [...prevSocial, doc.data()])
+          })
+          setLoading({
+            ...loading,
+            social: false,
           })
         })
     }
@@ -145,7 +161,13 @@ export const Status: React.FC = () => {
 
   return (
     <div className="component-layout status-container">
-      {!(loading.project && loading.activity && loading.tag && loading.type) ? (
+      {!(
+        loading.project &&
+        loading.activity &&
+        loading.tag &&
+        loading.type &&
+        loading.social
+      ) ? (
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -156,7 +178,7 @@ export const Status: React.FC = () => {
             </Grid>
 
             <Grid item xs={4}>
-              <StatusLike />
+              <StatusLike social={social} />
             </Grid>
 
             <Grid item xs={4}>

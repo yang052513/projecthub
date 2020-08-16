@@ -101,6 +101,7 @@ export const GroupForm: React.FC = () => {
 
       addProjectLog(
         user.uid,
+        'Activity',
         profile.avatar,
         'You',
         'created a new team project request',

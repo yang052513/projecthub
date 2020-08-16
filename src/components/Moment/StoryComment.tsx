@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Comment } from './Comment'
 import { timeFormat } from 'current-time-format'
-import { addNotification } from '../../modules/modules'
+import { addNotification, addProjectLog } from '../../modules/modules'
 import { Hidden } from '@material-ui/core'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 interface Props {
   docRef?: string
@@ -19,6 +20,9 @@ export const StoryComment: React.FC<Props> = ({
   creatorId,
 }) => {
   const user: any = firebase.auth().currentUser
+
+  const profile = useFetchProfile(user.uid)
+
   const db = firebase.firestore()
   const [currUserInfo, setCurrUserInfo] = useState<any>({
     name: '',
@@ -85,6 +89,14 @@ export const StoryComment: React.FC<Props> = ({
       'Story Comment',
       `/moment/${user.uid}`,
       currUserInfo.avatar
+    )
+    addProjectLog(
+      creatorId,
+      'Social',
+      profile.avatar,
+      profile.profile.profileName,
+      'commented your story',
+      commentText
     )
     hideComment()
   }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { StorySocial } from './StorySocial'
 import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
-import { addNotification } from '../../modules/modules'
+import { addNotification, addProjectLog } from '../../modules/modules'
 import { MomentMenu } from '../Moment/MomentMenu'
 import { Feedback } from '../Common/Feedback'
 import { CSSTransition } from 'react-transition-group'
@@ -95,6 +95,14 @@ export const StoryCard: React.FC<Props> = ({
         'Story Like',
         `/moemnt/${userId}`,
         currUserProfile.avatar
+      )
+      addProjectLog(
+        userId,
+        'Social',
+        currUserProfile.avatar,
+        currUserProfile.profile.profileName,
+        'liked your story',
+        content
       )
     }
   }
