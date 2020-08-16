@@ -53,3 +53,38 @@ export function addActivity(
       console.log(`保存活动状态时出错 ${error}`)
     })
 }
+
+// 项目添加，修改，删除大厅项目发起，修改，删除，创建 更新活动日志
+export function addProjectLog(
+  userRef: string,
+  avatar: string,
+  name: string,
+  action: string,
+  title: string
+) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(userRef)
+    .collection('Activity')
+    .add({
+      Avatar: avatar,
+      Message: {
+        Name: name,
+        Action: action,
+        Title: title,
+        Date: activityTime,
+      },
+    })
+    .then(activityRef => {
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(userRef)
+        .collection('Activity')
+        .doc(activityRef.id)
+        .update({
+          Key: activityRef.id,
+        })
+    })
+}

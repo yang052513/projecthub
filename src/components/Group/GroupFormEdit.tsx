@@ -7,6 +7,8 @@ import TextField from '@material-ui/core/TextField'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { useHistory } from 'react-router-dom'
+import { addProjectLog } from '../../modules/modules'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +27,8 @@ export const GroupFormEdit: React.FC = () => {
   const params: any = useParams()
   const classes = useStyles()
   const history = useHistory()
+  const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
 
   const [progress, setProgress] = useState<boolean>(false)
   const [feedback, setFeedback] = useState<any>({
@@ -99,6 +103,13 @@ export const GroupFormEdit: React.FC = () => {
         EndDate: textInput.endDate,
         Tools: tool,
       })
+      addProjectLog(
+        user.uid,
+        profile.avatar,
+        'You',
+        'edited team project',
+        textInput.name
+      )
 
       setProgress(false)
       setFeedback({

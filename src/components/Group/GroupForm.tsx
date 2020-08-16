@@ -6,6 +6,7 @@ import { useFetchProfile } from '../Hooks/useFetchProfile'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { useHistory } from 'react-router-dom'
+import { addProjectLog } from '../../modules/modules'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -97,6 +98,14 @@ export const GroupForm: React.FC = () => {
           })
           console.log(`创建新的合作项目成功，密匙为${docRef.id}`)
         })
+
+      addProjectLog(
+        user.uid,
+        profile.avatar,
+        'You',
+        'created a new team project request',
+        textInput.name
+      )
       setProgress(false)
       setFeedback({
         show: true,

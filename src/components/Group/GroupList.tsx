@@ -24,7 +24,8 @@ import {
   deleteRequest,
   updateApplication,
 } from '../../modules/group'
-import { addNotification } from '../../modules/modules'
+import { addNotification, addProjectLog } from '../../modules/modules'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -62,6 +63,9 @@ interface Props {
 export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
   const history = useHistory()
+  const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
+
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',
@@ -115,6 +119,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           contributorList.push(contributor)
 
           updateApplication(contributor.Id, projectData.Key, 'Created')
+
           addNotification(
             contributor.Id,
             `Project ${projectData.Name} has been created and added to your dashboard`,
@@ -167,6 +172,9 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
       // 写入到每个用户的Project的集合中
       contributorList.forEach((contributor: any) => {
+        let subjectName =
+          contributor.Id === user.uid ? 'You' : profile.profile.profileName
+
         firebase
           .firestore()
           .collection('user')
@@ -174,6 +182,14 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           .collection('Project')
           .doc(projectData.Key)
           .set(projectDoc)
+
+        addProjectLog(
+          contributor.Id,
+          contributor.Avatar,
+          subjectName,
+          'created the team project',
+          projectData.Name
+        )
       })
 
       // Delete from group project docs
@@ -244,7 +260,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
 
       // Delete from user Application collection 删除已经加入的用户
       groupData.Contributors.forEach(
-        (contributor: { Id: string }, index: number) => {
+        (contributor: { Id: string; Avatar: string }, index: number) => {
           if (contributor.Id !== 'None' && index > 0) {
             updateApplication(contributor.Id, groupData.Key, 'Deleted')
             addNotification(
@@ -254,8 +270,23 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
               '/grouppost',
               groupData.Creator.Avatar
             )
+            addProjectLog(
+              contributor.Id,
+              contributor.Avatar,
+              'The Project Owner',
+              'deleted team project',
+              groupData.Name
+            )
           }
         }
+      )
+
+      addProjectLog(
+        groupData.Creator.Id,
+        groupData.Creator.Avatar,
+        'You',
+        'deleted team project',
+        groupData.Name
       )
 
       firebase.firestore().collection('group').doc(groupData.Key).delete()
