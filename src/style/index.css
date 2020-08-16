@@ -2384,16 +2384,10 @@
   display: flex;
 }
 
-.messenger-friend-list-container .messenger-friend-list-item .messenger-friend-list-profile img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
 .messenger-friend-list-container .messenger-friend-list-item .messenger-friend-list-profile h4 {
   font-family: title;
   color: #4a4a4a;
+  margin-top: 5px;
 }
 
 .messenger-friend-list-container .messenger-friend-list-item .messenger-friend-list-profile p {
@@ -2416,10 +2410,27 @@
   height: 40px;
   border-radius: 50%;
   margin-right: 20px;
+  color: #ffffff;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
-.messenger-friend-list-container .messenger-friend-list-item .messenger-friend-list-action button i {
-  color: #ffffff;
+.messenger-friend-list-container .messenger-friend-list-item .messenger-friend-list-action button:hover {
+  color: #03a9f4;
+  border: 1px solid #03a9f4;
+  background-color: #ffffff;
+}
+
+.avatar-container {
+  margin-right: 10px;
+}
+
+.avatar-container .avatar-badge-online .MuiBadge-badge {
+  background-color: #44b700;
+}
+
+.avatar-container .avatar-badge-offline .MuiBadge-badge {
+  background-color: #a7a7a7;
 }
 
 .notification-menu {

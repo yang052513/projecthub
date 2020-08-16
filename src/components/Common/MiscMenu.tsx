@@ -15,13 +15,13 @@ export const MiscMenu: React.FC = props => {
 
   return (
     <div>
-      <Button
+      <button
         aria-controls="edit-menu"
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <i className="fas fa-ellipsis-h"></i>
-      </Button>
+        <i className="fas fa-ellipsis-v"></i>
+      </button>
 
       <Menu
         anchorEl={anchorEl}

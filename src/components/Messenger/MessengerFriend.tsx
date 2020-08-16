@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import firebase from 'firebase'
+import { MessengerListMenu } from './MessengerList/MessengerListMenu'
+import { AvatarOnline } from '../Common/AvatarOnline'
 
 export const MessengerFriend: React.FC = () => {
   const user: any = firebase.auth().currentUser
@@ -25,7 +28,8 @@ export const MessengerFriend: React.FC = () => {
   const friendList = friend.map((item: any) => (
     <div key={item.FriendKey} className="messenger-friend-list-item">
       <div className="messenger-friend-list-profile">
-        <img src={item.FriendProfile.Avatar} alt="" />
+        {/* <img src={item.FriendProfile.Avatar} alt="" /> */}
+        <AvatarOnline avator={item.FriendProfile.Avatar} isOnline={false} />
         <div>
           <h4>{item.FriendProfile.Profile.profileName}</h4>
           <p>Offline</p>
@@ -33,12 +37,14 @@ export const MessengerFriend: React.FC = () => {
       </div>
 
       <div className="messenger-friend-list-action">
-        <button>
-          <i className="fas fa-comment-alt"></i>
-        </button>
-        <button>
-          <i className="fas fa-ellipsis-v"></i>
-        </button>
+        <Link to={`/messenger/chat/${item.FriendKey}`}>
+          <button>
+            <i className="fas fa-comment-alt"></i>
+          </button>
+        </Link>
+
+        {/* <i className="fas fa-ellipsis-v"></i> */}
+        <MessengerListMenu friendKey={item.FriendKey} />
       </div>
     </div>
   ))

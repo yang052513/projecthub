@@ -10,7 +10,6 @@ export const MessengerListFriend: React.FC<Props> = ({ friend }) => {
     <div key={item.FriendKey} className="messenger-list-friend-item">
       <img className="friend-avatar" src={item.FriendProfile.Avatar} alt="" />
       <p>{item.FriendProfile.Profile.profileName}</p>
-      <MessengerListMenu friendKey={item.FriendKey} />
     </div>
   ))
 
