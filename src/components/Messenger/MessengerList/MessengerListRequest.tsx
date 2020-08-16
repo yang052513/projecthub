@@ -16,7 +16,13 @@ export const MessengerListRequest: React.FC<Props> = ({ request }) => {
         <p>FRIENDS REQUEST</p>
       </div>
 
-      {requestList}
+      {requestList.length > 0 ? (
+        requestList
+      ) : (
+        <div className="messenger-noresult">
+          <p>暂无好友申请</p>
+        </div>
+      )}
     </div>
   )
 }

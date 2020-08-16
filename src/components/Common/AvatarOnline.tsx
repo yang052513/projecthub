@@ -2,6 +2,7 @@ import React from 'react'
 import Badge from '@material-ui/core/Badge'
 import Avatar from '@material-ui/core/Avatar'
 import { Theme, withStyles, createStyles } from '@material-ui/core/styles'
+import { useFetchOnline } from '../Hooks/useFetchOnline'
 
 const StyledBadge = withStyles((theme: Theme) =>
   createStyles({
@@ -23,23 +24,36 @@ const StyledBadge = withStyles((theme: Theme) =>
 
 interface Props {
   avator: string
-  isOnline: boolean
+  userKey: string
+  userName: string
 }
 
-export const AvatarOnline: React.FC<Props> = ({ avator, isOnline }) => {
+export const AvatarOnline: React.FC<Props> = ({
+  avator,
+  userKey,
+  userName,
+}) => {
+  const isOnline = useFetchOnline(userKey)
+
   return (
-    <div className="avatar-container">
-      <StyledBadge
-        className={isOnline ? 'avatar-badge-online' : 'avatar-badge-offline'}
-        overlap="circle"
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        variant="dot"
-      >
-        <Avatar alt="" src={avator} />
-      </StyledBadge>
+    <div className="messenger-friend-list-profile">
+      <div className="avatar-container">
+        <StyledBadge
+          className={isOnline ? 'avatar-badge-online' : 'avatar-badge-offline'}
+          overlap="circle"
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          variant="dot"
+        >
+          <Avatar alt="" src={avator} />
+        </StyledBadge>
+      </div>
+      <div>
+        <h4>{userName}</h4>
+        <p>{isOnline ? 'Online' : 'Offline'}</p>
+      </div>
     </div>
   )
 }

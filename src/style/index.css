@@ -2253,6 +2253,10 @@
   outline: none;
 }
 
+.messenger-list-request-container {
+  height: 100%;
+}
+
 .messenger-list-request-container .messenger-list-request-item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2431,6 +2435,21 @@
 
 .avatar-container .avatar-badge-offline .MuiBadge-badge {
   background-color: #a7a7a7;
+}
+
+.messenger-noresult {
+  height: 80%;
+  position: relative;
+}
+
+.messenger-noresult p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-style: italic;
+  color: #4a4a4a;
 }
 
 .notification-menu {

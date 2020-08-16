@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import { MessengerListMenu } from './MessengerList/MessengerListMenu'
 import { AvatarOnline } from '../Common/AvatarOnline'
+import { useFetchOnline } from '../Hooks/useFetchOnline'
 
 export const MessengerFriend: React.FC = () => {
   const user: any = firebase.auth().currentUser
@@ -27,14 +28,17 @@ export const MessengerFriend: React.FC = () => {
 
   const friendList = friend.map((item: any) => (
     <div key={item.FriendKey} className="messenger-friend-list-item">
-      <div className="messenger-friend-list-profile">
-        {/* <img src={item.FriendProfile.Avatar} alt="" /> */}
-        <AvatarOnline avator={item.FriendProfile.Avatar} isOnline={false} />
-        <div>
+      {/* <div className="messenger-friend-list-profile"> */}
+      <AvatarOnline
+        avator={item.FriendProfile.Avatar}
+        userKey={item.FriendKey}
+        userName={item.FriendProfile.Profile.profileName}
+      />
+      {/* <div>
           <h4>{item.FriendProfile.Profile.profileName}</h4>
           <p>Offline</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="messenger-friend-list-action">
         <Link to={`/messenger/chat/${item.FriendKey}`}>
