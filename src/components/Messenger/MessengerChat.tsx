@@ -15,9 +15,7 @@ export const MessengerChat: React.FC = () => {
   const profile = useFetchProfile(user.uid)
 
   const [friendUserName, setFriendUserName] = useState<string>('')
-
   const [chatMsg, setChatMsg] = useState<string>('')
-
   const [chat, setChat] = useState<any>([])
 
   const fetchChat = () => {
@@ -67,6 +65,35 @@ export const MessengerChat: React.FC = () => {
     }
     sendMessage(user.uid, params.ref, chatData)
     setChatMsg('')
+
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Friend')
+      .doc('Added')
+      .collection('Friends')
+      .doc(params.ref)
+      .update({
+        LatestNotify: {
+          Msg: chatMsg,
+          Date: currentDay,
+        },
+      })
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(params.ref)
+      .collection('Friend')
+      .doc('Added')
+      .collection('Friends')
+      .doc(user.uid)
+      .update({
+        LatestNotify: {
+          Msg: chatMsg,
+          Date: currentDay,
+        },
+      })
   }
 
   const handleSubmit = (e: { key: string; shiftKey: any }) => {

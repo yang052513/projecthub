@@ -8,30 +8,6 @@ interface Props {
 export const MessengerListChat: React.FC<Props> = ({ friend }) => {
   const user: any = firebase.auth().currentUser
 
-  const [message, setMessage] = useState<string>('')
-
-  // const fetchLatestMessage = () => {
-  //   firebase
-  //     .firestore()
-  //     .collection('user')
-  //     .doc(friend[0].FriendKey)
-  //     .collection('Friend')
-  //     .doc('Added')
-  //     .collection('Friends')
-  //     .doc(user.uid)
-  //     .collection('Chat')
-  //     .get()
-  //     .then(docs => {
-  //       docs.forEach(doc => {
-  //         if (doc.data().UserRef !== user.uid) {
-  //           setMessage(doc.data().Message)
-  //         }
-  //       })
-  //     })
-  // }
-
-  // useEffect(fetchLatestMessage, [])
-
   const chatList = friend.map((item: any) => (
     <Link
       className="messenger-list-chat-wrap"
@@ -42,7 +18,14 @@ export const MessengerListChat: React.FC<Props> = ({ friend }) => {
         <img src={item.FriendProfile.Avatar} alt="" />
         <div>
           <h4>{item.FriendProfile.Profile.profileName}</h4>
-          <p>Let me know what you think...</p>
+          <div className="messenger-list-chat-notify">
+            <p>
+              {item.LatestNotify
+                ? `${item.LatestNotify.Msg.slice(0, 15)}...`
+                : `No Chat with ${item.FriendProfile.Profile.profileName}`}
+            </p>
+            <p>{item.LatestNotify && item.LatestNotify.Date}</p>
+          </div>
         </div>
       </div>
     </Link>
@@ -52,7 +35,6 @@ export const MessengerListChat: React.FC<Props> = ({ friend }) => {
       <div className="messenger-list-header">
         <p>RECENT CHATS</p>
       </div>
-
       {chatList}
     </div>
   )

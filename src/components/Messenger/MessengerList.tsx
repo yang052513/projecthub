@@ -12,6 +12,7 @@ export const MessengerList: React.FC = () => {
 
   const [friend, setFriend] = useState<any>([])
   const [request, setRequest] = useState<any>([])
+  const latestMsgList = useState([])
 
   const fetchRequest = () => {
     firebase

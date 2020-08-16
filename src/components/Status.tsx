@@ -170,9 +170,9 @@ export const Status: React.FC = () => {
               <StatusLog activity={activity} />
             </Grid>
 
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <StatusContributor />
-            </Grid>
+            </Grid> */}
           </Grid>
         </div>
       ) : (
