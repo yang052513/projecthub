@@ -17,7 +17,10 @@ export const Header: React.FC = () => {
       setHeaderTitle('FIND CONTRIBUTORS')
     } else if (currRoute === '/friends') {
       setHeaderTitle('PROJECTHUB USERS')
-    } else if (currRoute === '/messenger/chat') {
+    } else if (
+      currRoute === '/messenger/chat' ||
+      currRoute.includes('/messenger/chat')
+    ) {
       setHeaderTitle('CHAT WITH FRIENDS')
     } else if (currRoute === '/messenger/friends') {
       setHeaderTitle('FRIEND LISTS')
