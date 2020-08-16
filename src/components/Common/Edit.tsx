@@ -228,6 +228,27 @@ export const Edit: React.FC = () => {
               '/',
               profile.avatar
             )
+            db.collection('user')
+              .doc(contributor.Id)
+              .collection('Activity')
+              .add({
+                Avatar: profile.avatar,
+                Message: {
+                  Name: profile.profile.profileName,
+                  Action: 'edited project',
+                  Title: textInput.projectName,
+                  Date: currentTime,
+                },
+              })
+              .then(activityRef => {
+                db.collection('user')
+                  .doc(contributor.Id)
+                  .collection('Activity')
+                  .doc(activityRef.id)
+                  .update({
+                    Key: activityRef.id,
+                  })
+              })
           }
         })
 
@@ -236,9 +257,13 @@ export const Edit: React.FC = () => {
           .doc(user.uid)
           .collection('Activity')
           .add({
-            ProjectKey: params.ref,
-            Time: currentTime,
-            Content: `Edited project ${textInput.projectName}`,
+            Avatar: profile.avatar,
+            Message: {
+              Name: 'You',
+              Action: 'edited project',
+              Title: textInput.projectName,
+              Date: currentTime,
+            },
           })
           .then(activityRef => {
             db.collection('user')

@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
-
+import { useHistory } from 'react-router-dom'
 import { timeFormat } from 'current-time-format'
 
 import { Feedback } from './Feedback'
@@ -45,6 +45,7 @@ const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
 export const CreateProject: React.FC = () => {
   const classes = useStyles()
+  const history = useHistory()
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
@@ -161,14 +162,18 @@ export const CreateProject: React.FC = () => {
                 Key: docRef.id,
               })
 
-            //Write 'create project' activity to Activity collection
+            // 写入到Log集合中：创建新的项目
             db.collection('user')
               .doc(user.uid)
               .collection('Activity')
               .add({
-                ProjectKey: docRef.id,
-                Time: currentTime,
-                Content: `Created a new project ${textInput.projectName}`,
+                Avatar: profile.avatar,
+                Message: {
+                  Name: 'You',
+                  Action: 'create a new project',
+                  Title: textInput.projectName,
+                  Date: currentTime,
+                },
               })
               .then(activityRef => {
                 db.collection('user')
@@ -209,7 +214,7 @@ export const CreateProject: React.FC = () => {
             msg="Success"
             info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
-            toggle={handleReload}
+            toggle={history.push('/')}
           />
         </div>
       )}

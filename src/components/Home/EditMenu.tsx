@@ -11,6 +11,7 @@ import { timeFormat } from 'current-time-format'
 import { useFetchContributor } from '../Hooks/useFetchContributor'
 import { addActivity, addNotification } from '../../modules/modules'
 import { deleteProject } from '../../modules/home'
+import { useFetchProfile } from '../Hooks/useFetchProfile'
 
 const useStyles = makeStyles({
   root: {
@@ -36,6 +37,7 @@ export const EditMenu: React.FC<Props> = ({
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const user: any = firebase.auth().currentUser
+  const profile = useFetchProfile(user.uid)
   const contributorList: any = useFetchContributor(user.uid, docRef)
 
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
@@ -70,6 +72,32 @@ export const EditMenu: React.FC<Props> = ({
               '/',
               contributor.Avatar
             )
+
+            firebase
+              .firestore()
+              .collection('user')
+              .doc(contributor.Id)
+              .collection('Activity')
+              .add({
+                Avatar: profile.avatar,
+                Message: {
+                  Name: profile.profile.profileName,
+                  Action: 'deleted project',
+                  Title: projectName,
+                  Date: currentTime,
+                },
+              })
+              .then(activityRef => {
+                firebase
+                  .firestore()
+                  .collection('user')
+                  .doc(contributor.Id)
+                  .collection('Activity')
+                  .doc(activityRef.id)
+                  .update({
+                    Key: activityRef.id,
+                  })
+              })
           }
         })
       }
@@ -78,7 +106,32 @@ export const EditMenu: React.FC<Props> = ({
       contributorList.forEach((contributor: any) => {
         deleteProject(contributor.Id, docRef)
       })
-      addActivity(user.uid, `Deleted project ${projectName}`, 'Delete')
+
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(user.uid)
+        .collection('Activity')
+        .add({
+          Avatar: profile.avatar,
+          Message: {
+            Name: 'You',
+            Action: 'deleted project',
+            Title: projectName,
+            Date: currentTime,
+          },
+        })
+        .then(activityRef => {
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(user.uid)
+            .collection('Activity')
+            .doc(activityRef.id)
+            .update({
+              Key: activityRef.id,
+            })
+        })
 
       setLoading(false)
       setDeleteConfirm(false)
