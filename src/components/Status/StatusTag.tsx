@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from 'recharts'
 
 interface Props {
@@ -21,14 +22,16 @@ export const StatusTag: React.FC<Props> = ({ tagSort }) => {
       <h3>Most Used Technology</h3>
 
       <div className="status-card-container status-tag-container">
-        <BarChart width={400} height={300} data={tagList}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="cnt" fill="#03a9f4" />
-        </BarChart>
+        <ResponsiveContainer width={'90%'} height={300}>
+          <BarChart data={tagList}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="cnt" fill="#03a9f4" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   )

@@ -901,8 +901,7 @@
 }
 
 .status-container .status-card-container {
-  min-height: 400px;
-  max-height: 400px;
+  height: 400px;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
@@ -938,6 +937,13 @@
 
 .status-tag-container {
   position: relative;
+}
+
+.recharts-responsive-container {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-10px, -50%);
+          transform: translate(-10px, -50%);
 }
 
 .recharts-text {
