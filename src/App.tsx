@@ -56,9 +56,81 @@ export default function App() {
 
   const [profile, setProfile] = useState({})
   const [avatar, setAvatar] = useState('/images/user.jpg')
+  const initStatusData = {
+    inProgress: 0,
+    completed: 0,
+    planning: 0,
+    dropped: 0,
+  }
 
+  const initStatus = [
+    {
+      name: 'January',
+      data: initStatusData,
+    },
+    {
+      name: 'February',
+      data: initStatusData,
+    },
+    {
+      name: 'March',
+      data: initStatusData,
+    },
+    {
+      name: 'April',
+      data: initStatusData,
+    },
+    {
+      name: 'May',
+      data: initStatusData,
+    },
+    {
+      name: 'June',
+      data: initStatusData,
+    },
+    {
+      name: 'July',
+      data: initStatusData,
+    },
+    {
+      name: 'August',
+      data: initStatusData,
+    },
+    {
+      name: 'September',
+      data: initStatusData,
+    },
+    {
+      name: 'October',
+      data: initStatusData,
+    },
+    {
+      name: 'November',
+      data: initStatusData,
+    },
+    {
+      name: 'December',
+      data: initStatusData,
+    },
+  ]
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
+    db.collection('user')
+      .doc(user.uid)
+      .collection('Statistics')
+      .doc('Monthly')
+      .get()
+      .then(doc => {
+        if (!doc.exists) {
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Statistics')
+            .doc('Monthly')
+            .set({
+              initStatus,
+            })
+        }
+      })
     // firebase.auth().onAuthStateChanged(user => {
     //将用户加入到所有用户列表
     db.collection('friends')

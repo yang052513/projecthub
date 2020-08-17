@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   LineChart,
   Line,
@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts'
+import firebase from 'firebase'
 
 const inProgress = 'rgb(67, 219, 118)'
 const completed = 'rgb(51, 196, 206)'
@@ -57,51 +58,26 @@ const data = [
     planning: 4,
     dropped: 4,
   },
-  // {
-  //   name: 'July',
-  //   inProgress: 3,
-  //   completed: 2,
-  //   planning: 1,
-  //   dropped: 0,
-  // },
-  // {
-  //   name: 'August',
-  //   inProgress: 1,
-  //   completed: 2,
-  //   planning: 3,
-  //   dropped: 4,
-  // },
-  // {
-  //   name: 'September',
-  //   inProgress: 3,
-  //   completed: 1,
-  //   planning: 5,
-  //   dropped: 2,
-  // },
-  // {
-  //   name: 'October',
-  //   inProgress: 4,
-  //   completed: 5,
-  //   planning: 2,
-  //   dropped: 0,
-  // },
-  // {
-  //   name: 'November',
-  //   inProgress: 2,
-  //   completed: 1,
-  //   planning: 4,
-  //   dropped: 0,
-  // },
-  // {
-  //   name: 'December',
-  //   inProgress: 3,
-  //   completed: 3,
-  //   planning: 2,
-  //   dropped: 4,
-  // },
 ]
 
 export const StatusActivity: React.FC = () => {
+  const user: any = firebase.auth().currentUser
+
+  const fetchStat = () => {
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user.uid)
+      .collection('Statistics')
+      .doc('Monthly')
+      .get()
+      .then((doc: any) => {
+        console.log(doc.data().initStatus)
+      })
+  }
+
+  useEffect(fetchStat, [])
+
   return (
     <div className="status-card-item-wrap">
       <h3>Project Status Analysis</h3>

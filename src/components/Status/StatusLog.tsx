@@ -5,8 +5,6 @@ interface Props {
 }
 
 export const StatusLog: React.FC<Props> = ({ activity }) => {
-  console.log(activity)
-
   const projectLog = activity.map((log: any) => (
     <div className="status-log-item" key={log.Key}>
       <img src={log.Avatar} alt="" />
