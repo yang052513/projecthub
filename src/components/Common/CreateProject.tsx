@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -42,7 +42,10 @@ const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
 
 const currentDay = `${year}-${monthNum}-${day}`
 const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
-const currentMonth = monthStrLong
+
+const date = new Date()
+const currentMonth: any =
+  date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
 
 export const CreateProject: React.FC = () => {
   const classes = useStyles()
@@ -56,6 +59,8 @@ export const CreateProject: React.FC = () => {
   const [fail, setFail] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<string>('')
 
+  const [statusCnt, setStatusCnt] = useState<any>()
+
   const [textInput, setTextInput] = useState({
     projectName: '',
     projectCategory: '',
@@ -68,10 +73,6 @@ export const CreateProject: React.FC = () => {
 
   function handleFail() {
     setFail(false)
-  }
-
-  function handleReload() {
-    window.location.reload()
   }
 
   //管理普通文本输入，名称，简介，分类
@@ -187,9 +188,14 @@ export const CreateProject: React.FC = () => {
               })
 
             //写入到统计集合中
-            // db.collection('user').doc(user.uid).collection('Statistics').doc('Monthly').update({
 
-            // })
+            db.collection('user')
+              .doc(user.uid)
+              .collection('Statistics')
+              .doc(currentMonth)
+              .update({
+                [`${status}`]: firebase.firestore.FieldValue.increment(1),
+              })
 
             //Write the project to public project collection: Explore Component
             if (publicProject) {
@@ -220,7 +226,7 @@ export const CreateProject: React.FC = () => {
             msg="Success"
             info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
-            toggle={history.push('/')}
+            toggle={() => history.push('/')}
           />
         </div>
       )}

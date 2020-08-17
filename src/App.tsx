@@ -63,93 +63,93 @@ export default function App() {
     db.collection('user')
       .doc(user.uid)
       .collection('Statistics')
-      .doc('January')
+      .doc('00')
       .get()
       .then(doc => {
         if (!doc.exists) {
           statRef.doc('00').set({
-            name: 'January',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'January',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('01').set({
-            name: 'February',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'February',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('02').set({
-            name: 'March',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'March',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('03').set({
-            name: 'April',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'April',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('04').set({
-            name: 'May',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'May',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('05').set({
-            name: 'June',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'June',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('06').set({
-            name: 'July',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'July',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('07').set({
-            name: 'August',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'August',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('08').set({
-            name: 'September',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'September',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('09').set({
-            name: 'October',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'October',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('10').set({
-            name: 'November',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'November',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
           statRef.doc('11').set({
-            name: 'December',
-            inProgress: 0,
-            completed: 0,
-            planning: 0,
-            dropped: 0,
+            Label: 'December',
+            'In Progress': 0,
+            Completed: 0,
+            Planning: 0,
+            Dropped: 0,
           })
         }
       })

@@ -42,20 +42,20 @@ export const StatusActivity: React.FC = () => {
         <ResponsiveContainer width={'95%'} height={400}>
           <LineChart data={statusData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="Label" />
             <YAxis domain={[0, 'dataMax']} />
             <Tooltip />
             <Legend />
 
             <Line
               type="monotone"
-              dataKey="inProgress"
+              dataKey="In Progress"
               stroke={inProgress}
               activeDot={{ r: 8 }}
             />
-            <Line type="monotone" dataKey="completed" stroke={completed} />
-            <Line type="monotone" dataKey="planning" stroke={planning} />
-            <Line type="monotone" dataKey="dropped" stroke={dropped} />
+            <Line type="monotone" dataKey="Completed" stroke={completed} />
+            <Line type="monotone" dataKey="Planning" stroke={planning} />
+            <Line type="monotone" dataKey="Dropped" stroke={dropped} />
           </LineChart>
         </ResponsiveContainer>
       </div>
