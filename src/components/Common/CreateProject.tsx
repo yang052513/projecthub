@@ -42,6 +42,7 @@ const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
 
 const currentDay = `${year}-${monthNum}-${day}`
 const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
+const currentMonth = monthStrLong
 
 export const CreateProject: React.FC = () => {
   const classes = useStyles()
@@ -184,6 +185,11 @@ export const CreateProject: React.FC = () => {
                     Key: activityRef.id,
                   })
               })
+
+            //写入到统计集合中
+            // db.collection('user').doc(user.uid).collection('Statistics').doc('Monthly').update({
+
+            // })
 
             //Write the project to public project collection: Explore Component
             if (publicProject) {

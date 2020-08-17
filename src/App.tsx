@@ -56,79 +56,101 @@ export default function App() {
 
   const [profile, setProfile] = useState({})
   const [avatar, setAvatar] = useState('/images/user.jpg')
-  const initStatusData = {
-    inProgress: 0,
-    completed: 0,
-    planning: 0,
-    dropped: 0,
-  }
 
-  const initStatus = [
-    {
-      name: 'January',
-      data: initStatusData,
-    },
-    {
-      name: 'February',
-      data: initStatusData,
-    },
-    {
-      name: 'March',
-      data: initStatusData,
-    },
-    {
-      name: 'April',
-      data: initStatusData,
-    },
-    {
-      name: 'May',
-      data: initStatusData,
-    },
-    {
-      name: 'June',
-      data: initStatusData,
-    },
-    {
-      name: 'July',
-      data: initStatusData,
-    },
-    {
-      name: 'August',
-      data: initStatusData,
-    },
-    {
-      name: 'September',
-      data: initStatusData,
-    },
-    {
-      name: 'October',
-      data: initStatusData,
-    },
-    {
-      name: 'November',
-      data: initStatusData,
-    },
-    {
-      name: 'December',
-      data: initStatusData,
-    },
-  ]
+  const statRef = db.collection('user').doc(user.uid).collection('Statistics')
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
     db.collection('user')
       .doc(user.uid)
       .collection('Statistics')
-      .doc('Monthly')
+      .doc('January')
       .get()
       .then(doc => {
         if (!doc.exists) {
-          db.collection('user')
-            .doc(user.uid)
-            .collection('Statistics')
-            .doc('Monthly')
-            .set({
-              initStatus,
-            })
+          statRef.doc('00').set({
+            name: 'January',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('01').set({
+            name: 'February',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('02').set({
+            name: 'March',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('03').set({
+            name: 'April',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('04').set({
+            name: 'May',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('05').set({
+            name: 'June',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('06').set({
+            name: 'July',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('07').set({
+            name: 'August',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('08').set({
+            name: 'September',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('09').set({
+            name: 'October',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('10').set({
+            name: 'November',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
+          statRef.doc('11').set({
+            name: 'December',
+            inProgress: 0,
+            completed: 0,
+            planning: 0,
+            dropped: 0,
+          })
         }
       })
     // firebase.auth().onAuthStateChanged(user => {
