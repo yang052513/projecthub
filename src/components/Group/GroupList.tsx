@@ -60,6 +60,10 @@ interface Props {
   tableData: any
 }
 
+const date = new Date()
+const currentMonth: any =
+  date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+
 export const GroupList: React.FC<Props> = ({ tableData }) => {
   const classes = useStyles()
   const history = useHistory()
@@ -174,6 +178,16 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       contributorList.forEach((contributor: any) => {
         let subjectName =
           contributor.Id === user.uid ? 'You' : profile.profile.profileName
+
+        firebase
+          .firestore()
+          .collection('user')
+          .doc(contributor.Id)
+          .collection('Statistics')
+          .doc(currentMonth)
+          .update({
+            'In Progress': firebase.firestore.FieldValue.increment(1),
+          })
 
         firebase
           .firestore()

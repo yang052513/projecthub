@@ -918,6 +918,7 @@
 
 .status-container .status-activity-log-list {
   font-size: 13px;
+  overflow-y: scroll;
 }
 
 .status-container .status-activity-log-list li {

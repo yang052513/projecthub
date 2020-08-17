@@ -57,6 +57,7 @@
 
   .status-activity-log-list {
     font-size: 13px;
+    overflow-y: scroll;
     li {
       margin: 0 0 10px 0;
       list-style-type: none;

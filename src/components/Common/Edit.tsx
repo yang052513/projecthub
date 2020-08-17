@@ -64,15 +64,24 @@ export const Edit: React.FC = () => {
   const currentDay = `${year}-${monthNum}-${day}`
   const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
+  const date = new Date()
+  const currentMonth: any =
+    date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+
   //从数据库读取的信息
   const [textInput, setTextInput] = useState({
     projectName: '',
-    projectCategory: '',
     projectDesc: '',
     projectDate: currentDay,
   })
   const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
+
+  const [category, setCategory] = useState<string>('Android')
+  const [oldStatus, setOldStatus] = useState('')
+
+  const [statusUpdate, setStatusUpdate] = useState<boolean>(false)
+
   const [publicProject, setPublicProject] = useState(true)
 
   const contributorList: any = useFetchContributor(user.uid, params.ref)
@@ -87,12 +96,13 @@ export const Edit: React.FC = () => {
       .then((doc: any) => {
         setTextInput({
           projectName: doc.data().Name,
-          projectCategory: doc.data().Category,
           projectDesc: doc.data().Description,
           projectDate: doc.data().StartDate,
         })
+        setCategory(doc.data().Category)
         setTool(doc.data().Tools)
         setStatus(doc.data().Status)
+        setOldStatus(doc.data().Status)
         setPublicProject(doc.data().Privacy === 'Public' ? true : false)
       })
   }, [])
@@ -170,6 +180,7 @@ export const Edit: React.FC = () => {
   //管理项目进程 4个状态可选 默认In Progress
   const handleStatus = (event: { target: { value: any } }) => {
     setStatus(event.target.value)
+    setStatusUpdate(true)
   }
 
   //管理项目公开性 默认公开Public
@@ -179,11 +190,13 @@ export const Edit: React.FC = () => {
     setPublicProject(event.target.checked)
   }
 
+  const handleCategory = (event: { target: { value: any } }) => {
+    setCategory(event.target.value)
+  }
   //上传项目信息到云端
   const handleSave = () => {
     if (
       textInput.projectName === '' ||
-      textInput.projectCategory === '' ||
       textInput.projectDesc === '' ||
       tool.length === 0
     ) {
@@ -203,7 +216,7 @@ export const Edit: React.FC = () => {
           Like: 0,
           Name: textInput.projectName,
           Status: status,
-          Category: textInput.projectCategory,
+          Category: category,
           StartDate: textInput.projectDate,
           EndDate: '',
           Description: textInput.projectDesc,
@@ -219,6 +232,18 @@ export const Edit: React.FC = () => {
             .collection('Project')
             .doc(params.ref)
             .update(projectData)
+
+          //写入到统计集合中
+          if (statusUpdate) {
+            db.collection('user')
+              .doc(contributor.Id)
+              .collection('Statistics')
+              .doc(currentMonth)
+              .update({
+                [`${oldStatus}`]: firebase.firestore.FieldValue.increment(-1),
+                [`${status}`]: firebase.firestore.FieldValue.increment(1),
+              })
+          }
 
           if (index > 0) {
             addNotification(
@@ -383,18 +408,27 @@ export const Edit: React.FC = () => {
             />
 
             {/* 项目分类输入，之后可以用来分类filter */}
-            <TextField
-              id="project-category-input"
-              name="projectCategory"
-              onChange={handleTextField}
-              label="Category"
-              value={textInput.projectCategory}
-              className={classes.textField}
-              helperText="E.g. Web app, IOS app"
-              margin="dense"
-              variant="outlined"
-            />
 
+            <FormControl
+              variant="outlined"
+              margin="dense"
+              className={classes.formControl}
+            >
+              <InputLabel>Project Category</InputLabel>
+              <Select
+                name="category"
+                value={category}
+                onChange={handleCategory}
+                label="Project Category"
+              >
+                <MenuItem value="Android">Android</MenuItem>
+                <MenuItem value="IOS">IOS</MenuItem>
+                <MenuItem value="PC/Mac">PC/Mac</MenuItem>
+                <MenuItem value="Game">Game</MenuItem>
+                <MenuItem value="Web">Web</MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
             {/* 项目介绍输入 */}
             <TextField
               id="project-desc-input"

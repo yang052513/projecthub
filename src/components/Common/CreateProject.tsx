@@ -63,13 +63,14 @@ export const CreateProject: React.FC = () => {
 
   const [textInput, setTextInput] = useState({
     projectName: '',
-    projectCategory: '',
     projectDesc: '',
     projectDate: currentDay,
   })
   const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
+
+  const [category, setCategory] = useState<string>('Android')
 
   function handleFail() {
     setFail(false)
@@ -109,6 +110,10 @@ export const CreateProject: React.FC = () => {
     setStatus(event.target.value)
   }
 
+  const handleCategory = (event: { target: { value: any } }) => {
+    setCategory(event.target.value)
+  }
+
   //管理项目公开性 默认公开Public
   const handlePublic = (event: {
     target: { checked: React.SetStateAction<boolean> }
@@ -120,7 +125,6 @@ export const CreateProject: React.FC = () => {
   const handleSubmit = () => {
     if (
       textInput.projectName === '' ||
-      textInput.projectCategory === '' ||
       textInput.projectDesc === '' ||
       tool.length === 0
     ) {
@@ -140,7 +144,7 @@ export const CreateProject: React.FC = () => {
           Like: 0,
           Name: textInput.projectName,
           Status: status,
-          Category: textInput.projectCategory,
+          Category: category,
           StartDate: textInput.projectDate,
           EndDate: '',
           Description: textInput.projectDesc,
@@ -286,17 +290,27 @@ export const CreateProject: React.FC = () => {
             />
 
             {/* 项目分类输入，之后可以用来分类filter */}
-            <TextField
-              id="project-category-input"
-              name="projectCategory"
-              onChange={handleTextField}
-              label="Category"
-              placeholder="Project category"
-              className={classes.textField}
-              helperText="E.g. Web app, IOS app"
-              margin="dense"
+
+            <FormControl
               variant="outlined"
-            />
+              margin="dense"
+              className={classes.formControl}
+            >
+              <InputLabel>Project Category</InputLabel>
+              <Select
+                name="category"
+                value={category}
+                onChange={handleCategory}
+                label="Project Category"
+              >
+                <MenuItem value="Android">Android</MenuItem>
+                <MenuItem value="IOS">IOS</MenuItem>
+                <MenuItem value="PC/Mac">PC/Mac</MenuItem>
+                <MenuItem value="Game">Game</MenuItem>
+                <MenuItem value="Web">Web</MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
 
             {/* 项目介绍输入 */}
             <TextField
