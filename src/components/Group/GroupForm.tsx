@@ -7,6 +7,7 @@ import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { useHistory } from 'react-router-dom'
 import { addProjectLog } from '../../modules/modules'
+import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,10 +39,11 @@ export const GroupForm: React.FC = () => {
     name: '',
     startDate: '',
     endDate: '',
-    category: '',
     contributors: '',
     description: '',
   })
+
+  const [category, setCategory] = useState<string>('Android')
 
   const [tool, setTool] = useState<Array<string>>([])
 
@@ -51,6 +53,10 @@ export const GroupForm: React.FC = () => {
       ...prevText,
       [name]: value,
     }))
+  }
+
+  const handleCategory = (event: { target: { value: any } }) => {
+    setCategory(event.target.value)
   }
 
   const handleTool = () => {
@@ -86,7 +92,7 @@ export const GroupForm: React.FC = () => {
           Name: textInput.name,
           StartDate: textInput.startDate,
           EndDate: textInput.endDate,
-          Category: textInput.category,
+          Category: category,
           Contributors: contributor_list,
           Description: textInput.description,
           Tools: tool,
@@ -173,19 +179,26 @@ export const GroupForm: React.FC = () => {
               }}
             />
 
-            <TextField
-              name="category"
-              onChange={handleTextField}
-              label="Category"
-              placeholder="Project category"
-              className={classes.textField}
-              helperText="E.g. Web app, IOS app"
-              margin="dense"
+            <FormControl
               variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+              margin="dense"
+              className={classes.textField}
+            >
+              <InputLabel>Project Category</InputLabel>
+              <Select
+                name="category"
+                value={category}
+                onChange={handleCategory}
+                label="Project Category"
+              >
+                <MenuItem value="Android">Android</MenuItem>
+                <MenuItem value="IOS">IOS</MenuItem>
+                <MenuItem value="PC/Mac">PC/Mac</MenuItem>
+                <MenuItem value="Game">Game</MenuItem>
+                <MenuItem value="Web">Web</MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
 
             <TextField
               name="contributors"

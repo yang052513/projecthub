@@ -9,6 +9,7 @@ import { Progress } from '../Common/Progress'
 import { useHistory } from 'react-router-dom'
 import { addProjectLog } from '../../modules/modules'
 import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +31,7 @@ export const GroupFormEdit: React.FC = () => {
   const user: any = firebase.auth().currentUser
   const profile = useFetchProfile(user.uid)
 
+  const [category, setCategory] = useState<string>('Android')
   const [progress, setProgress] = useState<boolean>(false)
   const [feedback, setFeedback] = useState<any>({
     show: false,
@@ -41,12 +43,15 @@ export const GroupFormEdit: React.FC = () => {
     name: '',
     startDate: '',
     endDate: '',
-    category: '',
     contributors: '',
     description: '',
   })
 
   const [tool, setTool] = useState<Array<string>>([])
+
+  const handleCategory = (event: { target: { value: any } }) => {
+    setCategory(event.target.value)
+  }
 
   const fetchGroupDoc = () => {
     firebase
@@ -59,12 +64,12 @@ export const GroupFormEdit: React.FC = () => {
           name: doc.data().Name,
           startDate: doc.data().StartDate,
           endDate: doc.data().EndDate,
-          category: doc.data().Category,
           description: doc.data().Description,
           contributor: parseInt(doc.data().Contributors.length),
           capacity: parseInt(doc.data().Capacity),
         })
         setTool(doc.data().Tools)
+        setCategory(doc.data().Category)
       })
   }
 
@@ -94,10 +99,10 @@ export const GroupFormEdit: React.FC = () => {
 
   const handleSubmit = () => {
     setProgress(true)
-
     setTimeout(() => {
       firebase.firestore().collection('group').doc(params.ref).update({
         Name: textInput.name,
+        Category: category,
         Description: textInput.description,
         StartDate: textInput.startDate,
         EndDate: textInput.endDate,
@@ -179,20 +184,26 @@ export const GroupFormEdit: React.FC = () => {
               }}
             />
 
-            <TextField
-              name="category"
-              value={textInput.category}
-              onChange={handleTextField}
-              label="Category"
-              placeholder="Project category"
-              className={classes.textField}
-              helperText="E.g. Web app, IOS app"
-              margin="dense"
+            <FormControl
               variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+              margin="dense"
+              className={classes.textField}
+            >
+              <InputLabel>Project Category</InputLabel>
+              <Select
+                name="category"
+                value={category}
+                onChange={handleCategory}
+                label="Project Category"
+              >
+                <MenuItem value="Android">Android</MenuItem>
+                <MenuItem value="IOS">IOS</MenuItem>
+                <MenuItem value="PC/Mac">PC/Mac</MenuItem>
+                <MenuItem value="Game">Game</MenuItem>
+                <MenuItem value="Web">Web</MenuItem>
+                <MenuItem value="Others">Others</MenuItem>
+              </Select>
+            </FormControl>
 
             {/* 如果改成的数字小于当前team的规模，alert 否则写入数据库更新 */}
             <TextField

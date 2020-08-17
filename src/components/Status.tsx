@@ -35,6 +35,7 @@ export const Status: React.FC = () => {
   const [type, setType] = useState<Array<string | null>>([])
   const [typeSort, setTypeSort] = useState<Array<any>>([])
 
+  const [category, setCategory] = useState<any>()
   // const [typeCnt, setTypeCnt] = useState<any>({
   //   typeCountt: '',
   //   typeContent: '',
@@ -123,41 +124,19 @@ export const Status: React.FC = () => {
   }, [tag])
 
   useEffect(() => {
-    let count: { [index: string]: any } = {}
-    type.forEach((i: any) => {
-      count[i] = (count[i] || 0) + 1
-    })
-
-    let sortable = []
-    for (let x in count) {
-      sortable.push({ name: x, cnt: count[x] })
+    let typeData: any = {
+      Android: 0,
+      IOS: 0,
+      Web: 0,
+      'PC/Mac': 0,
+      Game: 0,
+      Others: 0,
     }
-    setTypeSort(
-      sortable.sort((a: any, b: any) => {
-        return b[1] - a[1]
-      })
-    )
+    type.forEach((item: any) => {
+      typeData[item] += 1
+    })
+    setCategory(typeData)
   }, [type])
-
-  // useEffect(() => {
-  //   let maxFreq = 1
-  //   let cnt = 0
-  //   let mostFreqTag
-  //   for (let i = 0; i < type.length; i++) {
-  //     for (let j = i; j < type.length; j++) {
-  //       if (type[i] === type[j]) cnt++
-  //       if (maxFreq < cnt) {
-  //         maxFreq = cnt
-  //         mostFreqTag = type[i]
-  //       }
-  //     }
-  //     cnt = 0
-  //   }
-  //   setTypeCnt({
-  //     typeCount: maxFreq,
-  //     typeContent: mostFreqTag,
-  //   })
-  // }, [type])
 
   return (
     <div className="component-layout status-container">
@@ -185,16 +164,12 @@ export const Status: React.FC = () => {
               <StatusTag tagSort={tagSort} />
             </Grid>
             <Grid item xs={4}>
-              <StatusType typeSort={typeSort} />
+              <StatusType category={category} />
             </Grid>
 
             <Grid item xs={4}>
               <StatusLog activity={activity} />
             </Grid>
-
-            {/* <Grid item xs={6}>
-              <StatusContributor />
-            </Grid> */}
           </Grid>
         </div>
       ) : (

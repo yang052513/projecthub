@@ -9,37 +9,36 @@ import {
 } from 'recharts'
 
 interface Props {
-  typeSort: any
+  category: any
 }
 
-const data = [
-  {
-    name: 'Android',
-    cnt: 120,
-  },
-  {
-    name: 'iOS',
-    cnt: 98,
-  },
-  {
-    name: 'PC/Mac',
-    cnt: 86,
-  },
-  {
-    name: 'Game',
-    cnt: 99,
-  },
-  {
-    name: 'Web',
-    cnt: 85,
-  },
-  {
-    name: 'Others',
-    cnt: 65,
-  },
-]
-
-export const StatusType: React.FC<Props> = ({ typeSort }) => {
+export const StatusType: React.FC<Props> = ({ category }) => {
+  const data = [
+    {
+      name: 'Android',
+      cnt: category['Android'],
+    },
+    {
+      name: 'IOS',
+      cnt: category['IOS'],
+    },
+    {
+      name: 'PC/Mac',
+      cnt: category['PC/Mac'],
+    },
+    {
+      name: 'Game',
+      cnt: category['Game'],
+    },
+    {
+      name: 'Web',
+      cnt: category['Web'],
+    },
+    {
+      name: 'Others',
+      cnt: category['Others'],
+    },
+  ]
   return (
     <div className="status-card-item-wrap">
       <h3>Project Categories</h3>
