@@ -316,23 +316,27 @@
     font-size: 30px;
   }
   .project-header-filter {
+    display: flex;
+    align-items: center;
     .project-header-search {
       position: relative;
+      margin-top: 10px;
       i {
         position: absolute;
         left: 0;
         top: 0;
-        margin: 4px 0 0 10px;
+        margin: 8px 0 0 10px;
         color: rgb(187, 187, 187);
       }
       input {
         margin-right: 30px;
         border-radius: 25px;
         border: 1px solid rgb(187, 187, 187);
-        padding: 5px 50px 5px 35px;
+        padding: 8px 50px 8px 35px;
         background-color: rgba(0, 0, 0, 0);
         font-size: 13px;
         transition: all 0.5s;
+        width: 250px;
         &:focus {
           outline: none;
           color: $sideNavBg;

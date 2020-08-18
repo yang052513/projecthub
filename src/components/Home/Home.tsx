@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { HomeHitokoto } from './HomeHitokoto'
-import { HomeProject } from './HomeProject'
-import { HomeCreateBtn } from './HomeCreateBtn'
+import { HomeHitokoto, HomeProject, HomeCreateBtn } from './index'
 
+// Material UI Components API
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -15,10 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       margin: theme.spacing(1),
       minWidth: 150,
-      transform: 'translateY(-25px)',
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
     },
     selectItem: {
       fontSize: '13px',

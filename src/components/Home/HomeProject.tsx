@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Loading } from '../shared/Loading'
-import { ProjectCard } from './ProjectCard'
+import { HomeProjectCard } from './HomeProjectCard'
 import { CSSTransition } from 'react-transition-group'
 
 interface Props {
@@ -53,7 +53,11 @@ export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
       }
     })
     .map((project: any) => (
-      <ProjectCard key={project.Key} project={project} docRef={project.Key} />
+      <HomeProjectCard
+        key={project.Key}
+        project={project}
+        docRef={project.Key}
+      />
     ))
 
   return (

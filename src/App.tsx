@@ -1,60 +1,26 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Switch, Route } from 'react-router-dom'
-import firebase from 'firebase'
 
-//所有主组件
-import {
-  Home,
-  Status,
-  Explore,
-  Group,
-  Messenger,
-  Friends,
-  Moment,
-  Setting,
-  FAQ,
-} from './components/index'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 
-import { CreateProject } from './components/shared/CreateProject'
-
-//导航，副组件根据ref来决定渲染内容
-import { ProfileMenu } from './components/navigation/ProfileMenu'
-import { Edit } from './components/shared/Edit'
-import { HomeKanban } from './components/home/HomeKanban'
-import { UserProfile } from './components/shared/UserProfile'
-import { GroupForm } from './components/group/GroupForm'
-import { GroupPost } from './components/group/GroupPost'
-import { GroupFormEdit } from './components/group/GroupFormEdit'
-
-import { SideNavItem } from './components/navigation/SideNavItem'
-import { NotificationMenu } from './components/notification/NotificationMenu'
-
-import { MomentUser } from './components/moment/MomentUser'
-import { Header } from './components/navigation/Header'
 import { initStatusActivity } from './modules/status'
-
 import { Navigator } from './router/Navigator'
 import { SideNavBar } from './components/navigation/SideNavBar'
 import { NavigationHeader } from './components/navigation/NavigationHeader'
 
 export default function App() {
-  const db = firebase.firestore()
-  const user: any = firebase.auth().currentUser
+  const user: firebase.User | null = firebase.auth().currentUser
 
   //全局样式化
-  //侧边导航栏样式
   const [theme, setTheme] = useState('#0e5dd3')
-
-  //背景样式
   const [options, setOptions] = useState('Color')
   const [customBg, setCustomBg] = useState<any>([])
   const [demo, setDemo] = useState<any>({
     backgroundColor: true,
     backgroundRef: '',
   })
-
-  //透明度样式
   const [opacity, setOpacity] = useState({
     sidebar: 100,
     topbar: 100,
@@ -67,33 +33,40 @@ export default function App() {
 
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
-    initStatusActivity(user.uid)
-    // firebase.auth().onAuthStateChanged(user => {
+    initStatusActivity(user!.uid)
     //将用户加入到所有用户列表
-    db.collection('friends')
-      .doc(user.uid)
+    firebase
+      .firestore()
+      .collection('friends')
+      .doc(user!.uid)
       .get()
       .then(doc => {
         if (!doc.exists) {
-          db.collection('friends')
-            .doc(user.uid)
+          firebase
+            .firestore()
+            .collection('friends')
+            .doc(user!.uid)
             .set({
               avatar: '/images/user.jpg',
               profile: {
-                profileName: user.displayName,
+                profileName: user!.displayName,
                 profileBio: '',
-                profileEmail: user.email,
+                profileEmail: user!.email,
                 profileGithub: '',
                 profileLocation: '',
                 profileWeb: '',
                 profilelinkedin: '',
               },
-              Key: user.uid,
+              Key: user!.uid,
             })
         }
       })
 
-    const settingRef = db.collection('user').doc(user.uid).collection('Setting')
+    const settingRef = firebase
+      .firestore()
+      .collection('user')
+      .doc(user!.uid)
+      .collection('Setting')
 
     const langRef = settingRef.doc('Language')
     const apparenceRef = settingRef.doc('Apparence')
@@ -162,8 +135,10 @@ export default function App() {
   //颜色有更改时 写入到数据库
   const handleTheme = (color: any, event: any) => {
     // firebase.auth().onAuthStateChanged(user => {
-    db.collection('user')
-      .doc(user.uid)
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user!.uid)
       .collection('Setting')
       .doc('Apparence')
       .update({
@@ -195,9 +170,10 @@ export default function App() {
       backgroundRef: bgRef,
     }))
     //同时更新到数据库
-    // firebase.auth().onAuthStateChanged(user => {
-    db.collection('user')
-      .doc(user.uid)
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user!.uid)
       .collection('Setting')
       .doc('Apparence')
       .update({
@@ -210,14 +186,14 @@ export default function App() {
       .catch(error => {
         console.log(`切换背景错误${error}`)
       })
-    // })
   }
 
   //用户点击卡色 写入数据库
   const handleColor = (color: any, event: any) => {
-    // firebase.auth().onAuthStateChanged(user => {
-    db.collection('user')
-      .doc(user.uid)
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user!.uid)
       .collection('Setting')
       .doc('Apparence')
       .update({
@@ -234,7 +210,6 @@ export default function App() {
       .catch(error => {
         console.log(`更改主题色时出错啦${error}`)
       })
-    // })
   }
 
   //更改透明度
@@ -243,8 +218,10 @@ export default function App() {
       ...prevOpacity,
       [name]: value,
     }))
-    db.collection('user')
-      .doc(user.uid)
+    firebase
+      .firestore()
+      .collection('user')
+      .doc(user!.uid)
       .collection('Setting')
       .doc('Apparence')
       .update({
@@ -279,20 +256,10 @@ export default function App() {
       <div className="content-container">
         <img className="logo" src="/images/logo.png" alt="" />
 
-        {/* Side nav bar */}
         <SideNavBar opacity={opacity} theme={theme} />
-
-        {/* Header bar with notification and current page title */}
-        {/* <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
-          <Header />
-          <div className="user-navbar-icon">
-            <NotificationMenu />
-            <ProfileMenu avatar={avatar} />
-          </div>
-        </div> */}
         <NavigationHeader opacity={opacity} avatar={avatar} />
 
-        {/* Router switch URL */}
+        {/* Router */}
         <Navigator
           avatar={avatar}
           profile={profile}

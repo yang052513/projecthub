@@ -8,20 +8,19 @@ import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import firebase from 'firebase'
-import { Feedback } from './Feedback'
-import { Progress } from './Progress'
-import { Link, useParams } from 'react-router-dom'
-import { useFetchProfile } from '../../hooks/useFetchProfile'
-import { timeFormat } from 'current-time-format'
-import { useFetchContributor } from '../../hooks/useFetchContributor'
-import { addNotification } from '../../modules/modules'
 import { useHistory } from 'react-router-dom'
+import { timeFormat } from 'current-time-format'
+
+import { Feedback } from '../shared/Feedback'
+import { Progress } from '../shared/Progress'
+
+import { useFetchProfile } from '../../hooks/useFetchProfile'
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
   },
-
   // 文本框样式
   textField: {
     marginLeft: theme.spacing(1),
@@ -38,37 +37,30 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const Edit: React.FC = () => {
+//当前的时间 年-月-日格式
+const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
+
+const currentDay = `${year}-${monthNum}-${day}`
+const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
+
+const date = new Date()
+const currentMonth: any =
+  date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+
+export const HomeCreateForm: React.FC = () => {
   const classes = useStyles()
+  const history = useHistory()
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
-  const history = useHistory()
-  //用户选择的当前项目密匙
-  const params: any = useParams()
-
   const profile = useFetchProfile(user.uid)
 
-  //prompt信息：加载动画，modal反馈，错误提示和信息
-  const [loading, setLoading] = useState(false)
-  const [feedback, setFeedback] = useState(false)
-  const [fail, setFail] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-  const [deleteTool, setDeleteTool] = useState({
-    status: false,
-    name: '',
-  })
+  const [loading, setLoading] = useState<boolean>(false)
+  const [feedback, setFeedback] = useState<boolean>(false)
+  const [fail, setFail] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string>('')
 
-  //当前的时间 年-月-日格式
-  const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
+  const [statusCnt, setStatusCnt] = useState<any>()
 
-  const currentDay = `${year}-${monthNum}-${day}`
-  const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
-
-  const date = new Date()
-  const currentMonth: any =
-    date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
-
-  //从数据库读取的信息
   const [textInput, setTextInput] = useState({
     projectName: '',
     projectDesc: '',
@@ -76,75 +68,16 @@ export const Edit: React.FC = () => {
   })
   const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
-
-  const [category, setCategory] = useState<string>('Android')
-  const [oldStatus, setOldStatus] = useState('')
-
-  const [statusUpdate, setStatusUpdate] = useState<boolean>(false)
-
   const [publicProject, setPublicProject] = useState(true)
 
-  const contributorList: any = useFetchContributor(user.uid, params.ref)
-
-  //初始化加载数据库内该项目的信息
-  useEffect(() => {
-    db.collection('user')
-      .doc(user.uid)
-      .collection('Project')
-      .doc(params.ref)
-      .get()
-      .then((doc: any) => {
-        setTextInput({
-          projectName: doc.data().Name,
-          projectDesc: doc.data().Description,
-          projectDate: doc.data().StartDate,
-        })
-        setCategory(doc.data().Category)
-        setTool(doc.data().Tools)
-        setStatus(doc.data().Status)
-        setOldStatus(doc.data().Status)
-        setPublicProject(doc.data().Privacy === 'Public' ? true : false)
-      })
-  }, [])
+  const [category, setCategory] = useState<string>('Android')
 
   function handleFail() {
     setFail(false)
   }
 
-  function handleReload() {
-    window.location.reload()
-  }
-
-  //点击垃圾桶按钮弹出确认modal
-  const handleDelete = (event: { currentTarget: { id: any } }) => {
-    setDeleteTool({
-      status: true,
-      name: event.currentTarget.id,
-    })
-    setErrorMsg(
-      `Do you want to delete ${event.currentTarget.id} from tool box?`
-    )
-  }
-
-  //   确认删除tool
-  const deleteYes = () => {
-    tool.splice(tool.indexOf(deleteTool.name), 1)
-    setDeleteTool({
-      status: false,
-      name: '',
-    })
-  }
-
-  //取消删除tool
-  function deleteNo() {
-    setDeleteTool({
-      status: false,
-      name: '',
-    })
-  }
-
   //管理普通文本输入，名称，简介，分类
-  const handleTextField = (event: { target: { name: any; value: any } }) => {
+  function handleTextField(event: { target: { name: any; value: any } }) {
     const { name, value } = event.target
     setTextInput(prevText => ({
       ...prevText,
@@ -166,21 +99,19 @@ export const Edit: React.FC = () => {
     } else {
       setTool((prevTool: any) => [...prevTool, toolInput])
     }
-
+    //Empty text field
     toolInput = ''
   }
 
-  const toolList = tool.map((item: any) => (
-    <li key={item}>
-      <i onClick={handleDelete} id={item} className="fas fa-trash-alt"></i>
-      {item}
-    </li>
-  ))
+  const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
 
   //管理项目进程 4个状态可选 默认In Progress
   const handleStatus = (event: { target: { value: any } }) => {
     setStatus(event.target.value)
-    setStatusUpdate(true)
+  }
+
+  const handleCategory = (event: { target: { value: any } }) => {
+    setCategory(event.target.value)
   }
 
   //管理项目公开性 默认公开Public
@@ -190,11 +121,8 @@ export const Edit: React.FC = () => {
     setPublicProject(event.target.checked)
   }
 
-  const handleCategory = (event: { target: { value: any } }) => {
-    setCategory(event.target.value)
-  }
   //上传项目信息到云端
-  const handleSave = () => {
+  const handleSubmit = () => {
     if (
       textInput.projectName === '' ||
       textInput.projectDesc === '' ||
@@ -206,8 +134,8 @@ export const Edit: React.FC = () => {
       //如果表格都填写
       setLoading(true)
       setTimeout(() => {
+        //Project Document Data
         let projectData = {
-          Key: params.ref,
           Creator: {
             Avatar: profile.avatar,
             Id: user.uid,
@@ -222,166 +150,120 @@ export const Edit: React.FC = () => {
           Description: textInput.projectDesc,
           Tools: tool,
           Privacy: publicProject === true ? 'Public' : 'Private',
-          Contributors: contributorList,
+          Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
         }
 
-        //更新所有队员
-        contributorList.forEach((contributor: any, index: any) => {
-          db.collection('user')
-            .doc(contributor.Id)
-            .collection('Project')
-            .doc(params.ref)
-            .update(projectData)
-
-          //写入到统计集合中
-          if (statusUpdate) {
+        //Save the project document to user's Project collection
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Project')
+          .add(projectData)
+          .then(docRef => {
+            //Update the project Uid Key to document
             db.collection('user')
-              .doc(contributor.Id)
-              .collection('Statistics')
-              .doc(currentMonth)
+              .doc(user.uid)
+              .collection('Project')
+              .doc(docRef.id)
               .update({
-                [`${oldStatus}`]: firebase.firestore.FieldValue.increment(-1),
-                [`${status}`]: firebase.firestore.FieldValue.increment(1),
+                Key: docRef.id,
               })
-          }
 
-          if (index > 0) {
-            addNotification(
-              contributor.Id,
-              `${profile.profile.profileName} edited project ${textInput.projectName}`,
-              'Project Details Update',
-              '/',
-              profile.avatar
-            )
+            // 写入到Log集合中：创建新的项目
             db.collection('user')
-              .doc(contributor.Id)
+              .doc(user.uid)
               .collection('Activity')
               .add({
                 Avatar: profile.avatar,
                 Message: {
-                  Name: profile.profile.profileName,
-                  Action: 'edited project',
+                  Name: 'You',
+                  Action: 'create a new project',
                   Title: textInput.projectName,
                   Date: currentTime,
                 },
               })
               .then(activityRef => {
                 db.collection('user')
-                  .doc(contributor.Id)
+                  .doc(user.uid)
                   .collection('Activity')
                   .doc(activityRef.id)
                   .update({
                     Key: activityRef.id,
                   })
               })
-          }
-        })
 
-        //只写入项目拥有者 写入到日志中
-        db.collection('user')
-          .doc(user.uid)
-          .collection('Activity')
-          .add({
-            Avatar: profile.avatar,
-            Message: {
-              Name: 'You',
-              Action: 'edited project',
-              Title: textInput.projectName,
-              Date: currentTime,
-            },
-          })
-          .then(activityRef => {
+            //写入到统计集合中
+
             db.collection('user')
               .doc(user.uid)
-              .collection('Activity')
-              .doc(activityRef.id)
+              .collection('Statistics')
+              .doc(currentMonth)
               .update({
-                Key: activityRef.id,
+                [`${status}`]: firebase.firestore.FieldValue.increment(1),
               })
-          })
 
-        //写入到公开数据库
-        //如果改为公开项目 写入到公开集合
-        if (publicProject) {
-          db.collection('project').doc(params.ref).set(projectData)
-        } else {
-          //If the project changed from public to private, delete from public database
-          let projectRef = db.collection('project').doc(params.ref)
-          projectRef.get().then(doc => {
-            if (doc.exists) {
-              db.collection('project')
-                .doc(params.ref)
-                .delete()
-                .then(() => {
-                  console.log('已经从公开数据中删除该项目')
-                })
+            //Write the project to public project collection: Explore Component
+            if (publicProject) {
+              db.collection('project').doc(docRef.id).set(projectData)
+              db.collection('project').doc(docRef.id).update({ Key: docRef.id })
             }
           })
-        }
-        // })
+          .catch(error => {
+            console.log(`上传失败${error}`)
+          })
         setLoading(false)
         setFeedback(true)
       }, 2000)
 
-      console.log('项目成功修改并保存到云端~ ୧(๑•̀⌄•́๑)૭✧')
+      console.log('项目成功保存到云端~ ୧(๑•̀⌄•́๑)૭✧')
     }
   }
 
   return (
     <div>
-      {loading === true ? <Progress /> : null}
+      {/* Loading Animation While Writing Data to Firestore */}
+      {loading && <Progress />}
 
-      {/* 项目修改成功反馈 */}
-      {feedback === true ? (
+      {/* Display Success Feedback Modal Once Created Project */}
+      {feedback && (
         <div>
           <Feedback
             msg="Success"
-            info="The project saved successfully ー( ´ ▽ ` )ﾉ"
+            info="Project created successfully~ ー( ´ ▽ ` )ﾉ"
             imgUrl="/images/emoji/emoji_happy.png"
             toggle={() => history.push('/')}
           />
         </div>
-      ) : null}
+      )}
 
-      {/* 项目缺少信息错误反馈 */}
-      {fail === true ? (
+      {/* Project Input Missing Field Error Modal */}
+      {fail && (
         <Feedback
           msg="Error"
           info={errorMsg}
           imgUrl="/images/emoji/emoji_scare.png"
           toggle={handleFail}
         />
-      ) : null}
+      )}
 
-      {/* 删除项目tool确认信息 */}
-      {deleteTool.status === true ? (
-        <Feedback
-          msg="Confirm"
-          info={errorMsg}
-          imgUrl="/images/emoji/emoji_cry.png"
-          toggle={deleteYes}
-          cancel={deleteNo}
-          confirm={true}
-        />
-      ) : null}
-
-      {/* 项目表单信息容器 */}
+      {/* Project Form Input Container */}
       <div className="project-form-container component-layout">
         <div className={classes.root}>
           <div>
             <div className="project-form-header-container">
-              <h2>Edit Your Project</h2>
-              <p>Edit your project information</p>
+              <h2>Create a New Project</h2>
+              <p>
+                Create a new project will displayed on the home main dashboard
+                that allows you manage your project easily
+              </p>
             </div>
 
-            {/* 项目名称输入 */}
+            {/* Project Name */}
             <TextField
-              id="project-name-input"
               name="projectName"
               onChange={handleTextField}
               label="Project Name"
               style={{ margin: 8 }}
-              value={textInput.projectName}
+              placeholder="Enter your project name"
               helperText="Project name should be meaningful and memorable!"
               fullWidth
               margin="normal"
@@ -398,7 +280,7 @@ export const Edit: React.FC = () => {
               onChange={handleTextField}
               label="Create Date"
               type="date"
-              defaultValue={textInput.projectDate}
+              defaultValue={currentDay}
               className={classes.textField}
               margin="dense"
               variant="outlined"
@@ -429,6 +311,7 @@ export const Edit: React.FC = () => {
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
+
             {/* 项目介绍输入 */}
             <TextField
               id="project-desc-input"
@@ -436,7 +319,7 @@ export const Edit: React.FC = () => {
               onChange={handleTextField}
               label="Description"
               style={{ margin: 8 }}
-              value={textInput.projectDesc}
+              placeholder="What does you project for?"
               fullWidth
               margin="normal"
               InputLabelProps={{
@@ -510,11 +393,7 @@ export const Edit: React.FC = () => {
             </div>
 
             <div className="project-input-submit-container">
-              <Link to="/">
-                <button>Cancel</button>
-              </Link>
-
-              <button onClick={handleSave}>Save Changes</button>
+              <button onClick={handleSubmit}>Create Project</button>
             </div>
           </div>
         </div>

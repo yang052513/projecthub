@@ -11,7 +11,7 @@ interface Props {
   docRef: string | undefined
 }
 
-export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
+export const HomeProjectCard: React.FC<Props> = ({ project, docRef }) => {
   let statusColor
   if (project.Status === 'In Progress') {
     statusColor = { backgroundColor: inProgress }

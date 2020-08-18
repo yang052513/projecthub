@@ -12,12 +12,12 @@ import {
   Setting,
   FAQ,
 } from '../components/index'
-import { CreateProject } from '../components/shared/CreateProject'
+import { HomeCreateForm } from '../components/home/HomeCreateForm'
 import { GroupForm } from '../components/group/GroupForm'
 import { GroupFormEdit } from '../components/group/GroupFormEdit'
 import { GroupPost } from '../components/group/GroupPost'
 import { MomentUser } from '../components/moment/MomentUser'
-import { Edit } from '../components/shared/Edit'
+import { HomeEditForm } from '../components/home/HomeEditForm'
 import { HomeKanban } from '../components/home/HomeKanban'
 import { UserProfile } from '../components/shared/UserProfile'
 
@@ -91,7 +91,7 @@ export const Navigator: React.FC<Props> = ({
         <FAQ />
       </Route>
       <Route path="/create">
-        <CreateProject />
+        <HomeCreateForm />
       </Route>
       <Route path="/request">
         <GroupForm />
@@ -107,7 +107,7 @@ export const Navigator: React.FC<Props> = ({
       </Route>
       {/* Other nested router */}
       <Route path="/edit/:ref">
-        <Edit />
+        <HomeEditForm />
       </Route>
       <Route path="/kanban/:ref">
         <HomeKanban />
