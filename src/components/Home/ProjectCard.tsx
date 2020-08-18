@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditMenu } from './EditMenu'
+import { HomeEditMenu } from './HomeEditMenu'
 
 const inProgress = 'rgb(67, 219, 118)'
 const completed = 'rgb(51, 196, 206)'
@@ -44,7 +44,7 @@ export const ProjectCard: React.FC<Props> = ({ project, docRef }) => {
       </div>
       <div className="project-footer">
         <p>{project.Privacy}</p>
-        <EditMenu
+        <HomeEditMenu
           docRef={docRef}
           projectName={project.Name}
           creatorId={project.Creator.Id}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -27,7 +27,7 @@ interface Props {
   handleSelector: (event: any) => void
 }
 
-export const GroupSort: React.FC<Props> = ({ handleSelector, selector }) => {
+export const GroupFilter: React.FC<Props> = ({ handleSelector, selector }) => {
   const classes = useStyles()
 
   return (

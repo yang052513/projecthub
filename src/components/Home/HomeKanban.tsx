@@ -43,7 +43,7 @@ const data = {
   ],
 }
 
-export const Kanban: React.FC = () => {
+export const HomeKanban: React.FC = () => {
   const params: any = useParams()
   const user: any = firebase.auth().currentUser
   const [loading, setLoading] = useState<boolean>(false)

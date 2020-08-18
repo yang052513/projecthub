@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const CreateBtn: React.FC = () => {
+export const HomeCreateBtn: React.FC = () => {
   return (
     <div className="create-btn-container">
       <Link to="/create">

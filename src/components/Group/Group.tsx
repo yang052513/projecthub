@@ -10,7 +10,7 @@ import { timeFormat } from 'current-time-format'
 
 import { addNotification } from '../../modules/modules'
 import { CSSTransition } from 'react-transition-group'
-import { GroupSort } from './GroupSort'
+import { GroupFilter } from './GroupFilter'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])
@@ -205,7 +205,10 @@ export const Group: React.FC = () => {
             />
 
             <div className="group-filter-wrap">
-              <GroupSort selector={selector} handleSelector={handleSelector} />
+              <GroupFilter
+                selector={selector}
+                handleSelector={handleSelector}
+              />
               <Link to="/request">
                 <button>Create A Request</button>
               </Link>

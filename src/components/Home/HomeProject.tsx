@@ -10,7 +10,7 @@ interface Props {
   search: string | undefined | null
 }
 
-export const Project: React.FC<Props> = ({ sort, filter, search }) => {
+export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
   const [project, setProject] = useState<any>([])
@@ -93,5 +93,3 @@ export const Project: React.FC<Props> = ({ sort, filter, search }) => {
     </div>
   )
 }
-
-export default Project

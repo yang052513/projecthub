@@ -21,7 +21,7 @@ import { CreateProject } from './components/shared/CreateProject'
 //导航，副组件根据ref来决定渲染内容
 import { ProfileMenu } from './components/navigation/ProfileMenu'
 import { Edit } from './components/shared/Edit'
-import { Kanban } from './components/home/Kanban'
+import { HomeKanban } from './components/home/HomeKanban'
 import { UserProfile } from './components/shared/UserProfile'
 import { GroupForm } from './components/group/GroupForm'
 import { GroupPost } from './components/group/GroupPost'
@@ -32,6 +32,11 @@ import { NotificationMenu } from './components/notification/NotificationMenu'
 
 import { MomentUser } from './components/moment/MomentUser'
 import { Header } from './components/navigation/Header'
+import { initStatusActivity } from './modules/status'
+
+import { Navigator } from './router/Navigator'
+import { SideNavBar } from './components/navigation/SideNavBar'
+import { NavigationHeader } from './components/navigation/NavigationHeader'
 
 export default function App() {
   const db = firebase.firestore()
@@ -60,102 +65,9 @@ export default function App() {
   const [profile, setProfile] = useState({})
   const [avatar, setAvatar] = useState('/images/user.jpg')
 
-  const statRef = db.collection('user').doc(user.uid).collection('Statistics')
   //初始化读取数据库 判断用户是否有过记录
   useEffect(() => {
-    db.collection('user')
-      .doc(user.uid)
-      .collection('Statistics')
-      .doc('00')
-      .get()
-      .then(doc => {
-        if (!doc.exists) {
-          statRef.doc('00').set({
-            Label: 'January',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('01').set({
-            Label: 'February',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('02').set({
-            Label: 'March',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('03').set({
-            Label: 'April',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('04').set({
-            Label: 'May',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('05').set({
-            Label: 'June',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('06').set({
-            Label: 'July',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('07').set({
-            Label: 'August',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('08').set({
-            Label: 'September',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('09').set({
-            Label: 'October',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('10').set({
-            Label: 'November',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-          statRef.doc('11').set({
-            Label: 'December',
-            'In Progress': 0,
-            Completed: 0,
-            Planning: 0,
-            Dropped: 0,
-          })
-        }
-      })
+    initStatusActivity(user.uid)
     // firebase.auth().onAuthStateChanged(user => {
     //将用户加入到所有用户列表
     db.collection('friends')
@@ -246,14 +158,6 @@ export default function App() {
       })
     // })
   }, [])
-
-  // active css style 当前所在的route对应的nav icon样式化
-  const currLinkStyle: any = {
-    backgroundColor: 'white',
-    color: `${theme}`,
-    padding: '5px',
-    borderRadius: '50%',
-  }
 
   //颜色有更改时 写入到数据库
   const handleTheme = (color: any, event: any) => {
@@ -376,166 +280,32 @@ export default function App() {
         <img className="logo" src="/images/logo.png" alt="" />
 
         {/* Side nav bar */}
-        <div
-          className="navbar"
-          style={{ backgroundColor: theme, opacity: opacity.sidebar / 100 }}
-        >
-          <SideNavItem
-            theme={theme}
-            route={'/'}
-            icon="fas fa-home"
-            prompt="Home"
-          />
-          <SideNavItem
-            theme={theme}
-            route={'/status'}
-            icon="fas fa-tachometer-alt"
-            prompt="Status Analysis"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/explore'}
-            icon="fab fa-wpexplorer"
-            prompt="Explore Projects"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/group'}
-            icon="far fa-calendar-alt"
-            prompt="Group Projects"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/friends'}
-            icon="fas fa-user-friends"
-            prompt="Friends"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/messenger/chat'}
-            icon="fab fa-facebook-messenger"
-            prompt="Message"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/moment'}
-            icon="far fa-clock"
-            prompt="Moment"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/setting/profile'}
-            icon="fas fa-sliders-h"
-            prompt="Settings"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/faq'}
-            icon="fas fa-book"
-            prompt="Documentation"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/create'}
-            icon="fas fa-feather"
-            prompt="Create a Project"
-          />
-
-          <SideNavItem
-            theme={theme}
-            route={'/noidea'}
-            icon="fas fa-sign-out-alt"
-            prompt="Logout"
-          />
-        </div>
+        <SideNavBar opacity={opacity} theme={theme} />
 
         {/* Header bar with notification and current page title */}
-        <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
+        {/* <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
           <Header />
           <div className="user-navbar-icon">
             <NotificationMenu />
             <ProfileMenu avatar={avatar} />
           </div>
-        </div>
+        </div> */}
+        <NavigationHeader opacity={opacity} avatar={avatar} />
 
         {/* Router switch URL */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/status">
-            <Status />
-          </Route>
-          <Route path="/explore">
-            <Explore />
-          </Route>
-          <Route path="/group">
-            <Group />
-          </Route>
-          <Route path="/messenger/">
-            <Messenger />
-          </Route>
-          <Route exact path="/friends/">
-            <Friends />
-          </Route>
-          <Route exact path="/moment">
-            <Moment profile={profile} avatar={avatar} />
-          </Route>
-          <Route path="/setting/">
-            <Setting
-              avatar={avatar}
-              demo={demo}
-              options={options}
-              customBg={customBg}
-              opacity={opacity}
-              switchImgPreview={handleSwitch}
-              switchColorPreview={handleColor}
-              switchOption={handleOptions}
-              switchTheme={handleTheme}
-              swicthOpacity={handleOpacity}
-            />
-          </Route>
-          <Route path="/faq">
-            <FAQ />
-          </Route>
-          <Route path="/create">
-            <CreateProject />
-          </Route>
-          <Route path="/request">
-            <GroupForm />
-          </Route>
-
-          <Route exact path="/grouppost">
-            <GroupPost />
-          </Route>
-
-          <Route path="/grouppost/:ref">
-            <GroupFormEdit />
-          </Route>
-
-          <Route path="/moment/:ref">
-            <MomentUser />
-          </Route>
-
-          {/* Other nested router */}
-          <Route path="/edit/:ref">
-            <Edit />
-          </Route>
-          <Route path="/kanban/:ref">
-            <Kanban />
-          </Route>
-          <Route path="/friends/:ref">
-            <UserProfile />
-          </Route>
-        </Switch>
+        <Navigator
+          avatar={avatar}
+          profile={profile}
+          demo={demo}
+          options={options}
+          customBg={customBg}
+          opacity={opacity}
+          handleColor={handleColor}
+          handleOpacity={handleOpacity}
+          handleOptions={handleOptions}
+          handleSwitch={handleSwitch}
+          handleTheme={handleTheme}
+        />
       </div>
     </div>
   )

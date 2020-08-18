@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export const Hitokoto: React.FC = () => {
+export const HomeHitokoto: React.FC = () => {
   const [hitokoto, setHitokoto] = useState<any>({
     content: '',
     from: '',

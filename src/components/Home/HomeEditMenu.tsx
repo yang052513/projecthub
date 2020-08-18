@@ -9,7 +9,7 @@ import { Feedback } from '../shared/Feedback'
 import { Progress } from '../shared/Progress'
 import { timeFormat } from 'current-time-format'
 import { useFetchContributor } from '../../hooks/useFetchContributor'
-import { addActivity, addNotification } from '../../modules/modules'
+import { addNotification } from '../../modules/modules'
 import { deleteProject } from '../../modules/home'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
 
@@ -29,7 +29,7 @@ interface Props {
 const { monthStrLong, day, hours, minutes } = timeFormat
 const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
 
-export const EditMenu: React.FC<Props> = ({
+export const HomeEditMenu: React.FC<Props> = ({
   docRef,
   projectName,
   creatorId,

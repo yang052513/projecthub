@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Hitokoto } from './Hitokoto'
-import { Project } from './Project'
-import { CreateBtn } from './CreateBtn'
+import { HomeHitokoto } from './HomeHitokoto'
+import { HomeProject } from './HomeProject'
+import { HomeCreateBtn } from './HomeCreateBtn'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
 
   return (
     <div className="home-container component-layout">
-      <Hitokoto />
+      <HomeHitokoto />
 
       <div className="project-header-container">
         <h3>{status}</h3>
@@ -126,8 +126,8 @@ export const Home: React.FC = () => {
           </Link>
         </div>
       </div>
-      <Project sort={sort} filter={status} search={search} />
-      <CreateBtn />
+      <HomeProject sort={sort} filter={status} search={search} />
+      <HomeCreateBtn />
     </div>
   )
 }
