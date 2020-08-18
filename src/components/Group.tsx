@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
-import { useFetchProfile } from './Hooks/useFetchProfile'
+import { useFetchProfile } from '../hooks/useFetchProfile'
 import { GroupDetailCard } from './Group/GroupDetailCard'
 
 import { Feedback } from './Common/Feedback'

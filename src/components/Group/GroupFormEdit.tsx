@@ -8,7 +8,7 @@ import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { useHistory } from 'react-router-dom'
 import { addProjectLog } from '../../modules/modules'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

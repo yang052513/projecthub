@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase from 'firebase'
 import { StoryCard } from './StoryCard'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 export const MomentUser = () => {
   const params: any = useParams()

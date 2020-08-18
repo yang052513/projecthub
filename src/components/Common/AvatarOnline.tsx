@@ -2,7 +2,7 @@ import React from 'react'
 import Badge from '@material-ui/core/Badge'
 import Avatar from '@material-ui/core/Avatar'
 import { Theme, withStyles, createStyles } from '@material-ui/core/styles'
-import { useFetchOnline } from '../Hooks/useFetchOnline'
+import { useFetchOnline } from '../../hooks/useFetchOnline'
 
 const StyledBadge = withStyles((theme: Theme) =>
   createStyles({

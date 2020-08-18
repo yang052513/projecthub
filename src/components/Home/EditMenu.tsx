@@ -8,10 +8,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 import { timeFormat } from 'current-time-format'
-import { useFetchContributor } from '../Hooks/useFetchContributor'
+import { useFetchContributor } from '../../hooks/useFetchContributor'
 import { addActivity, addNotification } from '../../modules/modules'
 import { deleteProject } from '../../modules/home'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 const useStyles = makeStyles({
   root: {

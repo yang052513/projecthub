@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import firebase, { analytics } from 'firebase'
 import { timeFormat } from 'current-time-format'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { sendMessage } from '../../modules/messenger'
 import { MessengerChatItem } from './MessengerChatItem'
 

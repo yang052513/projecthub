@@ -14,7 +14,7 @@ import { timeFormat } from 'current-time-format'
 import { Feedback } from './Feedback'
 import { Progress } from './Progress'
 
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {

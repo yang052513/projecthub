@@ -4,7 +4,7 @@ import { Comment } from './Comment'
 import { timeFormat } from 'current-time-format'
 import { addNotification, addProjectLog } from '../../modules/modules'
 import { Hidden } from '@material-ui/core'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 interface Props {
   docRef?: string

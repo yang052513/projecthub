@@ -25,7 +25,7 @@ import {
   updateApplication,
 } from '../../modules/group'
 import { addNotification, addProjectLog } from '../../modules/modules'
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>

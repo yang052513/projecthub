@@ -6,7 +6,7 @@ import {
   addProjectLog,
 } from '../../../modules/modules'
 import firebase from 'firebase'
-import { useFetchProfile } from '../../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../../hooks/useFetchProfile'
 import { useHistory } from 'react-router-dom'
 import {
   deleteFriendRequest,

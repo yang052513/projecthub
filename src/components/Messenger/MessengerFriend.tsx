@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import { MessengerListMenu } from './MessengerList/MessengerListMenu'
 import { AvatarOnline } from '../Common/AvatarOnline'
-import { useFetchOnline } from '../Hooks/useFetchOnline'
+import { useFetchOnline } from '../../hooks/useFetchOnline'
 
 export const MessengerFriend: React.FC = () => {
   const user: any = firebase.auth().currentUser

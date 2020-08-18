@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
 import { Loading } from '../Common/Loading'
-import { useFetchContributor } from '../Hooks/useFetchContributor'
+import { useFetchContributor } from '../../hooks/useFetchContributor'
 
 //初始化的看板模板
 const data = {

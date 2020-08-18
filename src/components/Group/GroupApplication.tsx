@@ -18,7 +18,7 @@ import Paper from '@material-ui/core/Paper'
 import { Feedback } from '../Common/Feedback'
 import { Progress } from '../Common/Progress'
 
-import { useFetchProfile } from '../Hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 import { addNotification } from '../../modules/modules'
 

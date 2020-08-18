@@ -4,7 +4,7 @@ import { StoryCard } from './Moment/StoryCard'
 import firebase from 'firebase'
 import { Loading } from './Common/Loading'
 
-import { useFetchProfile } from '../components/Hooks/useFetchProfile'
+import { useFetchProfile } from '../hooks/useFetchProfile'
 import { CSSTransition } from 'react-transition-group'
 
 export function Moment(props: any) {
