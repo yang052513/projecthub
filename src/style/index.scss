@@ -1,24 +1,25 @@
-@import './mixin';
+// 混入以及全局变量
+@import './shared/mixin';
 
-@import './login';
-@import './navbar';
-@import './feedback';
-@import './loading';
-@import './animation';
+// 组件样式化
+@import '../components/home/home';
+@import '../components/status/status';
+@import '../components/setting/setting';
+@import '../components/moment/moment';
+@import '../components/friends/friend';
+@import '../components/group/group';
+@import '../components/messenger/messenger';
+@import '../components/navigation/notification';
 
-@import './home/home';
-@import './status/status';
-@import './setting/setting';
-@import './moment/moment';
-@import './friend/friend';
-@import './group/group';
-@import './messenger/messenger';
+// 共享样式化
+@import './shared/login';
+@import './shared/logout';
+@import './shared/navbar';
+@import './shared/feedback';
+@import './shared/loading';
+@import './shared/animation';
 
-@import './common/notification';
-@import './common/logout';
-
-@import './projectform/projectform';
-
+// 字体导入
 @font-face {
   font-family: raleway;
   src: url('../assets/font/Raleway-Regular.ttf');
@@ -44,6 +45,7 @@
   padding: 0;
 }
 
+// 屏蔽滑动栏显示
 *::-webkit-scrollbar {
   display: none;
 }

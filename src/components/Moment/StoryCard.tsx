@@ -4,7 +4,7 @@ import { StorySocial } from './StorySocial'
 import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
 import { addNotification, addProjectLog } from '../../modules/modules'
-import { MomentMenu } from '../Moment/MomentMenu'
+import { MomentMenu } from '../moment/MomentMenu'
 import { Feedback } from '../shared/Feedback'
 import { CSSTransition } from 'react-transition-group'
 

@@ -19,19 +19,19 @@ import {
 import { CreateProject } from './components/shared/CreateProject'
 
 //导航，副组件根据ref来决定渲染内容
-import { ProfileMenu } from './components/Navigation/ProfileMenu'
+import { ProfileMenu } from './components/navigation/ProfileMenu'
 import { Edit } from './components/shared/Edit'
-import { Kanban } from './components/Home/Kanban'
+import { Kanban } from './components/home/Kanban'
 import { UserProfile } from './components/shared/UserProfile'
-import { GroupForm } from './components/Group/GroupForm'
-import { GroupPost } from './components/Group/GroupPost'
-import { GroupFormEdit } from './components/Group/GroupFormEdit'
+import { GroupForm } from './components/group/GroupForm'
+import { GroupPost } from './components/group/GroupPost'
+import { GroupFormEdit } from './components/group/GroupFormEdit'
 
-import { SideNavItem } from './components/Navigation/SideNavItem'
-import { NotificationMenu } from './components/Notification/NotificationMenu'
+import { SideNavItem } from './components/navigation/SideNavItem'
+import { NotificationMenu } from './components/notification/NotificationMenu'
 
-import { MomentUser } from './components/Moment/MomentUser'
-import { Header } from './components/Navigation/Header'
+import { MomentUser } from './components/moment/MomentUser'
+import { Header } from './components/navigation/Header'
 
 export default function App() {
   const db = firebase.firestore()
