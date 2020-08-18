@@ -6,6 +6,7 @@ import { Progress } from '../shared/Progress'
 import { Feedback } from '../shared/Feedback'
 import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,14 +37,12 @@ const profileInit = {
   profileGithub: '',
 }
 
-interface Props {
-  avatar: any
-}
-
 //Profile的信息从App用props传 直接在数据库更改
-export const Profile: React.FC<Props> = ({ avatar }) => {
+export const Profile: React.FC = () => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
+
+  const avatar = useFetchProfile(user.uid)
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
@@ -297,7 +296,7 @@ export const Profile: React.FC<Props> = ({ avatar }) => {
             <p>Edit your personal information</p>
           </div>
           <div className="setting-content-profile-header">
-            <img src={avatar} alt="profile" />
+            <img src={avatar.avatar} alt="profile" />
             <input id="profile-input" name="profile-input" type="file" />
             <label htmlFor="profile-input">
               <p>Upload Images</p>

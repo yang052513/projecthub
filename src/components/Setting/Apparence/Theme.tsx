@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CirclePicker } from 'react-color'
+import { ThemeContext } from '../../../context/ThemeContext'
 
-interface Props {
-  switchTheme: any
-}
-
-export const Theme: React.FC<Props> = ({ switchTheme }) => {
+export const Theme: React.FC = () => {
+  const theme: any = useContext(ThemeContext)
   return (
     <div className="setting-content-theme">
       <h3 className="setting-content-subtit">Theme</h3>
@@ -32,7 +30,7 @@ export const Theme: React.FC<Props> = ({ switchTheme }) => {
         ]}
         width={'600px'}
         circleSize={50}
-        onChange={switchTheme}
+        onChange={theme.handleTheme}
       />
     </div>
   )

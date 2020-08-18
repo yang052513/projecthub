@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import firebase from 'firebase'
 import { Progress } from '../../shared/Progress'
 import { Feedback } from '../../shared/Feedback'
@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import { SwatchesPicker } from 'react-color'
-
+import { ThemeContext } from '../../../context/ThemeContext'
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -23,23 +23,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-interface Props {
-  options: string | null | undefined
-  demo: any
-  customBg: any
-  switchImgPreview: any
-  switchColorPreview: any
-  switchOption: any
-}
-
-export const Background: React.FC<Props> = ({
-  options,
-  demo,
-  customBg,
-  switchColorPreview,
-  switchImgPreview,
-  switchOption,
-}) => {
+export const Background: React.FC = () => {
+  const theme: any = useContext(ThemeContext)
+  console.log(theme)
   const classes = useStyles()
   const db = firebase.firestore()
   const user = firebase.auth().currentUser
@@ -92,10 +78,10 @@ export const Background: React.FC<Props> = ({
   }
 
   const customBgRender =
-    customBg.length === 0
+    theme.theme.customBackground.length === 0
       ? null
-      : customBg.map((bg: any) => (
-          <img onClick={switchImgPreview} id={bg} key={bg} src={bg} alt="" />
+      : theme.theme.customBackground.map((bg: any) => (
+          <img onClick={theme.handleSwitch} id={bg} key={bg} src={bg} alt="" />
         ))
 
   return (
@@ -129,7 +115,11 @@ export const Background: React.FC<Props> = ({
 
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel htmlFor="outlined-age-native-simple">Options</InputLabel>
-          <Select value={options} onChange={switchOption} label="Options">
+          <Select
+            value={theme.theme.option}
+            onChange={theme.handleOptions}
+            label="Options"
+          >
             <MenuItem className={classes.menuItem} value={'Color'}>
               Color
             </MenuItem>
@@ -141,55 +131,55 @@ export const Background: React.FC<Props> = ({
       </div>
 
       <div className="setting-content-background-demo">
-        {demo.backgroundColor ? (
+        {theme.theme.backgroundColor ? (
           <div
-            style={{ backgroundColor: demo.backgroundRef }}
+            style={{ backgroundColor: theme.theme.background }}
             className="color-placeholder"
           ></div>
         ) : (
-          <img src={demo.backgroundRef} alt="preview demo placeholder" />
+          <img src={theme.theme.background} alt="preview demo placeholder" />
         )}
       </div>
 
       <div className="setting-content-background-options">
         {/* 系统内置壁纸 */}
-        {options === 'Color' ? (
+        {theme.theme.option === 'Color' ? (
           <div>
             <SwatchesPicker
               width={600}
               height={300}
-              onChange={switchColorPreview}
+              onChange={theme.handleColor}
             />
           </div>
         ) : (
           <div>
             <img
               id="/images/theme/background/1.jpg"
-              onClick={switchImgPreview}
+              onClick={theme.handleSwitch}
               src="/images/theme/background/1-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/2.jpg"
-              onClick={switchImgPreview}
+              onClick={theme.handleSwitch}
               src="/images/theme/background/2-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/3.jpg"
-              onClick={switchImgPreview}
+              onClick={theme.handleSwitch}
               src="/images/theme/background/3-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/4.jpg"
-              onClick={switchImgPreview}
+              onClick={theme.handleSwitch}
               src="/images/theme/background/4-demo.jpg"
               alt=""
             />
             <img
               id="/images/theme/background/5.jpg"
-              onClick={switchImgPreview}
+              onClick={theme.handleSwitch}
               src="/images/theme/background/5-demo.jpg"
               alt=""
             />

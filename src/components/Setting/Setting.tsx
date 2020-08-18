@@ -8,31 +8,7 @@ import { Language } from './Language'
 import { About } from './About'
 import { ChangeLog } from './Changelog'
 
-interface Props {
-  avatar: string | null | undefined
-  demo: string | null | undefined
-  options: string | null | undefined
-  customBg: string | null | undefined
-  opacity: object | null | undefined
-  switchImgPreview: any
-  switchColorPreview: any
-  switchOption: any
-  switchTheme: any
-  swicthOpacity: any
-}
-
-export const Setting: React.FC<Props> = ({
-  avatar,
-  demo,
-  options,
-  customBg,
-  opacity,
-  swicthOpacity,
-  switchColorPreview,
-  switchImgPreview,
-  switchOption,
-  switchTheme,
-}) => {
+export const Setting: React.FC = () => {
   let location = useLocation()
 
   const currPathStyle: any = {
@@ -90,20 +66,10 @@ export const Setting: React.FC<Props> = ({
           <section className="route-section">
             <Switch location={location}>
               <Route exact path="/setting/profile">
-                <Profile avatar={avatar} />
+                <Profile />
               </Route>
               <Route path="/setting/theme">
-                <Apparence
-                  options={options}
-                  demo={demo}
-                  customBg={customBg}
-                  opacity={opacity}
-                  switchImgPreview={switchImgPreview}
-                  switchColorPreview={switchColorPreview}
-                  switchOption={switchOption}
-                  switchTheme={switchTheme}
-                  swicthOpacity={swicthOpacity}
-                />
+                <Apparence />
               </Route>
               <Route path="/setting/language">
                 <Language />

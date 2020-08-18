@@ -24,32 +24,9 @@ import { UserProfile } from '../components/shared/UserProfile'
 interface Props {
   avatar: string
   profile: any
-  demo: any
-  options: string
-  customBg: any
-  opacity: any
-  handleSwitch: (event: { currentTarget: { id: any } }) => void
-  handleColor: (color: any, event: any) => void
-  handleOptions: (event: {
-    target: { value: React.SetStateAction<string> }
-  }) => void
-  handleTheme: (color: any, event: any) => void
-  handleOpacity: (color: any, event: any) => void
 }
 
-export const Navigator: React.FC<Props> = ({
-  avatar,
-  profile,
-  demo,
-  options,
-  customBg,
-  opacity,
-  handleColor,
-  handleOpacity,
-  handleOptions,
-  handleSwitch,
-  handleTheme,
-}) => {
+export const Navigator: React.FC<Props> = ({ avatar, profile }) => {
   return (
     <Switch>
       <Route exact path="/">
@@ -74,18 +51,7 @@ export const Navigator: React.FC<Props> = ({
         <Moment profile={profile} avatar={avatar} />
       </Route>
       <Route path="/setting/">
-        <Setting
-          avatar={avatar}
-          demo={demo}
-          options={options}
-          customBg={customBg}
-          opacity={opacity}
-          switchImgPreview={handleSwitch}
-          switchColorPreview={handleColor}
-          switchOption={handleOptions}
-          switchTheme={handleTheme}
-          swicthOpacity={handleOpacity}
-        />
+        <Setting />
       </Route>
       <Route path="/faq">
         <FAQ />

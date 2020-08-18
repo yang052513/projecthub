@@ -98,3 +98,19 @@ export function initUserProfile(userRef: string) {
     }
   })
 }
+
+export function initUserLanguage(userRef: string) {
+  const langRef = firebase
+    .firestore()
+    .collection('user')
+    .doc(userRef)
+    .collection('Setting')
+    .doc('Language')
+  langRef.get().then(doc => {
+    if (!doc.exists) {
+      langRef.set({
+        Language: 'English',
+      })
+    }
+  })
+}
