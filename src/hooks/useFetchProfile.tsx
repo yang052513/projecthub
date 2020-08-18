@@ -13,7 +13,22 @@ export const useFetchProfile = (uid: string) => {
       .doc('Profile')
       .get()
       .then(profileDoc => {
-        setProfile(profileDoc.data())
+        if (profileDoc.exists) {
+          setProfile(profileDoc.data())
+        } else {
+          setProfile({
+            avatar: '/images/user.jpg',
+            profile: {
+              profileName: '',
+              profileBio: '',
+              profileEmail: '',
+              profileGithub: '',
+              profileLocation: '',
+              profileWeb: '',
+              profilelinkedin: '',
+            },
+          })
+        }
       })
   }
 

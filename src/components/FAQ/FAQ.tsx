@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
+import { ThemeContext } from '../../context/ThemeContext'
 
 export const FAQ: React.FC = () => {
+  const theme = useContext(ThemeContext)
+
   return (
     <div className="component-layout">
       <ul>
