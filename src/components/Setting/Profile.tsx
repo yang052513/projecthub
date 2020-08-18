@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import { Progress } from '../Common/Progress'
-import { Feedback } from '../Common/Feedback'
-import { Loading } from '../Common/Loading'
+import { Progress } from '../shared/Progress'
+import { Feedback } from '../shared/Feedback'
+import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MiscMenu } from '../../Common/MiscMenu'
+import { MiscMenu } from '../../shared/MiscMenu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import { deleteFriend } from '../../../modules/messenger'
 import firebase from 'firebase'
-import { Feedback } from '../../Common/Feedback'
-import { Progress } from '../../Common/Progress'
-import { Loading } from '../../Common/Loading'
+import { Feedback } from '../../shared/Feedback'
+import { Progress } from '../../shared/Progress'
+import { Loading } from '../../shared/Loading'
 
 interface Props {
   friendKey: string

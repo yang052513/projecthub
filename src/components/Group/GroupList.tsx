@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import { GroupQueue } from './GroupQueue'
 import { GroupMenu } from './GroupMenu'
-import { Feedback } from '../Common/Feedback'
-import { Progress } from '../Common/Progress'
+import { Feedback } from '../shared/Feedback'
+import { Progress } from '../shared/Progress'
 import {
   withStyles,
   Theme,

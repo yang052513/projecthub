@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Board from 'react-trello'
 import firebase from 'firebase'
-import { Loading } from '../Common/Loading'
+import { Loading } from '../shared/Loading'
 import { useFetchContributor } from '../../hooks/useFetchContributor'
 
 //初始化的看板模板

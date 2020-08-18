@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { Link } from 'react-router-dom'
-import { useFetchProfile } from '../hooks/useFetchProfile'
-import { GroupDetailCard } from './Group/GroupDetailCard'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
+import { GroupDetailCard } from './GroupDetailCard'
 
-import { Feedback } from './Common/Feedback'
-import { Loading } from './Common/Loading'
+import { Feedback } from '../shared/Feedback'
+import { Loading } from '../shared/Loading'
 import { timeFormat } from 'current-time-format'
 
-import { addNotification } from '../modules/modules'
+import { addNotification } from '../../modules/modules'
 import { CSSTransition } from 'react-transition-group'
-import { GroupSort } from './Group/Form/GroupSort'
+import { GroupSort } from './GroupSort'
 
 export const Group: React.FC = () => {
   const [project, setProject] = useState<Array<object | null | undefined>>([])

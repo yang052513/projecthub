@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import { MessengerListMenu } from './MessengerList/MessengerListMenu'
-import { AvatarOnline } from '../Common/AvatarOnline'
+import { AvatarOnline } from '../shared/AvatarOnline'
 import { useFetchOnline } from '../../hooks/useFetchOnline'
 
 export const MessengerFriend: React.FC = () => {

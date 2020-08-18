@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
-import { FriendCard } from './Friends/FriendCard'
-import { Loading } from './Common/Loading'
+import { FriendCard } from './FriendCard'
+import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
 
 export const Friends: React.FC = () => {

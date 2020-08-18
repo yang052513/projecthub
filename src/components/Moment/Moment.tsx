@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { StoryEditor } from './Moment/StoryEditor'
-import { StoryCard } from './Moment/StoryCard'
+import { StoryEditor } from './StoryEditor'
+import { StoryCard } from './StoryCard'
 import firebase from 'firebase'
-import { Loading } from './Common/Loading'
+import { Loading } from '../shared/Loading'
 
-import { useFetchProfile } from '../hooks/useFetchProfile'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { CSSTransition } from 'react-transition-group'
 
-export function Moment(props: any) {
+export const Moment = (props: any) => {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
 

@@ -1,6 +1,28 @@
 {
   "versions": [
     {
+      "version": "Version 0.0.3",
+      "release": "RELEASED AUGUST 17, 2020",
+      "content": [
+        {
+          "status": "ADDED",
+          "info": "New project analysis dashboard"
+        },
+        {
+          "status": "ADDED",
+          "info": "Group project search improve"
+        },
+        {
+          "status": "ADDED",
+          "info": "New social activity feed"
+        },
+        {
+          "status": "ADDED",
+          "info": "Notification alert feature"
+        }
+      ]
+    },
+    {
       "version": "Version 0.0.2",
       "release": "RELEASED AUGUST 6, 2020",
       "content": [

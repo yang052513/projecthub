@@ -2,11 +2,11 @@ import React from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { Profile } from './Setting/Profile'
-import { Apparence } from './Setting/Apparence'
-import { Language } from './Setting/Language'
-import { About } from './Setting/About'
-import { ChangeLog } from './Setting/Changelog'
+import { Profile } from './Profile'
+import { Apparence } from './Apparence'
+import { Language } from './Language'
+import { About } from './About'
+import { ChangeLog } from './Changelog'
 
 interface Props {
   avatar: string | null | undefined

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChangeLogBlock } from './ChangeLog/ChangeLogBlock'
-import changelogData from '../../ChangeLog.json'
+import changelogData from '../../data/changeLog.json'
 
 export const ChangeLog: React.FC = () => {
   const changelogBlock = changelogData.versions.map(item => (

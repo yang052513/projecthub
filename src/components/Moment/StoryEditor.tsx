@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
-import { Progress } from '../Common/Progress'
+import { Progress } from '../shared/Progress'
 import { timeFormat } from 'current-time-format'
-import { Feedback } from '../Common/Feedback'
+import { Feedback } from '../shared/Feedback'
 import { CSSTransition } from 'react-transition-group'
 
 interface Props {

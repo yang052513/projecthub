@@ -14,7 +14,7 @@ import {
   addFriend,
 } from '../../../modules/messenger'
 
-import { Feedback } from '../../Common/Feedback'
+import { Feedback } from '../../shared/Feedback'
 
 interface Props {
   requestUser: any

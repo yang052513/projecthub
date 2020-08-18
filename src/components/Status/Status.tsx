@@ -3,15 +3,15 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import firebase from 'firebase'
 
-import { ProjectStatus } from './Status/ProjectStatus'
-import { StatusTag } from './Status/StatusTag'
-import { StatusType } from './Status/StatusType'
-import { StatusContributor } from './Status/StatusContributor'
-import { StatusLog } from './Status/StatusLog'
-import { StatusActivity } from './Status/StatusActivity'
-import { StatusLike } from './Status/StatusLike'
+import { ProjectStatus } from './ProjectStatus'
+import { StatusTag } from './StatusTag'
+import { StatusType } from './StatusType'
+import { StatusContributor } from './StatusContributor'
+import { StatusLog } from './StatusLog'
+import { StatusActivity } from './StatusActivity'
+import { StatusLike } from './StatusLike'
 import { triggerAsyncId } from 'async_hooks'
-import { Loading } from './Common/Loading'
+import { Loading } from '../shared/Loading'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
-import { ExploreProject } from './Explore/ExploreProject'
-import { ExploreTrending } from './Explore/ExploreTrending'
-import { Loading } from './Common/Loading'
+import { ExploreProject, ExploreTrending } from './index'
+import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
 
 export const Explore: React.FC = () => {

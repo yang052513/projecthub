@@ -5,7 +5,7 @@ import { StoryComment } from './StoryComment'
 import firebase from 'firebase'
 import { addNotification, addProjectLog } from '../../modules/modules'
 import { MomentMenu } from '../Moment/MomentMenu'
-import { Feedback } from '../Common/Feedback'
+import { Feedback } from '../shared/Feedback'
 import { CSSTransition } from 'react-transition-group'
 
 interface Props {

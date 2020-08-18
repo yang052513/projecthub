@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupQueueItem } from './GroupQueueItem'
-import { Feedback } from '../Common/Feedback'
-import { Progress } from '../Common/Progress'
+import { Feedback } from '../shared/Feedback'
+import { Progress } from '../shared/Progress'
 
 // Modules
 import { addNotification } from '../../modules/modules'

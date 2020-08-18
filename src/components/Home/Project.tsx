@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
-import { Loading } from '../Common/Loading'
+import { Loading } from '../shared/Loading'
 import { ProjectCard } from './ProjectCard'
 import { CSSTransition } from 'react-transition-group'
 

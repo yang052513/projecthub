@@ -4,22 +4,25 @@ import { Switch, Route } from 'react-router-dom'
 import firebase from 'firebase'
 
 //所有主组件
-import { Home } from './components/Home'
-import { Status } from './components/Status'
-import { Explore } from './components/Explore'
-import { Group } from './components/Group'
-import { Messenger } from './components/Messenger'
-import { Friends } from './components/Friends'
-import { Moment } from './components/Moment'
-import { Setting } from './components/Setting'
-import { FAQ } from './components/FAQ'
-import { CreateProject } from './components/Common/CreateProject'
+import {
+  Home,
+  Status,
+  Explore,
+  Group,
+  Messenger,
+  Friends,
+  Moment,
+  Setting,
+  FAQ,
+} from './components/index'
+
+import { CreateProject } from './components/shared/CreateProject'
 
 //导航，副组件根据ref来决定渲染内容
 import { ProfileMenu } from './components/Navigation/ProfileMenu'
-import { Edit } from './components/Common/Edit'
+import { Edit } from './components/shared/Edit'
 import { Kanban } from './components/Home/Kanban'
-import { UserProfile } from './components/Common/UserProfile'
+import { UserProfile } from './components/shared/UserProfile'
 import { GroupForm } from './components/Group/GroupForm'
 import { GroupPost } from './components/Group/GroupPost'
 import { GroupFormEdit } from './components/Group/GroupFormEdit'

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import { GroupList } from './GroupList'
 import { GroupApplication } from './GroupApplication'
-import { Loading } from '../Common/Loading'
+import { Loading } from '../shared/Loading'
 import { useHistory } from 'react-router-dom'
 export const GroupPost = () => {
   const user: any = firebase.auth().currentUser

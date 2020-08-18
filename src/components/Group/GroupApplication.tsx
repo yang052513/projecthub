@@ -15,8 +15,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
-import { Feedback } from '../Common/Feedback'
-import { Progress } from '../Common/Progress'
+import { Feedback } from '../shared/Feedback'
+import { Progress } from '../shared/Progress'
 
 import { useFetchProfile } from '../../hooks/useFetchProfile'
 

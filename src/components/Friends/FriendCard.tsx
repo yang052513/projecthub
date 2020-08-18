@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
-import { Feedback } from '../Common/Feedback'
+import { Feedback } from '../shared/Feedback'
 import { addNotification } from '../../modules/modules'
 
 interface Profile {

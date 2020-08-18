@@ -1,9 +1,9 @@
 import React from 'react'
-import { MessengerList } from './Messenger/MessengerList'
-import { MessengerChat } from './Messenger/MessengerChat'
-import { MessengerPanel } from './Messenger/MessengerPanel'
+import { MessengerList } from './MessengerList'
+import { MessengerChat } from './MessengerChat'
+import { MessengerPanel } from './MessengerPanel'
 import { Switch, Route } from 'react-router-dom'
-import { MessengerFriend } from './Messenger/MessengerFriend'
+import { MessengerFriend } from './MessengerFriend'
 
 export const Messenger: React.FC = () => {
   return (
