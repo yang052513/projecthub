@@ -1,64 +1,49 @@
-import React, { useState, useEffect } from 'react'
-import { StoryEditor } from './StoryEditor'
-import { StoryCard } from './StoryCard'
-import firebase from 'firebase'
-import { Loading } from '../shared/Loading'
+import React, { useState, useEffect, useContext } from 'react'
+import { MomentEditor, MomentCard } from './index'
 
-import { useFetchProfile } from '../../hooks/useFetchProfile'
+import * as firebase from 'firebase/app'
+import 'firebase/firestore'
+
+import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
+import { ProfileContext } from '../../context/ProfileContext'
 
 export const Moment = () => {
-  const db = firebase.firestore()
-  const user: any = firebase.auth().currentUser
+  const profile: any = useContext(ProfileContext)
 
-  const currUserProfile = useFetchProfile(user.uid)
-
+  const [moment, setMoment] = useState<Array<object | null | undefined>>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [editor, setEditor] = useState<boolean>(false)
-  const [moment, setMoment] = useState<Array<object | null | undefined>>([])
 
-  const displayEditor = () => {
-    setEditor(true)
-  }
-  const offEditor = () => {
-    setEditor(false)
-  }
-
-  //Initialize and read all the moment that stores in the database
+  // 加载所有动态
   useEffect(() => {
-    db.collection('moment')
-      .orderBy('Time', 'desc')
-      .get()
-      .then(query => {
-        query.forEach(doc => {
-          setMoment(prevMoment => [...prevMoment, doc.data()])
-        })
-        setLoading(false)
+    const fetchMoment = async () => {
+      const momentDocs = await firebase
+        .firestore()
+        .collection('moment')
+        .orderBy('Time', 'desc')
+        .get()
+      momentDocs.forEach(doc => {
+        setMoment(prevMoment => [...prevMoment, doc.data()])
       })
+      setLoading(false)
+    }
+    fetchMoment()
   }, [])
 
-  //Loop all the moment and render in storycard component
+  // 渲染所有动态
   const momentList = moment
     .sort((a: any, b: any) => {
       return a.Time.split(' on ')[1] < b.Time.split(' on ')[1] ? 1 : -1
     })
     .map((moment: any) => (
-      <StoryCard
-        currUserProfile={currUserProfile}
-        key={moment.Key}
-        docRef={moment.Key}
-        userId={moment.UserId}
-        avatar={moment.Avatar}
-        name={moment.Author}
-        time={moment.Time}
-        content={moment.Content}
-        picture={moment.Picture}
-      />
+      <MomentCard key={moment.Key} profile={profile} moment={moment} />
     ))
 
   return (
     <div className="component-layout moment-container">
       {loading && <Loading />}
+
       <CSSTransition
         in={!loading}
         timeout={500}
@@ -68,9 +53,9 @@ export const Moment = () => {
         <div className="moment-story-card-wrap">{momentList}</div>
       </CSSTransition>
 
-      {/* Creat a new moment button */}
+      {/* 编辑一个新的动态按钮 */}
       <div className="post-moment-container">
-        <i onClick={displayEditor} className="fas fa-feather"></i>
+        <i onClick={() => setEditor(true)} className="fas fa-feather"></i>
       </div>
 
       {/* Display the moment editor container */}
@@ -80,10 +65,10 @@ export const Moment = () => {
         classNames="fade-in"
         unmountOnExit
       >
-        <StoryEditor
-          profile={currUserProfile.profile}
-          avatar={currUserProfile.avatar}
-          toggle={offEditor}
+        <MomentEditor
+          profile={profile.profile}
+          avatar={profile.avatar}
+          toggle={() => setEditor(false)}
         />
       </CSSTransition>
     </div>

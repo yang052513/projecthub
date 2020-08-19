@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import firebase from 'firebase'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 import { ExploreProject, ExploreTrending } from './index'
 import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
 
 export const Explore: React.FC = () => {
-  const [loadingProject, setLoadingProject] = useState<boolean>(true)
-  const [loadingFriend, setLoadingFriend] = useState<boolean>(true)
-
+  const [loading, setLoading] = useState<{ project: boolean; friend: boolean }>(
+    {
+      project: true,
+      friend: true,
+    }
+  )
   const [project, setProject] = useState<Array<object | null | undefined>>([])
-  const [userList, setUserList] = useState<Array<object | null | undefined>>([])
+  const [user, setUser] = useState<Array<object | null | undefined>>([])
 
-  const fetchProject = () => {
+  const fetchExplore = () => {
     firebase
       .firestore()
       .collection('project')
@@ -20,7 +25,7 @@ export const Explore: React.FC = () => {
         projectDoc.forEach(doc => {
           setProject(prevProject => [...prevProject, doc.data()])
         })
-        setLoadingProject(false)
+        setLoading({ ...loading, project: false })
       })
 
     firebase
@@ -29,27 +34,27 @@ export const Explore: React.FC = () => {
       .get()
       .then(userDoc => {
         userDoc.forEach(doc => {
-          setUserList(prevUser => [...prevUser, doc.data()])
+          setUser(prevUser => [...prevUser, doc.data()])
         })
-        setLoadingFriend(false)
+        setLoading({ ...loading, friend: false })
       })
   }
 
-  useEffect(fetchProject, [])
+  useEffect(fetchExplore, [])
 
   return (
     <div className="component-layout ">
-      {loadingProject || (loadingFriend && <Loading />)}
+      {loading.project || loading.friend ? <Loading /> : null}
 
       <CSSTransition
-        in={!(loadingProject && loadingFriend)}
+        in={!(loading.project && loading.friend)}
         timeout={500}
         classNames="fade-in"
         unmountOnExit
       >
         <div className="explore-container">
           <ExploreProject projectData={project} />
-          <ExploreTrending userData={userList} />
+          <ExploreTrending userData={user} />
         </div>
       </CSSTransition>
     </div>

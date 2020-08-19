@@ -1,14 +1,14 @@
 import React from 'react'
 
 interface Props {
-  like: any
+  like: number
   hasLiked: boolean
   comment: any
   handleLike: () => void
   handleDislike: () => void
   displayComment: () => void
 }
-export const StorySocial: React.FC<Props> = ({
+export const MomentStatistics: React.FC<Props> = ({
   like,
   hasLiked,
   comment,

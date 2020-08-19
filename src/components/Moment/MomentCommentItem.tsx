@@ -1,14 +1,12 @@
 import React from 'react'
 
 interface Props {
-  userId: string
   userName: string
   userAvatar: string
   commentBody: string
-  commentId: string
   commentDate: string
 }
-export const Comment: React.FC<Props> = ({
+export const MomentCommentItem: React.FC<Props> = ({
   userAvatar,
   userName,
   commentBody,

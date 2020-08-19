@@ -14,7 +14,7 @@ interface Props {
 const { monthNum, day, hours, minutes } = timeFormat
 const currentTime = `${hours}:${minutes} on ${monthNum}/${day}`
 
-export const StoryEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
+export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
   const db = firebase.firestore()
   const storageRef = firebase.storage().ref()
 
