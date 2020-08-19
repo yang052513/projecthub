@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import firebase from 'firebase'
+import React, { useState, useEffect, useContext } from 'react'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
+import { ProfileContext } from '../context/ProfileContext'
 
 export const Logout: React.FC = () => {
-  const db = firebase.firestore()
-  const user = firebase.auth().currentUser
-
-  const [userName, setUserName] = useState<string>('')
+  const user: any = firebase.auth().currentUser
+  const profile: any = useContext(ProfileContext)
 
   const [bgImg, setBgImg] = useState<number | null>(null)
   const [bye, setBye] = useState<string | null>(null)
@@ -19,8 +22,6 @@ export const Logout: React.FC = () => {
     'See you next time',
   ]
   const maxByes: number = byeMsg.length
-
-  //Log out background images length
   const maxImages: number = 20
 
   //Gnerate random images and bye message
@@ -30,19 +31,9 @@ export const Logout: React.FC = () => {
   const logoutAnimation = () => {
     setBgImg(randomImg)
     setBye(byeMsg[randomBye])
-
-    if (user) {
-      db.collection('user')
-        .doc(user.uid)
-        .get()
-        .then((doc: any) => {
-          setUserName(doc.data().Name)
-        })
-
-      db.collection('user').doc(user.uid).update({
-        Online: false,
-      })
-    }
+    firebase.firestore().collection('user').doc(user.uid).update({
+      Online: false,
+    })
 
     setTimeout(() => {
       firebase
@@ -53,12 +44,11 @@ export const Logout: React.FC = () => {
             console.log('退出成功 bye bye')
           },
           error => {
-            console.error('退出也能有错误？那可能是你的网的问题', error)
+            console.error('firebase signout错误', error)
           }
         )
     }, 4000)
   }
-
   useEffect(logoutAnimation, [])
 
   return (
@@ -68,9 +58,8 @@ export const Logout: React.FC = () => {
       }}
       className="logout-container"
     >
-      {/* <Particle /> */}
       <p>
-        {bye} {userName}.
+        {bye} {profile.profile.profileName}.
       </p>
     </div>
   )

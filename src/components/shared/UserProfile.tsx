@@ -1,46 +1,41 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import firebase from 'firebase'
-import { Loading } from './Loading'
 
+import * as firebase from 'firebase/app'
+import 'firebase/firestore'
+
+import { Loading } from './Loading'
+import { useFetchProfile } from '../../hooks/useFetchProfile'
+
+/**
+ * 用户个人主页面 之后要改 加入朋友圈 以及动态之类
+ */
 export const UserProfile = () => {
   const userId: any = useParams()
+  const [userProfile] = useFetchProfile(userId)
 
-  const [userInfo, setUserInfo] = useState<any>()
   const [userRepo, setUserRepo] = useState<any>([])
   const [statusList, setStatusList] = useState<Array<string>>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const fetchUserInfo = () => {
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(userId.ref)
-      .collection('Setting')
-      .doc('Profile')
-      .get()
-      .then(docs => {
-        setUserInfo(docs.data())
+  useEffect(() => {
+    const fetchUserRepo = async () => {
+      const projectDocs = await firebase
+        .firestore()
+        .collection('user')
+        .doc(userId.ref)
+        .collection('Project')
+        .get()
+      projectDocs.forEach(docs => {
+        if (docs.data().Privacy === 'Public') {
+          setUserRepo((prevRepo: any) => [...prevRepo, docs.data()])
+          setStatusList(prevStatus => [...prevStatus, docs.data().Status])
+        }
       })
-
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(userId.ref)
-      .collection('Project')
-      .get()
-      .then(projectDocs => {
-        projectDocs.forEach(docs => {
-          if (docs.data().Privacy === 'Public') {
-            setUserRepo((prevRepo: any) => [...prevRepo, docs.data()])
-            setStatusList(prevStatus => [...prevStatus, docs.data().Status])
-          }
-        })
-        setIsLoading(false)
-      })
-  }
-
-  useEffect(fetchUserInfo, [])
+      setIsLoading(false)
+    }
+    fetchUserRepo()
+  }, [])
 
   const renderStatus = statusList
     .filter((value, index, self) => self.indexOf(value) === index)
@@ -76,41 +71,41 @@ export const UserProfile = () => {
       ) : (
         <div className="user-profile-container">
           <div className="user-profile-info-container">
-            <img src={userInfo.avatar} alt="" width="100px" height="100px" />
-            <h3>{userInfo.profile.profileName}</h3>
+            <img src={userProfile.avatar} alt="" width="100px" height="100px" />
+            <h3>{userProfile.profile.profileName}</h3>
 
             <div className="user-profile-icon-wrap">
               <i className="fas fa-book"></i>
-              <p>{userInfo.profile.profileBio}</p>
+              <p>{userProfile.profile.profileBio}</p>
             </div>
 
             <div className="user-profile-icon-wrap">
               <i className="fas fa-envelope"></i>
-              <p>{userInfo.profile.profileEmail}</p>
+              <p>{userProfile.profile.profileEmail}</p>
             </div>
 
             <div className="user-profile-icon-wrap">
               <i className="fab fa-github"></i>
-              <p> {userInfo.profile.profileGithub}</p>
+              <p> {userProfile.profile.profileGithub}</p>
             </div>
 
             <div className="user-profile-icon-wrap">
               <i className="fas fa-map-marker-alt"></i>
-              <p> {userInfo.profile.profileLocation}</p>
+              <p> {userProfile.profile.profileLocation}</p>
             </div>
 
             <div className="user-profile-icon-wrap">
               <i className="fab fa-linkedin-in"></i>
-              <p> {userInfo.profile.profileWeb}</p>
+              <p> {userProfile.profile.profileWeb}</p>
             </div>
 
             <div className="user-profile-icon-wrap">
               <i className="fas fa-home"></i>
-              <p> {userInfo.profile.profileLinkedin}</p>
+              <p> {userProfile.profile.profileLinkedin}</p>
             </div>
           </div>
           <div className="user-profile-repo-wrap">
-            <h3>{userInfo.profile.profileName}'s Projects</h3>
+            <h3>{userProfile.profile.profileName}'s Projects</h3>
             <div className="user-profile-repo-category-container">
               {renderStatus}
             </div>

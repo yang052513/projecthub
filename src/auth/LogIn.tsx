@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
-import App from './App'
+import App from '../App'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 const config = {
@@ -16,7 +16,7 @@ const config = {
 }
 firebase.initializeApp(config)
 
-class SignIn extends Component {
+class LogIn extends Component {
   state = {
     isSignedIn: false,
     isApparence: false,
@@ -85,4 +85,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn
+export default LogIn

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import SignIn from './SignIn'
+import LogIn from './auth/LogIn'
 import './style/index.css'
 
-ReactDOM.render(<SignIn />, document.getElementById('root'))
+ReactDOM.render(<LogIn />, document.getElementById('root'))

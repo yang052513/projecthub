@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
-import Logout from '../shared/Logout'
+import Logout from '../../auth/Logout'
 import { ProfileContext } from '../../context/ProfileContext'
 
 // Material UI
