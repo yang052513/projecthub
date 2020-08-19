@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
-import firebase from 'firebase'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import 'firebase/storage'
+
 import { Progress } from '../shared/Progress'
-import { timeFormat } from 'current-time-format'
 import { Feedback } from '../shared/Feedback'
+
+import { timeFormat } from 'current-time-format'
 import { CSSTransition } from 'react-transition-group'
 
 interface Props {
-  profile: object | any
+  profile: any
   avatar: string
   toggle: any
 }
@@ -15,8 +21,7 @@ const { monthNum, day, hours, minutes } = timeFormat
 const currentTime = `${hours}:${minutes} on ${monthNum}/${day}`
 
 export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
-  const db = firebase.firestore()
-  const storageRef = firebase.storage().ref()
+  const user: any = firebase.auth().currentUser
 
   const [loading, setLoading] = useState(false)
   const [post, setPost] = useState('')
@@ -31,31 +36,25 @@ export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
     info: '',
   })
 
-  const handleReload = () => {
-    window.location.reload()
-  }
-
   const handleMoment = () => {
     if (post !== '') {
-      firebase.auth().onAuthStateChanged((user: any) => {
-        db.collection('moment')
-          .add({
-            Author: profile.profileName,
-            Time: currentTime,
-            Content: post,
-            Like: 0,
-            Comments: {},
-            Avatar: avatar,
-            UserId: user.uid,
-            Picture: picture,
+      const momentCollectionRef = firebase.firestore().collection('moment')
+      momentCollectionRef
+        .add({
+          Author: profile.profileName,
+          Time: currentTime,
+          Content: post,
+          Like: 0,
+          Comments: {},
+          Avatar: avatar,
+          UserId: user.uid,
+          Picture: picture,
+        })
+        .then(docRef => {
+          momentCollectionRef.doc(docRef.id).update({
+            Key: docRef.id,
           })
-          .then(docRef => {
-            db.collection('moment').doc(docRef.id).update({
-              Key: docRef.id,
-            })
-          })
-      })
-      // toggle()
+        })
       setFeedback({
         display: true,
         msg: 'Shared Success',
@@ -78,28 +77,31 @@ export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
     setLoading(true)
     let imageInput: any = document.getElementById(event.currentTarget.id)
     let file = imageInput.files[0]
-
-    let metadata = {
+    const metadata = {
       contentType: file.type,
     }
 
-    let task = storageRef.child(file.name).put(file, metadata)
-    task
+    const uploadFile = firebase
+      .storage()
+      .ref()
+      .child(file.name)
+      .put(file, metadata)
+    uploadFile
       .then(snapshot => snapshot.ref.getDownloadURL())
       .then(url => {
         setPicture(url)
-        console.log('朋友圈图片上传成功 链接为: ' + url)
         setLoading(false)
         setPictureInfo({
           Status: true,
           Name: file.name,
         })
+        console.log('朋友圈图片上传成功 链接为: ' + url)
       })
   }
 
   return (
     <div>
-      {loading ? <Progress /> : null}
+      {loading && <Progress />}
       <div onClick={toggle} className="overlay-post"></div>
       <div className="moment-editor-container">
         <div className="moment-editor-textarea">
@@ -116,10 +118,8 @@ export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
           <label htmlFor="image-input">
             <i className="far fa-image"></i>
           </label>
-
           <i className="far fa-laugh"></i>
-
-          {pictureInfo.Status ? <p>{pictureInfo.Name}</p> : null}
+          {pictureInfo.Status && <p>{pictureInfo.Name}</p>}
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export const MomentEditor: React.FC<Props> = ({ profile, avatar, toggle }) => {
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
-          toggle={handleReload}
+          toggle={() => window.location.reload()}
         />
       </CSSTransition>
     </div>

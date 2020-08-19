@@ -31,12 +31,12 @@ export const MomentStatistics: React.FC<Props> = ({
         <div>
           <i onClick={handleLike} className="far fa-heart"></i>
 
-          {like > 0 && <p>{like}</p>}
+          {like > 0 && <p style={{ transition: 'all 0.5s' }}>{like}</p>}
         </div>
       )}
       <div>
         <i onClick={displayComment} className="far fa-comment"></i>
-        <p>{comment > 0 ? comment : ''}</p>
+        <p>{comment > 0 && comment}</p>
       </div>
     </div>
   )

@@ -1,22 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+// Material UI
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
-interface Props {
-  handleDelete?: () => void
-  handleEdit?: () => void
-}
 
 const useStyles = makeStyles({
   root: {
     fontSize: '13px',
     color: 'black',
+    fontFamily: 'quicksand',
   },
 })
 
-export const MomentMenu: React.FC<Props> = ({ handleDelete, handleEdit }) => {
+interface Props {
+  handleDelete: () => void
+}
+
+export const MomentMenu: React.FC<Props> = ({ handleDelete }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -30,11 +32,7 @@ export const MomentMenu: React.FC<Props> = ({ handleDelete, handleEdit }) => {
 
   return (
     <div className="moment-menu-container">
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
+      <Button aria-haspopup="true" onClick={handleClick}>
         <i onClick={handleClick} className="fas fa-ellipsis-v"></i>
       </Button>
 
