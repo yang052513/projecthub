@@ -1,9 +1,13 @@
 import firebase from 'firebase'
 import { timeFormat } from 'current-time-format'
 
+const date = new Date()
 const { monthStrLong, day, hours, minutes } = timeFormat
+
 const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
 const activityTime = `${monthStrLong} ${day} ${hours}:${minutes}`
+const currentMonth: any =
+  date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
 
 export function addNotification(
   userRef: string,
@@ -87,5 +91,17 @@ export function addProjectLog(
         .update({
           Key: activityRef.id,
         })
+    })
+}
+
+export function updateStatistics(userRef: string, status: any, value: number) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(userRef)
+    .collection('Statistics')
+    .doc(currentMonth)
+    .update({
+      [`${status}`]: firebase.firestore.FieldValue.increment(value),
     })
 }

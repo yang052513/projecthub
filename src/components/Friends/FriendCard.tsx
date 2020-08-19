@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from 'firebase'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
 import { timeFormat } from 'current-time-format'
-import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { Feedback } from '../shared/Feedback'
 import { addNotification } from '../../modules/modules'
-
-interface Profile {
-  profileName: string | null
-  profileEmail: string | null
-  profileBio: string | null
-  profileGithub: string | null
-  profileLocation: string | null
-  profileWeb: string | null
-  profilelinkedin: string | null
-}
+import { ProfileContext } from '../../context/ProfileContext'
 
 interface Props {
-  info: Profile
+  info: any
   avatar: string
   userId: string
 }
 
+const { monthStrLong, day, hours, minutes } = timeFormat
+const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
+
+const onlineColor: any = {
+  color: 'rgb(15, 207, 89)',
+}
+
+const promptStyle: any = {
+  opacity: '1',
+}
+
 export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
-  const [online, setOnline] = useState<boolean>(false)
   const user: firebase.User | null | any = firebase.auth().currentUser
-  const profile = useFetchProfile(user.uid)
+  const profile: any = useContext(ProfileContext)
 
+  const [online, setOnline] = useState<boolean>(false)
   const [showPrompt, setShowPrompt] = useState<boolean>(false)
-
   const [isApplied, setIsApplied] = useState<boolean>(false)
-
   const [feedback, setFeedback] = useState<any>({
     show: false,
     msg: '',
     info: '',
   })
-  const { monthStrLong, day, hours, minutes } = timeFormat
-
-  const currentDay = `${monthStrLong} ${day} at ${hours}:${minutes}`
 
   //检测该用户是否处于在线状态
   const fecthOnlineStatus = () => {
@@ -69,32 +69,8 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
         }
       })
   }
-
   useEffect(fecthOnlineStatus, [])
   useEffect(fetchApplicationStatus, [])
-
-  //用户申请写入到被申请用户的通知里
-  // const addNotification = () => {
-  //   const notificatonRef = firebase
-  //     .firestore()
-  //     .collection('user')
-  //     .doc(userId)
-  //     .collection('Notification')
-  //   notificatonRef
-  //     .add({
-  //       Unread: true,
-  //       Message: `${profile.profile.profileName} sent you a friend request`,
-  //       Date: currentDay,
-  //       Category: 'Friend Request',
-  //       Redirect: '/messenger',
-  //     })
-  //     .then(docKey => {
-  //       notificatonRef.doc(docKey.id).update({
-  //         Key: docKey.id,
-  //       })
-  //       console.log(`通知已经写入到用户数据库中${docKey.id}`)
-  //     })
-  // }
 
   //向点击的用户发起好友请求
   const handleFriend = () => {
@@ -143,22 +119,11 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
       profile.avatar
     )
     setIsApplied(true)
-
     setFeedback({
       show: true,
       msg: 'Request Made',
       info: `Request has been sent to ${info.profileName}.`,
     })
-
-    console.log('好友请求发起成功')
-  }
-
-  const onlineColor: any = {
-    color: 'rgb(15, 207, 89)',
-  }
-
-  const promptStyle: any = {
-    opacity: '1',
   }
 
   return (
@@ -182,16 +147,6 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
         </div>
         <p className="friend-card-info-location">{info.profileLocation}</p>
         <p className="friend-card-info-bio">{info.profileBio}</p>
-        {/* 
-        <ul className="friend-card-info-skills">
-          <li>React</li>
-          <li>MongoDB</li>
-          <li>Sass</li>
-          <li>HTML5</li>
-          <li>Javascript</li>
-          <li>SQL</li>
-          <li>Less</li>
-        </ul> */}
       </div>
 
       {!(user.uid === userId) && (
@@ -207,8 +162,6 @@ export const FriendCard: React.FC<Props> = ({ info, avatar, userId }) => {
               ></i>
             </button>
           )}
-          {/* 
-          <button>Message</button> */}
           <p style={showPrompt ? promptStyle : null} className="friend-prompt">
             Add Friend
           </p>

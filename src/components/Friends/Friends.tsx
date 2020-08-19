@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import firebase from 'firebase'
+
+import * as firebase from 'firebase/app'
+import 'firebase/firestore'
+
 import { FriendCard } from './FriendCard'
 import { Loading } from '../shared/Loading'
 import { CSSTransition } from 'react-transition-group'
 
 export const Friends: React.FC = () => {
   const [user, setUser] = useState<Array<object | null | undefined>>([])
-  const db = firebase.firestore()
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchFriends = () => {
-    db.collection('friends')
+    firebase
+      .firestore()
+      .collection('friends')
       .get()
       .then(friendQuery => {
         friendQuery.forEach(doc => {
@@ -33,7 +37,6 @@ export const Friends: React.FC = () => {
   return (
     <div className="component-layout friend-container">
       {loading && <Loading />}
-
       <CSSTransition
         in={!loading}
         timeout={500}

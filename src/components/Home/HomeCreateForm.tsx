@@ -1,4 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
+
+// Firebase API
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
+// Modules Hooks
+import { useHistory } from 'react-router-dom'
+import { timeFormat } from 'current-time-format'
+import { ProfileContext } from '../../context/ProfileContext'
+import { addProjectLog, updateStatistics } from '../../modules/modules'
+import { addProject } from '../../modules/home'
+
+// Shared Components
+import { Feedback } from '../shared/Feedback'
+import { Progress } from '../shared/Progress'
+
+// Material UI Components API
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,27 +25,17 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
-import firebase from 'firebase'
-import { useHistory } from 'react-router-dom'
-import { timeFormat } from 'current-time-format'
-
-import { Feedback } from '../shared/Feedback'
-import { Progress } from '../shared/Progress'
-
-import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
   },
-  // 文本框样式
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '45ch',
   },
-  // 下拉选择菜单样式
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200,
@@ -37,29 +45,20 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-//当前的时间 年-月-日格式
-const { year, monthNum, monthStrLong, day, hours, minutes } = timeFormat
-
-const currentDay = `${year}-${monthNum}-${day}`
-const currentTime = `${monthStrLong} ${day} ${hours}:${minutes}`
-
-const date = new Date()
-const currentMonth: any =
-  date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
+const { year, monthNum, day } = timeFormat
+const currentDay = `${year}-${monthNum}-${day}` // e.g. 2020-05-25
 
 export const HomeCreateForm: React.FC = () => {
-  const classes = useStyles()
-  const history = useHistory()
-  const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
-  const profile = useFetchProfile(user.uid)
+  const profile: any = useContext(ProfileContext)
+  const history = useHistory()
+  const classes = useStyles()
 
+  // States
   const [loading, setLoading] = useState<boolean>(false)
   const [feedback, setFeedback] = useState<boolean>(false)
   const [fail, setFail] = useState<boolean>(false)
   const [errorMsg, setErrorMsg] = useState<string>('')
-
-  const [statusCnt, setStatusCnt] = useState<any>()
 
   const [textInput, setTextInput] = useState({
     projectName: '',
@@ -69,15 +68,14 @@ export const HomeCreateForm: React.FC = () => {
   const [tool, setTool] = useState<any>([])
   const [status, setStatus] = useState('In Progress')
   const [publicProject, setPublicProject] = useState(true)
-
   const [category, setCategory] = useState<string>('Android')
 
-  function handleFail() {
+  const handleFail = () => {
     setFail(false)
   }
 
   //管理普通文本输入，名称，简介，分类
-  function handleTextField(event: { target: { name: any; value: any } }) {
+  const handleTextField = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target
     setTextInput(prevText => ({
       ...prevText,
@@ -100,7 +98,7 @@ export const HomeCreateForm: React.FC = () => {
       setTool((prevTool: any) => [...prevTool, toolInput])
     }
     //Empty text field
-    toolInput = ''
+    toolInputTarget.value = ''
   }
 
   const toolList = tool.map((item: any) => <li key={item}>{item}</li>)
@@ -131,11 +129,9 @@ export const HomeCreateForm: React.FC = () => {
       setFail(true)
       setErrorMsg('Please fill the information ヽ(￣д￣;)ノ')
     } else {
-      //如果表格都填写
       setLoading(true)
       setTimeout(() => {
-        //Project Document Data
-        let projectData = {
+        const projectData = {
           Creator: {
             Avatar: profile.avatar,
             Id: user.uid,
@@ -153,77 +149,28 @@ export const HomeCreateForm: React.FC = () => {
           Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
         }
 
-        //Save the project document to user's Project collection
-        db.collection('user')
-          .doc(user.uid)
-          .collection('Project')
-          .add(projectData)
-          .then(docRef => {
-            //Update the project Uid Key to document
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Project')
-              .doc(docRef.id)
-              .update({
-                Key: docRef.id,
-              })
+        addProject(user.uid, projectData, publicProject)
+        addProjectLog(
+          user.uid,
+          'Activity',
+          profile.avatar,
+          'You',
+          'create a new project',
+          textInput.projectName
+        )
+        updateStatistics(user.uid, status, 1)
 
-            // 写入到Log集合中：创建新的项目
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Activity')
-              .add({
-                Avatar: profile.avatar,
-                Message: {
-                  Name: 'You',
-                  Action: 'create a new project',
-                  Title: textInput.projectName,
-                  Date: currentTime,
-                },
-              })
-              .then(activityRef => {
-                db.collection('user')
-                  .doc(user.uid)
-                  .collection('Activity')
-                  .doc(activityRef.id)
-                  .update({
-                    Key: activityRef.id,
-                  })
-              })
-
-            //写入到统计集合中
-
-            db.collection('user')
-              .doc(user.uid)
-              .collection('Statistics')
-              .doc(currentMonth)
-              .update({
-                [`${status}`]: firebase.firestore.FieldValue.increment(1),
-              })
-
-            //Write the project to public project collection: Explore Component
-            if (publicProject) {
-              db.collection('project').doc(docRef.id).set(projectData)
-              db.collection('project').doc(docRef.id).update({ Key: docRef.id })
-            }
-          })
-          .catch(error => {
-            console.log(`上传失败${error}`)
-          })
         setLoading(false)
         setFeedback(true)
       }, 2000)
-
       console.log('项目成功保存到云端~ ୧(๑•̀⌄•́๑)૭✧')
     }
   }
 
   return (
     <div>
-      {/* Loading Animation While Writing Data to Firestore */}
       {loading && <Progress />}
 
-      {/* Display Success Feedback Modal Once Created Project */}
       {feedback && (
         <div>
           <Feedback
@@ -275,7 +222,6 @@ export const HomeCreateForm: React.FC = () => {
 
             {/* 项目创建时间输入 */}
             <TextField
-              id="project-date-input"
               name="projectDate"
               onChange={handleTextField}
               label="Create Date"
@@ -314,7 +260,6 @@ export const HomeCreateForm: React.FC = () => {
 
             {/* 项目介绍输入 */}
             <TextField
-              id="project-desc-input"
               name="projectDesc"
               onChange={handleTextField}
               label="Description"

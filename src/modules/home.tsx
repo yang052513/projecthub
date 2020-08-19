@@ -1,5 +1,35 @@
 import firebase from 'firebase'
 
+export function addProject(userRef: string, docData: any, isPublic: boolean) {
+  firebase
+    .firestore()
+    .collection('user')
+    .doc(userRef)
+    .collection('Project')
+    .add(docData)
+    .then(docRef => {
+      //Update the project Uid Key to document
+      firebase
+        .firestore()
+        .collection('user')
+        .doc(userRef)
+        .collection('Project')
+        .doc(docRef.id)
+        .update({
+          Key: docRef.id,
+        })
+
+      if (isPublic) {
+        firebase.firestore().collection('project').doc(docRef.id).set(docData)
+        firebase
+          .firestore()
+          .collection('project')
+          .doc(docRef.id)
+          .update({ Key: docRef.id })
+      }
+    })
+}
+
 export function deleteProject(userRef: string, projectRef: string) {
   firebase
     .firestore()
