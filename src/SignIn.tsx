@@ -66,6 +66,7 @@ class SignIn extends Component {
         </div>
       )
     } else {
+      // 认证成功
       const db = firebase.firestore()
       firebase.auth().onAuthStateChanged(user => {
         if (user) {

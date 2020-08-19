@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import Button from '@material-ui/core/Button'
@@ -6,6 +6,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import Logout from '../shared/Logout'
+import { ProfileContext } from '../../context/ProfileContext'
 
 const useStyles = makeStyles({
   root: {
@@ -14,16 +15,13 @@ const useStyles = makeStyles({
   },
 })
 
-interface Props {
-  avatar: string
-}
-
-export const ProfileMenu: React.FC<Props> = ({ avatar }) => {
+export const ProfileMenu: React.FC = () => {
   const classes = useStyles()
   const user: firebase.User | null | any = firebase.auth().currentUser
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [logout, setLogout] = useState<boolean>(false)
 
+  const profile: any = useContext(ProfileContext)
   //Open the menu modal when click the avatar
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -47,7 +45,11 @@ export const ProfileMenu: React.FC<Props> = ({ avatar }) => {
           aria-haspopup="true"
           onClick={handleClick}
         >
-          <img className="user-profile-icon" src={avatar} alt="profile" />
+          <img
+            className="user-profile-icon"
+            src={profile.avatar}
+            alt="profile"
+          />
         </Button>
 
         <Menu
@@ -74,7 +76,7 @@ export const ProfileMenu: React.FC<Props> = ({ avatar }) => {
         </Menu>
       </div>
 
-      <div>{logout === true ? <Logout /> : null}</div>
+      <div>{logout && <Logout />}</div>
     </div>
   )
 }

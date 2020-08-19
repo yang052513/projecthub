@@ -74,31 +74,6 @@ export function initFriendCollection(
     })
 }
 
-export function initUserProfile(userRef: string) {
-  const profileRef = firebase
-    .firestore()
-    .collection('user')
-    .doc(userRef)
-    .collection('Setting')
-    .doc('Profile')
-  profileRef.get().then((doc: any) => {
-    if (!doc.exists) {
-      profileRef.set({
-        avatar: '/images/user.jpg',
-        profile: {
-          profileName: '',
-          profileBio: '',
-          profileEmail: '',
-          profileGithub: '',
-          profileLocation: '',
-          profileWeb: '',
-          profilelinkedin: '',
-        },
-      })
-    }
-  })
-}
-
 export function initUserLanguage(userRef: string) {
   const langRef = firebase
     .firestore()

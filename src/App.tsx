@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 
-// Firebase
+// Firebase 数据库
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -11,21 +11,31 @@ import 'firebase/firestore'
 import { ProfileContext } from './context/ProfileContext'
 import { ThemeContext } from './context/ThemeContext'
 
+// Modules, helper, hooks
 import {
   initStatusActivity,
   initFriendCollection,
-  initUserProfile,
   initUserLanguage,
 } from './modules/initApp'
-import { Navigator } from './router/Navigator'
-import { SideNavBar } from './components/navigation/SideNavBar'
-import { NavigationHeader } from './components/navigation/NavigationHeader'
 import { useFetchProfile } from './hooks/useFetchProfile'
 import { useTheme } from './hooks/useTheme'
 
+// Router 路由
+import { Navigator } from './router/Navigator'
+
+// Shared Components 共享导航菜单 标题栏组件
+import { SideNavBar } from './components/navigation/SideNavBar'
+import { NavigationHeader } from './components/navigation/NavigationHeader'
+import { ColorBackground } from './components/shared/ColorBackground'
+import { ImageBackground } from './components/shared/ImageBackground'
+
+/**
+ * 组件加载入口 读取数据库并初始化App
+ */
 export default function App() {
   const user: firebase.User | null = firebase.auth().currentUser
   const userProfile = useFetchProfile(user!.uid)
+
   const {
     theme,
     handleTheme,
@@ -35,10 +45,10 @@ export default function App() {
     handleSwitch,
   } = useTheme(user!.uid)
 
+  // 初始化数据库
   useEffect(() => {
     initStatusActivity(user!.uid)
     initFriendCollection(user!.uid, user?.displayName, user?.email)
-    initUserProfile(user!.uid)
     initUserLanguage(user!.uid)
   }, [])
 
@@ -54,44 +64,29 @@ export default function App() {
   return (
     <ThemeContext.Provider value={customTheme}>
       <ProfileContext.Provider value={userProfile}>
-        <div>
-          {/* Global CSS styles */}
+        <div className="app-container">
+          {/* 渲染应用背景 图片/纯色 */}
           {theme.backgroundColor ? (
-            <div
-              style={{
-                backgroundColor: theme.background,
-                transition: 'all 2s',
-              }}
-              className="background"
-            ></div>
+            <ColorBackground
+              backgroundColor={theme.background}
+              opacity={theme.opacity.background}
+            />
           ) : (
-            <div
-              style={{ backgroundImage: `url(${theme.background})` }}
-              className="background-img"
-            ></div>
+            <ImageBackground
+              backgroundUrl={theme.background}
+              opacity={theme.opacity.background}
+            />
           )}
 
-          {/* Overlay for backgroud image to control opacity */}
-          <div
-            className="overlay"
-            style={{ opacity: theme.opacity.background / 100 }}
-          ></div>
-
-          {/* Content container */}
+          {/* 应用内容容器 */}
           <div className="content-container">
             <img className="logo" src="/images/logo.png" alt="" />
 
             <SideNavBar opacity={theme.opacity} theme={theme.theme} />
-            <NavigationHeader
-              opacity={theme.opacity}
-              avatar={userProfile.avatar}
-            />
+            <NavigationHeader opacity={theme.opacity} />
 
-            {/* Router */}
-            <Navigator
-              avatar={userProfile.avatar}
-              profile={userProfile.profile}
-            />
+            {/* 路由组件 */}
+            <Navigator />
           </div>
         </div>
       </ProfileContext.Provider>

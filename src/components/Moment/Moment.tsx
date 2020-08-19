@@ -7,7 +7,7 @@ import { Loading } from '../shared/Loading'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { CSSTransition } from 'react-transition-group'
 
-export const Moment = (props: any) => {
+export const Moment = () => {
   const db = firebase.firestore()
   const user: any = firebase.auth().currentUser
 
@@ -16,19 +16,6 @@ export const Moment = (props: any) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [editor, setEditor] = useState<boolean>(false)
   const [moment, setMoment] = useState<Array<object | null | undefined>>([])
-
-  // const fetchMoment = () => {
-  //   db.collection('moment').onSnapshot(snap => {
-  //     snap.docChanges().forEach(change => {
-  //       if (change.type == 'added') {
-  //         setMoment(prevMoment => [...prevMoment, change.doc.data()])
-  //       }
-  //     })
-  //     setLoading(false)
-  //   })
-  // }
-
-  // useEffect(fetchMoment, [])
 
   const displayEditor = () => {
     setEditor(true)
@@ -94,8 +81,8 @@ export const Moment = (props: any) => {
         unmountOnExit
       >
         <StoryEditor
-          profile={props.profile}
-          avatar={props.avatar}
+          profile={currUserProfile.profile}
+          avatar={currUserProfile.avatar}
           toggle={offEditor}
         />
       </CSSTransition>

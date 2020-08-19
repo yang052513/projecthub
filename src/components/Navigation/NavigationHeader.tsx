@@ -5,17 +5,16 @@ import { ProfileMenu } from './ProfileMenu'
 
 interface Props {
   opacity: any
-  avatar: string
 }
 
-export const NavigationHeader: React.FC<Props> = ({ opacity, avatar }) => {
+export const NavigationHeader: React.FC<Props> = ({ opacity }) => {
   return (
     // Header bar with notification and current page title
     <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
       <Header />
       <div className="user-navbar-icon">
         <NotificationMenu />
-        <ProfileMenu avatar={avatar} />
+        <ProfileMenu />
       </div>
     </div>
   )

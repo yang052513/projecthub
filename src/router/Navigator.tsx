@@ -21,12 +21,7 @@ import { HomeEditForm } from '../components/home/HomeEditForm'
 import { HomeKanban } from '../components/home/HomeKanban'
 import { UserProfile } from '../components/shared/UserProfile'
 
-interface Props {
-  avatar: string
-  profile: any
-}
-
-export const Navigator: React.FC<Props> = ({ avatar, profile }) => {
+export const Navigator: React.FC = () => {
   return (
     <Switch>
       <Route exact path="/">
@@ -48,7 +43,7 @@ export const Navigator: React.FC<Props> = ({ avatar, profile }) => {
         <Friends />
       </Route>
       <Route exact path="/moment">
-        <Moment profile={profile} avatar={avatar} />
+        <Moment />
       </Route>
       <Route path="/setting/">
         <Setting />
