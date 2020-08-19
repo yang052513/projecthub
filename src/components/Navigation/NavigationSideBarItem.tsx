@@ -8,7 +8,7 @@ interface Props {
   prompt: string
 }
 
-export const SideNavItem: React.FC<Props> = ({
+export const NavigationSideBarItem: React.FC<Props> = ({
   theme,
   route,
   icon,

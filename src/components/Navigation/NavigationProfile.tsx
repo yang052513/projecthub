@@ -1,12 +1,17 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from 'firebase'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+
+import Logout from '../shared/Logout'
+import { ProfileContext } from '../../context/ProfileContext'
+
+// Material UI
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
-import Logout from '../shared/Logout'
-import { ProfileContext } from '../../context/ProfileContext'
 
 const useStyles = makeStyles({
   root: {
@@ -15,19 +20,19 @@ const useStyles = makeStyles({
   },
 })
 
-export const ProfileMenu: React.FC = () => {
-  const classes = useStyles()
-  const user: firebase.User | null | any = firebase.auth().currentUser
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+export const NavigationProfile: React.FC = () => {
+  const user: any = firebase.auth().currentUser
+  const profile: any = useContext(ProfileContext)
+
   const [logout, setLogout] = useState<boolean>(false)
 
-  const profile: any = useContext(ProfileContext)
-  //Open the menu modal when click the avatar
+  const classes = useStyles()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
-  //Close the menu modal; fired when user click anything
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -40,11 +45,7 @@ export const ProfileMenu: React.FC = () => {
   return (
     <div>
       <div>
-        <Button
-          aria-controls="profile-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
+        <Button aria-haspopup="true" onClick={handleClick}>
           <img
             className="user-profile-icon"
             src={profile.avatar}

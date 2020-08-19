@@ -1,7 +1,9 @@
 import React from 'react'
-import { Header } from './Header'
-import { NotificationMenu } from '../notification/NotificationMenu'
-import { ProfileMenu } from './ProfileMenu'
+import {
+  NavigationHeaderTitle,
+  NavigationNotification,
+  NavigationProfile,
+} from './index'
 
 interface Props {
   opacity: any
@@ -9,12 +11,11 @@ interface Props {
 
 export const NavigationHeader: React.FC<Props> = ({ opacity }) => {
   return (
-    // Header bar with notification and current page title
     <div className="user-navbar" style={{ opacity: opacity.topbar / 100 }}>
-      <Header />
+      <NavigationHeaderTitle />
       <div className="user-navbar-icon">
-        <NotificationMenu />
-        <ProfileMenu />
+        <NavigationNotification />
+        <NavigationProfile />
       </div>
     </div>
   )

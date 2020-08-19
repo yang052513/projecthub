@@ -5,7 +5,7 @@ interface Props {
   notificationData: any
 }
 
-export const NotificationModalItem: React.FC<Props> = ({
+export const NavigationNotificationModalItem: React.FC<Props> = ({
   notificationData,
 }) => {
   return (

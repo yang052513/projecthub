@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-export const Header: React.FC = () => {
+export const NavigationHeaderTitle: React.FC = () => {
   const currRoute: any = useLocation().pathname
 
   const [headerTitle, setHeaderTitle] = useState<string>('')

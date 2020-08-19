@@ -72,7 +72,7 @@ export const MomentCard: React.FC<Props> = ({ profile, moment }) => {
         moment.UserId,
         `${profile.profile.profileName} liked your story`,
         'Story Like',
-        `/moemnt/${moment.UserId}`,
+        `/moment/${moment.UserId}`,
         profile.avatar
       )
       addProjectLog(

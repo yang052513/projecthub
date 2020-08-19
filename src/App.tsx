@@ -24,7 +24,7 @@ import { useTheme } from './hooks/useTheme'
 import { Navigator } from './router/Navigator'
 
 // Shared Components 共享导航菜单 标题栏组件
-import { SideNavBar } from './components/navigation/SideNavBar'
+import { NavigationSideNavBar } from './components/navigation/NavigationSideBar'
 import { NavigationHeader } from './components/navigation/NavigationHeader'
 import { ColorBackground } from './components/shared/ColorBackground'
 import { ImageBackground } from './components/shared/ImageBackground'
@@ -82,7 +82,7 @@ export default function App() {
           <div className="content-container">
             <img className="logo" src="/images/logo.png" alt="" />
 
-            <SideNavBar opacity={theme.opacity} theme={theme.theme} />
+            <NavigationSideNavBar opacity={theme.opacity} theme={theme.theme} />
             <NavigationHeader opacity={theme.opacity} />
 
             {/* 路由组件 */}

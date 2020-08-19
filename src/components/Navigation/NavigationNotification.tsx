@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { NavigationNotificationModal } from './NavigationNotificationModal'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
+// Material UI
 import Badge from '@material-ui/core/Badge'
 import { Theme, withStyles, createStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
-import firebase from 'firebase'
-
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
-import { NotificationModal } from './NotificationModal'
 
-const StyledBadge = withStyles((theme: Theme) =>
+const NotificationBadge = withStyles((theme: Theme) =>
   createStyles({
     badge: {
       right: 0,
@@ -19,41 +23,41 @@ const StyledBadge = withStyles((theme: Theme) =>
   })
 )(Badge)
 
-export const NotificationMenu = () => {
+export const NavigationNotification = () => {
   const user: any = firebase.auth().currentUser
+
   const [show, setShow] = useState<boolean>(false)
   const [notification, setNotification] = useState<any>([])
 
-  const fetchNotification = () => {
-    firebase
-      .firestore()
-      .collection('user')
-      .doc(user.uid)
-      .collection('Notification')
-      .get()
-      .then(notificationDocs => {
-        notificationDocs.forEach(doc => {
-          setNotification((prevNotification: any) => [
-            ...prevNotification,
-            doc.data(),
-          ])
-        })
+  useEffect(() => {
+    const fetchNotification = async () => {
+      const notificationDocs = await firebase
+        .firestore()
+        .collection('user')
+        .doc(user.uid)
+        .collection('Notification')
+        .get()
+      notificationDocs.forEach(doc => {
+        setNotification((prevNotification: any) => [
+          ...prevNotification,
+          doc.data(),
+        ])
       })
-  }
-
-  useEffect(fetchNotification, [])
+    }
+    fetchNotification()
+  }, [])
 
   return (
     <div className="notification-menu">
-      <IconButton onClick={() => setShow(true)} aria-label="cart">
-        <StyledBadge badgeContent={notification.length} color="secondary">
+      <IconButton onClick={() => setShow(true)}>
+        <NotificationBadge badgeContent={notification.length} color="primary">
           <NotificationsNoneIcon />
-        </StyledBadge>
+        </NotificationBadge>
       </IconButton>
 
       <div className="notification-modal-wrap">
         {show && (
-          <NotificationModal
+          <NavigationNotificationModal
             offModal={() => setShow(false)}
             notification={notification}
           />

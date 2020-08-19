@@ -1,18 +1,17 @@
 import React from 'react'
-
-import { NotificationModalItem } from './NotificationModalItem'
+import { NavigationNotificationModalItem } from './NavigationNotificationModalItem'
 
 interface Props {
   offModal: () => void
   notification: any
 }
 
-export const NotificationModal: React.FC<Props> = ({
+export const NavigationNotificationModal: React.FC<Props> = ({
   offModal,
   notification,
 }) => {
   const notificationList = notification.map((notification: any) => (
-    <NotificationModalItem
+    <NavigationNotificationModalItem
       key={notification.Key}
       notificationData={notification}
     />
