@@ -11,11 +11,11 @@ import {
 } from 'recharts'
 
 interface Props {
-  tagSort: any
+  tools: any
 }
 
-export const StatusTag: React.FC<Props> = ({ tagSort }) => {
-  const tagList = tagSort.slice(0, 10)
+export const StatusTools: React.FC<Props> = ({ tools }) => {
+  const toolList = tools.slice(0, 10)
 
   return (
     <div className="status-card-item-wrap">
@@ -23,7 +23,7 @@ export const StatusTag: React.FC<Props> = ({ tagSort }) => {
 
       <div className="status-card-container status-tag-container">
         <ResponsiveContainer width={'90%'} height={300}>
-          <BarChart data={tagList}>
+          <BarChart data={toolList}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />

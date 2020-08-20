@@ -10,7 +10,7 @@ interface Props {
   color: IColor
 }
 
-export const ProjectStatusItem: React.FC<Props> = ({
+export const StatusHeaderItem: React.FC<Props> = ({
   caption,
   count,
   color,

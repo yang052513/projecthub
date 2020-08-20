@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+
+import {
+  StatusHeader,
+  StatusTools,
+  StatusCategory,
+  StatusLog,
+  StatusAnalysis,
+  StatusSocial,
+} from './index'
+import { Loading } from '../shared/Loading'
+
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import firebase from 'firebase'
-
-import { ProjectStatus } from './ProjectStatus'
-import { StatusTag } from './StatusTag'
-import { StatusType } from './StatusType'
-import { StatusContributor } from './StatusContributor'
-import { StatusLog } from './StatusLog'
-import { StatusActivity } from './StatusActivity'
-import { StatusLike } from './StatusLike'
-import { triggerAsyncId } from 'async_hooks'
-import { Loading } from '../shared/Loading'
+import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,86 +29,72 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const Status: React.FC = () => {
-  const db = firebase.firestore()
-  const user = firebase.auth().currentUser
+  const user: any = firebase.auth().currentUser
   const classes = useStyles()
 
   const [project, setProject] = useState<Array<object | null>>([])
+  const [statistics, setStatistics] = useState<Array<object | null>>([])
   const [activity, setActivity] = useState<Array<object | null>>([])
   const [social, setSocial] = useState<Array<object | null>>([])
+  const [tools, setTools] = useState<Array<object | null>>([])
+  const [category, setCategory] = useState<Array<object | null>>([])
 
   const [type, setType] = useState<Array<string | null>>([])
-  const [typeSort, setTypeSort] = useState<Array<any>>([])
-
-  const [category, setCategory] = useState<any>()
-  // const [typeCnt, setTypeCnt] = useState<any>({
-  //   typeCountt: '',
-  //   typeContent: '',
-  // })
-
   const [tag, setTag] = useState<Array<object | null>>([])
-  const [tagSort, setTagSort] = useState<Array<any>>([])
 
-  const [loading, setLoading] = useState({
-    project: true,
-    activity: true,
-    type: true,
-    tag: true,
-    social: true,
-  })
+  const [projectLoading, setProjectLoading] = useState(false)
+  const [logLoading, setLogLoading] = useState(false)
+  const [statLoading, setStatLoading] = useState(false)
+  const [socialLoading, setSocialLoading] = useState(false)
+
+  const userDocRef = firebase.firestore().collection('user').doc(user.uid)
 
   useEffect(() => {
-    if (user) {
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Project')
-        .get()
-        .then(collection => {
-          collection.forEach(doc => {
-            setProject(prevProject => [...prevProject, doc.data()])
-            setType(prevType => [...prevType, doc.data().Category])
-
-            doc.data().Tools.forEach((tag: any) => {
-              setTag(prevTag => [...prevTag, tag])
-            })
-          })
-
-          setLoading({
-            ...loading,
-            project: false,
-            type: false,
-            tag: false,
-          })
+    const fetchProject = async () => {
+      const collection = await userDocRef.collection('Project').get()
+      collection.forEach(doc => {
+        setProject(prevProject => [...prevProject, doc.data()])
+        setType(prevType => [...prevType, doc.data().Category])
+        doc.data().Tools.forEach((tag: any) => {
+          setTag(prevTag => [...prevTag, tag])
         })
-
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Activity')
-        .get()
-        .then(collection => {
-          collection.forEach(doc => {
-            setActivity(prevActivity => [...prevActivity, doc.data()])
-          })
-          setLoading({
-            ...loading,
-            activity: false,
-          })
-        })
-
-      db.collection('user')
-        .doc(user.uid)
-        .collection('Social')
-        .get()
-        .then(collection => {
-          collection.forEach(doc => {
-            setSocial(prevSocial => [...prevSocial, doc.data()])
-          })
-          setLoading({
-            ...loading,
-            social: false,
-          })
-        })
+      })
+      setProjectLoading(true)
     }
+    fetchProject()
+  }, [])
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      const docs = await userDocRef.collection('Statistics').get()
+      docs.forEach(doc => {
+        setStatistics((prevStat: any) => [...prevStat, doc.data()])
+      })
+      setStatLoading(true)
+    }
+    fetchStatistics()
+  }, [])
+
+  useEffect(() => {
+    const fetchLog = async () => {
+      const collection = await userDocRef.collection('Activity').get()
+      collection.forEach(doc => {
+        setActivity(prevActivity => [...prevActivity, doc.data()])
+      })
+      setLogLoading(true)
+    }
+    fetchLog()
+  }, [])
+
+  useEffect(() => {
+    const fetchSocial = async () => {
+      const collection = await userDocRef.collection('Social').get()
+      collection.forEach(doc => {
+        setSocial(prevSocial => [...prevSocial, doc.data()])
+      })
+      setSocialLoading(true)
+    }
+    fetchSocial()
   }, [])
 
   useEffect(() => {
@@ -116,7 +107,7 @@ export const Status: React.FC = () => {
     for (let x in count) {
       sortable.push({ name: x, cnt: count[x] })
     }
-    setTagSort(
+    setTools(
       sortable.sort((a: any, b: any) => {
         return b[1] - a[1]
       })
@@ -140,31 +131,39 @@ export const Status: React.FC = () => {
 
   return (
     <div className="component-layout status-container">
-      {!(
-        loading.project &&
-        loading.activity &&
-        loading.tag &&
-        loading.type &&
-        loading.social
-      ) ? (
+      <CSSTransition
+        in={!projectLoading || !statLoading || !socialLoading || !logLoading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Loading />
+      </CSSTransition>
+
+      <CSSTransition
+        in={projectLoading && statLoading && socialLoading && logLoading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <ProjectStatus project={project} />
+              <StatusHeader project={project} />
             </Grid>
             <Grid item xs={8}>
-              <StatusActivity />
+              <StatusAnalysis statistics={statistics} />
             </Grid>
 
             <Grid item xs={4}>
-              <StatusLike social={social} />
+              <StatusSocial social={social} />
             </Grid>
 
             <Grid item xs={4}>
-              <StatusTag tagSort={tagSort} />
+              <StatusTools tools={tools} />
             </Grid>
             <Grid item xs={4}>
-              <StatusType category={category} />
+              <StatusCategory category={category} />
             </Grid>
 
             <Grid item xs={4}>
@@ -172,9 +171,7 @@ export const Status: React.FC = () => {
             </Grid>
           </Grid>
         </div>
-      ) : (
-        <Loading />
-      )}
+      </CSSTransition>
     </div>
   )
 }

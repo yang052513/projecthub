@@ -12,7 +12,7 @@ interface Props {
   category: any
 }
 
-export const StatusType: React.FC<Props> = ({ category }) => {
+export const StatusCategory: React.FC<Props> = ({ category }) => {
   const data = [
     {
       name: 'Android',

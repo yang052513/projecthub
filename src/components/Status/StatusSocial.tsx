@@ -4,7 +4,7 @@ interface Props {
   social: any
 }
 
-export const StatusLike: React.FC<Props> = ({ social }) => {
+export const StatusSocial: React.FC<Props> = ({ social }) => {
   const socialList = social.map((item: any) => (
     <div key={item.Key} className="status-like-item">
       <img src={item.Avatar} alt="" />
