@@ -1,14 +1,22 @@
 import React, { useState, useContext } from 'react'
-import firebase from 'firebase'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import 'firebase/storage'
+
 import { Progress } from '../../shared/Progress'
 import { Feedback } from '../../shared/Feedback'
+import { ThemeContext } from '../../../context/ThemeContext'
+
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
+
 import { SwatchesPicker } from 'react-color'
-import { ThemeContext } from '../../../context/ThemeContext'
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -23,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const Background: React.FC = () => {
+export const ThemeBackground: React.FC = () => {
   const theme: any = useContext(ThemeContext)
   console.log(theme)
   const classes = useStyles()

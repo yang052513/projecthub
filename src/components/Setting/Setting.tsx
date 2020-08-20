@@ -2,11 +2,13 @@ import React from 'react'
 import { Link, Switch, Route, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { Profile } from './Profile'
-import { Apparence } from './Apparence'
-import { Language } from './Language'
-import { About } from './About'
-import { ChangeLog } from './Changelog'
+import {
+  SettingAbout,
+  SettingProfile,
+  SettingTheme,
+  SettingChangeLog,
+  SettingLanguage,
+} from './index'
 
 export const Setting: React.FC = () => {
   let location = useLocation()
@@ -66,19 +68,19 @@ export const Setting: React.FC = () => {
           <section className="route-section">
             <Switch location={location}>
               <Route exact path="/setting/profile">
-                <Profile />
+                <SettingProfile />
               </Route>
               <Route path="/setting/theme">
-                <Apparence />
+                <SettingTheme />
               </Route>
               <Route path="/setting/language">
-                <Language />
+                <SettingLanguage />
               </Route>
               <Route path="/setting/about">
-                <About />
+                <SettingAbout />
               </Route>
               <Route path="/setting/changelog">
-                <ChangeLog />
+                <SettingChangeLog />
               </Route>
             </Switch>
           </section>

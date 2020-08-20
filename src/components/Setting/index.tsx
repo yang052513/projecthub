@@ -1,0 +1,5 @@
+export { SettingAbout } from './SettingAbout'
+export { SettingTheme } from './SettingTheme'
+export { SettingChangeLog } from './SettingChangelog'
+export { SettingLanguage } from './SettingLanguage'
+export { SettingProfile } from './SettingProfile'

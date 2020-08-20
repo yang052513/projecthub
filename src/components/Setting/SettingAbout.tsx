@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const About: React.FC = () => {
+export const SettingAbout: React.FC = () => {
   return (
     <div>
       <div className="setting-content-intro">
@@ -43,18 +43,13 @@ export const About: React.FC = () => {
 
           <p>
             I know there are tons of similar app out there, and I dont even
-            think mine is comparable to them. However, I do believe what I
+            think mine is comparable to them lol. However, I do believe what I
             learned during the process is valueable, and the experience and
-            mistakes that I could make a better one next time.
+            mistakes that I learned during the development could help me to make
+            a better one next time.
           </p>
-
-          <p>Thank you.</p>
-
-          <p>Yang Li</p>
         </div>
       </div>
     </div>
   )
 }
-
-export default About

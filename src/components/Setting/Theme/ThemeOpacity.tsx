@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
-import { OpacitySlider } from './OpacitySlider'
+import { ThemeOpacitySlider } from './ThemeOpacitySlider'
 import { ThemeContext } from '../../../context/ThemeContext'
 
-export const Opacity: React.FC = () => {
+export const ThemeOpacity: React.FC = () => {
   const theme: any = useContext(ThemeContext)
 
   return (
     <div className="setting-opacity-container">
       <h3 className="setting-content-subtit">Opacity</h3>
-      <OpacitySlider
+      <ThemeOpacitySlider
         opacity={theme.theme.opacity}
         switchOpacity={theme.handleOpacity}
       />

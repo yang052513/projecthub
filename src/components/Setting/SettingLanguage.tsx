@@ -1,7 +1,7 @@
 import React from 'react'
 import { SelectLang } from './Language/SelectLang'
 
-export const Language: React.FC = () => {
+export const SettingLanguage: React.FC = () => {
   return (
     <div>
       <div className="setting-content-intro">
@@ -12,5 +12,3 @@ export const Language: React.FC = () => {
     </div>
   )
 }
-
-export default Language

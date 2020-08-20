@@ -2,7 +2,7 @@ import React from 'react'
 import { ChangeLogBlock } from './ChangeLog/ChangeLogBlock'
 import changelogData from '../../data/changeLog.json'
 
-export const ChangeLog: React.FC = () => {
+export const SettingChangeLog: React.FC = () => {
   const changelogBlock = changelogData.versions.map(item => (
     <ChangeLogBlock
       key={item.version}
@@ -22,5 +22,3 @@ export const ChangeLog: React.FC = () => {
     </div>
   )
 }
-
-export default ChangeLog

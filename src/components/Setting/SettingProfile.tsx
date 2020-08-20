@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import firebase from 'firebase'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import React, { useState, useEffect, useContext } from 'react'
+
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import 'firebase/storage'
+
 import { Progress } from '../shared/Progress'
 import { Feedback } from '../shared/Feedback'
 import { Loading } from '../shared/Loading'
-import { CSSTransition } from 'react-transition-group'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
+
+import { CSSTransition } from 'react-transition-group'
+
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import { ProfileContext } from '../../context/ProfileContext'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,32 +35,18 @@ const inputMargin = {
   margin: '12px 8px',
 }
 
-const profileInit = {
-  profileName: '',
-  profileLocation: '',
-  profileEmail: '',
-  profileBio: '',
-  profileWeb: '',
-  profilelinkedin: '',
-  profileGithub: '',
-}
-
-//Profile的信息从App用props传 直接在数据库更改
-export const Profile: React.FC = () => {
+export const SettingProfile: React.FC = () => {
   const classes = useStyles()
   const user: any = firebase.auth().currentUser
 
+  const [profile, setProfile] = useState<any>({})
   const avatar = useFetchProfile(user.uid)
   const db = firebase.firestore()
-  const storageRef = firebase.storage().ref()
 
   const [launch, setLaunch] = useState(true)
   const [loading, setLoading] = useState(false)
   const [feedback, setFeedback] = useState(false)
   const [error, setError] = useState(false)
-
-  const [profile, setProfile] = useState<any>({})
-  // const [avatar, setAvatar] = useState(avatar)
 
   function handleTextField(event: { target: { name: any; value: any } }) {
     const { name, value } = event.target
@@ -62,22 +56,20 @@ export const Profile: React.FC = () => {
     }))
   }
 
-  //Handle Image Upload Task
   const handleProfileUpload = () => {
     setLoading(true)
     let imageInput: any = document.getElementById('profile-input')
     let file = imageInput.files[0]
 
-    //If detect any file upload in the stack
     if (file) {
       let metadata = {
         contentType: file.type,
       }
-      let upload = storageRef.child(file.name).put(file, metadata)
+      let upload = firebase.storage().ref().child(file.name).put(file, metadata)
       upload
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
-          console.log(`头像成功上传到数据库~'${url}`)
+          console.log(`头像成功上传到数据库'${url}`)
 
           //更改个人页面
           db.collection('user')
@@ -88,7 +80,7 @@ export const Profile: React.FC = () => {
               avatar: url,
             })
 
-          //更新个人项目
+          //更新个人项目 如果从别人的数据库更改 遍历每个用户uid的project集合
           db.collection('user')
             .doc(user.uid)
             .collection('Project')
@@ -204,23 +196,21 @@ export const Profile: React.FC = () => {
     } else {
       setLoading(true)
       setTimeout(() => {
-        if (user) {
-          db.collection('user')
-            .doc(user.uid)
-            .collection('Setting')
-            .doc('Profile')
-            .update({
-              profile,
-            })
-            .then(() => console.log('用户信息保存成功'))
-            .catch(error => {
-              console.log('保存出错' + error)
-            })
-          db.collection('friends').doc(user.uid).update({
-            Key: user.uid,
+        db.collection('user')
+          .doc(user.uid)
+          .collection('Setting')
+          .doc('Profile')
+          .update({
             profile,
           })
-        }
+          .then(() => console.log('用户信息保存成功'))
+          .catch(error => {
+            console.log('保存出错' + error)
+          })
+        db.collection('friends').doc(user.uid).update({
+          Key: user.uid,
+          profile,
+        })
         setLoading(false)
         setFeedback(true)
       }, 1000)
@@ -235,7 +225,6 @@ export const Profile: React.FC = () => {
     setError(false)
   }
 
-  //初始化读取数据库信息
   useEffect(() => {
     db.collection('user')
       .doc(user.uid)
@@ -243,14 +232,7 @@ export const Profile: React.FC = () => {
       .doc('Profile')
       .get()
       .then((doc: any) => {
-        if (doc.data().profile) {
-          setProfile(doc.data().profile)
-        } else {
-          setProfile(profileInit)
-        }
-        // if (doc.data().avatar) {
-        //   setAvatar(doc.data().avatar)
-        // }
+        setProfile(doc.data().profile)
       })
 
     setLaunch(false)
@@ -258,9 +240,9 @@ export const Profile: React.FC = () => {
 
   return (
     <div>
-      {loading === true ? <Progress /> : null}
-      {/* 项目创建成功反馈 */}
-      {feedback === true ? (
+      {loading && <Progress />}
+      {launch && <Loading />}
+      {feedback && (
         <div>
           <Feedback
             msg="Success"
@@ -269,9 +251,9 @@ export const Profile: React.FC = () => {
             toggle={handleReload}
           />
         </div>
-      ) : null}
+      )}
 
-      {error === true ? (
+      {error && (
         <div>
           <Feedback
             msg="Error"
@@ -280,9 +262,7 @@ export const Profile: React.FC = () => {
             toggle={handleError}
           />
         </div>
-      ) : null}
-
-      {launch && <Loading />}
+      )}
 
       <CSSTransition
         in={!launch}
@@ -392,7 +372,6 @@ export const Profile: React.FC = () => {
               inputProps={{ placeholder: profile.profilelinkedin }}
             />
             <TextField
-              id="profile-github-input"
               name="profileGithub"
               onChange={handleTextField}
               label="Github URL"

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { CirclePicker } from 'react-color'
 import { ThemeContext } from '../../../context/ThemeContext'
 
-export const Theme: React.FC = () => {
+export const ThemeColor: React.FC = () => {
   const theme: any = useContext(ThemeContext)
   return (
     <div className="setting-content-theme">

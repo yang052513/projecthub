@@ -13,7 +13,10 @@ interface Props {
   switchOpacity: any
 }
 
-export const OpacitySlider: React.FC<Props> = ({ opacity, switchOpacity }) => {
+export const ThemeOpacitySlider: React.FC<Props> = ({
+  opacity,
+  switchOpacity,
+}) => {
   const classes = useStyles()
 
   return (
