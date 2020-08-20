@@ -8,6 +8,9 @@ $logoSize: 50px;
   z-index: 1;
   margin-left: ($sideNavWidth - $logoSize)/2;
   margin-top: 15px;
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 }
 
 .navbar {
@@ -17,16 +20,22 @@ $logoSize: 50px;
   a {
     color: white;
   }
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 }
 
 .user-navbar {
+  @include flexCenter(space-between);
   margin-left: $sideNavWidth;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
-
-  @include flexCenter(space-between);
-  // padding: 20px 50px 10px 30px;
   padding: 3px 5vh 3px 3vh;
+  @media only screen and (max-width: 700px) {
+    margin-left: 0;
+    padding: 3px 20px;
+  }
+
   h2 {
     font-size: 18px;
     font-family: raleway;
@@ -36,6 +45,9 @@ $logoSize: 50px;
   .user-navbar-icon {
     @include flexAlign();
     margin-right: 100px;
+    @media only screen and (max-width: 700px) {
+      margin-right: 0px;
+    }
   }
   i {
     font-size: 20px;

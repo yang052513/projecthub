@@ -21,6 +21,12 @@
   position: relative;
 }
 
+@media only screen and (max-width: 900px) {
+  .hitokoto-container {
+    height: auto;
+  }
+}
+
 .hitokoto-container p {
   z-index: 2;
   -webkit-transition: all 0.5s;
@@ -58,6 +64,13 @@
   position: fixed;
   bottom: 50px;
   right: 75px;
+}
+
+@media only screen and (max-width: 900px) {
+  .create-btn-container {
+    bottom: 20px;
+    right: 30px;
+  }
 }
 
 .create-btn-container img {
@@ -186,8 +199,18 @@
   display: grid;
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  justify-items: center;
   row-gap: 30px;
   padding: 25px 50px;
+}
+
+@media only screen and (max-width: 500px) {
+  .project-card-container .project-card-list-container {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 10px 0;
+  }
 }
 
 .project-card-item {
@@ -197,6 +220,20 @@
   background-color: white;
   position: relative;
   margin-bottom: 25px;
+}
+
+@media only screen and (max-width: 900px) {
+  .project-card-item {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .project-card-item {
+    width: 75%;
+    margin-bottom: 0;
+  }
 }
 
 .project-card-item .project-line {
@@ -421,11 +458,19 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  align-items: center;
   padding: 0 80px;
   margin-top: 50px;
+}
+
+@media only screen and (max-width: 1350px) {
+  .project-header-container {
+    display: -ms-grid;
+    display: grid;
+    padding: 0;
+    margin: 20px auto 0 auto;
+    width: 90%;
+  }
 }
 
 .project-header-container h3 {
@@ -439,6 +484,21 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media only screen and (max-width: 850px) {
+  .project-header-container .project-header-filter {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (minmax(300px, 1fr))[auto-fill];
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .project-header-container .project-header-filter .MuiFormControl-root {
+    margin-right: 50px;
+  }
 }
 
 .project-header-container .project-header-filter .project-header-search {
@@ -492,12 +552,27 @@
           transform: scale(1.2);
 }
 
+@media only screen and (max-width: 1350px) {
+  .project-header-container .project-header-filter button {
+    display: none;
+  }
+}
+
 .project-form-container {
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   margin-top: 50px;
+}
+
+@media only screen and (max-width: 550px) {
+  .project-form-container {
+    margin-top: 0;
+  }
+  .project-form-container .MuiFormControl-fullWidth {
+    width: 90%;
+  }
 }
 
 .project-form-container .project-form-header-container {
@@ -2509,6 +2584,12 @@
   margin-top: 15px;
 }
 
+@media only screen and (max-width: 700px) {
+  .logo {
+    display: none;
+  }
+}
+
 .navbar {
   position: fixed;
   width: 65px;
@@ -2566,11 +2647,13 @@
   color: white;
 }
 
+@media only screen and (max-width: 700px) {
+  .navbar {
+    display: none;
+  }
+}
+
 .user-navbar {
-  margin-left: 65px;
-  background-color: white;
-  -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
-          box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2580,7 +2663,18 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-left: 65px;
+  background-color: white;
+  -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
   padding: 3px 5vh 3px 3vh;
+}
+
+@media only screen and (max-width: 700px) {
+  .user-navbar {
+    margin-left: 0;
+    padding: 3px 20px;
+  }
 }
 
 .user-navbar h2 {
@@ -2598,6 +2692,12 @@
       -ms-flex-align: center;
           align-items: center;
   margin-right: 100px;
+}
+
+@media only screen and (max-width: 700px) {
+  .user-navbar .user-navbar-icon {
+    margin-right: 0px;
+  }
 }
 
 .user-navbar i {
@@ -2784,6 +2884,12 @@
   width: 100%;
 }
 
+.main-route-section {
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
 @font-face {
   font-family: raleway;
   src: url("../assets/font/Raleway-Regular.ttf");
@@ -2835,6 +2941,12 @@ button:focus {
 .component-layout {
   margin-left: 65px;
   padding: 30px 0;
+}
+
+@media only screen and (max-width: 700px) {
+  .component-layout {
+    margin-left: 0px;
+  }
 }
 
 body {

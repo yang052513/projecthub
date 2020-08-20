@@ -159,14 +159,14 @@ export const Status: React.FC = () => {
               <StatusSocial social={social} />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs>
               <StatusTools tools={tools} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs>
               <StatusCategory category={category} />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs>
               <StatusLog activity={activity} />
             </Grid>
           </Grid>

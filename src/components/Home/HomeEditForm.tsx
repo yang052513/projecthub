@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '45ch',
+    width: '40ch',
   },
   // 下拉选择菜单样式
   formControl: {
