@@ -6,7 +6,6 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 import { Loading } from '../shared/Loading'
-import { CSSTransition } from 'react-transition-group'
 
 export const Explore: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)

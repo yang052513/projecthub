@@ -12,7 +12,8 @@ import { useFetchProfile } from '../../hooks/useFetchProfile'
  */
 export const UserProfile = () => {
   const userId: any = useParams()
-  const [userProfile] = useFetchProfile(userId)
+
+  const userProfile = useFetchProfile(userId.ref)
 
   const [userRepo, setUserRepo] = useState<any>([])
   const [statusList, setStatusList] = useState<Array<string>>([])

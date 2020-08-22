@@ -6,9 +6,9 @@ interface Props {
 }
 
 export const ExploreProject: React.FC<Props> = ({ project }) => {
-  const exploreProjectList = project.map((item: any) => (
-    <ExploreProjectCard project={item} />
-  ))
+  const exploreProjectList = project
+    .slice(0, 3)
+    .map((item: any) => <ExploreProjectCard project={item} />)
 
   return (
     <div className="explore-project-list-container">{exploreProjectList}</div>
