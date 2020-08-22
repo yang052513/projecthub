@@ -1479,6 +1479,10 @@
   bottom: 40px;
 }
 
+.explore-developer-container {
+  border: 1px solid red;
+}
+
 .friend-container .friend-card-item-container {
   display: -ms-grid;
   display: grid;
