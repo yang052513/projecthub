@@ -22,8 +22,17 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      width: '85%',
+      width: '90%',
       margin: '0 auto',
+    },
+    chart: {
+      minWidth: '1000px',
+      ['@media (min-width:1800px)']: {
+        minWidth: '100%',
+      },
+    },
+    card: {
+      minWidth: '500px',
     },
   })
 )
@@ -151,22 +160,22 @@ export const Status: React.FC = () => {
             <Grid item xs={12}>
               <StatusHeader project={project} />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs className={classes.chart}>
               <StatusAnalysis statistics={statistics} />
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs className={classes.card}>
               <StatusSocial social={social} />
             </Grid>
 
-            <Grid item xs>
+            <Grid item xs className={classes.card}>
               <StatusTools tools={tools} />
             </Grid>
-            <Grid item xs>
+            <Grid item xs className={classes.card}>
               <StatusCategory category={category} />
             </Grid>
 
-            <Grid item xs>
+            <Grid item xs className={classes.card}>
               <StatusLog activity={activity} />
             </Grid>
           </Grid>

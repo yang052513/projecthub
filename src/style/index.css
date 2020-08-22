@@ -156,7 +156,7 @@
 }
 
 .project-no-result-container {
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 0;
   -webkit-transform: translateX(-50%);
