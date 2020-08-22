@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { StatusDetailModal } from './StatusDetailModal'
+import CSSTransition from 'react-transition-group/CSSTransition'
 
 interface Props {
   activity: any
 }
 
 export const StatusLog: React.FC<Props> = ({ activity }) => {
-  const projectLog = activity.map((log: any) => (
+  const [showModal, setShowModal] = useState<boolean>(false)
+
+  const projectLog = activity.slice(0, 5).map((log: any) => (
     <div className="status-log-item" key={log.Key}>
       <img src={log.Avatar} alt="" />
       <p className="status-like-msg">
@@ -17,11 +21,31 @@ export const StatusLog: React.FC<Props> = ({ activity }) => {
     </div>
   ))
   return (
-    <div className="status-card-item-wrap">
-      <h3>Project Log</h3>
-      <div className="status-card-container status-activity-log-list">
-        {projectLog}
+    <div>
+      <div className="status-card-item-wrap">
+        <h3>Project Log</h3>
+        <div className="status-card-container status-activity-log-list">
+          {projectLog}
+
+          {activity.length > 5 && (
+            <div className="status-log-button">
+              <button onClick={() => setShowModal(true)}>View More</button>
+            </div>
+          )}
+        </div>
       </div>
+
+      <CSSTransition
+        in={showModal}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <StatusDetailModal
+          activityList={activity}
+          toggleModal={() => setShowModal(false)}
+        />
+      </CSSTransition>
     </div>
   )
 }

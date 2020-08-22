@@ -26,13 +26,13 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: '0 auto',
     },
     chart: {
-      minWidth: '1000px',
-      ['@media (min-width:1800px)']: {
+      minWidth: '1024px',
+      '@media (max-width:1742px)': {
         minWidth: '100%',
       },
     },
     card: {
-      minWidth: '500px',
+      minWidth: '510px',
     },
   })
 )
@@ -160,7 +160,7 @@ export const Status: React.FC = () => {
             <Grid item xs={12}>
               <StatusHeader project={project} />
             </Grid>
-            <Grid item xs className={classes.chart}>
+            <Grid item xs={12} sm={8} className={classes.chart}>
               <StatusAnalysis statistics={statistics} />
             </Grid>
 
