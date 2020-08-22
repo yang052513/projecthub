@@ -1483,6 +1483,24 @@
   border: 1px solid red;
 }
 
+.explore-developer-container .explore-list-container {
+  border: 1px solid blue;
+}
+
+.explore-developer-container .explore-list-container .explore-card-container {
+  border: 1px solid green;
+}
+
+.explore-developer-container .explore-list-container .explore-card-container .explore-user-container {
+  border: 1px solid purple;
+}
+
+.explore-developer-container .explore-list-container .explore-card-container .explore-user-container img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
 .friend-container .friend-card-item-container {
   display: -ms-grid;
   display: grid;

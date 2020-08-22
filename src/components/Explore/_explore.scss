@@ -1,3 +1,19 @@
 .explore-developer-container {
   border: 1px solid red;
+
+  .explore-list-container {
+    border: 1px solid blue;
+
+    .explore-card-container {
+      border: 1px solid green;
+      .explore-user-container {
+        border: 1px solid purple;
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
 }
