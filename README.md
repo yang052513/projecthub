@@ -1,81 +1,64 @@
-# Projecthub
+<p align="center">
+<img src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/logo.png?alt=media&token=aad8d509-1bd6-4092-afb6-72325dc32ac7" alt="" width="100">
+</p>
+<h1 align="center">ProjectHub</h1>
 
-> https://projecthub.web.app/
+> 🔖 wow such a lovely project management dashboard
 
-## Table of Contents
+## Introduction
 
-- [Introduction](#01)
-- [Install](#02)
-- [Usage](#03)
-- [Features](#05)
-- [Preview](#06)
-- [Tools](#07)
+ProjectHub is a project management system that utilized with different progress status and conventional kanban system to track all your projects.
 
-#
+Projecthub also allows you to create team project request and let other developers to join with you.
 
-## <span id="01">Introduction</span>
+---
 
-This project was created for my summer algorithim part time course. The app allows students filter and search courses easily without submit a form then direct to a new page everytime Then the app will generate a timetable for student to preview the course schedule. Easy and quick. No more long time gap between classes.
-
-Right now I only update Coquitlam College course lists due to the project time constraints. I am looking into UBC and other school course scraping. Anyway, the idea is to help students to simplify the process of enrolling courses and avoid the time conficlts.
-
-#
-
-## <span id="02">Install</span>
+## Install
 
 Install all the necessary dependencies before running the application. In your shell, type the following:
 
 ```shell
-cd course-flex
+cd projecthub
 npm install
 ```
 
-You might need to install `nodemon` and `concurrently` if giving error based on above code
-
-```shell
-cd course-flex
-npm install nodemon concurrently --save
-```
-
-#
-
-## <span id="03">Usage</span>
+## Usage
 
 ### Live Demo
 
-The project is hosting at [Heroku courseflex](https://courseflex.herokuapp.com/)
+Please checkout live demo at here [Projecthub](https://courseflex.herokuapp.com/)
 
 ### Running on Local Machine
 
-Typing the following command in your shell, and the application should be running at `localhost:3000`. The server will start at port `8080`.
+Or you could running on the local machine using `start script command`.
+
+> The application use firebase database, you could replace the `config.js` file with your own database.
 
 ```shell
-cd course-flex
-npm run dev
+cd projecthub
+npm start
 ```
 
-#
+## Features
 
-## <span id="05">Features</span>
+- Create project that manage the progress and status
+- Project status, activity, social analysis
+- Friend system allows you communicate with teammates
+- Collaborative shared kanban within a team
+- Fully customized application apparence
+- Explore other developers projects, get inspired
+- Work with other contributors by using team project request
 
-- Search the course by course title or codes keywords
-- Filter the course with department, level, class start time, weekdays
-- Prompt if there are conflicts with the course choosed
-- Prompt if there are too many courses taken
-- Edit or empty course cart
-- Generate a timetable for visiualizing course schedule to avoid time gap
-
-#
-
-## <span id="06">Preview</span>
+## Preview
 
 ![](client/public/img/demo/2.png)
 ![](client/public/img/demo/3.png)
 
-## <span id="07">Tools</span>
+## Tools
 
 - React
-- Firebase Firestore, Cloud Storage, Hosting
+- React Hooks API
 - Typescript
 - Sass
+- Firebase
 - Material UI
