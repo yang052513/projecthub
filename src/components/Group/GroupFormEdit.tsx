@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { addProjectLog } from '../../modules/modules'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
 import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core'
+import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     marginBottom: '20px',
-    width: '45ch',
+    width: '40ch',
   },
 }))
 
@@ -258,14 +259,20 @@ export const GroupFormEdit: React.FC = () => {
           </div>
         </div>
       </div>
-      {feedback.show && (
+
+      <CSSTransition
+        in={feedback.show}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
           toggle={() => history.push('/grouppost')}
         />
-      )}
+      </CSSTransition>
 
       {progress && <Progress />}
     </div>

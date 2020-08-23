@@ -8,6 +8,7 @@ import { Progress } from '../shared/Progress'
 import { addNotification } from '../../modules/modules'
 import { updateApplication, deleteRequest } from '../../modules/group'
 import { group } from 'console'
+import { CSSTransition } from 'react-transition-group'
 
 interface Props {
   queueData: any
@@ -237,14 +238,20 @@ export const GroupQueue: React.FC<Props> = ({
       </div>
 
       {progress && <Progress />}
-      {feedback.show && (
+
+      <CSSTransition
+        in={feedback.show}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
           toggle={handleReload}
         />
-      )}
+      </CSSTransition>
     </div>
   )
 }

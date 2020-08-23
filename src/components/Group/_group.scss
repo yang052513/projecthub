@@ -154,3 +154,25 @@
   display: flex;
   margin: 0 50px;
 }
+
+.group-available {
+  display: flex;
+  flex-wrap: wrap;
+
+  button {
+    font-size: 13px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    color: $sideNavBg;
+    border: 1px solid $sideNavBg;
+    margin-right: 10px;
+    transition: all 0.5s;
+    &:hover {
+      color: white;
+      background-color: $sideNavBg;
+      border: 1px solid #fff;
+    }
+  }
+}

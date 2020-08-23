@@ -21,6 +21,7 @@ import { Progress } from '../shared/Progress'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
 
 import { addNotification } from '../../modules/modules'
+import { CSSTransition } from 'react-transition-group'
 
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -247,14 +248,20 @@ export const GroupApplication: React.FC<Props> = ({ applicationList }) => {
       </TableContainer>
 
       {progress && <Progress />}
-      {feedback.show && (
+
+      <CSSTransition
+        in={feedback.show}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
           imgUrl="/images/emoji/emoji_happy.png"
           toggle={handleReload}
         />
-      )}
+      </CSSTransition>
     </div>
   )
 }

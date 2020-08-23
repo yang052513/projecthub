@@ -23,31 +23,27 @@ export const GroupDetailCard: React.FC<Props> = ({ cardData, handleApply }) => {
         {cardData.StartDate} - {cardData.EndDate}
       </p>
 
-      {cardData.Contributors.map((contributor: any) => {
-        if (contributor.Avatar === 'None') {
-          return (
-            <img
-              onClick={() => handleApply()}
-              key={Math.random() * 255}
-              className="project-author-avatar"
-              src="./images/add.png"
-              alt=""
-              style={{ cursor: 'pointer' }}
-              title={`Apply ${cardData.Name}`}
-            />
-          )
-        } else {
-          return (
-            <Link key={contributor.Id} to={`/friends/${contributor.Id}`}>
-              <img
-                className="project-author-avatar"
-                src={contributor.Avatar}
-                alt=""
-              />
-            </Link>
-          )
-        }
-      })}
+      <div className="group-available">
+        {cardData.Contributors.map((contributor: any) => {
+          if (contributor.Avatar === 'None') {
+            return (
+              <button onClick={() => handleApply()}>
+                <i className="fas fa-user-plus"></i>
+              </button>
+            )
+          } else {
+            return (
+              <Link key={contributor.Id} to={`/friends/${contributor.Id}`}>
+                <img
+                  className="project-author-avatar"
+                  src={contributor.Avatar}
+                  alt=""
+                />
+              </Link>
+            )
+          }
+        })}
+      </div>
     </div>
   )
 }

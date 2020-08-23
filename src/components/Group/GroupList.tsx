@@ -26,6 +26,7 @@ import {
 } from '../../modules/group'
 import { addNotification, addProjectLog } from '../../modules/modules'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
+import { CSSTransition } from 'react-transition-group'
 
 //Table Styling
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -411,7 +412,13 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
       </TableContainer>
 
       {/* Display the queue list: people who applied the project */}
-      {display && (
+
+      <CSSTransition
+        in={display}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <div>
           <div
             onClick={() => {
@@ -432,10 +439,16 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
             groupData={groupData}
           />
         </div>
-      )}
+      </CSSTransition>
 
       {progress && <Progress />}
-      {feedback.show && (
+
+      <CSSTransition
+        in={feedback.show}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
@@ -444,7 +457,7 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
           confirm={feedback.confirm}
           cancel={feedback.cancel}
         />
-      )}
+      </CSSTransition>
     </div>
   )
 }

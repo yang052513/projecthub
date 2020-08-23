@@ -15,6 +15,8 @@ export const NavigationHeaderTitle: React.FC = () => {
       setHeaderTitle('EXPLORE PROJECTS')
     } else if (currRoute === '/group') {
       setHeaderTitle('FIND CONTRIBUTORS')
+    } else if (currRoute === '/grouppost') {
+      setHeaderTitle('MANAGE YOUR POST')
     } else if (currRoute === '/friends') {
       setHeaderTitle('PROJECTHUB USERS')
     } else if (

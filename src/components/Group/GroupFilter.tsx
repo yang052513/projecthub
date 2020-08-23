@@ -42,7 +42,7 @@ export const GroupFilter: React.FC<Props> = ({ handleSelector, selector }) => {
           <MenuItem className={classes.selectItem} value={' '}>
             All Categories
           </MenuItem>
-          <MenuItem className={classes.selectItem} value={'Web App'}>
+          <MenuItem className={classes.selectItem} value={'Web'}>
             Web
           </MenuItem>
           <MenuItem className={classes.selectItem} value={'Android'}>

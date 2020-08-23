@@ -222,11 +222,16 @@ export const Group: React.FC = () => {
         </div>
       </CSSTransition>
 
-      {feedback.show && (
+      <CSSTransition
+        in={feedback.show}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg={feedback.msg}
           info={feedback.info}
-          imgUrl="/images/emoji/emoji_scare.png"
+          imgUrl="/images/emoji/emoji_happy.png"
           toggle={() => {
             setFeedback({
               show: false,
@@ -235,7 +240,7 @@ export const Group: React.FC = () => {
             })
           }}
         />
-      )}
+      </CSSTransition>
     </div>
   )
 }
