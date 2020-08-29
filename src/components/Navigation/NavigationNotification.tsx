@@ -37,6 +37,7 @@ export const NavigationNotification = () => {
         .collection('user')
         .doc(user.uid)
         .collection('Notification')
+        .where('Unread', '==', true)
         .get()
       notificationDocs.forEach(doc => {
         setNotification((prevNotification: any) => [

@@ -19,9 +19,6 @@ firebase.initializeApp(config)
 class LogIn extends Component {
   state = {
     isSignedIn: false,
-    isApparence: false,
-    isLanguage: false,
-    isProfile: false,
   }
 
   uiConfig = {

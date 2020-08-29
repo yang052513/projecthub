@@ -1,18 +1,20 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { NavigationNotificationModalItem } from '../navigation/NavigationNotificationModalItem'
+import { NotificationCard } from './NotificationCard'
 
 export const Notification: React.FC = () => {
   const location = useLocation()
   console.log(location.state)
   const notificationData: any = location.state
 
-  const notificationList = notificationData.map((notification: any) => (
-    <NavigationNotificationModalItem
-      key={notification.Key}
-      notificationData={notification}
-    />
-  ))
+  const notificationList = notificationData
+    .filter((item: { Unread: any }) => item.Unread)
+    .map((notification: any) => (
+      <NotificationCard
+        key={notification.Key}
+        notificationData={notification}
+      />
+    ))
 
   return (
     <div className="component-layout notification-container">

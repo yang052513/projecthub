@@ -1,16 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import firebase from 'firebase'
+import { Link } from 'react-router-dom'
 
 interface Props {
   notificationData: any
 }
 
-export const NavigationNotificationModalItem: React.FC<Props> = ({
-  notificationData,
-}) => {
+export const NotificationCard: React.FC<Props> = ({ notificationData }) => {
   const user: any = firebase.auth().currentUser
-
   const handleRead = (ref: string) => {
     firebase
       .firestore()
@@ -21,6 +18,7 @@ export const NavigationNotificationModalItem: React.FC<Props> = ({
       .update({
         Unread: false,
       })
+    console.log('已读更新')
   }
 
   return (
@@ -28,16 +26,16 @@ export const NavigationNotificationModalItem: React.FC<Props> = ({
       to={notificationData.Redirect}
       onClick={() => handleRead(notificationData.Key)}
     >
-      <div className="notification-item">
+      <div className="notification-card">
         <img src={notificationData.Avatar} alt="" />
-        <div className="notification-item-text">
-          <p className="notification-item-category">
+        <div className="notification-card-text">
+          <p className="notification-card-category">
             New {notificationData.Category}
           </p>
-
-          <p className="notification-item-msg">{notificationData.Message}</p>
-          <p className="notification-item-time">{notificationData.Date}</p>
+          <p className="notification-card-msg">{notificationData.Message}</p>
         </div>
+
+        <p className="notification-card-time">{notificationData.Date}</p>
       </div>
     </Link>
   )

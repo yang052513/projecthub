@@ -5,6 +5,8 @@
 
 > 🔖 wow such a lovely project management dashboard
 
+<img src="./src/assets/preview/home.png" alt="" />
+
 ## Introduction
 
 ProjectHub is a project management system that utilized with different progress status and conventional kanban system to track all your projects.
