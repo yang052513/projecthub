@@ -67,7 +67,7 @@ class LogIn extends Component {
       const db = firebase.firestore()
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          db.collection('user').doc(user.uid).set({
+          db.collection('user').doc(user.uid).update({
             Name: user.displayName,
             Online: true,
           })

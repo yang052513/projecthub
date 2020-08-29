@@ -148,6 +148,9 @@ export const HomeCreateForm: React.FC = () => {
           Contributors: [{ Avatar: profile.avatar, Id: user.uid }],
         }
 
+        firebase.firestore().collection('user').doc(user.uid).update({
+          isExplore: true,
+        })
         addProject(user.uid, projectData, publicProject)
         addProjectLog(
           user.uid,

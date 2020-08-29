@@ -18,7 +18,9 @@ export const Explore: React.FC = () => {
       .get()
       .then(docs => {
         docs.forEach(doc => {
-          setUserList((prevUser: any) => [...prevUser, doc.id])
+          if (doc.data().isExplore) {
+            setUserList((prevUser: any) => [...prevUser, doc.id])
+          }
         })
         setLoading(false)
       })

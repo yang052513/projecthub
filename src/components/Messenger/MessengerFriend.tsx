@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import { MessengerListMenu } from './MessengerList/MessengerListMenu'
 import { AvatarOnline } from '../shared/AvatarOnline'
-import { useFetchOnline } from '../../hooks/useFetchOnline'
 
+import { useHistory } from 'react-router-dom'
 export const MessengerFriend: React.FC = () => {
   const user: any = firebase.auth().currentUser
   const [friend, setFriend] = useState<any>([])
-
+  const history = useHistory()
   const fetchFriends = () => {
     firebase
       .firestore()
@@ -59,7 +59,46 @@ export const MessengerFriend: React.FC = () => {
         <p>FRIENDS</p>
       </div>
 
-      <div className="messenger-friend-list-container">{friendList}</div>
+      <div className="messenger-friend-list-container">
+        {friend.length > 0 ? (
+          friendList
+        ) : (
+          <div className="messenger-no-friend-container">
+            <div className="project-welcome-container">
+              <i className="fab fa-wpexplorer welcome-icon"></i>
+              <div>
+                <h3>Explore Developers</h3>
+                <p>Find out other frequent developers on Projecthub</p>
+              </div>
+              <button onClick={() => history.push('/explore')}>
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div className="project-welcome-container">
+              <i className="fas fa-user-friends welcome-icon"></i>
+              <div>
+                <h3>Projecthub Users</h3>
+                <p>Display all the users that use projecthub</p>
+              </div>
+              <button onClick={() => history.push('/friends')}>
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div className="project-welcome-container">
+              <i className="far fa-clock welcome-icon"></i>
+              <div>
+                <h3>Story Board</h3>
+                <p>Communicate and meet new people by sharing stories</p>
+              </div>
+              <button onClick={() => history.push('/moment')}>
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

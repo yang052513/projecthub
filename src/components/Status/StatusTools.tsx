@@ -22,6 +22,7 @@ export const StatusTools: React.FC<Props> = ({ tools }) => {
       <h3>Most Used Technology</h3>
 
       <div className="status-card-container status-tag-container">
+        {tools.length === 0 && <p className="status-no-log">暂无常用技术</p>}
         <ResponsiveContainer width={'90%'} height={300}>
           <BarChart data={toolList}>
             <CartesianGrid strokeDasharray="3 3" />

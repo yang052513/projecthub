@@ -27,6 +27,7 @@ export const StatusSocial: React.FC<Props> = ({ social }) => {
         <h3>Recent Activity</h3>
 
         <div className="status-card-container status-activity-log-list">
+          {social.length === 0 && <p className="status-no-log">暂无互动记录</p>}
           {socialList}
 
           {socialList.length > 5 && (

@@ -19,7 +19,13 @@ export const MessengerListFriend: React.FC<Props> = ({ friend }) => {
         <p>YOUR FRIENDS</p>
       </div>
 
-      {friendList}
+      {friend.length > 0 ? (
+        friendList
+      ) : (
+        <div className="messenger-noresult">
+          <p>暂无好友</p>
+        </div>
+      )}
     </div>
   )
 }

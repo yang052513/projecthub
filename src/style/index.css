@@ -374,6 +374,11 @@
   transition: all 0.5s;
 }
 
+.project-welcome-container .welcome-icon {
+  color: #03a9f4;
+  font-size: 40px;
+}
+
 .project-welcome-container .project-welcome-emoji {
   font-size: 30px;
 }
@@ -723,6 +728,7 @@
 .status-container .status-activity-log-list {
   font-size: 13px;
   overflow-y: scroll;
+  position: relative;
 }
 
 .status-container .status-activity-log-list li {
@@ -885,6 +891,17 @@
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.status-no-log {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-style: italic;
+  color: #a7a7a7;
 }
 
 .setting-content-about-container {
@@ -2285,6 +2302,10 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
+.messenger-list-friend-container {
+  height: 100%;
+}
+
 .messenger-list-friend-container .messenger-list-friend-item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2413,6 +2434,18 @@
           transform: translate(-50%, -50%);
   font-style: italic;
   color: #4a4a4a;
+}
+
+.messenger-no-friend-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.messenger-list-chat-container {
+  height: 100%;
 }
 
 .notification-menu {

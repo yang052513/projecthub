@@ -225,6 +225,7 @@
 
 // 通过申请的好友列表
 .messenger-list-friend-container {
+  height: 100%;
   .messenger-list-friend-item {
     display: flex;
     align-items: center;
@@ -328,4 +329,15 @@
     font-style: italic;
     color: #4a4a4a;
   }
+}
+
+.messenger-no-friend-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.messenger-list-chat-container {
+  height: 100%;
 }

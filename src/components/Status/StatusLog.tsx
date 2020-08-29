@@ -25,6 +25,9 @@ export const StatusLog: React.FC<Props> = ({ activity }) => {
       <div className="status-card-item-wrap">
         <h3>Project Log</h3>
         <div className="status-card-container status-activity-log-list">
+          {activity.length === 0 && (
+            <p className="status-no-log">暂无项目记录</p>
+          )}
           {projectLog}
 
           {activity.length > 5 && (

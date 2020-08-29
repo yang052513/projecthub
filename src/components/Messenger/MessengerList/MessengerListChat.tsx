@@ -35,7 +35,13 @@ export const MessengerListChat: React.FC<Props> = ({ friend }) => {
       <div className="messenger-list-header">
         <p>RECENT CHATS</p>
       </div>
-      {chatList}
+      {friend.length > 0 ? (
+        chatList
+      ) : (
+        <div className="messenger-noresult">
+          <p>添加第一个好友开始聊天吧</p>
+        </div>
+      )}
     </div>
   )
 }
