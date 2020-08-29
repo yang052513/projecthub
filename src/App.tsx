@@ -1,6 +1,6 @@
 // React
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 // Firebase 数据库
 import * as firebase from 'firebase/app'
@@ -28,6 +28,8 @@ import { NavigationSideNavBar } from './components/navigation/NavigationSideBar'
 import { NavigationHeader } from './components/navigation/NavigationHeader'
 import { ColorBackground } from './components/shared/ColorBackground'
 import { ImageBackground } from './components/shared/ImageBackground'
+import { CSSTransition } from 'react-transition-group'
+import { Loading } from './components/shared'
 
 /**
  * 组件加载入口 读取数据库并初始化App
@@ -62,34 +64,55 @@ export default function App() {
   }
 
   return (
-    <ThemeContext.Provider value={customTheme}>
-      <ProfileContext.Provider value={userProfile}>
-        <div className="app-container">
-          {/* 渲染应用背景 图片/纯色 */}
-          {theme.backgroundColor ? (
-            <ColorBackground
-              backgroundColor={theme.background}
-              opacity={theme.opacity.background}
-            />
-          ) : (
-            <ImageBackground
-              backgroundUrl={theme.background}
-              opacity={theme.opacity.background}
-            />
-          )}
+    <div>
+      <CSSTransition
+        in={!userProfile.avatar || !customTheme.theme}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Loading />
+      </CSSTransition>
 
-          {/* 应用内容容器 */}
-          <div className="content-container">
-            <img className="logo" src="/images/logo.png" alt="" />
+      <CSSTransition
+        in={userProfile.avatar && customTheme.theme}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <ThemeContext.Provider value={customTheme}>
+          <ProfileContext.Provider value={userProfile}>
+            <div className="app-container">
+              {/* 渲染应用背景 图片/纯色 */}
+              {theme.backgroundColor ? (
+                <ColorBackground
+                  backgroundColor={theme.background}
+                  opacity={theme.opacity.background}
+                />
+              ) : (
+                <ImageBackground
+                  backgroundUrl={theme.background}
+                  opacity={theme.opacity.background}
+                />
+              )}
 
-            <NavigationSideNavBar opacity={theme.opacity} theme={theme.theme} />
-            <NavigationHeader opacity={theme.opacity} />
+              {/* 应用内容容器 */}
+              <div className="content-container">
+                <img className="logo" src="/images/logo.png" alt="" />
 
-            {/* 路由组件 */}
-            <Navigator />
-          </div>
-        </div>
-      </ProfileContext.Provider>
-    </ThemeContext.Provider>
+                <NavigationSideNavBar
+                  opacity={theme.opacity}
+                  theme={theme.theme}
+                />
+                <NavigationHeader opacity={theme.opacity} />
+
+                {/* 路由组件 */}
+                <Navigator />
+              </div>
+            </div>
+          </ProfileContext.Provider>
+        </ThemeContext.Provider>
+      </CSSTransition>
+    </div>
   )
 }

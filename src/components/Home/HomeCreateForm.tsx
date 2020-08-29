@@ -6,7 +6,6 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 // Modules Hooks
-import { useHistory } from 'react-router-dom'
 import { timeFormat } from 'current-time-format'
 import { ProfileContext } from '../../context/ProfileContext'
 import { addProjectLog, updateStatistics } from '../../modules/modules'
@@ -25,7 +24,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
-
+import { useHistory } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -338,6 +337,8 @@ export const HomeCreateForm: React.FC = () => {
             </div>
 
             <div className="project-input-submit-container">
+              <button onClick={() => history.push('/')}>Cancel</button>
+
               <button onClick={handleSubmit}>Create Project</button>
             </div>
           </div>

@@ -12,6 +12,7 @@ import { useFetchContributor } from '../../hooks/useFetchContributor'
 import { addNotification } from '../../modules/modules'
 import { deleteProject } from '../../modules/home'
 import { useFetchProfile } from '../../hooks/useFetchProfile'
+import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles({
   root: {
@@ -146,9 +147,21 @@ export const HomeEditMenu: React.FC<Props> = ({
 
   return (
     <div>
-      {loading && <Progress />}
+      <CSSTransition
+        in={loading}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Progress />
+      </CSSTransition>
 
-      {deleteConfirm === true ? (
+      <CSSTransition
+        in={deleteConfirm}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg="Confirm"
           info="Are you sure to delete this lovely project? w(ﾟДﾟ)w"
@@ -157,16 +170,21 @@ export const HomeEditMenu: React.FC<Props> = ({
           toggle={handleDelete}
           cancel={() => setDeleteConfirm(false)}
         />
-      ) : null}
+      </CSSTransition>
 
-      {showReturn === true ? (
+      <CSSTransition
+        in={showReturn}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
         <Feedback
           msg="Success"
           info="Delete successfully (๑•̀ㅂ•́)و✧"
           imgUrl="/images/emoji/emoji_laugh.png"
           toggle={handleReload}
         />
-      ) : null}
+      </CSSTransition>
 
       <div>
         <Button

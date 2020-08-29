@@ -10,6 +10,7 @@ import Badge from '@material-ui/core/Badge'
 import { Theme, withStyles, createStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
+import { CSSTransition } from 'react-transition-group'
 
 const NotificationBadge = withStyles((theme: Theme) =>
   createStyles({
@@ -47,21 +48,30 @@ export const NavigationNotification = () => {
     fetchNotification()
   }, [])
 
+  const handleToggle = () => {
+    setShow(prevShow => !prevShow)
+  }
+
   return (
     <div className="notification-menu">
-      <IconButton onClick={() => setShow(true)}>
+      <IconButton onClick={handleToggle}>
         <NotificationBadge badgeContent={notification.length} color="primary">
           <NotificationsNoneIcon />
         </NotificationBadge>
       </IconButton>
 
       <div className="notification-modal-wrap">
-        {show && (
+        <CSSTransition
+          in={show}
+          timeout={500}
+          classNames="fade-in"
+          unmountOnExit
+        >
           <NavigationNotificationModal
-            offModal={() => setShow(false)}
+            offModal={handleToggle}
             notification={notification}
           />
-        )}
+        </CSSTransition>
       </div>
     </div>
   )

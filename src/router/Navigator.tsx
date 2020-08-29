@@ -11,6 +11,7 @@ import {
   Moment,
   Setting,
   FAQ,
+  Notification,
 } from '../components/index'
 import { HomeCreateForm } from '../components/home/HomeCreateForm'
 import { GroupForm } from '../components/group/GroupForm'
@@ -70,6 +71,10 @@ export const Navigator: React.FC = () => {
             <Route exact path="/grouppost">
               <GroupPost />
             </Route>
+            <Route exact path="/notification">
+              <Notification />
+            </Route>
+
             <Route path="/grouppost/:ref">
               <GroupFormEdit />
             </Route>

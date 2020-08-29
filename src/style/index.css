@@ -432,6 +432,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   width: 250px;
+  font-family: quicksand;
 }
 
 .project-header-container .project-header-filter .project-header-search input:focus {
@@ -2442,6 +2443,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .notification-item-button button {
@@ -2454,7 +2458,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   font-size: 12px;
-  margin: 0 20px 10px 0;
+  margin: 0 5px 10px 0;
 }
 
 .notification-item-button button:hover {
@@ -2465,6 +2469,32 @@
 
 .notification-item-list {
   margin-bottom: 60px;
+}
+
+.notification-container .notification-item-list {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-grid-columns: 50%;
+      grid-template-columns: 50%;
+}
+
+.notification-container a {
+  color: black;
+}
+
+.notification-container .notification-item {
+  margin: 15px 0;
+  background-color: #fff;
+  padding: 20px 0;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.notification-container .notification-item-text {
+  padding: 0;
 }
 
 @-webkit-keyframes zoomAnimation {
