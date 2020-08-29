@@ -6,7 +6,7 @@ export const useFetchProfile = (uid: string) => {
   const user: any = firebase.auth().currentUser
 
   const initProfile = {
-    avatar: '/images/user.jpg',
+    avatar: '/images/default_avatar.jpg',
     profile: {
       profileName: user.displayName,
       profileBio: '',

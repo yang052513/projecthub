@@ -64,5 +64,3 @@ export const Logout: React.FC = () => {
     </div>
   )
 }
-
-export default Logout

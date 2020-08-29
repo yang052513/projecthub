@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import { Loading } from '../shared/Loading'
 import { HomeProjectCard } from './HomeProjectCard'
 import { CSSTransition } from 'react-transition-group'
-
+import { useHistory } from 'react-router-dom'
 interface Props {
   sort: string | undefined | null
   filter: string | undefined | null
@@ -15,6 +15,7 @@ export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
   const user: any = firebase.auth().currentUser
   const [project, setProject] = useState<any>([])
   const [initial, setInitial] = useState(false)
+  const history = useHistory()
 
   //Read all the projects in the user's database
   useEffect(() => {
@@ -63,7 +64,14 @@ export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
   return (
     <div className="project-card-container">
       {/* Initialzie all the project */}
-      {project.length === 0 && !initial && <Loading />}
+      <CSSTransition
+        in={project.length === 0 && !initial}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <Loading />
+      </CSSTransition>
 
       <CSSTransition
         in={!(project.length === 0 && !initial)}
@@ -75,12 +83,48 @@ export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
       </CSSTransition>
 
       {/* First time use the app, prompt message */}
-      {project.length === 0 && initial && (
-        <div className="project-no-result-container">
-          <p>Welcome to Projecthub</p>
-          <img src="/images/noresult.png" alt="" />
+
+      <CSSTransition
+        in={project.length === 0 && initial}
+        timeout={500}
+        classNames="fade-in"
+        unmountOnExit
+      >
+        <div className="project-welcome-list">
+          <div className="project-welcome-container">
+            <p className="project-welcome-emoji">👋</p>
+            <div>
+              <h3>Welcome to Projecthub</h3>
+              <p>Create your first project now</p>
+            </div>
+            <button onClick={() => history.push('/create')}>
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div className="project-welcome-container">
+            <p className="project-welcome-emoji">📊</p>
+            <div>
+              <h3>Periodic Analysis</h3>
+              <p>Find out your project analysis</p>
+            </div>
+            <button onClick={() => history.push('/status')}>
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div className="project-welcome-container">
+            <p className="project-welcome-emoji">👨‍💻</p>
+            <div>
+              <h3>Projecthub Explore</h3>
+              <p>Work with other contributors</p>
+            </div>
+            <button onClick={() => history.push('/group')}>
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
-      )}
+      </CSSTransition>
 
       {/* No searched or filter result */}
       <CSSTransition

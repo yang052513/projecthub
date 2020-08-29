@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
-import Logout from '../../auth/Logout'
+import { Logout } from '../../auth/Logout'
 import { ProfileContext } from '../../context/ProfileContext'
 
 // Material UI
@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
+import { CSSTransition } from 'react-transition-group'
 
 const useStyles = makeStyles({
   root: {
@@ -77,7 +78,16 @@ export const NavigationProfile: React.FC = () => {
         </Menu>
       </div>
 
-      <div>{logout && <Logout />}</div>
+      <div>
+        <CSSTransition
+          in={logout}
+          timeout={500}
+          classNames="fade-in"
+          unmountOnExit
+        >
+          <Logout />
+        </CSSTransition>
+      </div>
     </div>
   )
 }

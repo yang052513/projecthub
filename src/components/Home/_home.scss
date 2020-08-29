@@ -266,6 +266,53 @@
   }
 }
 
+.project-welcome-container {
+  border-radius: 15px;
+  width: 500px;
+  margin: 25px auto;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.5s;
+  .project-welcome-emoji {
+    font-size: 30px;
+  }
+  div {
+    margin-left: 10px;
+    h3 {
+      font-family: quicksand;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+  button {
+    margin-left: auto;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #03a9f4;
+    border: 1px solid #03a9f4;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 0.5s;
+    &:hover {
+      color: #fff;
+      background-color: #03a9f4;
+      border: 1px solid #fff;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+}
 //=================================Explore=====================================
 
 .project-header-container {

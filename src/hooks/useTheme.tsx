@@ -26,7 +26,7 @@ export const useTheme = (userRef: string) => {
     .doc('Apparence')
 
   const [theme, setTheme] = useState<ITheme | any>({
-    theme: '#0e5dd3',
+    theme: '#03a9f4',
     option: 'Color',
     background: '#f7f7f7',
     backgroundColor: true,
