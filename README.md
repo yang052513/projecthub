@@ -1,6 +1,11 @@
 <p align="center">
 <img src="https://firebasestorage.googleapis.com/v0/b/projecthub-yang.appspot.com/o/image.png?alt=media&token=dd992b14-d92a-4ac0-a394-187c3cc3555d" alt="" width="100">
 </p>
+
+<p align="center">
+<img src="https://img.shields.io/github/license/yang052513/projecthub" alt="" />
+<img src="https://img.shields.io/github/v/tag/yang052513/projecthub" alt="" /></p>
+
 <h1 align="center">ProjectHub</h1>
 
 > 🔖 A collection based project management dashboard application.
@@ -15,15 +20,6 @@ Projecthub also allows you to create team project request and let other develope
 
 ---
 
-## Install
-
-Install all the necessary dependencies before running the application. In your shell, type the following:
-
-```shell
-cd projecthub
-npm install
-```
-
 ## Usage
 
 ### Live Demo
@@ -32,44 +28,44 @@ Please checkout live demo at here [Projecthub](https://projecthub-yang.web.app/)
 
 ### Running on Local Machine
 
-Or you could running on the local machine using `start script command` and add your firebase database.
+> The application use firebase database, plase replace **your own firebase database configuration** in `.env` and change accordingly in `Login.tsx` components under `auth` src folder.
 
-> The application use firebase database, plase replace your own firebase database API key in `.env` and change accordingly in `Login.tsx` components.
+Then you could running on the local machine using `start script command`.
 
 ```shell
+git clone https://github.com/yang052513/projecthub.git
 cd projecthub
+npm install
 npm start
 ```
 
 ## Features
 
-### Create project that manage the progress and status
+- Creating or editing a project and manage different status
+- Team shared or individual used Kanban system
+- Working with other people by creating a group project request
+- Notification centre
+- Project and activity analysis with chart view
+- Explore other people public project ideas
+- Friend and chat system
+- Story share feature
+- Custom the apparence of the application
 
-<img src="./src/assets/preview/home.png" alt=""/>
+**Setting, Apparence, Profile**
 
-### Project status, activity, social analysis
+<img src="./src/assets/preview/profile.png" alt="" width="80%"/>
 
-<img src="./src/assets/preview/status.png" alt=""/>
+**Friend chat**
 
-### Friend system allows you communicate with teammates
+<img src="./src/assets/preview/friend.png" alt="" width="80%"/>
 
-<img src="./src/assets/preview/friend.png" alt=""/>
+**Explore**
 
-### Collaborative shared kanban within a team
+<img src="./src/assets/preview/explore.png" alt="" width="80%"/>
 
-<img src="./src/assets/preview/kanban.png" alt=""/>
+**Group**
 
-### Fully customized application apparence
-
-<img src="./src/assets/preview/profile.png" alt=""/>
-
-### Explore other developers projects, get inspired
-
-<img src="./src/assets/preview/explore.png" alt=""/>
-
-### Work with other contributors by using team project request
-
-<img src="./src/assets/preview/group.png" alt=""/>
+<img src="./src/assets/preview/group.png" alt="" width="80%"/>
 
 ## Tools
 
