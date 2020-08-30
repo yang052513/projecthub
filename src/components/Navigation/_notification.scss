@@ -3,8 +3,8 @@
 }
 .notification-modal-wrap {
   position: absolute;
-  top: 70px;
-  left: -154px;
+  top: 62px;
+  left: -234px;
 }
 .notification-modal-preview {
   position: relative;
@@ -20,20 +20,20 @@
   }
 }
 
-.notification-modal-preview:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 0;
-  z-index: 1;
-  border-style: solid;
-  border-color: #ffffff transparent;
+// .notification-modal-preview:after {
+//   content: '';
+//   position: absolute;
+//   display: block;
+//   width: 0;
+//   z-index: 1;
+//   border-style: solid;
+//   border-color: #ffffff transparent;
 
-  border-width: 0 12px 20px;
-  top: -15px;
-  left: 50%;
-  margin-left: -10px;
-}
+//   border-width: 0 12px 20px;
+//   top: -15px;
+//   left: 50%;
+//   margin-left: -10px;
+// }
 
 .notification-item {
   border-bottom: 1px solid rgb(214, 214, 214);

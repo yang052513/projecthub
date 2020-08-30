@@ -48,7 +48,9 @@ export const HomeProject: React.FC<Props> = ({ sort, filter, search }) => {
     })
     .filter((item: any) => {
       if (filter === 'All My Projects') {
-        return item && item.Name.includes(search)
+        return (
+          item && item.Name.toLowerCase().includes(search!.toLocaleLowerCase())
+        )
       } else {
         return item.Status === filter && item.Name.includes(search)
       }

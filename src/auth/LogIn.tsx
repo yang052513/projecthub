@@ -6,14 +6,15 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: 'pinboard-25.firebaseapp.com',
-  databaseURL: 'https://pinboard-25.firebaseio.com',
-  projectId: 'pinboard-25',
-  storageBucket: 'pinboard-25.appspot.com',
-  messagingSenderId: '649585637777',
-  appId: '1:649585637777:web:07f6bc2b38cb1ef7f90230',
-  measurementId: 'G-1VTSFT88XS',
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DB_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE,
+  messagingSenderId: process.env.REACT_APP_SENDER,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 }
+
 firebase.initializeApp(config)
 
 class LogIn extends Component {
@@ -67,7 +68,8 @@ class LogIn extends Component {
       const db = firebase.firestore()
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          db.collection('user').doc(user.uid).update({
+          console.log(user.uid)
+          db.collection('user').doc(user.uid).set({
             Name: user.displayName,
             Online: true,
           })

@@ -200,7 +200,7 @@
   -ms-grid-columns: (minmax(400px, 1fr))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   justify-items: center;
-  row-gap: 30px;
+  row-gap: 10px;
   padding: 25px 50px;
 }
 
@@ -220,6 +220,8 @@
   background-color: white;
   position: relative;
   margin-bottom: 25px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 @media only screen and (max-width: 900px) {
@@ -266,8 +268,10 @@
 }
 
 .project-card-item .project-title {
-  font-family: title;
+  font-family: quicksand;
   font-size: 17px;
+  color: #3a3a3a;
+  font-weight: bold;
 }
 
 .project-card-item .project-status {
@@ -451,6 +455,7 @@
 
 .project-header-container h3 {
   font-size: 30px;
+  color: #3a3a3a;
 }
 
 .project-header-container .project-header-filter {
@@ -511,22 +516,21 @@
 
 .project-header-container .project-header-filter button {
   font-size: 13px;
-  color: white;
-  background-color: #03a9f4;
+  color: #03a9f4;
+  background-color: rgba(0, 0, 0, 0);
   padding: 5px 20px;
   border-radius: 15px;
+  border: 1px solid #03a9f4;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  border: 1px solid white;
+  border: 1px solid #03a9f4;
   margin-left: 30px;
 }
 
 .project-header-container .project-header-filter button:hover {
-  color: #03a9f4;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #03a9f4;
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
+  color: white;
+  background-color: #03a9f4;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 @media only screen and (max-width: 1350px) {
@@ -1327,7 +1331,7 @@
 }
 
 .moment-story-card-container div .moment-story-image {
-  width: 30vw;
+  width: 80%;
   height: auto;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -1478,10 +1482,13 @@
 }
 
 .explore-developer-container .explore-list-container .explore-card-container .explore-user-container {
-  width: 450px;
+  min-width: 400px;
+  max-width: 400px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin-left: 50px;
 }
 
@@ -1490,6 +1497,12 @@
   height: 100px;
   border-radius: 50%;
   margin-right: 30px;
+}
+
+.explore-developer-container .explore-list-container .explore-card-container .explore-user-container .explore-user-profile-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 200px;
+          flex: 1 1 200px;
 }
 
 .explore-developer-container .explore-list-container .explore-card-container .explore-user-container .explore-profile-name {
@@ -1531,11 +1544,14 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  overflow-x: scroll;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .explore-developer-container .explore-list-container .explore-card-container .explore-project-list-container .project-card-item {
-  width: 350px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 330px;
+          flex: 0 1 330px;
   margin: 20px 0;
   margin-right: 15px;
 }
@@ -1543,26 +1559,23 @@
 .section-line {
   width: 100%;
   height: 1px;
-  background-color: #dadada;
+  background-color: #cacaca;
 }
 
 .friend-container .friend-card-item-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 100px 650px 100px;
-      grid-template-columns: 100px 650px 100px;
-  background-color: white;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  padding: 10px;
-  height: 110px;
-  width: 50%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 20px;
+  width: 60%;
   margin: 20px auto;
   border-radius: 10px;
   position: relative;
@@ -1583,7 +1596,7 @@
 }
 
 .friend-container .friend-card-item-container .friend-card-avatar {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .friend-container .friend-card-item-container .friend-card-avatar img {
@@ -1649,6 +1662,10 @@
   border-radius: 20px;
   color: #474747;
   border: 1px solid #818181;
+}
+
+.friend-container .friend-card-item-container .friend-card-button {
+  margin-left: auto;
 }
 
 .friend-container .friend-card-item-container .friend-card-button button {
@@ -2470,8 +2487,8 @@
 
 .notification-modal-wrap {
   position: absolute;
-  top: 70px;
-  left: -154px;
+  top: 62px;
+  left: -234px;
 }
 
 .notification-modal-preview {
@@ -2488,20 +2505,6 @@
 
 .notification-modal-preview a {
   color: black;
-}
-
-.notification-modal-preview:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 0;
-  z-index: 1;
-  border-style: solid;
-  border-color: #ffffff transparent;
-  border-width: 0 12px 20px;
-  top: -15px;
-  left: 50%;
-  margin-left: -10px;
 }
 
 .notification-item {
@@ -2815,7 +2818,7 @@
   height: 50px;
   z-index: 1;
   margin-left: 7.5px;
-  margin-top: 15px;
+  margin-top: 6px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -2834,7 +2837,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 80px 0;
+  padding: 70px 0;
   background-color: #03a9f4;
   -ms-grid-rows: (50px)[10];
       grid-template-rows: repeat(10, 50px);
@@ -2901,7 +2904,7 @@
   background-color: white;
   -webkit-box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
           box-shadow: 0px 1px 7px -3px rgba(0, 0, 0, 0.75);
-  padding: 3px 5vh 3px 3vh;
+  padding: 5px 20px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -2916,6 +2919,7 @@
   font-family: raleway;
   text-transform: uppercase;
   letter-spacing: 2px;
+  color: #3a3a3a;
 }
 
 .user-navbar .user-navbar-icon {
@@ -2925,7 +2929,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-right: 100px;
+  margin-right: 20px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -3133,7 +3137,7 @@
 
 @font-face {
   font-family: title;
-  src: url("../assets/font/Helvetica-Bold.ttf");
+  src: url("../assets/font/SF-Pro-Display-Regular.otf");
 }
 
 @font-face {

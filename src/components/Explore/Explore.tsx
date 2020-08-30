@@ -18,9 +18,17 @@ export const Explore: React.FC = () => {
       .get()
       .then(docs => {
         docs.forEach(doc => {
-          if (doc.data().isExplore) {
-            setUserList((prevUser: any) => [...prevUser, doc.id])
-          }
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(doc.id)
+            .collection('Project')
+            .get()
+            .then(projectDocs => {
+              if (projectDocs.size > 0) {
+                setUserList((prevUser: any) => [...prevUser, doc.id])
+              }
+            })
         })
         setLoading(false)
       })

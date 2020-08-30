@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import logo from '../../assets/images/logo.png'
 
 export const NavigationHeaderTitle: React.FC = () => {
   const currRoute: any = useLocation().pathname
@@ -53,5 +54,10 @@ export const NavigationHeaderTitle: React.FC = () => {
     }
   }, [currRoute])
 
-  return <h2>{headerTitle}</h2>
+  return (
+    <div className="navigation-header-logo">
+      <img className="logo" src={logo} alt="" />
+      <h2>{headerTitle}</h2>
+    </div>
+  )
 }

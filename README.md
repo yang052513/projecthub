@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">ProjectHub</h1>
 
-> 🔖 wow such a lovely project management dashboard
+> 🔖 A collection based project management dashboard application.
 
 <img src="./src/assets/preview/home.png" alt="" />
 
@@ -28,13 +28,13 @@ npm install
 
 ### Live Demo
 
-Please checkout live demo at here [Projecthub](https://courseflex.herokuapp.com/)
+Please checkout live demo at here [Projecthub](https://projecthub-yang.web.app/)
 
 ### Running on Local Machine
 
 Or you could running on the local machine using `start script command`.
 
-> The application use firebase database, you could replace the `config.js` file with your own database.
+> The application use firebase database, plase replace your own firebase database API key in `.env` and change accordingly in `Login.tsx` components.
 
 ```shell
 cd projecthub
@@ -51,11 +51,6 @@ npm start
 - Explore other developers projects, get inspired
 - Work with other contributors by using team project request
 
-## Preview
-
-![](client/public/img/demo/2.png)
-![](client/public/img/demo/3.png)
-
 ## Tools
 
 - React
@@ -64,3 +59,4 @@ npm start
 - Sass
 - Firebase
 - Material UI
+- Rechart

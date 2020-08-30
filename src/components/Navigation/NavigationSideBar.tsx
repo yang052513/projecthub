@@ -67,12 +67,12 @@ export const NavigationSideNavBar: React.FC<Props> = ({ theme, opacity }) => {
         prompt="Settings"
       />
 
-      <NavigationSideBarItem
+      {/* <NavigationSideBarItem
         theme={theme}
         route={'/faq'}
         icon="fas fa-book"
         prompt="Documentation"
-      />
+      /> */}
 
       <NavigationSideBarItem
         theme={theme}
@@ -80,13 +80,13 @@ export const NavigationSideNavBar: React.FC<Props> = ({ theme, opacity }) => {
         icon="fas fa-feather"
         prompt="Create a Project"
       />
-
+      {/* 
       <NavigationSideBarItem
         theme={theme}
         route={'/noidea'}
         icon="fas fa-sign-out-alt"
         prompt="Logout"
-      />
+      /> */}
     </div>
   )
 }

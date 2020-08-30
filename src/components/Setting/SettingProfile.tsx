@@ -162,6 +162,24 @@ export const SettingProfile: React.FC = () => {
               })
             })
 
+          db.collection('user')
+            .doc(user.uid)
+            .collection('Activity')
+            .where('Message.Name', '==', 'You')
+            .get()
+            .then(docs => {
+              docs.forEach(activityDoc => {
+                db.collection('user')
+                  .doc(user.uid)
+                  .collection('Activity')
+                  .doc(activityDoc.data().Key)
+                  .update({
+                    Avatar: url,
+                  })
+                console.log(activityDoc.id)
+              })
+            })
+
           // 更改好友集合
           db.collection('friends').doc(user.uid).update({
             avatar: url,

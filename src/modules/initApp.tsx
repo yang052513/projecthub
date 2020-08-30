@@ -58,7 +58,7 @@ export function initFriendCollection(
           .collection('friends')
           .doc(userRef)
           .set({
-            avatar: '/images/user.jpg',
+            avatar: '/images/default_avatar.jpg',
             profile: {
               profileName: userName,
               profileBio: '',
