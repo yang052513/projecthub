@@ -43,13 +43,33 @@ npm start
 
 ## Features
 
-- Create project that manage the progress and status
-- Project status, activity, social analysis
-- Friend system allows you communicate with teammates
-- Collaborative shared kanban within a team
-- Fully customized application apparence
-- Explore other developers projects, get inspired
-- Work with other contributors by using team project request
+### Create project that manage the progress and status
+
+<img src="./src/assets/preview/home.png" alt=""/>
+
+### Project status, activity, social analysis
+
+<img src="./src/assets/preview/status.png" alt=""/>
+
+### Friend system allows you communicate with teammates
+
+<img src="./src/assets/preview/friend.png" alt=""/>
+
+### Collaborative shared kanban within a team
+
+<img src="./src/assets/preview/kanban.png" alt=""/>
+
+### Fully customized application apparence
+
+<img src="./src/assets/preview/profile.png" alt=""/>
+
+### Explore other developers projects, get inspired
+
+<img src="./src/assets/preview/explore.png" alt=""/>
+
+### Work with other contributors by using team project request
+
+<img src="./src/assets/preview/group.png" alt=""/>
 
 ## Tools
 
