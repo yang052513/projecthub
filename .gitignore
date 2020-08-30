@@ -24,7 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 node_modules
 
-
-# ts declarative
-/src/react-app-env.d.ts
-/src/react-trello.d.ts

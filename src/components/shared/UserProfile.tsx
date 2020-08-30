@@ -59,6 +59,14 @@ export const UserProfile = () => {
                 <p className="user-profile-repo-card-desc">
                   {project.Description}
                 </p>
+
+                <div className="user-profile-repo-card-tools">
+                  <ul>
+                    {project.Tools.map((tool: any) => (
+                      <li key={tool}>{tool}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
         </div>
@@ -75,35 +83,47 @@ export const UserProfile = () => {
             <img src={userProfile.avatar} alt="" width="100px" height="100px" />
             <h3>{userProfile.profile.profileName}</h3>
 
-            <div className="user-profile-icon-wrap">
-              <i className="fas fa-book"></i>
-              <p>{userProfile.profile.profileBio}</p>
-            </div>
+            {userProfile.profile.profileBio !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fas fa-book"></i>
+                <p>{userProfile.profile.profileBio}</p>
+              </div>
+            )}
 
-            <div className="user-profile-icon-wrap">
-              <i className="fas fa-envelope"></i>
-              <p>{userProfile.profile.profileEmail}</p>
-            </div>
+            {userProfile.profile.profileEmail !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fas fa-envelope"></i>
+                <p>{userProfile.profile.profileEmail}</p>
+              </div>
+            )}
 
-            <div className="user-profile-icon-wrap">
-              <i className="fab fa-github"></i>
-              <p> {userProfile.profile.profileGithub}</p>
-            </div>
+            {userProfile.profile.profileGithub !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fab fa-github"></i>
+                <p> {userProfile.profile.profileGithub}</p>
+              </div>
+            )}
 
-            <div className="user-profile-icon-wrap">
-              <i className="fas fa-map-marker-alt"></i>
-              <p> {userProfile.profile.profileLocation}</p>
-            </div>
+            {userProfile.profile.profileLocation !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fas fa-map-marker-alt"></i>
+                <p> {userProfile.profile.profileLocation}</p>
+              </div>
+            )}
 
-            <div className="user-profile-icon-wrap">
-              <i className="fab fa-linkedin-in"></i>
-              <p> {userProfile.profile.profileWeb}</p>
-            </div>
+            {userProfile.profile.profilelinkedin !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fab fa-linkedin-in"></i>
+                <p> {userProfile.profile.profilelinkedin}</p>
+              </div>
+            )}
 
-            <div className="user-profile-icon-wrap">
-              <i className="fas fa-home"></i>
-              <p> {userProfile.profile.profileLinkedin}</p>
-            </div>
+            {userProfile.profile.profileWeb !== '' && (
+              <div className="user-profile-icon-wrap">
+                <i className="fas fa-home"></i>
+                <p> {userProfile.profile.profileWeb}</p>
+              </div>
+            )}
           </div>
           <div className="user-profile-repo-wrap">
             <h3>{userProfile.profile.profileName}'s Projects</h3>
