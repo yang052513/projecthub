@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://firebasestorage.googleapis.com/v0/b/pinboard-25.appspot.com/o/logo.png?alt=media&token=aad8d509-1bd6-4092-afb6-72325dc32ac7" alt="" width="100">
+<img src="https://firebasestorage.googleapis.com/v0/b/projecthub-yang.appspot.com/o/image.png?alt=media&token=dd992b14-d92a-4ac0-a394-187c3cc3555d" alt="" width="100">
 </p>
 <h1 align="center">ProjectHub</h1>
 
