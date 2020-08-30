@@ -5,7 +5,7 @@ import App from '../App'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 const config = {
-  apiKey: 'AIzaSyADkkb297MIxw6TMNeodIEIJQQC86ehrIc',
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: 'pinboard-25.firebaseapp.com',
   databaseURL: 'https://pinboard-25.firebaseio.com',
   projectId: 'pinboard-25',
