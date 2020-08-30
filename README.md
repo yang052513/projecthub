@@ -32,7 +32,7 @@ Please checkout live demo at here [Projecthub](https://projecthub-yang.web.app/)
 
 ### Running on Local Machine
 
-Or you could running on the local machine using `start script command`.
+Or you could running on the local machine using `start script command` and add your firebase database.
 
 > The application use firebase database, plase replace your own firebase database API key in `.env` and change accordingly in `Login.tsx` components.
 

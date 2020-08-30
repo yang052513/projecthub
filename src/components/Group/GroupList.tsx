@@ -168,13 +168,6 @@ export const GroupList: React.FC<Props> = ({ tableData }) => {
         Contributors: contributorList,
       }
 
-      // 写入到project集合 默认公开 进行中
-      firebase
-        .firestore()
-        .collection('project')
-        .doc(projectData.Key)
-        .set(projectDoc)
-
       // 写入到每个用户的Project的集合中
       contributorList.forEach((contributor: any) => {
         let subjectName =

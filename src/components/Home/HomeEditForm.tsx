@@ -299,26 +299,6 @@ export const HomeEditForm: React.FC = () => {
                 Key: activityRef.id,
               })
           })
-
-        //写入到公开数据库
-        //如果改为公开项目 写入到公开集合
-        if (publicProject) {
-          db.collection('project').doc(params.ref).set(projectData)
-        } else {
-          //If the project changed from public to private, delete from public database
-          let projectRef = db.collection('project').doc(params.ref)
-          projectRef.get().then(doc => {
-            if (doc.exists) {
-              db.collection('project')
-                .doc(params.ref)
-                .delete()
-                .then(() => {
-                  console.log('已经从公开数据中删除该项目')
-                })
-            }
-          })
-        }
-        // })
         setLoading(false)
         setFeedback(true)
       }, 2000)

@@ -18,15 +18,6 @@ export function addProject(userRef: string, docData: any, isPublic: boolean) {
         .update({
           Key: docRef.id,
         })
-
-      if (isPublic) {
-        firebase.firestore().collection('project').doc(docRef.id).set(docData)
-        firebase
-          .firestore()
-          .collection('project')
-          .doc(docRef.id)
-          .update({ Key: docRef.id })
-      }
     })
 }
 
